@@ -1,0 +1,27 @@
+{
+  "name": "likealight",
+  "version": "1.2.0",
+  "description": "Discord bot made in akairo",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "author": "BluePotatoBP",
+  "license": "ISC",
+  "dependencies": {
+    "cli-table3": "^0.6.0",
+    "common-tags": "^1.8.0",
+    "crypto": "^1.0.1",
+    "discord-akairo": "^8.0.0",
+    "discord.js": "^12.2.0",
+    "dotenv": "^8.2.0",
+    "fs": "0.0.1-security",
+    "nodemon": "^2.0.4",
+    "owoify-js": "^1.0.7",
+    "pastebin-js": "^1.0.5",
+    "spacy": "0.0.4",
+    "urban": "^0.3.2",
+    "util": "^0.12.3"
+  }
+}
