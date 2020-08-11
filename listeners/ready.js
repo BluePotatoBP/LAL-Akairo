@@ -13,8 +13,7 @@ class ReadyListener extends Listener {
 
     exec() {
 
-        // Clear console and send startup message
-        console.clear()
+        // Send startup message
         global.client = this.client;
 
         let statuses = [` you type ${prefix}help`, " the support server!"];

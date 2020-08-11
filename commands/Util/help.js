@@ -1,7 +1,7 @@
 const { Command } = require('discord-akairo');
 const Discord = require("discord.js");
 const { crimson } = require("../../assets/colors.json")
-const prefix = '.'
+const mysql2 = require('mysql2/promise');
 const { stripIndents } = require("common-tags")
 
 class Help extends Command {
@@ -25,11 +25,19 @@ class Help extends Command {
     async exec(message, { command }) {
         message.delete().catch(e => { });
 
+        let [data] = await DB.query(`SELECT * FROM prefixes WHERE guildId = ?`, [message.guild.id])
+        let prefix;
+
+        if (data.length === 0) {
+            prefix = process.env.PREFIX;
+        } else {
+            prefix = `${data[0].prefix}`;
+        }
+
         const embed = new Discord.MessageEmbed()
             .setColor(crimson)
             .setAuthor(`${this.client.user.username} Help`, this.client.user.avatarURL({ dynamic: true }))
             .setThumbnail(message.guild.iconURL({ dynamic: true }))
-
 
         if (!command) {
             var categories = this.handler.categories.values();
@@ -43,7 +51,7 @@ class Help extends Command {
                 }
                 else if (title) {
                     const dir = category.map(cmd => cmd).join(', ')
-                    embed.setDescription(`The default bot prefix is: \`${prefix}\` \nThese are the currently available commands for *${this.client.user.username}*`); 4
+                    embed.setDescription(`The prefix for this guild is: \`${prefix}\` \nThese are the currently available commands for \`${this.client.user.username}\`:`);
 
                     try {
                         embed.addField(`> ${category} (${category.size}):`, dir)

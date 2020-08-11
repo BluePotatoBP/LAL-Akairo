@@ -1,6 +1,6 @@
 {
   "name": "likealight",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Discord bot made in akairo",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,7 @@
   "author": "BluePotatoBP",
   "license": "ISC",
   "dependencies": {
+    "canvas": "^2.6.1",
     "cli-table3": "^0.6.0",
     "common-tags": "^1.8.0",
     "crypto": "^1.0.1",
@@ -17,9 +18,11 @@
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
     "fs": "0.0.1-security",
+    "mysql2": "^2.1.0",
     "nodemon": "^2.0.4",
     "owoify-js": "^1.0.7",
     "pastebin-js": "^1.0.5",
+    "path": "^0.12.7",
     "spacy": "0.0.4",
     "urban": "^0.3.2",
     "util": "^0.12.3"
