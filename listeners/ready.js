@@ -1,5 +1,6 @@
 const { Listener } = require('discord-akairo');
 const Discord = require("discord.js");
+const mysql2 = require('mysql2/promise');
 const prefix = process.env.PREFIX;
 const guildInvites = new Map();
 
@@ -12,6 +13,22 @@ class ReadyListener extends Listener {
     }
 
     exec() {
+
+        // Keep the database alive
+        setInterval(async () => {
+            let dot = '.';
+                let [data] = await DB.query(`SELECT * FROM keepAlive`)
+                if (data.length === 0) {
+                    await DB.query(`INSERT INTO keepAlive VALUES(?)`, [dot])
+                    await DB.query("DELETE FROM keepAlive")
+
+                } else {
+                    await DB.query("DELETE FROM keepAlive")
+                    console.log("deleted what was already there")
+                }
+
+            console.log('[DEBUG] Database lifespan expanded by 5 minutes!');
+        }, 300000);
 
         // Send startup message
         global.client = this.client;

@@ -19,7 +19,7 @@ console.clear();
     console.log(`[STARTUP] Connected to Database ${process.env.DB_NAME} (Ricardo)!`)
 
 })()
-
+    
     // Start akairo client
     class Client extends AkairoClient {
         constructor() {

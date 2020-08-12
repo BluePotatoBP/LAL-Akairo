@@ -58,7 +58,7 @@ class SetPrefix extends Command {
 
         } else {
             if (data.length !== 0) {
-                DB.query("UPDATE prefixes SET prefix = ? WHERE guildId = ?", [p, message.guild.id])
+                await DB.query("UPDATE prefixes SET prefix = ? WHERE guildId = ?", [p, message.guild.id])
 
                 prefixEmbed.setDescription(`The prefix for this guild has been updated to: \`${p}\``)
                 prefixEmbed.setColor(pastelGreen)
