@@ -63,12 +63,12 @@ class Ban extends Command {
 
         // Check if the user being banned has ban perms
         if (m.hasPermission("BAN_MEMBERS")) return message.channel.send(ambed);
-        /*const banEmbed = new Discord.MessageEmbed() // When i figure out how to use a database, nice embed
+        const banEmbed = new Discord.MessageEmbed() // When i figure out how to use a database, nice embed
           .setAuthor("Action: Ban", "https://i.imgur.com/CQjspzn.png")
           .setThumbnail(u.user.avatarURL({ dynamic: true }))
           .setColor(salmon)
           .setDescription(`**Offender:** ${u.tag} *(${u.id})*\n **Moderator:** ${message.author.tag} *(${message.author.id})* \n**Channel:** ${message.channel.name} *(${message.channel.id})* \n**Reason:** ${r}`)
-          .setTimestamp()*/
+          .setTimestamp()
 
         const promptEmbed = new Discord.MessageEmbed()
             .setColor(pastelGreen)
@@ -82,9 +82,9 @@ class Ban extends Command {
         // If the moderator reacted with a check mark ban the user
         if (emoji === "✅") {
 
-            /*u.ban(r).catch(err => {
+            u.ban(r).catch(err => {
                 if (err) return message.channel.send(`Well this is awkward... *${err}*`)
-            });*/
+            });
 
             message.channel.send(`**${message.author.tag}** banned **${m.user.tag}**. \nReason: ${r}`);
             /*logchannel.send(banEmbed);*/

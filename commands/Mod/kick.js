@@ -63,12 +63,12 @@ class Kick extends Command {
 
         // Check if the user being kicked has kick perms
         if (m.hasPermission("KICK_MEMBERS")) return message.channel.send(ambed);
-        /*const kickEmbed = new Discord.MessageEmbed() // When i figure out how to use a database, nice embed
+        const kickEmbed = new Discord.MessageEmbed() // When i figure out how to use a database, nice embed
           .setAuthor("Action: Kick", "https://i.imgur.com/CQjspzn.png")
           .setThumbnail(u.user.avatarURL({ dynamic: true }))
           .setColor(salmon)
           .setDescription(`**Offender:** ${u.tag} *(${u.id})*\n **Moderator:** ${message.author.tag} *(${message.author.id})* \n**Channel:** ${message.channel.name} *(${message.channel.id})* \n**Reason:** ${r}`)
-          .setTimestamp()*/
+          .setTimestamp()
 
         const promptEmbed = new Discord.MessageEmbed()
             .setColor(pastelGreen)
@@ -82,9 +82,9 @@ class Kick extends Command {
         // If the moderator reacted with a check mark kick the user
         if (emoji === "✅") {
 
-            /*u.kick(r).catch(err => {
+            u.kick(r).catch(err => {
                 if (err) return message.channel.send(`Well this is awkward... *${err}*`)
-            });*/
+            });
 
             message.channel.send(`**${message.author.tag}** kicked **${m.user.tag}**. \nReason: ${r}`);
             /*logchannel.send(kickEmbed);*/
