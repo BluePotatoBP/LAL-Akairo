@@ -27,8 +27,8 @@ class ReadyListener extends Listener {
                     console.log("deleted what was already there")
                 }
 
-            console.log('[DEBUG] Database lifespan expanded by 5 minutes!');
-        }, 300000);
+            console.log('[DEBUG] Database lifespan expanded by 2.5 minutes!');
+        }, 150000);
 
         // Send startup message
         global.client = this.client;
