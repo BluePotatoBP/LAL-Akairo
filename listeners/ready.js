@@ -28,7 +28,7 @@ class ReadyListener extends Listener {
                 }
 
             console.log('[DEBUG] Database lifespan expanded by 2.5 minutes!');
-        }, 15000);
+        }, 150000);
 
         // Send startup message
         global.client = this.client;
