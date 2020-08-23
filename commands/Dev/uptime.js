@@ -1,7 +1,7 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const { crimson } = require('../../assets/colors.json')
-
+const randomWord = require('random-word')
 class Uptime extends Command {
     constructor() {
         super('uptime',
@@ -26,11 +26,10 @@ class Uptime extends Command {
             seconds = (seconds < 10) ? "0" + seconds : seconds;
 
             var bicon = client.user.avatarURL({ dynamic: true });
-            const words = ["Benis", "Yes", "Word", "Discord", "lol", "Yeet", "Sad", "Bored", "Woke", "Dot.", "No", "Uptime", "You", "Bruh", "Train", "Overview", "Tutorial", "Keyboard", "Bender"]
 
             var embed = new Discord.MessageEmbed()
                 .setThumbnail(bicon)
-                .setAuthor(`Word of the day: ${words[~~(Math.random() * words.length)]} `, bicon)
+                .setAuthor(`Word of the day: ${randomWord()} `, bicon)
                 .addField('Uptime', `\`${hours}\`h \`${minutes}\`m \`${seconds}\`s`)
                 .setColor(crimson)
                 .setTimestamp()

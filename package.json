@@ -24,6 +24,7 @@
     "owoify-js": "^1.0.7",
     "pastebin-js": "^1.0.5",
     "path": "^0.12.7",
+    "random-word": "^2.0.0",
     "spacy": "0.0.4",
     "urban": "^0.3.2",
     "util": "^0.12.3"
