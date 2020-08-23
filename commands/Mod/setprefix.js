@@ -14,9 +14,9 @@ class SetPrefix extends Command {
                 ownerOnly: false,
                 cooldown: 10000,
                 description: {
-                    content: 'Set the bot prefix for this server',
-                    usage: 'fill later',
-                    syntax: 'fill later'
+                    content: 'Set the bot\'s prefix for this server',
+                    usage: '[prefix]',
+                    syntax: '[] - optional'
                 },
                 args: [
                     {
