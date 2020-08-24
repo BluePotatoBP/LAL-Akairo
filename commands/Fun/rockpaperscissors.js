@@ -132,7 +132,6 @@ class RPS extends Command {
 
                     editEmbed.edit(endEmbed)
                 }
-                editEmbed.edit()
             } else if (emoji === "📰") {
                 if (result === 1) { // Rock 🗻
                     endEmbed.setColor(pastelGreen)
@@ -157,21 +156,21 @@ class RPS extends Command {
                 }
             } else if (emoji === "✂") {
                 if (result === 1) { // Rock 🗻
-                    endEmbed.setColor(pastelGreen)
+                    endEmbed.setColor(lightRed)
                     endEmbed.setDescription(`You lost against me! 😢`)
                     endEmbed.setTitle(`You chose: ✂ & I chose: 🗻`)
 
                     editEmbed.edit(endEmbed)
                 }
                 if (result === 2) { // Paper 📰
-                    endEmbed.setColor(lightYellow)
+                    endEmbed.setColor(pastelGreen)
                     endEmbed.setDescription(`You won against me! 😁`)
                     endEmbed.setTitle(`You chose: ✂ & I chose: 📰`)
 
                     editEmbed.edit(endEmbed)
                 }
                 if (result === 3) { // Scissors ✂
-                    endEmbed.setColor(lightRed)
+                    endEmbed.setColor(lightYellow)
                     endEmbed.setDescription(`You tied with me! 🤝`)
                     endEmbed.setTitle(`You chose: ✂ & I chose: ✂`)
 
