@@ -24,7 +24,7 @@ class RealShit {
         return requestHandler.makeRequest("reddit", subreddits[Math.floor(Math.random() *subreddits.length)]);
     }
     async feet() {
-        let subreddits = ["feet"];
+        let subreddits = ["feet", "toes"];
         return requestHandler.makeRequest("reddit", subreddits[Math.floor(Math.random() *subreddits.length)]);
     }
     async boobs() {
