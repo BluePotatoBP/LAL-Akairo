@@ -14,7 +14,7 @@ class Language extends Command {
                 clientPermissions: ['SEND_MESSAGES'],
                 userPermissions: ['MANAGE_MESSAGES'],
                 description: {
-                    content: 'Change the bots language for this guild\n**Currently supported languages:** \`en-US\` \n',
+                    content: 'Change the bots language for this guild\n**Currently supported languages:** \`english\` \n',
                     usage: '[language]',
                     syntax: '[] - optional'
                 },

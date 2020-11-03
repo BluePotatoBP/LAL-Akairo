@@ -11,7 +11,7 @@ class What extends Command {
                 cooldown: 10000,
                 description: {
                     content: 'what',
-                    usage: 'what',
+                    usage: '',
                     syntax: 'what'
                 },
                 /*args: [

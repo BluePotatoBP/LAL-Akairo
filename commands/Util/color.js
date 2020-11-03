@@ -42,7 +42,7 @@ class Color extends Command {
             message.channel.send(embed)
         } catch (error) {
             console.log(error)
-            message.channel.send("Bip boop boop bap, give me a color and not that random mess <:sadpepe:613706060334759965> \nPlease \`re-type\` the command.")
+            message.channel.send("Bip boop bap, give me a color and not that random scrap <:sadpepe:613706060334759965> \nPlease \`re-type\` the command.")
         }
     }
 }

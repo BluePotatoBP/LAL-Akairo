@@ -8,14 +8,15 @@ module.exports = (message, textCode) => {
         if (!lang[textCode]) return `I couldn't translate this message. [Report Here](https://discord.gg/v8zkSc9)`
 
         return lang[textCode]
-    }
-    try {
-        lang = require(`../languages/lang/${selectedLanguageFind.lan}.json`)
-    } catch (error) {
-        message.channel.send('Something went wrong... I reported it back to the developer!')
-    }
-    
-    if (!lang[textCode]) return `I couldn't translate this message. [Report Here](https://discord.gg/v8zkSc9)`
+    } else {
+        try {
+            lang = require(`../languages/lang/${selectedLanguageFind.lan}.json`)
+        } catch (error) {
+            message.channel.send('Something went wrong... I reported it back to the developer!')
+        }
+        
+        if (!lang[textCode]) return `I couldn't translate this message. [Report Here](https://discord.gg/v8zkSc9)`
 
-    return lang[textCode]
+        return lang[textCode]
+    }
 }
