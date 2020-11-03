@@ -41,7 +41,7 @@ class Language extends Command {
 
             let checkedLang;
             if (data.length === 0) {
-                checkedLang = "en"
+                checkedLang = "english"
             } else {
                 checkedLang = data[0].language;
             }
