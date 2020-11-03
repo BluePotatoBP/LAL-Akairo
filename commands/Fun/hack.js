@@ -12,7 +12,7 @@ class Hack extends Command {
                 cooldown: 10000,
                 ownerOnly: false,
                 description: {
-                    content: 'Hacks into the selected users account',
+                    content: 'Hack into the selected users account',
                     usage: '<user>',
                     syntax: '<> - necessary'
 
@@ -22,8 +22,8 @@ class Hack extends Command {
                         id: 'u',
                         type: 'user',
                         prompt: {
-                            start: 'Please give me a user to check \`(Mention/Username/Discrim/ID)\`. \nYou can either send it now or you can \`re-type\` the command.',
-                            retry: 'Please give me a user to check \`(Mention/Username/Discrim/ID)\`. \nYou can either send it now or you can \`re-type\` the command.',
+                            start: message => lang(message, "command.hack.prompt.start"),
+                            retry: message => lang(message, "command.hack.prompt.retry")
                         }
                     }
                 ]
@@ -62,41 +62,41 @@ class Hack extends Command {
 
         try {
             console.log(generateId(10))
-            let firstMsg = await message.channel.send(`\`[Startup]\` Loading the sequence with upboot SQL on user **${u.tag}**... <a:gears:619268321065304065>`)
+            let firstMsg = await message.channel.send(`\`[Startup]\` Loading the sequence with upboot SQL on user **${u.tag}**... <a:gears:773203929507823617>`)
             setTimeout(() => {
-                firstMsg.edit("\`[10%]\` Fetching the IP address... <a:gears:619268321065304065>");
+                firstMsg.edit("\`[10%]\` Fetching the IP address... <a:gears:773203929507823617>");
             }, 5000);
             setTimeout(() => {
-                firstMsg.edit("\`[15%]\` IP found: \`192.\*\*\*.\*\*\*.\*\*\*\` <a:gears:619268321065304065>");
+                firstMsg.edit("\`[15%]\` IP found: \`192.\*\*\*.\*\*\*.\*\*\*\` <a:gears:773203929507823617>");
             }, 10000);
 
             setTimeout(() => {
-                firstMsg.edit("\`[23%]\` Starting GeoIP lookup... <a:gears:619268321065304065>");
+                firstMsg.edit("\`[23%]\` Starting GeoIP lookup... <a:gears:773203929507823617>");
             }, 15000);
 
             setTimeout(() => {
-                firstMsg.edit(`\`[38%]\` Location: Somewhere in **${region[message.guild.region]}** <a:gears:619268321065304065>`);
+                firstMsg.edit(`\`[38%]\` Location: Somewhere in **${region[message.guild.region]}** <a:gears:773203929507823617>`);
             }, 20000);
 
             setTimeout(() => {
-                firstMsg.edit("\`[49%]\` Searching for Discord credentials... <a:gears:619268321065304065>");
+                firstMsg.edit("\`[49%]\` Searching for Discord credentials... <a:gears:773203929507823617>");
             }, 25000);
 
             setTimeout(() => {
-                firstMsg.edit(`\`[55%]\` Credentials found (2fa bypassed): \`Email:${u.username.split(" ").join("")}@\*\*\*\*\*.\*\*\* Password: \*\*\*\*\*\*\*\*\` <a:gears:619268321065304065>`);
+                firstMsg.edit(`\`[55%]\` Credentials found (2fa bypassed): \`Email:${u.username.split(" ").join("")}@\*\*\*\*\*.\*\*\* Password: \*\*\*\*\*\*\*\*\` <a:gears:773203929507823617>`);
             }, 30000);
 
             setTimeout(() => {
-                firstMsg.edit(`\`[69%]\` Searching for the user token <a:gears:619268321065304065>`);
+                firstMsg.edit(`\`[69%]\` Searching for the user token <a:gears:773203929507823617>`);
             }, 35000);
             setTimeout(() => {
-                firstMsg.edit(`\`[81%]\` User token found: \`${generateId(12)}.******.**-*******************${generateId(5)}\` <a:gears:619268321065304065>`);
+                firstMsg.edit(`\`[81%]\` User token found: \`${generateId(12)}.******.**-*******************${generateId(5)}\` <a:gears:773203929507823617>`);
             }, 40000);
             setTimeout(() => {
-                firstMsg.edit(`\`[99%]\` Cleaning up the mess... <a:gears:619268321065304065>`);
+                firstMsg.edit(`\`[99%]\` Cleaning up the mess... <a:gears:773203929507823617>`);
             }, 45000);
             setTimeout(() => {
-                firstMsg.edit(`\`[COMPLETE]\` I will be sending you the user info in your DMs shortly. <a:gears:619268321065304065>`);
+                firstMsg.edit(`\`[COMPLETE]\` I will be sending you the user info in your DMs shortly. <a:gears:773203929507823617>`);
             }, 50000);
             setTimeout(() => {
                 message.author.send("For all your doxxing needs: 🤡").catch(e => {
@@ -108,7 +108,7 @@ class Hack extends Command {
 
         } catch (error) {
             console.log(error)
-            message.channel.send("Who deleted the message? <a:thinkpartyblob:605181120509771811><a:thinkpartyblob:605181120509771811><a:thinkpartyblob:605181120509771811>")
+            message.channel.send("Who deleted the message? <a:blobParty:773205661499916328><a:blobParty:773205661499916328><a:blobParty:773205661499916328>")
         }
     }
 }

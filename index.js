@@ -4,9 +4,13 @@ const { AkairoClient, CommandHandler, ListenerHandler, InhibitorHandler } = requ
 const Discord = require('discord.js');
 const mysql2 = require('mysql2/promise');
 
+//#region Utility for other stuff
 // Needs to be in global scope
 console.clear();
 global.promptFilter = [];
+global.guildLanguages = [];
+global.lang = require("./assets/languages/languageTranslate");
+
 let promptMsg;
 
 // Connect to database
@@ -23,6 +27,31 @@ let promptMsg;
 
 })()
 
+async function editPrompt(message, embed) {
+
+    let promptMsgFind = await promptFilter.find(c => c.userID === message.author.id && c.channelID === message.channel.id)
+
+    if (!promptMsgFind) {
+        promptMsg = await message.util.send(embed);
+
+        promptFilter.push({
+            userID: message.author.id, 
+            msgID: promptMsg.id,
+            channelID: message.channel.id 
+        })
+
+    }
+
+    if (promptMsgFind) {
+
+        let promptMsgFetch = await message.channel.messages.fetch(promptMsgFind.msgID)
+        if (!promptMsgFetch) promptMsg = await message.util.send(embed)
+
+        promptMsg = await promptMsgFetch.edit(embed)
+    }
+
+}
+//#endregion Utility for other stuff
 // Start akairo client
 class Client extends AkairoClient {
     constructor() {
@@ -34,6 +63,7 @@ class Client extends AkairoClient {
 
         this.commandHandler = new CommandHandler(this, {
             prefix: async (message) => {
+    
                 let [data] = await DB.query(`SELECT * FROM prefixes WHERE guildId = ?`, [message.guild.id])
                 let customPrefix;
 
@@ -60,84 +90,36 @@ class Client extends AkairoClient {
                     modifyStart: async (message, text) => {
                         let embed = new Discord.MessageEmbed()
                             .setColor(crimson)
-                            .setDescription('<a:loading:724754529702379541> ' + text)
-                            .setFooter('Type cancel to void this command.')
+                            .setDescription('<a:loading:773199688631058442> ' + text)
+                            .setFooter(lang(message, 'index.prompt.modifyStart.footer'))
                             .setTimestamp()
 
-                        let promptMsgFind = await promptFilter.find(c => c.userID === message.author.id)
-                        if (!promptMsgFind) {
-                            promptMsg = await message.util.send(embed);
-                        } else {
-                            let promptMsgFetch = await message.channel.messages.fetch(promptMsgFind.msgID)
-                            if (!promptMsgFetch) promptMsg = await message.util.send(embed)
-                            promptMsg = await promptMsgFetch.edit(embed)
-                        }
-                        promptFilter.push({ userID: message.author.id, msgID: promptMsg.id })
-
+                        editPrompt(message, embed)
                     },
                     modifyRetry: async (message, text) => {
                         let embed = new Discord.MessageEmbed()
                             .setColor(crimson)
-                            .setDescription('<a:loading:724754529702379541> ' + text)
-                            .setFooter('Type cancel to void this command.')
+                            .setDescription('<a:loading:773199688631058442> ' + text)
+                            .setFooter(lang(message, "index.prompt.modifyRetry.footer"))
                             .setTimestamp()
 
-                        let promptMsgFind = await promptFilter.find(c => c.userID === message.author.id)
-                        if (!promptMsgFind) {
-                            promptMsg = await message.util.send(embed);
-                        } else {
-                            let promptMsgFetch = await message.channel.messages.fetch(promptMsgFind.msgID)
-                            if (!promptMsgFetch) promptMsg = await message.util.send(embed)
-                            promptMsg = await promptMsgFetch.edit(embed)
-                        }
-                        promptFilter.push({ userID: message.author.id, msgID: promptMsg.id })
-
+                        editPrompt(message, embed)
                     },
+
                     ended: async (message) => {
-                        let embed = new Discord.MessageEmbed()
-                            .setColor(darkRed)
-                            .setDescription('<a:rxm:683827905377206310> Too many \`re-tries\`. The command has been canceled.')
-                        //message.channel.send(embed);
                     },
-                    nsfw: async (message) => {
-                        let embed = new Discord.MessageEmbed()
-                            .setColor(darkRed)
-                            .setDescription('<a:gcw:683827123227852813> This channel is not set as \`NSFW\`.')
 
-                        let promptMsgFind = await promptFilter.find(c => c.userID === message.author.id)
-                        if (!promptMsgFind) {
-                            promptMsg = await message.util.send(embed);
-                        } else {
-                            let promptMsgFetch = await message.channel.messages.fetch(promptMsgFind.msgID)
-                            if (!promptMsgFetch) promptMsg = await message.util.send(embed)
-                            promptMsg = await promptMsgFetch.edit(embed)
-                        }
-                        promptFilter.push({ userID: message.author.id, msgID: promptMsg.id })
-
-                    },
                     cancel: async (message) => {
                         let embed = new Discord.MessageEmbed()
                             .setColor(checkGreen)
-                            .setDescription('<a:gcw:683827123227852813> The command has been canceled.')
+                            .setDescription(`<a:cancel:773201205056503849> ${lang(message, 'index.prompt.cancel.footer')}`)
 
-                        let promptMsgFind = await promptFilter.find(c => c.userID === message.author.id)
-                        if (!promptMsgFind) {
-                            promptMsg = await message.util.send(embed);
-                        } else {
-                            let promptMsgFetch = await message.channel.messages.fetch(promptMsgFind.msgID)
-                            if (!promptMsgFetch) promptMsg = await message.util.send(embed)
-                            promptMsg = await promptMsgFetch.edit(embed)
-                        }
-                        promptFilter.push({ userID: message.author.id, msgID: promptMsg.id })
-
+                        editPrompt(message, embed)
                     },
                     retries: 4,
-                    time: 30000,
+                    time: 60000,
                     timeout: (message) => {
-                        let embed = new Discord.MessageEmbed()
-                            .setColor(darkRed)
-                            .setDescription('<a:rxm:683827905377206310> Time ran out, the command has been cancelled!')
-                        //message.channel.send(embed);
+              
                     }
                 }
                 //#endregion prompt

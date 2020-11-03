@@ -6,7 +6,7 @@ const { nsfw } = new nekoClient();
 
 class Neko extends Command {
     constructor() {
-        super('||neko||',
+        super('neko',
             {
                 aliases: ['neko'],
                 category: 'Nsfw',
@@ -31,7 +31,7 @@ class Neko extends Command {
         message.delete().catch(e => { });
 
         if (!message.channel.nsfw) {
-            message.channel.send("Please set the channel to \`NSFW\` mode.")
+            message.channel.send(lang(message, "command.nsfw.warning"))
         } else {
 
             const embed = new Discord.MessageEmbed()
@@ -46,14 +46,14 @@ class Neko extends Command {
             if (m) {
 
                 embed.setColor(crimson)
-                embed.setFooter(`😯v ${message.author.tag} sent you a neko gif 😯`)
+                embed.setFooter(`😯v ${message.author.tag} ${lang(message, "command.neko.embed.footer.one")} 😯`)
 
                 m.send(embed)
 
             } else {
 
                 embed.setColor(crimson)
-                embed.setFooter(`😯 ${message.author.tag} here: have a neko gif 😯`)
+                embed.setFooter(`😯 ${message.author.tag} ${lang(message, "command.neko.embed.footer.two")} 😯`)
 
                 message.channel.send(embed)
             }

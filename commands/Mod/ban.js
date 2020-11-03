@@ -1,7 +1,7 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const { promptMessage } = require("../../assets/tools/util");
-const { pastelGreen, darkRed } = require('../../assets/colors.json')
+const { pastelGreen, darkRed, salmon } = require('../../assets/colors.json')
 
 class Ban extends Command {
     constructor() {
@@ -11,6 +11,7 @@ class Ban extends Command {
                 category: 'Mod',
                 clientPermissions: ['BAN_MEMBERS'],
                 userPermissions: ['BAN_MEMBERS'],
+                cooldown: 10000,
                 ownerOnly: false,
                 description: {
                     content: 'Ban a user with a reason',
@@ -22,8 +23,8 @@ class Ban extends Command {
                         id: 'm',
                         type: 'member',
                         prompt: {
-                            start: 'Please give me a user to ban \`(Mention/Username/Discrim/ID)\`. \nYou can either send it now or you can \`re-type\` the command.',
-                            retry: 'Please give me a user to ban \`(Mention/Username/Discrim/ID)\`. \nYou can either send it now or you can \`re-type\` the command.',
+                            start: message => lang(message, "command.ban.prompt.start"),
+                            retry: message => lang(message, "command.ban.prompt.retry"),
                         }
                     },
                     {
@@ -40,14 +41,14 @@ class Ban extends Command {
 
         // If theres no reason change 'r' args to "No Reason"
         if (!r) {
-            r = 'No Reason'
+            r = lang(message, "command.ban.reason.noReason")
         }
 
         const sbembed = new Discord.MessageEmbed()
             .setAuthor(message.author.username, message.author.avatarURL({ dynamic: true }))
-            .setDescription("You cannot ban youself `LACK: BRAIN`")
+            .setDescription(lang(message, "command.ban.sbembed.desc"))
             .setColor(darkRed)
-            .setFooter(`If this was a mistake you can edit the message.`)
+            .setFooter(lang(message, "command.ban.mistake"))
             .setTimestamp()
 
         // Check if the user being banned isnt the moderator themselves
@@ -56,24 +57,18 @@ class Ban extends Command {
         }
 
         const ambed = new Discord.MessageEmbed()
-            .setTitle("That user cannot be banned `(HAS PERMISSIONS: BAN)`")
+            .setTitle(lang(message, "command.ban.ambed.title"))
             .setColor(darkRed)
-            .setFooter(`If this was a mistake you can edit the message.`)
+            .setFooter(lang(message, "command.ban.mistake"))
             .setTimestamp()
 
         // Check if the user being banned has ban perms
         if (m.hasPermission("BAN_MEMBERS")) return message.channel.send(ambed);
-        const banEmbed = new Discord.MessageEmbed() // When i figure out how to use a database, nice embed
-          .setAuthor("Action: Ban", "https://i.imgur.com/CQjspzn.png")
-          .setThumbnail(u.user.avatarURL({ dynamic: true }))
-          .setColor(salmon)
-          .setDescription(`**Offender:** ${u.tag} *(${u.id})*\n **Moderator:** ${message.author.tag} *(${message.author.id})* \n**Channel:** ${message.channel.name} *(${message.channel.id})* \n**Reason:** ${r}`)
-          .setTimestamp()
 
         const promptEmbed = new Discord.MessageEmbed()
             .setColor(pastelGreen)
-            .setTitle(`This verification becomes invalid after 30s.`)
-            .setDescription(`Are you sure you want to ban \`${m.displayName}\` for **${r}**?`)
+            .setTitle(lang(message, "command.ban.promptEmbed.title"))
+            .setDescription(`${lang(message, "command.ban.promptEmbed.desc.one")} \`${m.displayName}\` ${lang(message, "command.ban.promptEmbed.desc.two")} **${r}**?`)
 
         // Ban prompt initiation
         let editEmbed = await message.channel.send(promptEmbed)
@@ -82,18 +77,27 @@ class Ban extends Command {
         // If the moderator reacted with a check mark ban the user
         if (emoji === "✅") {
 
-            u.ban(r).catch(err => {
+            m.ban(r).catch(err => {
                 if (err) return message.channel.send(`Well this is awkward... *${err}*`)
             });
 
-            message.channel.send(`**${message.author.tag}** banned **${m.user.tag}**. \nReason: ${r}`);
-            /*logchannel.send(banEmbed);*/
+            message.channel.send(`**${message.author.tag}** ${lang(message, "command.ban.messageAfterBan.one")} **${m.user.tag}**. \n${lang(message, "command.ban.messageAfterBan.two")} ${r}`);
+
+            /*const banEmbed = new Discord.MessageEmbed() // When i figure out how to use a database, nice embed
+                .setAuthor("Action: Ban", "https://i.imgur.com/CQjspzn.png")
+                .setThumbnail(m.user.avatarURL({ dynamic: true }))
+                .setColor(salmon)
+                .setDescription(`**Offender:** ${m.tag} *(${m.id})*\n **Moderator:** ${message.author.tag} *(${message.author.id})* \n**Channel:** ${message.channel.name} *(${message.channel.id})* \n**Reason:** ${r}`)
+                .setTimestamp()
+
+            logchannel.send(banEmbed);*/
+
             // If the moderator reacted with an x cancel the action
         } else if (emoji === "❌") {
             const banCanceled = new Discord.MessageEmbed()
-                .setDescription(`\`${m.displayName}\` has not been banned.`)
+                .setDescription(`\`${m.displayName}\` ${lang(message, "command.ban.banCanceled.desc")}`)
                 .setColor(darkRed)
-                .setFooter(`Reason: Action canceled by ${message.author.username}`)
+                .setFooter(`${lang(message, "command.ban.banCanceled.footer")} ${message.author.username}`)
                 .setTimestamp()
             editEmbed.edit(banCanceled)
         }

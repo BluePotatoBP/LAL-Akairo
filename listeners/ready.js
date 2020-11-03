@@ -24,10 +24,10 @@ class ReadyListener extends Listener {
 
                 } else {
                     await DB.query("DELETE FROM keepAlive")
-                    console.log("deleted what was already there")
+                    console.log("[DEBUG] No items were deleted (Table was already empty)")
                 }
 
-            console.log('[DEBUG] Database lifespan expanded by 2.5 minutes!');
+            // console.log('[DEBUG] Database lifespan expanded by 2.5 minutes!');
         }, 150000);
 
         // Send startup message

@@ -8,8 +8,9 @@ module.exports = class BlacklistInhibitor extends Inhibitor {
         })
     }
 
-    exec(message) {
+    async exec(message) {
         const blockedChannels = ['dm'];
         return blockedChannels.includes(message.channel.type);
+        
     }
 }

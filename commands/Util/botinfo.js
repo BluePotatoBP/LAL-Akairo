@@ -29,13 +29,14 @@ class Botinfo extends Command {
         seconds = (seconds < 10) ? "0" + seconds : seconds;
 
         const embed = new Discord.MessageEmbed()
-            .setAuthor(`${client.user.username} - Bot Info`, bicon)
-            .addField(`**Developer:**`, `\`BluePotatoBP#5214\` <a:anismart:605179506013110373>`, true)
-            .addField(`**ID**`, `\`${client.user.id}\``, true)
-            .addField('**Version**', `\`${process.env.VERSION}\` <a:gears:619268321065304065>`, true)
-            .addField('**Created At**', `\`${client.user.createdAt.toUTCString().substr(0, 16)}\` <a:blobdj:605180387584507917>`, true)
-            .addField('**Uptime**', `\`${hours}\`h \`${minutes}\`m \`${seconds}\`s`, true)
-            .addField('**All Guild Stats**', `Members: \`${client.users.cache.size}\` \nGuilds: \`${client.guilds.cache.size}\` <a:blobSnowball:605179774817796106><a:bolbsnowball2:640348610609020939>\nChannels: \`${client.channels.cache.size}\``, true)
+            .setAuthor(`${client.user.username} - ${lang(message, "command.botinfo.embed.author")}`, bicon)
+            .addField(`**${lang(message, "command.botinfo.embed.field.one")}**`, `\`BluePotatoBP#5214\` <a:animatedCool:773205297782325259>`, true)
+            .addField(`**${lang(message, "command.botinfo.embed.field.two")}**`, `\`${client.user.id}\``, true)
+            .addField(`**${lang(message, "command.botinfo.embed.field.three")}**`, `\`${process.env.VERSION}\` <a:gears:773203929507823617>`, true)
+            .addField(`**${lang(message, "command.botinfo.embed.field.four")}**`, `\`${client.user.createdAt.toUTCString().substr(0, 16)}\` <a:blobdj:605180387584507917>`, true)
+            .addField(`**${lang(message, "command.botinfo.embed.field.five")}**`, `\`${hours}\`h \`${minutes}\`m \`${seconds}\`s`, true)
+            .addField(`**${lang(message, "command.botinfo.embed.field.six")}**`, `${lang(message, "command.botinfo.embed.field.seven")} \`${client.users.cache.size}\` 
+            \n${lang(message, "command.botinfo.embed.field.eight")} \`${client.guilds.cache.size}\` <a:blobSnowball1:773207107376906241><a:blobSnowball2:773207107398926357>\n${lang(message, "command.botinfo.embed.field.nine")} \`${client.channels.cache.size}\``, true)
             .setFooter(`🎉 Copyright © BluePotatoBP - 2020 🎉`, bicon)
             .setThumbnail(bicon)
             .setTimestamp()

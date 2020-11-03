@@ -41,60 +41,52 @@ class RPS extends Command {
             if (i === "rock") {
                 if (result === 1) { // Rock 🗻
                     endEmbed.setColor(lightYellow)
-                    endEmbed.setDescription(`You tied with me! 🤝`)
-                    endEmbed.setTitle(`You chose: 🗻 & I chose: 🗻`)
+                    endEmbed.setDescription(`${lang(message, "command.rps.embed.desc.tied")} 🤝`)
+                    endEmbed.setTitle(`${lang(message, "command.rps.embed.title.userChose")} 🗻 & ${lang(message, "command.rps.embed.title.botChose")} 🗻`)
 
-                }
-                if (result === 2) { // Paper 📰
+                } else if (result === 2) { // Paper 📰
                     endEmbed.setColor(lightRed)
-                    endEmbed.setDescription(`You lost against me! 😢`)
-                    endEmbed.setTitle(`You chose: 🗻 & I chose: 📰`)
+                    endEmbed.setDescription(`${lang(message, "command.rps.embed.desc.lost")} 😢`)
+                    endEmbed.setTitle(`${lang(message, "command.rps.embed.title.userChose")} 🗻 & ${lang(message, "command.rps.embed.title.botChose")} 📰`)
 
-                }
-                if (result === 3) { // Scissors ✂
+                } else if (result === 3) { // Scissors ✂
                     endEmbed.setColor(pastelGreen)
-                    endEmbed.setDescription(`You won against me! 😁`)
-                    endEmbed.setTitle(`You chose: 🗻 & I chose: ✂`)
+                    endEmbed.setDescription(`${lang(message, "command.rps.embed.desc.won")} 😁`)
+                    endEmbed.setTitle(`${lang(message, "command.rps.embed.title.userChose")} 🗻 & ${lang(message, "command.rps.embed.title.botChose")} ✂`)
 
                 }
-            }
-            if (i === "paper") {
+            } else if (i === "paper") {
                 if (result === 1) { // Rock 🗻
                     endEmbed.setColor(pastelGreen)
-                    endEmbed.setDescription(`You won against me! 😁`)
-                    endEmbed.setTitle(`You chose: 📰 & I chose: 🗻`)
+                    endEmbed.setDescription(`${lang(message, "command.rps.embed.desc.won")} 😁`)
+                    endEmbed.setTitle(`${lang(message, "command.rps.embed.title.userChose")} 📰 & ${lang(message, "command.rps.embed.title.botChose")} 🗻`)
 
-                }
-                if (result === 2) { // Paper 📰
+                } else if (result === 2) { // Paper 📰
                     endEmbed.setColor(lightYellow)
-                    endEmbed.setDescription(`You tied with me! 🤝`)
-                    endEmbed.setTitle(`You chose: 📰 & I chose: 📰`)
+                    endEmbed.setDescription(`${lang(message, "command.rps.embed.desc.tied")} 🤝`)
+                    endEmbed.setTitle(`${lang(message, "command.rps.embed.title.userChose")} 📰 & ${lang(message, "command.rps.embed.title.botChose")} 📰`)
 
-                }
-                if (result === 3) { // Scissors ✂
+                } else if (result === 3) { // Scissors ✂
                     endEmbed.setColor(lightRed)
-                    endEmbed.setDescription(`You lost against me! 😢`)
-                    endEmbed.setTitle(`You chose: 📰 & I chose: ✂`)
+                    endEmbed.setDescription(`${lang(message, "command.rps.embed.desc.lost")} 😢`)
+                    endEmbed.setTitle(`${lang(message, "command.rps.embed.title.userChose")} 📰 & ${lang(message, "command.rps.embed.title.botChose")} ✂`)
 
                 }
-            }
-            if (i === "scissors") {
+            } else if (i === "scissors") {
                 if (result === 1) { // Rock 🗻
                     endEmbed.setColor(pastelGreen)
-                    endEmbed.setDescription(`You lost against me! 😢`)
-                    endEmbed.setTitle(`You chose: ✂ & I chose: 🗻`)
+                    endEmbed.setDescription(`${lang(message, "command.rps.embed.desc.lost")} 😢`)
+                    endEmbed.setTitle(`${lang(message, "command.rps.embed.title.userChose")} ✂ & ${lang(message, "command.rps.embed.title.botChose")} 🗻`)
 
-                }
-                if (result === 2) { // Paper 📰
+                } else if (result === 2) { // Paper 📰
                     endEmbed.setColor(lightYellow)
-                    endEmbed.setDescription(`You won against me! 😁`)
-                    endEmbed.setTitle(`You chose: ✂ & I chose: 📰`)
+                    endEmbed.setDescription(`${lang(message, "command.rps.embed.desc.won")} 😁`)
+                    endEmbed.setTitle(`${lang(message, "command.rps.embed.title.userChose")} ✂ & ${lang(message, "command.rps.embed.title.botChose")} 📰`)
 
-                }
-                if (result === 3) { // Scissors ✂
+                } else if (result === 3) { // Scissors ✂
                     endEmbed.setColor(lightRed)
-                    endEmbed.setDescription(`You tied with me! 🤝`)
-                    endEmbed.setTitle(`You chose: ✂ & I chose: ✂`)
+                    endEmbed.setDescription(`${lang(message, "command.rps.embed.desc.tied")} 🤝`)
+                    endEmbed.setTitle(`${lang(message, "command.rps.embed.title.userChose")} ✂ & ${lang(message, "command.rps.embed.title.botChose")} ✂`)
 
                 }
             }
@@ -104,8 +96,8 @@ class RPS extends Command {
             //#region NoArgs
             const promptEmbed = new Discord.MessageEmbed()
                 .setColor(pastelGreen)
-                .setTitle(`React to one of the emoji below to play!`)
-                .setDescription(`🗻 = Rock, 📰 = Paper, ✂ = Scissors`)
+                .setTitle(lang(message, "command.rps.promptEmbed.title"))
+                .setDescription(lang(message, "command.rps.promptEmbed.desc"))
 
             let editEmbed = await message.channel.send(promptEmbed)
             const emoji = await promptMessage(editEmbed, message.author, 60, ["🗻", "📰", "✂"]);
@@ -113,66 +105,66 @@ class RPS extends Command {
             if (emoji === "🗻") {
                 if (result === 1) { // Rock 🗻
                     endEmbed.setColor(lightYellow)
-                    endEmbed.setDescription(`You tied with me! 🤝`)
-                    endEmbed.setTitle(`You chose: 🗻 & I chose: 🗻`)
+                    endEmbed.setDescription(`${lang(message, "command.rps.embed.desc.tied")} 🤝`)
+                    endEmbed.setTitle(`${lang(message, "command.rps.embed.title.userChose")} 🗻 & ${lang(message, "command.rps.embed.title.botChose")} 🗻`)
 
                     editEmbed.edit(endEmbed)
                 }
                 if (result === 2) { // Paper 📰
                     endEmbed.setColor(lightRed)
-                    endEmbed.setDescription(`You lost against me! 😢`)
-                    endEmbed.setTitle(`You chose: 🗻 & I chose: 📰`)
+                    endEmbed.setDescription(`${lang(message, "command.rps.embed.desc.lost")} 😢`)
+                    endEmbed.setTitle(`${lang(message, "command.rps.embed.title.userChose")} 🗻 & ${lang(message, "command.rps.embed.title.botChose")} 📰`)
 
                     editEmbed.edit(endEmbed)
                 }
                 if (result === 3) { // Scissors ✂
                     endEmbed.setColor(pastelGreen)
-                    endEmbed.setDescription(`You won against me! 😁`)
-                    endEmbed.setTitle(`You chose: 🗻 & I chose: ✂`)
+                    endEmbed.setDescription(`${lang(message, "command.rps.embed.desc.won")} 😁`)
+                    endEmbed.setTitle(`${lang(message, "command.rps.embed.title.userChose")} 🗻 & ${lang(message, "command.rps.embed.title.botChose")} ✂`)
 
                     editEmbed.edit(endEmbed)
                 }
             } else if (emoji === "📰") {
                 if (result === 1) { // Rock 🗻
                     endEmbed.setColor(pastelGreen)
-                    endEmbed.setDescription(`You won against me! 😁`)
-                    endEmbed.setTitle(`You chose: 📰 & I chose: 🗻`)
+                    endEmbed.setDescription(`${lang(message, "command.rps.embed.desc.won")} 😁`)
+                    endEmbed.setTitle(`${lang(message, "command.rps.embed.title.userChose")} 📰 & ${lang(message, "command.rps.embed.title.botChose")} 🗻`)
 
                     editEmbed.edit(endEmbed)
                 }
                 if (result === 2) { // Paper 📰
                     endEmbed.setColor(lightYellow)
-                    endEmbed.setDescription(`You tied with me! 🤝`)
-                    endEmbed.setTitle(`You chose: 📰 & I chose: 📰`)
+                    endEmbed.setDescription(`${lang(message, "command.rps.embed.desc.tied")} 🤝`)
+                    endEmbed.setTitle(`${lang(message, "command.rps.embed.title.userChose")} 📰 & ${lang(message, "command.rps.embed.title.botChose")} 📰`)
 
                     editEmbed.edit(endEmbed)
                 }
                 if (result === 3) { // Scissors ✂
                     endEmbed.setColor(lightRed)
-                    endEmbed.setDescription(`You lost against me! 😢`)
-                    endEmbed.setTitle(`You chose: 📰 & I chose: ✂`)
+                    endEmbed.setDescription(`${lang(message, "command.rps.embed.desc.lost")} 😢`)
+                    endEmbed.setTitle(`${lang(message, "command.rps.embed.title.userChose")} 📰 & ${lang(message, "command.rps.embed.title.botChose")} ✂`)
 
                     editEmbed.edit(endEmbed)
                 }
             } else if (emoji === "✂") {
                 if (result === 1) { // Rock 🗻
                     endEmbed.setColor(lightRed)
-                    endEmbed.setDescription(`You lost against me! 😢`)
-                    endEmbed.setTitle(`You chose: ✂ & I chose: 🗻`)
+                    endEmbed.setDescription(`${lang(message, "command.rps.embed.desc.lost")} 😢`)
+                    endEmbed.setTitle(`${lang(message, "command.rps.embed.title.userChose")} ✂ & ${lang(message, "command.rps.embed.title.botChose")} 🗻`)
 
                     editEmbed.edit(endEmbed)
                 }
                 if (result === 2) { // Paper 📰
                     endEmbed.setColor(pastelGreen)
-                    endEmbed.setDescription(`You won against me! 😁`)
-                    endEmbed.setTitle(`You chose: ✂ & I chose: 📰`)
+                    endEmbed.setDescription(`${lang(message, "command.rps.embed.desc.won")} 😁`)
+                    endEmbed.setTitle(`${lang(message, "command.rps.embed.title.userChose")} ✂ & ${lang(message, "command.rps.embed.title.botChose")} 📰`)
 
                     editEmbed.edit(endEmbed)
                 }
                 if (result === 3) { // Scissors ✂
                     endEmbed.setColor(lightYellow)
-                    endEmbed.setDescription(`You tied with me! 🤝`)
-                    endEmbed.setTitle(`You chose: ✂ & I chose: ✂`)
+                    endEmbed.setDescription(`${lang(message, "command.rps.embed.desc.tied")} 🤝`)
+                    endEmbed.setTitle(`${lang(message, "command.rps.embed.title.userChose")} ✂ & ${lang(message, "command.rps.embed.title.botChose")} ✂`)
 
                     editEmbed.edit(endEmbed)
                 }

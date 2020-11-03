@@ -38,20 +38,20 @@ class SetPrefix extends Command {
             if (data.length === 0) {
 
                 prefixEmbed.setAuthor(message.author.username, message.author.avatarURL({ dynamic: true }))
-                prefixEmbed.setDescription(`The prefix for this guild is: \`${process.env.PREFIX}\` \nTo set a custom prefix use \`${process.env.PREFIX}setprefix\``)
+                prefixEmbed.setDescription(`${lang(message, "command.setprefix.prefixEmbed.desc.one")} \`${process.env.PREFIX}\` \n${lang(message, "command.setprefix.prefixEmbed.desc.two")} \`${process.env.PREFIX}setprefix\``)
                 prefixEmbed.setColor(pastelGreen)
 
                 message.channel.send(prefixEmbed)
 
             } else {
-                prefixEmbed.setDescription(`The prefix for this guild is: \`${data[0].prefix}\``)
+                prefixEmbed.setDescription(`${lang(message, "command.setprefix.prefixEmbed.desc.one")} \`${data[0].prefix}\``)
                 prefixEmbed.setColor(pastelGreen)
                 message.channel.send(prefixEmbed)
 
             }
         } else if (p.length > 5) {
             prefixEmbed.setAuthor(message.author.username, message.author.avatarURL({ dynamic: true }))
-            prefixEmbed.setDescription('You cannot set a prefix thats longer then \`5\` letters.')
+            prefixEmbed.setDescription(lang(message, "command.setprefix.prefixEmbed.longPrefix"))
             prefixEmbed.setColor(lightRed)
 
             message.channel.send(prefixEmbed)
@@ -60,17 +60,17 @@ class SetPrefix extends Command {
             if (data.length !== 0) {
                 await DB.query("UPDATE prefixes SET prefix = ? WHERE guildId = ?", [p, message.guild.id])
 
-                prefixEmbed.setDescription(`The prefix for this guild has been updated to: \`${p}\``)
+                prefixEmbed.setDescription(`${lang(message, "command.setprefix.prefixEmbed.updatePrefix")} \`${p}\``)
                 prefixEmbed.setColor(pastelGreen)
-    
+
                 message.channel.send(prefixEmbed)
 
             } else {
                 await DB.query(`INSERT INTO prefixes (guildId, prefix) VALUES(?, ?)`, [message.guild.id, p])
 
-                prefixEmbed.setDescription(`The new prefix for this guild is: \`${p}\``)
+                prefixEmbed.setDescription(`${lang(message, "command.setprefix.prefixEmbed.newPrefix")} \`${p}\``)
                 prefixEmbed.setColor(pastelGreen)
-    
+
                 message.channel.send(prefixEmbed)
 
             }

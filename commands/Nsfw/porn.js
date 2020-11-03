@@ -6,9 +6,9 @@ const { nsfw } = new DabiImages.Client();
 
 class Porn extends Command {
     constructor() {
-        super('||porn||',
+        super('randomporn',
             {
-                aliases: ['porn', 'randomporn'],
+                aliases: ['porn'],
                 category: 'Nsfw',
                 ownerOnly: false,
                 nsfw: true,
@@ -31,7 +31,7 @@ class Porn extends Command {
         message.delete().catch(e => { });
 
         if (!message.channel.nsfw) {
-            message.channel.send("Please set the channel to \`NSFW\` mode.")
+            message.channel.send(lang(message, "command.nsfw.warning"))
         } else {
             
             const embed = new Discord.MessageEmbed()
@@ -46,14 +46,14 @@ class Porn extends Command {
             if (m) {
 
                 embed.setColor(crimson)
-                embed.setFooter(`👀 ${message.author.tag} sent you something 👀`)
+                embed.setFooter(`👀 ${message.author.tag} ${lang(message, "command.randomporn.embed.footer.one")} 👀`)
 
                 m.send(embed)
 
             } else {
 
                 embed.setColor(crimson)
-                embed.setFooter(`👀 ${message.author.tag} enjoy whatever you got 👀`)
+                embed.setFooter(`👀 ${message.author.tag} ${lang(message, "command.randomporn.embed.footer.two")} 👀`)
 
                 message.channel.send(embed)
             }

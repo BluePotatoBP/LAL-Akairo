@@ -6,7 +6,7 @@ const { nsfw } = new nekoClient();
 
 class Hentai extends Command {
     constructor() {
-        super('||hentai||',
+        super('hentai',
             {
                 aliases: ['hentai'],
                 category: 'Nsfw',
@@ -31,7 +31,7 @@ class Hentai extends Command {
         message.delete().catch(e => { });
 
         if (!message.channel.nsfw) {
-            message.channel.send("Please set the channel to \`NSFW\` mode.")
+            message.channel.send(lang(message, "command.nsfw.warning"))
         } else {
 
             const embed = new Discord.MessageEmbed()
@@ -46,14 +46,14 @@ class Hentai extends Command {
             if (m) {
 
                 embed.setColor(crimson)
-                embed.setFooter(`😯v ${message.author.tag} sent you some hentai 😯`)
+                embed.setFooter(`😯v ${message.author.tag} ${lang(message, "command.hentai.embed.footer.one")} 😯`)
 
                 m.send(embed)
 
             } else {
 
                 embed.setColor(crimson)
-                embed.setFooter(`😯 ${message.author.tag} have some hentai 😯`)
+                embed.setFooter(`😯 ${message.author.tag} ${lang(message, "command.hentai.embed.footer.two")} 😯`)
 
                 message.channel.send(embed)
             }

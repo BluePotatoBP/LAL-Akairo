@@ -33,7 +33,7 @@ class Eval extends Command {
             var toEval = args.text;
             var evaluated = inspect(eval(toEval, { depth: 0 }))
             if (evaluated.length >= 1900) {
-                var wmessage = await message.channel.send("Output is too long, creating a pastebin link... <a:gears:619268321065304065>")
+                var wmessage = await message.channel.send("Output is too long, creating a pastebin link... <a:gears:773203929507823617>")
                 try {
                     pastebin
                         .createPaste({

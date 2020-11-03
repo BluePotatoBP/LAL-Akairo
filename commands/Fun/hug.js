@@ -11,6 +11,7 @@ class Hug extends Command {
                 aliases: ['hug'],
                 category: 'Fun',
                 ownerOnly: false,
+                cooldown: 10000,
                 description: {
                     content: 'Hug someone who needs it',
                     usage: '[user]',
@@ -34,16 +35,16 @@ class Hug extends Command {
         embed.setImage(image.url)
 
         if (m) {
-            
+
             embed.setColor(crimson)
-            embed.setFooter(`❤️ ${message.author.username} hugged ${m.user.username} ❤️`)
+            embed.setFooter(`❤️ ${message.author.username} ${lang(message, "command.hug.embed.first")} ${m.user.username} ❤️`)
 
             message.channel.send(embed)
 
         } else {
 
             embed.setColor(crimson)
-            embed.setFooter(`❤️ ${message.author.username} hugged themself ❤️`)
+            embed.setFooter(`❤️ ${message.author.username} ${lang(message, "command.hug.embed.second")} ❤️`)
 
             message.channel.send(embed)
         }

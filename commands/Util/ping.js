@@ -8,6 +8,8 @@ class Ping extends Command {
         super('ping', {
             aliases: ['ping'],
             category: 'Util',
+            ownerOnly: false,
+            cooldown: 10000,
             description: {
                 content: 'Shows the bot message latency and API latency'
             }

@@ -27,10 +27,11 @@ class Serverinfo extends Command {
         message.delete().catch(e => { });
 
         // Define bicon (bot icon) and sicon (server icon) 
-        var bicon = client.user.avatarURL({ dynamic: true });
-        var sicon = message.guild.iconURL({ dynamic: true });
+        let bicon = client.user.avatarURL({ dynamic: true });
+        let sicon = message.guild.iconURL({ dynamic: true });
+        let owner = message.guild.ownerID;
 
-        var region = {
+        let region = {
             "brazil": "\`Brazil\` :flag_br:",
             "europe": "\`Europe\` :flag_eu:",
             "eu-central": "\`Central Europe\` :flag_eu:",
@@ -61,17 +62,17 @@ class Serverinfo extends Command {
         var serverembed = new Discord.MessageEmbed()
             .setAuthor(message.guild.name, sicon)
             .addField("ID", `\`${message.guild.id}\`  👌`, true)
-            .addField("Owner", `${message.guild.owner} <a:BlobCool:640348267485331466>`, true)
+            .addField("Owner", `<@${owner}> <a:animatedCool:773205297782325259>`, true)
             .addField("Region", `${region[message.guild.region]}`, true)
-            .addField("Custom Emoji", `\`${message.guild.emojis.cache.size}\` <a:wobbleblob:605179634899877918>`, true)
-            .addField("Roles", `\`${message.guild.roles.cache.size}\` <a:BlobEat:605179705242550388>`, true)
-            .addField("Channels", `\`${message.guild.channels.cache.size}\` <a:gimmeLeft:613704022607790110>`, true)
+            .addField("Custom Emoji", `\`${message.guild.emojis.cache.size}\` <a:blobWobble:773208612776181800>`, true)
+            .addField("Roles", `\`${message.guild.roles.cache.size}\` <a:blobEat:773207674015055912>`, true)
+            .addField("Channels", `\`${message.guild.channels.cache.size}\` <a:blobGimmeLeft:773217828052402186>`, true)
             .addField("You joined", `\`${message.member.joinedAt.toUTCString().substr(0, 16)}\` 🖖`, true)
-            .addField("Verification Level", `\`${verifLevels[message.guild.verificationLevel]}\` <:captcha:603616843625922600>`, true)
-            .addField("Total Members", `\`${message.guild.memberCount}\` <a:BlobKnight1:618523912220835840><a:BlobKnight2:618523972124016661>`, true)
-            .addField("Status List", `${message.guild.members.cache.filter(o => o.presence.status === 'online').size} <:online:580819575742922753> Online` + `\n${message.guild.members.cache.filter(o => o.presence.status === 'streaming').size} <:streaming:613525444808933379> Streaming` + `\n${message.guild.members.cache.filter(o => o.presence.status === 'dnd').size} <:dnd:580819574816112640> DND` + `\n${message.guild.members.cache.filter(o => o.presence.status === 'idle').size} <:idle:580819575088742413> Idle` + `\n${message.guild.members.cache.filter(o => o.presence.status === 'offline').size} <:offline:580819575319560243> Offline`, true)
-            .addField("Highest Role", `\`${message.guild.roles.highest.name}\` <a:squidwarddance:605180674785411082>`, true)
-            .addField("Voice AFK Timeout", `\`${message.guild.afkTimeout / 60} min\` <a:sleepycat:724769209393086544>`, true)
+            .addField("Verification Level", `\`${verifLevels[message.guild.verificationLevel]}\` <:captcha:773217509850873886>`, true)
+            .addField("Total Members", `\`${message.guild.memberCount}\` <a:blobKnight1:773218186694098994><a:blobKnight2:773218752405307392>`, true)
+            .addField("Status List", `${message.guild.members.cache.filter(o => o.presence.status === 'online').size} <:online:773212850733711360> Online` + `\n${message.guild.members.cache.filter(o => o.presence.status === 'streaming').size} <:streaming:773212851174506565> Streaming` + `\n${message.guild.members.cache.filter(o => o.presence.status === 'dnd').size} <:dnd:773212850364743742> DND` + `\n${message.guild.members.cache.filter(o => o.presence.status === 'idle').size} <:idle:773212850533171211> Idle` + `\n${message.guild.members.cache.filter(o => o.presence.status === 'offline').size} <:offline:773212850755862538> Offline`, true)
+            .addField("Highest Role", `\`${message.guild.roles.highest.name}\` <a:dancingSquidward:773219104479379467>`, true)
+            .addField("Voice AFK Timeout", `\`${message.guild.afkTimeout / 60} min\` <a:sleepyCat:773219103933464616>`, true)
             .setThumbnail(sicon)
             .setColor(crimson)
             .setTimestamp()

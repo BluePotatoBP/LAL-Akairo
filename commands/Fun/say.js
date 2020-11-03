@@ -11,6 +11,7 @@ class Say extends Command {
             {
                 aliases: ['say', 's'],
                 category: 'Fun',
+                cooldown: 10000,
                 clientPermissions: ['SEND_MESSAGES'],
                 userPermissions: ['MANAGE_MESSAGES'],
                 ownerOnly: false,
@@ -87,10 +88,13 @@ class Say extends Command {
 
         try {
             if (!args.text) {
-                message.channel.send("Im gonna need some text to send tho? Please `re-type` the command.")
+                const noArgs = new Discord.MessageEmbed()
+                .setAuthor(message.author.username, message.author.avatarURL({ dynamic: true }))
+                .setDescription(lang(message, "command.say.noArgs"))
+                .setColor(crimson)
+
+                message.channel.send(noArgs)
             } else {
-
-
 
                 var flipText = args.text.split('').map(c => c.charCodeAt(0) - OFFSET).map(c => mapping[c] || ' ').reverse().join('')
                 // Check if the user wants an embed
@@ -121,7 +125,7 @@ class Say extends Command {
                     }
                     // Checks if both avatar and guildicon flags are in the message
                     if (args.avatar && args.guildicon) {
-                        return message.channel.send("Pick one, smh my head... <:thonkingong:568878623910526997>")
+                        return message.channel.send("Pick one or the other, smh my head my head... <:thonkingong:568878623910526997>")
                     }
                     // Checks if there should be a timestamp in the embed
                     if (args.timestamp) {

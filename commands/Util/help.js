@@ -9,6 +9,8 @@ class Help extends Command {
         super('help', {
             aliases: ['help'],
             category: 'Util',
+            ownerOnly: false,
+            cooldown: 10000,
             description: {
                 content: 'Shows you this message',
                 usage: '[command}',
@@ -50,8 +52,8 @@ class Help extends Command {
                     continue;
                 }
                 else if (title) {
-                    const dir = category.map(cmd => cmd).join(', ')
-                    embed.setDescription(`The prefix for this guild is: \`${prefix}\` \nThese are the currently available commands for \`${this.client.user.username}\`:`);
+                    const dir = category.map(cmd => `${cmd.categoryID.toLowerCase() == "nsfw" ? `|| ${cmd} ||` : cmd}`).join(', ')
+                    embed.setDescription(`${lang(message, "command.help.embed.desc.one")} \`${prefix}\` \n${lang(message, "command.help.embed.desc.two")} \`${this.client.user.username}\`:`);
 
                     try {
                         embed.addField(`> ${category} (${category.size}):`, dir)
@@ -61,22 +63,24 @@ class Help extends Command {
                 }
             }
 
-            embed.setFooter(`🎉 Copyright © BluePotatoBP - 2020 🎉 | Total Commands: ${total.reduce((a, b) => a + b, 0)}`, this.client.user.avatarURL({ dynamic: true }));
-            embed.addField(`More help:`, `\nClick [here](https://discord.gg/v8zkSc9) to join the support server, \nor if you'd like to you can invite me [here](https://discordapp.com/oauth2/authorize?this.client_id=${this.client.user.id}&scope=bot&permissions=8).`)
+            embed.setFooter(`🎉 Copyright © BluePotatoBP - 2020 🎉 | ${lang(message, "command.help.embed.footer.one")} ${total.reduce((a, b) => a + b, 0)}`, this.client.user.avatarURL({ dynamic: true }));
+            embed.addField(`${lang(message, "command.help.embed.field.one")}`, `\n${lang(message, "command.help.embed.field.two")} [${lang(message, "command.help.embed.field.three")}](https://discord.gg/v8zkSc9) ${lang(message, "command.help.embed.field.four")} [${lang(message, "command.help.embed.field.three")}](https://discordapp.com/oauth2/authorize?this.client_id=${this.client.user.id}&scope=bot&permissions=8).`)
             await message.channel.send(embed)
 
         } else {
-            if (!command) return message.channel.send(embed.setTitle("Invalid command.").setDescription(`Do \`${prefix}help\` for the list of commands.`))
+            if (!command) return message.channel.send(embed.setTitle(lang(message, "command.help.embed.title.one")).setDescription(`${lang(message, "command.help.embed.title.desc.one")} \`${prefix}help\` ${lang(message, "command.help.embed.title.desc.two")}`))
+            console.log(`[DEBUG] '${message.author.tag}'[${message.author.id}] used "${prefix}help ${command.id.toLowerCase()}" in '${message.guild.name}'[${message.guild.id}]`)
 
-            embed.setDescription(stripIndents`The bot's prefix is: \`${prefix}\`\n
-            **Command: **\`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\`
-            **Description:** ${command.description.content}
-            **Usage:** ${command.description.usage ? `\`${prefix}${command.id} ${command.description.usage}\`` : "No usage"}
-            **Aliases:** ${command.aliases ? command.aliases.join(", ") : "none"}`)
-            embed.setFooter(`Syntax: ${command.description.syntax ? `${command.description.syntax}` : "No syntax"}`)
+            embed.setDescription(stripIndents`${lang(message, "command.help.embedtwo.desc.one")} \`${prefix}\`\n 
+            **${lang(message, "command.help.embedtwo.desc.two")} **${command.categoryID.toLowerCase() === "nsfw" ? `|| \`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\` ||` : `\`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\``}
+            **${lang(message, "command.help.embedtwo.desc.three")}** ${lang(message, `command.${command.id}.desc.content`)}
+            **${lang(message, "command.help.embedtwo.desc.four")}** ${command.description.usage ? `\`${prefix}${command.id} ${command.description.usage}\`` : lang(message, "command.help.embedtwo.desc.five")}
+            **${lang(message, "command.help.embedtwo.desc.six")}** ${command.aliases ? command.aliases.join(", ") : lang(message, "command.help.embedtwo.desc.seven")}`)
+            embed.setFooter(`${lang(message, "command.help.embedtwo.desc.eight")} ${command.description.syntax ? `${command.description.syntax}` : lang(message, "command.help.embedtwo.desc.nine")}`)
 
             return message.channel.send(embed)
         }
+
     }
 }
 module.exports = Help;

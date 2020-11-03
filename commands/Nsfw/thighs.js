@@ -6,7 +6,7 @@ const { nsfw } = new DabiImages.Client();
 
 class Thigs extends Command {
     constructor() {
-        super('||thighs||',
+        super('thighs',
             {
                 aliases: ['thighs'],
                 category: 'Nsfw',
@@ -31,7 +31,7 @@ class Thigs extends Command {
         message.delete().catch(e => { });
 
         if (!message.channel.nsfw) {
-            message.channel.send("Please set the channel to \`NSFW\` mode.")
+            message.channel.send(lang(message, "command.nsfw.warning"))
         } else {
 
             const embed = new Discord.MessageEmbed()
@@ -46,14 +46,14 @@ class Thigs extends Command {
             if (m) {
 
                 embed.setColor(crimson)
-                embed.setFooter(`🤤 ${message.author.tag} sent you some thicc thighs 🤤`)
+                embed.setFooter(`🤤 ${message.author.tag} ${lang(message, "command.thighs.embed.footer.one")} 🤤`)
 
                 m.send(embed)
 
             } else {
 
                 embed.setColor(crimson)
-                embed.setFooter(`🤤 ${message.author.tag} have some thicc thighs 🤤`)
+                embed.setFooter(`🤤 ${message.author.tag} ${lang(message, "command.thighs.embed.footer.two")} 🤤`)
 
                 message.channel.send(embed)
             }

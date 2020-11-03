@@ -9,6 +9,7 @@ class Google extends Command {
                 aliases: ['google', 'whatis', 'g'],
                 category: 'Fun',
                 ownerOnly: false,
+                cooldown: 10000,
                 description: {
                     content: 'For the people that can\'t google themselves',
                     usage: '<query>',
@@ -20,8 +21,8 @@ class Google extends Command {
                         match: 'text',
                         type: 'string',
                         prompt: {
-                            start: 'Please give something to look up \`(Mention/Username/Discrim/ID)\`. \nYou can either send it now or you can \`re-type\` the command.',
-                            retry: 'Please give something to look up \`(Mention/Username/Discrim/ID)\`. \nYou can either send it now or you can \`re-type\` the command.',
+                            start: message => lang(message, "command.google.prompt.start"),
+                            retry: message => lang(message, "command.google.prompt.retry"),
                         }
                     },
                 ]
@@ -46,8 +47,8 @@ class Google extends Command {
         let query = s.split(" ").join("+");
         let embed = new Discord.MessageEmbed()
             .setAuthor(message.author.username, message.author.avatarURL({ dynamic: true }))
-            .setTitle(cut(s + '...'))
-            .setDescription(`[I googled it for you!](http://lmgtfy.com/?iie=1&q=${query})`)
+            .setTitle(`"${cut(s) + '...'}"`)
+            .setDescription(`[${lang(message, "command.google.embed.desc")}](http://lmgtfy.com/?iie=1&q=${query})`)
             .setColor('RANDOM');
 
         message.channel.send(embed)

@@ -6,7 +6,7 @@ const { nsfw } = new DabiImages.Client();
 
 class Boobs extends Command {
     constructor() {
-        super('||boobs||',
+        super('boobs',
             {
                 aliases: ['boobs'],
                 category: 'Nsfw',
@@ -32,7 +32,7 @@ class Boobs extends Command {
 
         try {
             if (!message.channel.nsfw) {
-                message.channel.send("Please set the channel to \`NSFW\` mode.")
+                message.channel.send(lang(message, "command.nsfw.warning"))
             } else {
                 const embed = new Discord.MessageEmbed()
                 let image = await nsfw.real.boobs()
@@ -46,14 +46,14 @@ class Boobs extends Command {
                 if (m) {
 
                     embed.setColor(crimson)
-                    embed.setFooter(`😯 ${message.author.tag} sent you some boobies! 😯`)
+                    embed.setFooter(`😯 ${message.author.tag} ${lang(message, "command.||boobs||.embed.footer.one")} 😯`)
 
                     await m.send(embed)
 
                 } else {
 
                     embed.setColor(crimson)
-                    embed.setFooter(`😯 ${message.author.tag} have some boobies 😯`)
+                    embed.setFooter(`😯 ${message.author.tag} ${lang(message, "command.||boobs||.embed.footer.two")} 😯`)
 
                     await message.channel.send(embed)
                 }

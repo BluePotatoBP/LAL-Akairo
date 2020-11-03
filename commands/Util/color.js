@@ -9,6 +9,7 @@ class Color extends Command {
                 aliases: ['color', 'hex', 'whatcolor', 'c'],
                 category: 'Util',
                 ownerOnly: false,
+                cooldown: 10000,
                 description: {
                     content: 'Get a preview of a #hex color code',
                     usage: '<color>',
@@ -20,8 +21,8 @@ class Color extends Command {
                         match: 'text',
                         type: 'string',
                         prompt: {
-                            start: 'Please provide me with a **#hex** color code. \nYou can either send it now or you can \`re-type\` the command.',
-                            retry: 'Please provide a valid color. \nYou can either send it now or you can \`re-type\` the command.',
+                            start: message => lang(message, "command.color.prompt.start"),
+                            retry: message => lang(message, "command.color.prompt.retry"),
                         }
                     },
                 ]
@@ -33,9 +34,9 @@ class Color extends Command {
         try {
             let embed = new Discord.MessageEmbed()
                 .setAuthor(message.author.username, message.author.avatarURL({ dynamic: true }))
-                .setDescription(`Preview of your **#hex** color is on the 👈 left. \nIf the bar is \`Gray\`, that means you entered \nan invalid **#hex** color code. <:smallbrain:622860598652174356>`)
+                .setDescription(`${lang(message, "command.color.embed.desc")} <:smallbrain:622860598652174356>`)
                 .setColor(args.text)
-                .setFooter(`You entered: ${args.text}`)
+                .setFooter(`${lang(message, "command.color.embed.footer")} ${args.text}`)
                 .setTimestamp()
 
             message.channel.send(embed)

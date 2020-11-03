@@ -1,6 +1,6 @@
 const { Command, Util } = require('discord-akairo');
 const Discord = require('discord.js');
-const { darkRed } = require('../../assets/colors.json')
+const { crimson } = require('../../assets/colors.json')
 
 class Addrole extends Command {
     constructor() {
@@ -11,6 +11,7 @@ class Addrole extends Command {
                 clientPermissions: ['MANAGE_ROLES'],
                 userPermissions: ['MANAGE_ROLES'],
                 ownerOnly: false,
+                cooldown: 10000,
                 description: {
                     content: 'Add any role to any user',
                     usage: '<user> <role>',
@@ -22,8 +23,8 @@ class Addrole extends Command {
                         type: 'member',
                         unordered: true,
                         prompt: {
-                            start: 'Please give me a \`user\` to continue \`(Mention/Username/Discrim/ID)\`. \nYou can either send it now or you can \`re-type\` the command.',
-                            retry: 'Please give me a \`user\` to continue \`(Mention/Username/Discrim/ID)\`. \nYou can either send it now or you can \`re-type\` the command.',
+                            start: message => lang(message, "command.addrole.prompt.member.start"),
+                            retry: message => lang(message, "command.addrole.prompt.member.retry"),
                         }
                     },
                     {
@@ -32,8 +33,8 @@ class Addrole extends Command {
                         type: 'role',
                         unordered: true,
                         prompt: {
-                            start: 'Please give me a \`role\` to continue \`(Mention/Username/Discrim/ID)\`. \nYou can either send it now or you can \`re-type\` the command.',
-                            retry: 'Please give me a \`role\` to continue \`(Mention/Username/Discrim/ID)\`. \nYou can either send it now or you can \`re-type\` the command.',
+                            start: message => lang(message, "command.addrole.prompt.role.start"),
+                            retry: message => lang(message, "command.addrole.prompt.role.retry"),
                         }
                     },
                 ]
@@ -43,14 +44,20 @@ class Addrole extends Command {
     async exec(message, { m, r }) {
         message.delete({ timeout: 30000 }).catch(e => { });
 
-          if (m.roles.cache.has(r.id)) return message.channel.send(`That user already has the \`${r.name}\` role.`);
-          await (m.roles.add(r.id));
-        
-          try {
+        const embed = new Discord.MessageEmbed()
+            .setAuthor(message.author.username, message.author.avatarURL({ dynamic: true }))
+            .setDescription(`${m.user.username} ${lang(message, "command.addrole.embed.desc.one")} ${r} ${lang(message, "command.addrole.embed.desc.two")}`)
+            .setColor(crimson)
+
+        if (m.roles.cache.has(r.id)) return message.channel.send(embed);
+
+        await (m.roles.add(r.id));
+
+        try {
             await m.message.react("✅")
-          } catch (e) {
+        } catch (e) {
             message.react("✅");
-          }
+        }
     }
 }
 module.exports = Addrole;

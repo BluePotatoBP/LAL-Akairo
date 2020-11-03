@@ -12,6 +12,7 @@ class Kick extends Command {
                 clientPermissions: ['KICK_MEMBERS'],
                 userPermissions: ['KICK_MEMBERS'],
                 ownerOnly: false,
+                cooldown: 10000,
                 description: {
                     content: 'Kick a user with a reason',
                     usage: '<user> [reason]',
@@ -22,8 +23,8 @@ class Kick extends Command {
                         id: 'm',
                         type: 'member',
                         prompt: {
-                            start: 'Please give me a user to kick \`(Mention/Username/Discrim/ID)\`. \nYou can either send it now or you can \`re-type\` the command.',
-                            retry: 'Please give me a user to kick \`(Mention/Username/Discrim/ID)\`. \nYou can either send it now or you can \`re-type\` the command.',
+                            start: message => lang(message, "command.kick.prompt.start"),
+                            retry: message => lang(message, "command.kick.prompt.retry"),
                         }
                     },
                     {
@@ -40,14 +41,14 @@ class Kick extends Command {
 
         // If theres no reason change 'r' args to "No Reason"
         if (!r) {
-            r = 'No Reason'
+            r = lang(message, "command.kick.reason.noReason")
         }
 
         const sbembed = new Discord.MessageEmbed()
             .setAuthor(message.author.username, message.author.avatarURL({ dynamic: true }))
-            .setDescription("You cannot kick youself `LACK: BRAIN`")
+            .setDescription(lang(message, "command.kick.sbembed.desc"))
             .setColor(darkRed)
-            .setFooter(`If this was a mistake you can edit the message.`)
+            .setFooter(lang(message, "command.kick.mistake"))
             .setTimestamp()
 
         // Check if the user being kicked isnt the moderator themselves
@@ -56,24 +57,18 @@ class Kick extends Command {
         }
 
         const ambed = new Discord.MessageEmbed()
-            .setTitle("That user cannot be kicked `(HAS PERMISSIONS: KICK)`")
+            .setTitle(lang(message, "command.kick.ambed.title"))
             .setColor(darkRed)
-            .setFooter(`If this was a mistake you can edit the message.`)
+            .setFooter(lang(message, "command.kick.mistake"))
             .setTimestamp()
 
         // Check if the user being kicked has kick perms
         if (m.hasPermission("KICK_MEMBERS")) return message.channel.send(ambed);
-        const kickEmbed = new Discord.MessageEmbed() // When i figure out how to use a database, nice embed
-          .setAuthor("Action: Kick", "https://i.imgur.com/CQjspzn.png")
-          .setThumbnail(u.user.avatarURL({ dynamic: true }))
-          .setColor(salmon)
-          .setDescription(`**Offender:** ${u.tag} *(${u.id})*\n **Moderator:** ${message.author.tag} *(${message.author.id})* \n**Channel:** ${message.channel.name} *(${message.channel.id})* \n**Reason:** ${r}`)
-          .setTimestamp()
 
         const promptEmbed = new Discord.MessageEmbed()
             .setColor(pastelGreen)
-            .setTitle(`This verification becomes invalid after 30s.`)
-            .setDescription(`Are you sure you want to kick \`${m.displayName}\` for **${r}**?`)
+            .setTitle(lang(message, "command.kick.promptEmbed.title"))
+            .setDescription(`${lang(message, "command.kick.promptEmbed.desc.one")} \`${m.displayName}\` ${lang(message, "command.kick.promptEmbed.desc.two")} **${r}**?`)
 
         // Kick prompt initiation
         let editEmbed = await message.channel.send(promptEmbed)
@@ -86,14 +81,20 @@ class Kick extends Command {
                 if (err) return message.channel.send(`Well this is awkward... *${err}*`)
             });
 
-            message.channel.send(`**${message.author.tag}** kicked **${m.user.tag}**. \nReason: ${r}`);
-            /*logchannel.send(kickEmbed);*/
+            message.channel.send(`**${message.author.tag}** ${lang(message, "command.kick.messageAfterBan.one")} **${m.user.tag}**. \n${lang(message, "command.kick.messageAfterBan.two")} ${r}`);
+            /*const kickEmbed = new Discord.MessageEmbed() // When i figure out how to use a database, nice embed
+                .setAuthor("Action: Kick", "https://i.imgur.com/CQjspzn.png")
+                .setThumbnail(u.user.avatarURL({ dynamic: true }))
+                .setColor(salmon)
+                .setDescription(`**Offender:** ${u.tag} *(${u.id})*\n **Moderator:** ${message.author.tag} *(${message.author.id})* \n**Channel:** ${message.channel.name} *(${message.channel.id})* \n**Reason:** ${r}`)
+                .setTimestamp()
+            logchannel.send(kickEmbed);*/
             // If the moderator reacted with an x cancel the action
         } else if (emoji === "❌") {
             const kickCanceled = new Discord.MessageEmbed()
-                .setDescription(`\`${m.displayName}\` has not been kicked.`)
+                .setDescription(`\`${m.displayName}\` ${lang(message, "command.kick.banCanceled.desc")}`)
                 .setColor(darkRed)
-                .setFooter(`Reason: Action canceled by ${message.author.username}`)
+                .setFooter(`${lang(message, "command.kick.banCanceled.desc")} ${message.author.username}`)
                 .setTimestamp()
             editEmbed.edit(kickCanceled)
         }

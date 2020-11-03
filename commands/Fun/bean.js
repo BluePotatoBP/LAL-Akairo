@@ -8,7 +8,7 @@ class Bean extends Command {
             {
                 aliases: ['bean'],
                 category: 'Fun',
-                cooldown: 5000,
+                cooldown: 10000,
                 ownerOnly: false,
                 description: {
                     content: 'Uh oh, you just got beaned!!!',
@@ -21,8 +21,8 @@ class Bean extends Command {
                         type: 'user',
                         prompt: {
                             optional: true,
-                            start: 'Please give me a user to bean \`(Mention/Username/Discrim/ID)\`. \nYou can either send it now or you can \`re-type\` the command.',
-                            retry: 'Please give me a user to bean \`(Mention/Username/Discrim/ID)\`. \nYou can either send it now or you can \`re-type\` the command.',
+                            start: message => lang(message, "command.bean.prompt.start"),
+                            retry: message => lang(message, "command.bean.prompt.retry"),
                         }
                     }
                 ]

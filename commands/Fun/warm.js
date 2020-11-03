@@ -9,6 +9,7 @@ class Warm extends Command {
                 aliases: ['warm'],
                 category: 'Fun',
                 ownerOnly: false,
+                cooldown: 10000,
                 description: {
                     content: 'Warm any user in need of hugs',
                     usage: '[user]',
@@ -20,8 +21,8 @@ class Warm extends Command {
                         type: 'user',
                         prompt: {
                             optional: true,
-                            start: 'Please give me a user to warm \`(Mention/Username/Discrim/ID)\`. \nYou can either send it now or you can \`re-type\` the command.',
-                            retry: 'Please give me a user to warm \`(Mention/Username/Discrim/ID)\`. \nYou can either send it now or you can \`re-type\` the command.',
+                            start: message => lang(message, "command.warm.prompt.start"),
+                            retry: message => lang(message, "command.warm.prompt.retry"),
                         }
                     },
                     {
@@ -38,18 +39,30 @@ class Warm extends Command {
 
         if (!u) {
             const embed = new Discord.MessageEmbed()
-                .setDescription(`**${message.author} has been warmed. Have a nice day! ❤**`)
-                .setImage("http://umirror.in/wp-content/uploads/2017/04/Main-image-warm.jpg?size=128")
+                .setDescription(`**${message.author} ${lang(message, "command.warm.embed.desc")} ❤**`)
+                .setImage("https://i.imgur.com/z0cy78Y.jpg")
                 .setColor(orange)
             message.channel.send(embed).catch(e => { console.log(e) });
         } else {
             try {
                 const embed2 = new Discord.MessageEmbed()
-                    .setDescription(`**${u} has been warmed. Have a nice day! ❤**`)
-                    .setImage("http://umirror.in/wp-content/uploads/2017/04/Main-image-warm.jpg?size=128")
+                    .setDescription(`**${u} ${lang(message, "command.warm.embed.desc")} ❤**`)
+                    .setImage("https://i.imgur.com/z0cy78Y.jpg")
                     .setColor(orange)
                 if (r) {
-                    embed2.setFooter(`Reason: ${r} - now you feel bad, don't you?`)
+                    function cut(text) {
+                        if (r.length > 20) {
+                            let res = r.length - 20;
+                            text = text.slice(-res)
+
+                            return text;
+                        } else {
+                            text = r;
+                            return text;
+                        }
+                    };
+
+                    embed2.setFooter(`${lang(message, "command.warm.embed.footer.reason")} "${cut(r) + '...'}" - ${lang(message, "command.warm.embed.footer.funny")}`)
                 }
                 message.channel.send(embed2).catch(e => { console.log(e) });
 

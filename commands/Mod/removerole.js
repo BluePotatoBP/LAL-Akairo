@@ -11,6 +11,7 @@ class Addrole extends Command {
                 clientPermissions: ['MANAGE_ROLES'],
                 userPermissions: ['MANAGE_ROLES'],
                 ownerOnly: false,
+                cooldown: 10000,
                 description: {
                     content: 'Remove any role from any user',
                     usage: '<user> <role>',
@@ -22,8 +23,8 @@ class Addrole extends Command {
                         type: 'member',
                         unordered: true,
                         prompt: {
-                            start: 'Please give me a \`user\` to continue \`(Mention/Username/Discrim/ID)\`. \nYou can either send it now or you can \`re-type\` the command.',
-                            retry: 'Please give me a \`user\` to continue \`(Mention/Username/Discrim/ID)\`. \nYou can either send it now or you can \`re-type\` the command.',
+                            start: message => lang(message, "command.removerole.prompt.member.start"),
+                            retry: message => lang(message, "command.removerole.prompt.member.retry"),
                         }
                     },
                     {
@@ -32,8 +33,8 @@ class Addrole extends Command {
                         type: 'role',
                         unordered: true,
                         prompt: {
-                            start: 'Please give me a \`role\` to continue \`(Mention/Username/Discrim/ID)\`. \nYou can either send it now or you can \`re-type\` the command.',
-                            retry: 'Please give me a \`role\` to continue \`(Mention/Username/Discrim/ID)\`. \nYou can either send it now or you can \`re-type\` the command.',
+                            start: message => lang(message, "command.removerole.prompt.role.start"),
+                            retry: message => lang(message, "command.removerole.prompt.role.retry"),
                         }
                     },
                 ]
@@ -43,7 +44,7 @@ class Addrole extends Command {
     async exec(message, { m, r }) {
         message.delete({ timeout: 30000 }).catch(e => { });
 
-        if (!m.roles.cache.has(r.id)) return message.channel.send(`That user already doesn't have the \`${r.name}\` role.`);
+        if (!m.roles.cache.has(r.id)) return message.channel.send(`${m.user.username} ${lang(message, "command.removerole.embed.desc.one")} \`${r.name}\` ${lang(message, "command.removerole.embed.desc.two")}`);
         await (m.roles.remove(r.id));
 
         try {

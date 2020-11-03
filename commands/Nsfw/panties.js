@@ -6,7 +6,7 @@ const { nsfw } = new DabiImages.Client();
 
 class Panties extends Command {
     constructor() {
-        super('||panties||',
+        super('panties',
             {
                 aliases: ['panties'],
                 category: 'Nsfw',
@@ -40,20 +40,20 @@ class Panties extends Command {
             try {
                 embed.setImage(image.url)
             } catch (e) {
-                embed.setDescription("Something went wrong, please try again later.")
+                embed.setDescription(lang(message, "command.nsfw.warning"))
             }
 
             if (m) {
 
                 embed.setColor(crimson)
-                embed.setFooter(`👙 ${message.author.tag} sent you some panties 👙`)
+                embed.setFooter(`👙 ${message.author.tag} ${lang(message, "command.panties.embed.footer.one")} 👙`)
 
                 m.send(embed)
 
             } else {
 
                 embed.setColor(crimson)
-                embed.setFooter(`👙 ${message.author.tag} have some panties 👙`)
+                embed.setFooter(`👙 ${message.author.tag} ${lang(message, "command.panties.embed.footer.two")} 👙`)
 
                 message.channel.send(embed)
             }

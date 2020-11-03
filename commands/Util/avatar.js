@@ -34,7 +34,7 @@ class Avatar extends Command {
         let gificon;
         let avembed = new Discord.MessageEmbed()
             .setTimestamp()
-            .setFooter(`Requested by: ${message.author.tag}`)
+            .setFooter(`${lang(message, "command.avatar.avembed.content")} ${message.author.tag}`)
             .setColor(crimson);
 
         avembed.setTitle(`Avatar for ${u.tag}`);

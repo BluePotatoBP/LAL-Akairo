@@ -10,10 +10,11 @@ class Urban extends Command {
                 aliases: ['urban'],
                 category: 'Fun',
                 ownerOnly: false,
+                cooldown: 10000,
                 description: {
-                    content: 'You\'re not sure what it means? The Urban Dictionary most likely has an answer. \`(NSFW)\`',
-                    usage: '[search|!input=random] <query>',
-                    syntax: '<> - necessary, [] - optional \n \n"!input=random" means that if theres no "search" argument it will find a random term.'
+                    content: 'You\'re not sure what it means? The Urban Dictionary most likely has an answer.',
+                    usage: '[query]',
+                    syntax: '[] - optional'
                 },
                 args: [
                     {
@@ -28,12 +29,13 @@ class Urban extends Command {
     async exec(message, { args }) {
         message.delete().catch(e => { });
 
-        let search = args ? urban(args) : urban.random()
+        let search = await args ? urban(args) : urban.random();
+
         try {
-            search.first(res => {
+            search.first(async res => {
                 const nrembed = new Discord.MessageEmbed()
                     .setAuthor(message.author.username, message.author.avatarURL({ dynamic: true }))
-                    .setDescription(`No results found for that topic.`)
+                    .setDescription(lang(message, "command.urban.nrembed.desc"))
                     .setColor(darkRed)
                     .setTimestamp()
 
@@ -42,15 +44,16 @@ class Urban extends Command {
 
                 let nembed = new Discord.MessageEmbed()
                     .setColor(crimson)
-                    .setAuthor(`Heres what I found about '${word}'`, client.user.avatarURL({ dynamic: true }))
+                    .setAuthor(`${lang(message, "command.urban.nembed.author")} '${word}'`, client.user.avatarURL({ dynamic: true }))
                     .setThumbnail("https://i.imgur.com/KeDXCWj.png")
-                    .setDescription(`\`Definition:\` \n${definition || "No definition"}
-                        \`Example:\` \n${example || "No example"}
-                        \`Upvotes:\` ${thumbs_up || 0}
-                        \`Downvotes:\` ${thumbs_down || 0}
-                        \`Link:\` [Link to '${word}'](${permalink || "https://www.urbandictionary.com/"})`)
+                    .setDescription(`
+                        \`${lang(message, "command.urban.nembed.desc.definition")}\` \n${definition || lang(message, "command.urban.nembed.desc.noDefinition")}
+                        \`${lang(message, "command.urban.nembed.desc.example")}\` \n${example || lang(message, "command.urban.nembed.desc.noExample")}
+                        \`${lang(message, "command.urban.nembed.desc.upvotes")}\` ${thumbs_up || 0}
+                        \`${lang(message, "command.urban.nembed.desc.downvotes")}\` ${thumbs_down || 0}
+                        \`${lang(message, "command.urban.nembed.desc.link")}\` [${lang(message, "command.urban.nembed.desc.linkTo")} '${word}'](${permalink || "https://www.urbandictionary.com/"})`)
                     .setTimestamp()
-                    .setFooter(`Written by ${author || "unknown"}`)
+                    .setFooter(`${lang(message, "command.urban.nembed.desc.author")} ${author || "unknown"}`)
 
                 message.channel.send(nembed)
             })

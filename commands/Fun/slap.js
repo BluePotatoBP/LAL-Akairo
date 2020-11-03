@@ -36,14 +36,14 @@ class Slap extends Command {
         if (m) {
             
             embed.setColor(crimson)
-            embed.setFooter(`👏 ${message.author.username} slapped ${m.user.username} 👏`)
+            embed.setFooter(`👏 ${message.author.username} ${lang(message, "command.slap.embed.slapped")} ${m.user.username} 👏`)
 
             message.channel.send(embed)
 
         } else {
 
             embed.setColor(crimson)
-            embed.setFooter(`👏 ${message.author.username} slapped themself 👏`)
+            embed.setFooter(`👏 ${message.author.username} ${lang(message, "command.slap.embed.slappedThemselves")} 👏`)
 
             message.channel.send(embed)
         }
