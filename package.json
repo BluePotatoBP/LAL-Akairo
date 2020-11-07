@@ -1,6 +1,6 @@
 {
   "name": "likealight",
-  "version": "1.2.1",
+  "version": "1.2.5",
   "description": "Discord bot made in akairo",
   "main": "index.js",
   "scripts": {
