@@ -1,8 +1,9 @@
+const chalk = require('chalk');
 const { Command } = require('discord-akairo');
 const Discord = require("discord.js");
 const { inspect } = require("util")
 const { red, lightRed, darkRed, pink, darkPink, yellow, lightYellow, orange, darkOrange, darkGreen, lightGreen, veryBrightGreen, blue, darkBlue, lightBlue, purple, lightPurple, black, gray, white, dcBlack, banana, clear, gold, ultraBlue, checkGreen, crimson } = require("../../assets/colors.json")
-var PastebinAPI = require('pastebin-js'),
+let PastebinAPI = require('pastebin-js'),
     pastebin = new PastebinAPI({
         'api_dev_key': 'ea18216abe69e7ead54e74ca1e98b4b5',
         'api_user_name': 'BluePotatoBP',
@@ -30,10 +31,11 @@ class Eval extends Command {
 
     async exec(message, args) {
         try {
-            var toEval = args.text;
-            var evaluated = inspect(eval(toEval, { depth: 0 }))
+            let toEval = args.text;
+            console.log(`${debug('[DEBUG]')} '${message.author.tag}'[${message.author.id}] in '${message.guild.name}'[${message.guild.id}] used \n${chalk.gray(`${process.env.PREFIX}eval ${toEval}`)}`)
+            let evaluated = inspect(eval(toEval, { depth: 0 }))
             if (evaluated.length >= 1900) {
-                var wmessage = await message.channel.send("Output is too long, creating a pastebin link... <a:gears:773203929507823617>")
+                let wmessage = await message.channel.send("Output is too long, creating a pastebin link... <a:gears:773203929507823617>")
                 try {
                     pastebin
                         .createPaste({

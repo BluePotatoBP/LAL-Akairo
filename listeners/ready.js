@@ -1,8 +1,6 @@
 const { Listener } = require('discord-akairo');
-const Discord = require("discord.js");
-const mysql2 = require('mysql2/promise');
+const chalk = require('chalk');
 const prefix = process.env.PREFIX;
-const guildInvites = new Map();
 
 class ReadyListener extends Listener {
     constructor() {
@@ -13,37 +11,32 @@ class ReadyListener extends Listener {
     }
 
     exec() {
+        global.client = this.client;
+        let statuses = [` you type ${prefix}help`, " the support server!"];
 
-        // Keep the database alive
+        // Keep the database alive (ping it every 2.5 minutes)
         setInterval(async () => {
             let dot = '.';
-                let [data] = await DB.query(`SELECT * FROM keepAlive`)
-                if (data.length === 0) {
-                    await DB.query(`INSERT INTO keepAlive VALUES(?)`, [dot])
-                    await DB.query("DELETE FROM keepAlive")
-
-                } else {
-                    await DB.query("DELETE FROM keepAlive")
-                    console.log("[DEBUG] No items were deleted (Table was already empty)")
-                }
-
-            // console.log('[DEBUG] Database lifespan expanded by 2.5 minutes!');
+            let [data] = await DB.query(`SELECT * FROM keepAlive`)
+            if (data.length === 0) {
+                await DB.query(`INSERT INTO keepAlive VALUES(?)`, [dot])
+                await DB.query("DELETE FROM keepAlive")
+            } else {
+                await DB.query("DELETE FROM keepAlive")
+                console.log("[DEBUG] No items were deleted (Table was already empty)")
+            }
         }, 150000);
-
-        // Send startup message
-        global.client = this.client;
-
-        let statuses = [` you type ${prefix}help`, " the support server!"];
+        // Automatic status changer
         setInterval(() => {
             let status = statuses[Math.floor(Math.random() * statuses.length)];
             this.client.user.setActivity(`${status}`, { type: "WATCHING" });
         }, 10000);
-
-        console.log(`[STARTUP] ${this.client.user.username} is online in ${this.client.guilds.cache.size} guilds and ready!`);
-        // Set status to dnd
+        // Log basic bot info on startup
+        console.log(`${startup('[STARTUP]')} ${chalk.magenta(this.client.user.username)} is online in ${chalk.red(this.client.guilds.cache.size)} guilds and ready!`);
+        console.log(`${info('[INFO]')} You can kill the bot instance by pressing ${chalk.red.bold('Ctrl+C')} at any time.`)
+        // Set client status to do not disturb
         this.client.user.setStatus('dnd')
-
-    } // End of exec()
+    }
 }
 
 module.exports = ReadyListener;

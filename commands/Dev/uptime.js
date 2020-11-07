@@ -17,7 +17,7 @@ class Uptime extends Command {
     async exec(message) {
         message.delete().catch(e => { });
         try {
-            var seconds = parseInt((client.uptime / 1000) % 60),
+            let seconds = parseInt((client.uptime / 1000) % 60),
                 minutes = parseInt((client.uptime / (1000 * 60)) % 60),
                 hours = parseInt((client.uptime / (1000 * 60 * 60)) % 24);
 
@@ -25,9 +25,9 @@ class Uptime extends Command {
             minutes = (minutes < 10) ? "0" + minutes : minutes;
             seconds = (seconds < 10) ? "0" + seconds : seconds;
 
-            var bicon = client.user.avatarURL({ dynamic: true });
+            let bicon = client.user.avatarURL({ dynamic: true });
 
-            var embed = new Discord.MessageEmbed()
+            let embed = new Discord.MessageEmbed()
                 .setThumbnail(bicon)
                 .setAuthor(`Word of the day: ${randomWord()} `, bicon)
                 .addField('Uptime', `\`${hours}\`h \`${minutes}\`m \`${seconds}\`s`)

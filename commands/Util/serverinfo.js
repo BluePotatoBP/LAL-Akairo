@@ -51,7 +51,7 @@ class Serverinfo extends Command {
             "russia": "\`Russia\` :flag_ru:",
             "southafrica": "\`South Africa\` :flag_za:"
         };
-        var verifLevels = {
+        let verifLevels = {
             "NONE": "None",
             "LOW": "Low",
             "MEDIUM": "Medium",
@@ -59,7 +59,7 @@ class Serverinfo extends Command {
             "VERY_HIGH": "┻┻ヽ(ಠ益ಠ)ノ┻┻"
         };
 
-        var serverembed = new Discord.MessageEmbed()
+        let serverembed = new Discord.MessageEmbed()
             .setAuthor(message.guild.name, sicon)
             .addField("ID", `\`${message.guild.id}\`  👌`, true)
             .addField("Owner", `<@${owner}> <a:animatedCool:773205297782325259>`, true)

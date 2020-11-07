@@ -1,7 +1,7 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const { crimson } = require('../../assets/colors.json')
-var crypto = require("crypto");
+const crypto = require("crypto");
 
 class Hack extends Command {
     constructor() {
@@ -56,7 +56,7 @@ class Hack extends Command {
 
         // generateId :: Integer -> String
         function generateId(len = 1) {
-            var id = crypto.randomBytes(len / 2).toString('hex');
+            let id = crypto.randomBytes(len / 2).toString('hex');
             return id;
         }
 

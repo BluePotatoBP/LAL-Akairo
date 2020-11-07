@@ -1,8 +1,8 @@
 const { Command } = require('discord-akairo');
 const Discord = require("discord.js");
 const { crimson } = require("../../assets/colors.json")
-const mysql2 = require('mysql2/promise');
-const { stripIndents } = require("common-tags")
+const { stripIndents } = require("common-tags");
+const chalk = require('chalk');
 
 class Help extends Command {
     constructor() {
@@ -29,32 +29,28 @@ class Help extends Command {
 
         let [data] = await DB.query(`SELECT * FROM prefixes WHERE guildId = ?`, [message.guild.id])
         let prefix;
+        const embed = new Discord.MessageEmbed()
+            .setColor(crimson)
+            .setAuthor(`${this.client.user.username} Help`, this.client.user.avatarURL({ dynamic: true }))
+            .setThumbnail(message.guild.iconURL({ dynamic: true }))
 
         if (data.length === 0) {
             prefix = process.env.PREFIX;
         } else {
             prefix = `${data[0].prefix}`;
         }
-
-        const embed = new Discord.MessageEmbed()
-            .setColor(crimson)
-            .setAuthor(`${this.client.user.username} Help`, this.client.user.avatarURL({ dynamic: true }))
-            .setThumbnail(message.guild.iconURL({ dynamic: true }))
-
         if (!command) {
-            var categories = this.handler.categories.values();
+            let categories = this.handler.categories.values();
             let total = [];
             for (const category of categories) {
                 total.push(parseInt(category.size));
-
+                console.log(total)
                 const title = category.id;
                 if (title == 'default') {
                     continue;
-                }
-                else if (title) {
+                } else if (title) {
                     const dir = category.map(cmd => `${cmd.categoryID.toLowerCase() == "nsfw" ? `|| ${cmd} ||` : cmd}`).join(', ')
                     embed.setDescription(`${lang(message, "command.help.embed.desc.one")} \`${prefix}\` \n${lang(message, "command.help.embed.desc.two")} \`${this.client.user.username}\`:`);
-
                     try {
                         embed.addField(`> ${category} (${category.size}):`, dir)
                     } catch (error) {
@@ -69,7 +65,7 @@ class Help extends Command {
 
         } else {
             if (!command) return message.channel.send(embed.setTitle(lang(message, "command.help.embed.title.one")).setDescription(`${lang(message, "command.help.embed.title.desc.one")} \`${prefix}help\` ${lang(message, "command.help.embed.title.desc.two")}`))
-            console.log(`[DEBUG] '${message.author.tag}'[${message.author.id}] used "${prefix}help ${command.id.toLowerCase()}" in '${message.guild.name}'[${message.guild.id}]`)
+            console.log(`${debug('[DEBUG]')} '${message.author.tag}'[${message.author.id}] used ${chalk.gray(`"${prefix}help ${command.id.toLowerCase()}"`)} in '${message.guild.name}'[${message.guild.id}]`)
 
             embed.setDescription(stripIndents`${lang(message, "command.help.embedtwo.desc.one")} \`${prefix}\`\n 
             **${lang(message, "command.help.embedtwo.desc.two")} **${command.categoryID.toLowerCase() === "nsfw" ? `|| \`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\` ||` : `\`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\``}
@@ -80,7 +76,6 @@ class Help extends Command {
 
             return message.channel.send(embed)
         }
-
     }
 }
 module.exports = Help;

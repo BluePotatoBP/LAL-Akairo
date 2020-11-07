@@ -42,8 +42,8 @@ class Slowmode extends Command {
         message.delete({ timeout: 30000 }).catch(e => { });
         if (nr >= 21600) {
             const embed2 = new Discord.MessageEmbed()
-                .setTitle("The slowmode timer should not \nexceed or be equal to \`21600\`s \`(6h)\`")
-                .setDescription("Please \`edit\` the message or \`re-send\` the command.\n \nUnfortunately this limit cannot be bypassed \nanymore because of Discord limitations.")
+                .setTitle(lang(message, "command.slowmode.embed.title"))
+                .setDescription(lang(message, "command.slowmode.embed.desc"))
                 .setColor(crimson)
                 .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }))
                 .setTimestamp()
@@ -59,20 +59,20 @@ class Slowmode extends Command {
             }
             if (!rateLimit || rateLimit === 0) {
                 if (nr === rateLimit) {
-                    slowMessage = 'Slowmode was already at'
+                    slowMessage = lang(message, "command.slowmode.embed.slowMessage.alreadyExists")
                 } else {
-                    slowMessage = 'Slowmode has been set to'
+                    slowMessage = lang(message, "command.slowmode.embed.slowMessage.new")
                 }
             } else if (nr === 0) {
-                slowMessage = 'Slowmode has been reset back to'
+                slowMessage = lang(message, "command.slowmode.embed.slowMessage.reset")
             } else {
-                slowMessage = 'Slowmode has been updated to'
-                embed.setDescription(`Previous slowmode:\n\`\`\`• ${rateLimit}s\n\`\`\``)
+                slowMessage = lang(message, "command.slowmode.embed.slowMessage.updated")
+                embed.setDescription(`${lang(message, "command.slowmode.embed.slowMessage.previous")}\n\`\`\`• ${rateLimit}s\n\`\`\``)
             }
 
             message.channel.setRateLimitPerUser(nr)
 
-            embed.setTitle(`${slowMessage} \`${nr}\` second(s)`)
+            embed.setTitle(`${slowMessage} \`${nr}\` ${lang(message, "command.slowmode.embed.slowMessage.seconds")}`)
             embed.setColor(crimson)
             embed.setFooter(message.author.username, message.author.avatarURL({ dynamic: true }))
             embed.setTimestamp()

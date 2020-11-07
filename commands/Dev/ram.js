@@ -1,6 +1,5 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
-let os = require("os");
 const { crimson } = require('../../assets/colors.json')
 
 class Ram extends Command {
@@ -19,8 +18,8 @@ class Ram extends Command {
         message.delete().catch(e => { });
 
         try {
-            var usageMb = process.memoryUsage().heapUsed / 1024 / 1024;
-            var usage = usageMb.toFixed(2);
+            let usageMb = process.memoryUsage().heapUsed / 1024 / 1024;
+            let usage = usageMb.toFixed(2);
 
             let rembed = new Discord.MessageEmbed()
                 .setAuthor(message.author.tag, message.author.avatarURL({ dynamic: true }))

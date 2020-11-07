@@ -1,6 +1,7 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const { crimson } = require('../../assets/colors.json')
+const hexRgb = require('hex-rgb');
 
 class Color extends Command {
     constructor() {
@@ -17,7 +18,7 @@ class Color extends Command {
                 },
                 args: [
                     {
-                        id: 'text',
+                        id: 'c',
                         match: 'text',
                         type: 'string',
                         prompt: {
@@ -29,20 +30,29 @@ class Color extends Command {
             });
     }
 
-    async exec(message, args) {
-        message.delete().catch(e => { });
+    async exec(message, { c }) {
+        message.delete({ timeout: 30000 }).catch(e => { });
+        let promptMsg;
+
         try {
+            let CRed = hexRgb(c).red;
+            let CGreen = hexRgb(c).red;
+            let CBlue = hexRgb(c).red;
+            let CAlpha = hexRgb(c).red;
+
             let embed = new Discord.MessageEmbed()
                 .setAuthor(message.author.username, message.author.avatarURL({ dynamic: true }))
-                .setDescription(`${lang(message, "command.color.embed.desc")} <:smallbrain:622860598652174356>`)
-                .setColor(args.text)
-                .setFooter(`${lang(message, "command.color.embed.footer")} ${args.text}`)
+                .addField(lang(message, "command.color.embed.field1"), c)
+                .addField(lang(message, "command.color.embed.field2"), `${CRed}, ${CGreen}, ${CBlue} - ${CAlpha}`)
+                .setColor(c)
                 .setTimestamp()
 
-            message.channel.send(embed)
+            promptMsg = await message.util.send(embed)
         } catch (error) {
-            console.log(error)
-            message.channel.send("Bip boop bap, give me a color and not that random scrap <:sadpepe:613706060334759965> \nPlease \`re-type\` the command.")
+            const errorEmbed = new Discord.MessageEmbed()
+                .setDescription(lang(message, "command.color.bigError"))
+                .setColor(crimson)
+            promptMsg = await message.util.send(errorEmbed);
         }
     }
 }

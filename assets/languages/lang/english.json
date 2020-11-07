@@ -210,8 +210,9 @@
     "command.color.desc.content": "Get a preview of a #hex color code",
     "command.color.prompt.start": "Please provide me with a **#hex** color code. \nYou can either send it now or you can `re-type` the command.",
     "command.color.prompt.retry": "Please provide a valid color. \nYou can either send it now or you can `re-type` the command.",
-    "command.color.embed.desc": "Preview of your **#hex** color is on the 👈 left. \nIf the bar is `Gray`, that means you entered \nan invalid **#hex** color code.",
-    "command.color.embed.footer": "You entered:",
+    "command.color.embed.field1": "Hex value:",
+    "command.color.embed.field2": "RGBA value:",
+    "command.color.bigError": "Please give me a **valid hex color**. \nYou can `edit` the last message or `re-type` the command.",
 
     "command.help.desc.content": "Shows you this message",
     "command.help.embed.desc.one": "The prefix for this guild is:",
@@ -243,5 +244,13 @@
 
     "command.slowmode.desc.content": "Set a custom slowmode time for any channel\n**NOTE:** You have to provide the time in seconds",
     "command.slowmode.prompt.start": "Please only provide numbers (10 not 10s). \nYou can either send it now or you can `re-type` the command.",
-    "command.slowmode.prompt.retry": "Please only provide numbers (10 not 10s). \nYou can either send it now or you can `re-type` the command."
+    "command.slowmode.prompt.retry": "Please only provide numbers (10 not 10s). \nYou can either send it now or you can `re-type` the command.",
+    "command.slowmode.embed.title": "The slowmode timer should not \nexceed or be equal to `21600`s `(6h)`",
+    "command.slowmode.embed.desc": "Please `edit` the message or `re-send` the command.\n \nUnfortunately this limit cannot be bypassed \nanymore because of Discord limitations.",
+    "command.slowmode.embed.slowMessage.alreadyExists": "Slowmode was already at",
+    "command.slowmode.embed.slowMessage.new": "Slowmode has been set to",
+    "command.slowmode.embed.slowMessage.reset": "Slowmode has been reset back to",
+    "command.slowmode.embed.slowMessage.updated": "Slowmode has been updated to",
+    "command.slowmode.embed.slowMessage.previous": "Previous slowmode:",
+    "command.slowmode.embed.slowMessage.seconds": "second(s)"
 }

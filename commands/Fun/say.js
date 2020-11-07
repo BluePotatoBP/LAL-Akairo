@@ -89,14 +89,14 @@ class Say extends Command {
         try {
             if (!args.text) {
                 const noArgs = new Discord.MessageEmbed()
-                .setAuthor(message.author.username, message.author.avatarURL({ dynamic: true }))
-                .setDescription(lang(message, "command.say.noArgs"))
-                .setColor(crimson)
+                    .setAuthor(message.author.username, message.author.avatarURL({ dynamic: true }))
+                    .setDescription(lang(message, "command.say.noArgs"))
+                    .setColor(crimson)
 
                 message.channel.send(noArgs)
             } else {
 
-                var flipText = args.text.split('').map(c => c.charCodeAt(0) - OFFSET).map(c => mapping[c] || ' ').reverse().join('')
+                let flipText = args.text.split('').map(c => c.charCodeAt(0) - OFFSET).map(c => mapping[c] || ' ').reverse().join('')
                 // Check if the user wants an embed
                 if (args.embed) {
                     const eembed = new Discord.MessageEmbed()
@@ -158,9 +158,6 @@ class Say extends Command {
                     return message.channel.send(args.text)
                 }
                 //#endregion NormalSay
-
-
-
             }
         } catch (error) {
             console.log(error)

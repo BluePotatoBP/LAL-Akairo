@@ -2,7 +2,7 @@ const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const Table = require(`cli-table3`);
 const { darkRed } = require("../../assets/colors.json")
-var PastebinAPI = require('pastebin-js'),
+let PastebinAPI = require('pastebin-js'),
     pastebin = new PastebinAPI({
         'api_dev_key': 'ea18216abe69e7ead54e74ca1e98b4b5',
         'api_user_name': 'BluePotatoBP',
@@ -24,7 +24,7 @@ class Serverlist extends Command {
     async exec(message) {
 
         // Create a new table with the id, name, user count, bot count, total users count
-        var table = new Table({
+        let table = new Table({
             head: ['ID', 'Name', 'Users', 'Bots', 'Total'], colWidths: [20, 25, 8, 8, 8]
         });
         // Push the data into the table  

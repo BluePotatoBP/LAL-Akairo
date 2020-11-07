@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "canvas": "^2.6.1",
+    "chalk": "^4.1.0",
     "cli-table3": "^0.6.0",
     "common-tags": "^1.8.0",
     "crypto": "^1.0.1",
@@ -18,6 +19,7 @@
     "discord.js": "^12.4.1",
     "dotenv": "^8.2.0",
     "fs": "0.0.1-security",
+    "hex-rgb": "^4.2.0",
     "mysql2": "^2.1.0",
     "nekos.life": "^2.0.7",
     "nodemon": "^2.0.4",

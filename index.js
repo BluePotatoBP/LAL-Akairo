@@ -3,14 +3,17 @@ const { red, lightRed, darkRed, pink, darkPink, yellow, lightYellow, orange, dar
 const { AkairoClient, CommandHandler, ListenerHandler, InhibitorHandler } = require('discord-akairo');
 const Discord = require('discord.js');
 const mysql2 = require('mysql2/promise');
+const chalk = require('chalk');
 
 //#region Utility for other stuff
-// Needs to be in global scope
+
 console.clear();
+global.startup = chalk.greenBright;
+global.info = chalk.keyword('orange');
+global.debug = chalk.black.bgWhite;
 global.promptFilter = [];
 global.guildLanguages = [];
 global.lang = require("./assets/languages/languageTranslate");
-
 let promptMsg;
 
 // Connect to database
@@ -23,7 +26,7 @@ let promptMsg;
         database: process.env.DB_NAME,
         enableKeepAlive: true
     })
-    console.log(`[STARTUP] Connected to Database ${process.env.DB_NAME} (Ricardo)!`)
+    console.log(`${startup('[STARTUP]')} Connected to Database ${chalk.yellow(`${process.env.DB_NAME} (Ricardo)`)}!`)
 
 })()
 
@@ -35,9 +38,9 @@ async function editPrompt(message, embed) {
         promptMsg = await message.util.send(embed);
 
         promptFilter.push({
-            userID: message.author.id, 
+            userID: message.author.id,
             msgID: promptMsg.id,
-            channelID: message.channel.id 
+            channelID: message.channel.id
         })
 
     }
@@ -57,13 +60,11 @@ class Client extends AkairoClient {
     constructor() {
         super({
             ownerID: process.env.OWNER,
-        }, {
-            disableMentions: 'everyone'
         });
 
         this.commandHandler = new CommandHandler(this, {
             prefix: async (message) => {
-    
+
                 let [data] = await DB.query(`SELECT * FROM prefixes WHERE guildId = ?`, [message.guild.id])
                 let customPrefix;
 
@@ -75,6 +76,7 @@ class Client extends AkairoClient {
                 return customPrefix;
             },
             blockBots: true,
+            disableMentions: 'everyone',
             blockClient: true,
             allowMention: true,
             automateCategories: false,
@@ -105,10 +107,7 @@ class Client extends AkairoClient {
 
                         editPrompt(message, embed)
                     },
-
-                    ended: async (message) => {
-                    },
-
+                    ended: () => { },
                     cancel: async (message) => {
                         let embed = new Discord.MessageEmbed()
                             .setColor(checkGreen)
@@ -116,11 +115,10 @@ class Client extends AkairoClient {
 
                         editPrompt(message, embed)
                     },
+
                     retries: 4,
                     time: 60000,
-                    timeout: (message) => {
-              
-                    }
+                    timeout: () => { }
                 }
                 //#endregion prompt
             }
@@ -129,7 +127,6 @@ class Client extends AkairoClient {
         this.listenerHandler = new ListenerHandler(this, {
             directory: './listeners/'
         });
-
         this.listenerHandler.setEmitters({
             commandHandler: this.commandHandler,
             listenerHandler: this.listenerHandler,
@@ -145,6 +142,6 @@ class Client extends AkairoClient {
         this.commandHandler.loadAll()
     }
 }
-const client = new Client();
 
+const client = new Client();
 client.login();
