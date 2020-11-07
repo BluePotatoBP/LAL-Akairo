@@ -44,7 +44,6 @@ class Help extends Command {
             let total = [];
             for (const category of categories) {
                 total.push(parseInt(category.size));
-                console.log(total)
                 const title = category.id;
                 if (title == 'default') {
                     continue;

@@ -77,7 +77,7 @@ class Ban extends Command {
         // If the moderator reacted with a check mark ban the user
         if (emoji === "✅") {
 
-            m.ban(r).catch(err => {
+            m.ban().catch(err => {
                 if (err) return message.channel.send(`Well this is awkward... *${err}*`)
             });
 

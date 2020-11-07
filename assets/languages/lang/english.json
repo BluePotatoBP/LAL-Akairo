@@ -171,7 +171,7 @@
     "command.hentai.embed.footer.one": "sent you some hentai!",
     "command.hentai.embed.footer.two": "have some hentai",
 
-    "command.neko.desc.content": "Get a random neko image",
+    "command.neko.desc.content": "Get a random neko gif",
     "command.neko.embed.footer.one": "sent you a neko gif!",
     "command.neko.embed.footer.two": "have a neko gif",
 
@@ -239,7 +239,7 @@
     "command.invite.iembed.desc.one": "Invite",
     "command.invite.iembed.desc.two": "me with `ADMINISTRATOR` perms! `(Recommended)` \n or \n",
     "command.invite.iembed.desc.three": "me with `ESSENTIAL` perms! `(2nd best option)`\n or \n",
-    "command.invite.iembed.desc.four": "me with only `SEND MESSAGES` perms! `(Not Recommended)`\n \nThe reason why I recommend administrator is so the bot can do \nmost stuff like delete messages after sent commands, send \na message to a channel in lockdown, etc. without interruptions! \nOr if you're not combortable with that you can pick the \n\"essential\" permissions.",
+    "command.invite.iembed.desc.four": "me with only `SEND MESSAGES` perms! `(Not Recommended)`\n \nThe reason why I recommend administrator is so the bot can do \nmost stuff like delete messages after sent commands, send \na message to a channel in lockdown, etc. without interruptions! \nOr if you're not comfortable with that you can pick the \n\"essential\" permissions.",
 
     "command.ping.desc.content": "Shows the bot message latency and API latency",
 
