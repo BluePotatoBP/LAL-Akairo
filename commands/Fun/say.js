@@ -161,7 +161,7 @@ class Say extends Command {
             }
         } catch (error) {
             console.log(error)
-            message.channel.send("<:sadpepe:613706060334759965> u bwoke me... idfk how don't ask")
+            message.channel.send("<:sadpepe:774640053020000266> u bwoke me... idfk how don't ask")
         }
     }
 }

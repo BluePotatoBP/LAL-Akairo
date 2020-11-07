@@ -10,6 +10,7 @@
   "author": "BluePotatoBP",
   "license": "ISC",
   "dependencies": {
+    "better-pastebin": "^0.4.1",
     "canvas": "^2.6.1",
     "chalk": "^4.1.0",
     "cli-table3": "^0.6.0",
@@ -24,7 +25,6 @@
     "nekos.life": "^2.0.7",
     "nodemon": "^2.0.4",
     "owoify-js": "^1.0.7",
-    "pastebin-js": "^1.0.5",
     "path": "^0.12.7",
     "random-word": "^2.0.0",
     "spacy": "0.0.4",

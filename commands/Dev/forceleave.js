@@ -1,3 +1,4 @@
+const chalk = require('chalk');
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const { crimson } = require('../../assets/colors.json')
@@ -26,14 +27,12 @@ class ForceLeave extends Command {
 
     async exec(message, { id }) {
         message.delete().catch(e => { });
+        let guild = client.guilds.cache.get(id);
 
         if (!id) {
             id = message.guild.id;
-        } 
-        let guild = client.guilds.cache.get(id);
-
-        guild.leave().then(g => console.log(`Left the guild "${g}"`))
-
+        }
+        guild.leave().then(g => console.log(`${debug('[DEBUG]')} ${chalk.magenta(this.client.user.username)} left the guild "${chalk.yellow(g)}"`))
     }
 }
 module.exports = ForceLeave;

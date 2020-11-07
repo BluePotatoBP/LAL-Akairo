@@ -1,13 +1,7 @@
 const { Command } = require('discord-akairo');
-const Discord = require('discord.js');
 const Table = require(`cli-table3`);
-const { darkRed } = require("../../assets/colors.json")
-let PastebinAPI = require('pastebin-js'),
-    pastebin = new PastebinAPI({
-        'api_dev_key': 'ea18216abe69e7ead54e74ca1e98b4b5',
-        'api_user_name': 'BluePotatoBP',
-        'api_user_password': `${process.env.PASTEBINPASSWORD}`
-    });;
+const paste = require("better-pastebin");
+paste.setDevKey(process.env.PASTEBINKEY);
 
 class Serverlist extends Command {
     constructor() {
@@ -30,24 +24,33 @@ class Serverlist extends Command {
         // Push the data into the table  
         client.guilds.cache.map(g => table.push([g.id, g.name, g.members.cache.filter(u => !u.user.bot).size, g.members.cache.filter(u => u.user.bot).size, g.members.cache.size]));
 
-        // Send the table to pastebin
+        // Send the table to pastebin and console
         console.log(table.toString())
-        pastebin
-            .createPaste({
-                text: `${table.toString()}`,
-                title: `Serverlist; private`,
-                format: null,
-                privacy: 2,
-                expiration: '1M'
-            })
-            .then(function (data) {
-                message.author.send(`Here ya go: ${data}`).catch(message.channel.send("Dude open DMs... \nhttps://imgur.com/RLUojAU"))
-                message.react("❤")
-            })
-            .catch(error => {
-                console.error(error);
-                message.channel.send("Couldn't send the output to pastebin.com")
+        paste.login("BluePotatoBP", process.env.PASTEBINPASSWORD, function (success, data) {
+            if (!success) {
+                console.log("Failed (" + data + ")");
+                return false;
+            }
+            paste.create({
+                contents: `${table.toString()}`,
+                name: "Serverlist; private",
+                privacy: "2",
+                expires: '1D',
+                format: 'javascript'
+            }, async function (success, data) {
+                if (success) {
+                    try {
+                        message.author.send(`Here ya go: ${data}`)
+                        message.react("❤")
+                    } catch (error) {
+                        message.channel.send("Dude open DMs rn \nhttps://imgur.com/RLUojAU")
+                    }
+                } else {
+                    console.log(data);
+                    message.channel.send('Couldn\'t send the output to pastebin.com')
+                }
             });
+        });
     }
 }
 module.exports = Serverlist;

@@ -23,7 +23,7 @@ class Ram extends Command {
 
             let rembed = new Discord.MessageEmbed()
                 .setAuthor(message.author.tag, message.author.avatarURL({ dynamic: true }))
-                .setDescription(`Im currently chewing on \`${usage}mb\` of RAM <:sadpepe:613706060334759965>`)
+                .setDescription(`Im currently chewing on \`${usage}mb\` of RAM <:sadpepe:774640053020000266>`)
                 .setColor(crimson)
                 .setTimestamp()
             message.channel.send(rembed)

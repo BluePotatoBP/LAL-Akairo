@@ -54,9 +54,7 @@ class Slowmode extends Command {
             let slowMessage;
             const embed = new Discord.MessageEmbed()
 
-            if (reset) {
-                nr = 0;
-            }
+            if (reset) { nr = 0; }
             if (!rateLimit || rateLimit === 0) {
                 if (nr === rateLimit) {
                     slowMessage = lang(message, "command.slowmode.embed.slowMessage.alreadyExists")

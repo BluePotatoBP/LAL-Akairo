@@ -7,20 +7,26 @@ class Restart extends Command {
         super('restart',
             {
                 aliases: ['restart'],
+                category: '',
                 ownerOnly: true,
+                cooldown: 10000,
                 description: {
-                    content: 'Restarts the bot instance'
-                },
+                    content: '',
+                    usage: '',
+                    syntax: ''
+                }
             });
     }
 
     async exec(message) {
+        message.delete().catch(e => { });
+
         try {
-                await message.react("✅")
-                await process.exit();
+            await message.author.react("✅")
+            process.exit();
         } catch (error) {
             console.log(error)
-            message.channel.send("No stonks this time... how did you manage this? <:sadpepe:613706060334759965>")
+            message.channel.send("No stonks this time... how did you manage this? <:sadpepe:774640053020000266>")
         }
     }
 }
