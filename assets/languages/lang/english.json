@@ -135,6 +135,7 @@
     "command.language.currentLang.desc": "Currently selected language:",
     "command.language.langSet.desc": "Language set to:",
     "command.language.langUpdate.desc": "Language updated to:",
+    "command.language.contEmbed.desc": "If you'd like to contribute to the translation of LAL you can \nedit the `english.json` file into your language and submit \nit for review in our [support server](https://discord.gg/v8zkSc9).",
 
     "command.poll.desc.content": "Create a poll for the community to vote on something",
     "command.poll.channel.prompt.start": "Please give me a channel. `(#channelName/ID)` \nYou can either send it now or you can `re-type` the command.",

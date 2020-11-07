@@ -110,7 +110,7 @@ class Client extends AkairoClient {
                     ended: () => { },
                     cancel: async (message) => {
                         let embed = new Discord.MessageEmbed()
-                            .setColor(checkGreen)
+                            .setColor(darkRed)
                             .setDescription(`<a:cancel:773201205056503849> ${lang(message, 'index.prompt.cancel.footer')}`)
 
                         editPrompt(message, embed)

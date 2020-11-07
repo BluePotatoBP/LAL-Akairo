@@ -28,7 +28,7 @@ module.exports = class commandCancelledListener extends Listener {
             let channel = message.guild.channels.cache.get(promptMsgFind.channelID)
             let fetchMsg = await channel.messages.fetch(promptMsgFind.msgID)
             if (fetchMsg) await fetchMsg.delete({
-                timeout: 500
+                timeout: 5000
             })
 
         } catch (e) {

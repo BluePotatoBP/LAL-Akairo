@@ -1,7 +1,6 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const { crimson } = require('../../assets/colors.json')
-const mysql2 = require('mysql2/promise');
 
 class Language extends Command {
     constructor() {
@@ -21,38 +20,51 @@ class Language extends Command {
                 args: [
                     {
                         id: 'i',
-                        match: 'phrase',
-                        type: ['english', 'german'],
+                        match: 'flag',
+                        flag: ['english', 'german'],
                         prompt: {
                             start: message => lang(message, "command.language.prompt.start"),
                             retry: message => lang(message, "command.language.prompt.retry"),
                             optional: true
                         }
                     },
+                    {
+                        id: 'cont',
+                        match: 'flag',
+                        flag: ['contribute', 'translate']
+                    }
                 ]
             });
     }
 
-    async exec(message, { i }) {
+    async exec(message, { i, cont }) {
         message.delete({ timeout: 30000 }).catch(e => { });
         let [data] = await DB.query(`SELECT * FROM languages WHERE guildId = ?`, [message.guild.id])
 
         if (!i) {
-
-            let checkedLang;
-            if (data.length === 0) {
-                checkedLang = "english"
+            if (cont) {
+                let sentContr;
+                const contEmbed = new Discord.MessageEmbed()
+                    .setDescription(lang(message, "command.language.contEmbed.desc"))
+                    .setColor(crimson)
+                sentContr = await message.util.send(contEmbed);
+                sentContr = await message.util.send({ files: ['./assets/languages/lang/english.json'] });
             } else {
-                checkedLang = data[0].language;
+                let checkedLang;
+                if (data.length === 0) {
+                    checkedLang = "english"
+                } else {
+                    checkedLang = data[0].language;
+                }
+
+                const currentLang = new Discord.MessageEmbed()
+                    .setDescription(`${lang(message, "command.language.currentLang.desc")} \`${checkedLang}\``)
+                    .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }))
+                    .setColor(crimson)
+                    .setTimestamp()
+
+                message.channel.send(currentLang)
             }
-
-            const currentLang = new Discord.MessageEmbed()
-                .setDescription(`${lang(message, "command.language.currentLang.desc")} \`${checkedLang}\``)
-                .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }))
-                .setColor(crimson)
-                .setTimestamp()
-
-            message.channel.send(currentLang)
         } else {
             if (data.length === 0) {
                 await DB.query(`INSERT INTO languages (guildID, language) VALUES(?, ?)`, [message.guild.id, i])
