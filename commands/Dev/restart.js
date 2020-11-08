@@ -19,10 +19,10 @@ class Restart extends Command {
     }
 
     async exec(message) {
-        message.delete().catch(e => { });
+        message.delete({ timeout: 10000 }).catch(e => { });
 
         try {
-            await message.author.react("✅")
+            await message.react("✅")
             process.exit();
         } catch (error) {
             console.log(error)

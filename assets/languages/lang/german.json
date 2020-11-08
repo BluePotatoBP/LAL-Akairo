@@ -135,7 +135,7 @@
     "command.language.currentLang.desc": "Aktuell ausgewählte Sprache:",
     "command.language.langSet.desc": "Festgelegte Sprache:",
     "command.language.langUpdate.desc": "Aktualisierte Sprache:",
-    "command.language.contEmbed.desc": "Falls du helfen möchtest, LAL in deine Sprache zu übersetzen, kannst du die `english.json` Datei übersetzen und die Übersetzung zur Überprüfung in unseren [Support Server](https://discord.gg/v8zkSc9) schicken.",
+    "command.language.contEmbed.desc": "Falls du helfen möchtest, LAL in deine Sprache zu übersetzen,\n kannst du die `english.json` Datei übersetzen und die Übersetzung \nzur Überprüfung in unseren [Support Server](https://discord.gg/v8zkSc9) schicken.",
 
     "command.poll.desc.content": "Erstelle eine Umfrage.",
     "command.poll.channel.prompt.start": "Bitte gib einen Kanal an. `(#KanalName/ID)`\nDu kannst es jetzt senden oder einfach den Command noch einmal schreiben.",
@@ -239,7 +239,7 @@
     "command.invite.iembed.desc.one": "Lade",
     "command.invite.iembed.desc.two": "mich mit `ADMINISTRATOR` Berechtigungen ein! `(Empfohlen)` \n oder \n",
     "command.invite.iembed.desc.three": "mich mit den `WICHTIGSTEN` Berechtigungen! `(Zweitbeste Option)`\n oder \n",
-    "command.invite.iembed.desc.four": "mich nur mit `SEND MESSAGES` Berechtigungen! `(Nicht empfohlen)`\n \nDer Grund warum ADMINISTRATOR empfohlen ist, ist damit der bot die meisten Dinge auch machen kann. Wie das löschen von Nachrichten nachdem der Command ausgeführt wurde, Nachrichten in einen gelockten Kanal schicken zu können, usw.\nOder wenn du dich damit nicht wohl fühlst nimm einfach nur die \n\"wichtigsten\" Berechtigungen.",
+    "command.invite.iembed.desc.four": "mich nur mit `SEND MESSAGES` Berechtigungen! `(Nicht empfohlen)`\n \nDer Grund warum ADMINISTRATOR empfohlen ist, ist damit der bot die meisten Dinge auch machen kann. Wie das löschen von Nachrichten nachdem der Command ausgeführt wurde, Nachrichten in einen gelockten Kanal schicken zu können, usw. Oder wenn du dich damit nicht wohl fühlst nimm \neinfach nur die \"wichtigsten\" Berechtigungen.",
 
     "command.ping.desc.content": "Zeigt die Nachrichten Latenz und die API Latenz des Bots.",
 

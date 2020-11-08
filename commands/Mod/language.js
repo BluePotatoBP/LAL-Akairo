@@ -13,86 +13,85 @@ class Language extends Command {
                 clientPermissions: ['SEND_MESSAGES'],
                 userPermissions: ['MANAGE_MESSAGES'],
                 description: {
-                    content: 'Change the bots language for this guild\n**Currently supported languages:** \`english\` \n',
+                    content: '',
                     usage: '[language]',
                     syntax: '[] - optional'
                 },
-                args: [
-                    {
-                        id: 'i',
-                        match: 'flag',
-                        flag: ['english', 'german'],
+
+                *args(message) {
+                    let action = yield {
+                        type: ["contribute", "german", "english"],
+                        default: "showLan",
                         prompt: {
-                            start: message => lang(message, "command.language.prompt.start"),
-                            retry: message => lang(message, "command.language.prompt.retry"),
+                            start: lang(message, "command.language.prompt.start"),
+                            retry: lang(message, "command.language.prompt.retry"),
                             optional: true
                         }
-                    },
-                    {
-                        id: 'cont',
-                        match: 'flag',
-                        flag: ['contribute', 'translate']
                     }
-                ]
+
+                    //Set new Language
+                    if (action !== "contribute") {
+                        const i = action;
+                        action = "translate"
+                        return { i, action }
+                    }
+
+                    //Show current language
+                    if (action == "showLan") {
+                        action = "translate"
+                        const i = "showLan"
+                        return { i, showLan }
+                    }
+
+                    //Contribute
+                    if (action == "contribute") return { action }
+
+                }
             });
     }
 
-    async exec(message, { i, cont }) {
+    async exec(message, { action, i }) {
         message.delete({ timeout: 30000 }).catch(e => { });
-        let [data] = await DB.query(`SELECT * FROM languages WHERE guildId = ?`, [message.guild.id])
 
-        if (!i) {
-            if (cont) {
-                let sentContr;
-                const contEmbed = new Discord.MessageEmbed()
-                    .setDescription(lang(message, "command.language.contEmbed.desc"))
-                    .setColor(crimson)
-                sentContr = await message.util.send(contEmbed);
-                sentContr = await message.util.send({ files: ['./assets/languages/lang/english.json'] });
-            } else {
-                let checkedLang;
-                if (data.length === 0) {
-                    checkedLang = "english"
-                } else {
-                    checkedLang = data[0].language;
-                }
+        if (action == "translate") {
+            let [guildLanguageDB] = await DB.query(`SELECT * FROM languages WHERE guildID = ? `, [message.guild.id])
+            let languageInArrayFind = guildLanguages.find(c => c.guildID == message.guild.id)
 
+            if (i == "showLan") {
+                let currentLan = languageInArrayFind ? languageInArrayFind.lan : "english";
                 const currentLang = new Discord.MessageEmbed()
-                    .setDescription(`${lang(message, "command.language.currentLang.desc")} \`${checkedLang}\``)
+                    .setDescription(`${lang(message, "command.language.currentLang.desc")} \`${currentLan}\``)
                     .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }))
                     .setColor(crimson)
                     .setTimestamp()
-
-                message.channel.send(currentLang)
+                return message.channel.send(currentLang)
             }
+
+            if (languageInArrayFind) languageInArrayFind.lan = i
+            if (!languageInArrayFind) guildLanguages.push({
+                guildID: message.guild.id,
+                lan: i
+            })
+
+            if (guildLanguageDB.length == 0) await DB.query(`INSERT INTO languages VALUES(?,?)`, [message.guild.id, i])
+            if (guildLanguageDB.length > 0) await DB.query(`UPDATE languages SET language = ? WHERE guildID = ?`, [i, message.guild.id])
+
+            const langUpdate = new Discord.MessageEmbed()
+                .setDescription(`${lang(message, "command.language.langUpdate.desc")} \`${i}\``)
+                .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }))
+                .setColor(crimson)
+                .setTimestamp()
+
+            await message.channel.send(langUpdate)
+
         } else {
-            if (data.length === 0) {
-                await DB.query(`INSERT INTO languages (guildID, language) VALUES(?, ?)`, [message.guild.id, i])
-                const langSet = new Discord.MessageEmbed()
-                    .setDescription(`${lang(message, "command.language.langSet.desc")} \`${i}\``)
-                    .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }))
-                    .setColor(crimson)
-                    .setTimestamp()
-
-                message.channel.send(langSet)
-            } else {
-                await DB.query("UPDATE languages SET language = ? WHERE guildId = ?", [i, message.guild.id])
-                const langUpdate = new Discord.MessageEmbed()
-                    .setDescription(`${lang(message, "command.language.langUpdate.desc")} \`${i}\``)
-                    .setFooter(message.author.username, message.author.avatarURL({ dynamic: true }))
-                    .setColor(crimson)
-                    .setTimestamp()
-
-                message.channel.send(langUpdate)
-            }
+            let sentContr;
+            const contEmbed = new Discord.MessageEmbed()
+                .setDescription(lang(message, "command.language.contEmbed.desc"))
+                .setColor(crimson)
+            sentContr = await message.util.send(contEmbed);
+            sentContr = await message.util.send({ files: ['./assets/languages/lang/english.json'] });
         }
-
-        let languageInArrayFind = guildLanguages.find(c => c.guildID == message.guild.id);
-        if (languageInArrayFind) languageInArrayFind.lan = i;
-        if (!languageInArrayFind) guildLanguages.push({
-            guildID: message.guild.id,
-            lan: i
-        })
     }
 }
 module.exports = Language;

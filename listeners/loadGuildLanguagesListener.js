@@ -19,7 +19,6 @@ class loadGuildLanguagesListener extends Listener {
                 guildID: guild[i],
                 lan: lans
             })
-
         }
     }
 }

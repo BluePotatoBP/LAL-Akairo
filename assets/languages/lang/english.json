@@ -130,8 +130,8 @@
     "command.kick.banCanceled.footer": "Reason: Action canceled by",
 
     "command.language.desc.content": "Change the bots language for this guild\n**Currently supported languages:** `english`, `german` \n",
-    "command.language.prompt.start": "Please give me a valid language.\nList of available languages:\n \n`english`\n`german`\n \nYou can either send it now or you can `re-type` the command.",
-    "command.language.prompt.retry": "Please give me a valid language.\nList of available languages:\n \n`english`\n`german`\n \nYou can either send it now or you can `re-type` the command.",
+    "command.language.prompt.start": "Please give me a valid language.\nList of available languages:\n`english`\n`german`\n \nOr if you'd like to help translate LAL: \n`contribute`\n \nYou can either send it now or you can `re-type` the command.",
+    "command.language.prompt.retry": "Please give me a valid language.\nList of available languages:\n`english`\n`german`\n \nOr if you'd like to help translate LAL: \n`contribute`\n \nYou can either send it now or you can `re-type` the command.",
     "command.language.currentLang.desc": "Currently selected language:",
     "command.language.langSet.desc": "Language set to:",
     "command.language.langUpdate.desc": "Language updated to:",
