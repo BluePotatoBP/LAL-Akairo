@@ -130,8 +130,8 @@
     "command.kick.banCanceled.footer": "Grund: Abgebrochen von",
 
     "command.language.desc.content": "Ändere die Sprache für diesen Server\n**Momentan unterstützte Sprachen:** `english`, `german` \n",
-    "command.language.prompt.start": "Bitte gib eine gültige Sprache an.\nGültige Sprachen:\n \n`english`\n`german`\n\nDu kannst es jetzt senden oder einfach den Command noch einmal schreiben.",
-    "command.language.prompt.retry": "Bitte gib eine gültige Sprache an.\nList of available languages:\n \n`english`\n`german`\n\nDu kannst es jetzt senden oder einfach den Command noch einmal schreiben.",
+    "command.language.prompt.start": "Bitte gib eine gültige Sprache an.\nVerfügbare Sprachen:\n`english`\n`german`\n\nFalls du helfen möchtest LAL zu übersetzen:\n`contribute`\n\nDu kannst die Argumente entweder gleich senden oder den Command wiederholen.",
+    "command.language.prompt.retry": "Bitte gib eine gültige Sprache an.\nVerfügbare Sprachen:\n`english`\n`german`\n\nFalls du helfen möchtest LAL zu übersetzen:\n`contribute`\n\nDu kannst die Argumente entweder gleich senden oder den Command wiederholen.",
     "command.language.currentLang.desc": "Aktuell ausgewählte Sprache:",
     "command.language.langSet.desc": "Festgelegte Sprache:",
     "command.language.langUpdate.desc": "Aktualisierte Sprache:",
