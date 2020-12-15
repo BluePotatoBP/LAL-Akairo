@@ -168,5 +168,6 @@ class Client extends AkairoClient {
 	}
 }
 
-const client = new Client();
+const client = new Client({ ws: { intents: [ 'GUILD_PRESENCES', 'GUILD_MEMBERS' ] } });
+
 client.login();
