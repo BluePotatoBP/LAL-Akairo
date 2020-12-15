@@ -53,7 +53,8 @@ class Changelog extends Command {
 						'⤷ *ADDED*  \n`Language command.`\n`Slowmode command.`\n`Translations.`\n`README.md` \n⤷ *FIXED/UPDATED* \n`A lot of legacy code updated.`\n`Fixed inconsistencies with colors etc.`'
 					)
 					.setColor(crimson)
-					.setFooter('Page: [1/2]', message.author.avatarURL({ dynamic: true })),
+					.setFooter('Page: [1/2]', message.author.avatarURL({ dynamic: true }))
+					.setTimestamp(),
 
 				new MessageEmbed()
 					.setAuthor('📰 LAL Changelog 📰')
@@ -67,6 +68,7 @@ class Changelog extends Command {
 					.addField('• 1.0.0', '⤷ *ADDED*  \n`-`\n⤷ *FIXED/UPDATED* \n`-`')
 					.setColor(crimson)
 					.setFooter('Page: [2/2]', message.author.avatarURL({ dynamic: true }))
+					.setTimestamp()
 			],
 			collectorOptions: {
 				time: 60000
