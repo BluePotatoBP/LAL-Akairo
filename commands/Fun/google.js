@@ -32,11 +32,13 @@ class Google extends Command {
 	async exec(message, { s }) {
 		message.delete().catch((e) => {});
 		let query = s.split(' ').join('+');
+
 		let embed = new Discord.MessageEmbed()
 			.setAuthor(message.author.username, message.author.avatarURL({ dynamic: true }))
 			.setTitle(`"${cutTo(s)}"`)
 			.setDescription(`[${lang(message, 'command.google.embed.desc')}](http://lmgtfy.com/?iie=1&q=${query})`)
 			.setColor('RANDOM');
+
 		message.channel.send(embed);
 	}
 }
