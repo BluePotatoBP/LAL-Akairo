@@ -62,6 +62,8 @@
     "command.rps.embed.title.userChose": "Du wählst:",
     "command.rps.embed.title.botChose": "Ich wähle:",
 
+    "command.game.desc.content": "\nSpiele eines der verfügbaren Spiele: \n`Connect4`\n`Hangman`\n`Snake`\n \nDie Spiele sind noch in Entwicklung und haben noch keine Channel- oder Nutzer-Sperre.",
+
     "command.say.desc.content": "Lass mich etwas sagen!",
     "command.say.noArgs": "Gib mir einen Text den ich sagen soll. \nDu kannst deine Nachricht `bearbeiten` oder du `wiederholst` den Command.",
 
@@ -144,12 +146,16 @@
     "command.poll.text.prompt.retry": "Bitte gib einen Text an.\nDu kannst es jetzt senden oder einfach den Command noch einmal schreiben.",
     "command.poll.embed.pollAuthor": "Umfrage von",
 
+    "command.role.desc.content": "Hinzufügen oder entfernen von Rollen für einen Nutzer.",
+    "command.role.prompt.start": "Möchtest du eine Rolle hinzufügen oder entfernen? `(add/remove)` \nDu kannst es gleich senden oder wiederhole einfach den Command.",
+    "command.role.prompt.retry": "Möchtest du eine Rolle hinzufügen oder entfernen? `(add/remove)` \nDu kannst es gleich senden oder wiederhole einfach den Command.",
+    
     "command.removerole.desc.content": "Entferne eine Rolle von Nutzern",
     "command.removerole.prompt.member.start": "Bitte gib einen `Benutzer` an. `(@Erwähnung/Benutzername/Diskriminator/ID)`.\nDu kannst es jetzt senden oder einfach den Command noch einmal schreiben.",
     "command.removerole.prompt.member.retry": "Bitte gib einen `Benutzer` an. `(@Erwähnung/Benutzername/Diskriminator/ID)`.\nDu kannst es jetzt senden oder einfach den Command noch einmal schreiben.",
     "command.removerole.prompt.role.start": "Bitte gib eine `Rolle` an. `(@Erwähnung/ID)`.\nDu kannst es jetzt senden oder einfach den Command noch einmal schreiben.",
     "command.removerole.prompt.role.retry": "Bitte gib eine `Rolle` an. `(@Erwähnung/ID)`.\nDu kannst es jetzt senden oder einfach den Command noch einmal schreiben.",
-    "command.removerole.embed.desc.one": "hat die Rolle",
+    "command.removerole.embed.desc.one": "hat nicht",
     "command.removerole.embed.desc.two": "nicht.",
 
     "command.setprefix.desc.content": "Das Prefix wurde festgelegt.",
@@ -236,10 +242,8 @@
     "command.help.embedtwo.desc.nine": "Keine Syntax",
 
     "command.invite.desc.content": "Lade mich in deinen Server ein!",
-    "command.invite.iembed.desc.one": "Lade",
-    "command.invite.iembed.desc.two": "mich mit `ADMINISTRATOR` Berechtigungen ein! `(Empfohlen)` \n oder \n",
-    "command.invite.iembed.desc.three": "mich mit den `WICHTIGSTEN` Berechtigungen! `(Zweitbeste Option)`\n oder \n",
-    "command.invite.iembed.desc.four": "mich nur mit `SEND MESSAGES` Berechtigungen! `(Nicht empfohlen)`\n \nDer Grund warum ADMINISTRATOR empfohlen ist, ist damit der bot die meisten Dinge auch machen kann. Wie das löschen von Nachrichten nachdem der Command ausgeführt wurde, Nachrichten in einen gelockten Kanal schicken zu können, usw. Oder wenn du dich damit nicht wohl fühlst nimm \neinfach nur die \"wichtigsten\" Berechtigungen.",
+    "command.invite.iembed.desc.one": "Klicke hier!",
+    "command.invite.iembed.desc.two": "(Du kannst dir aussuchen, welche Berechtigungen du mir geben willst, oder du kannst es so lassen, wie es ist.)",
 
     "command.ping.desc.content": "Zeigt die Nachrichten Latenz und die API Latenz des Bots.",
 

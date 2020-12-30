@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "better-pastebin": "^0.4.1",
+    "bufferutil": "^4.0.2",
     "canvas": "^2.6.1",
     "chalk": "^4.1.0",
     "cli-table3": "^0.6.0",
@@ -22,14 +23,17 @@
     "dotenv": "^8.2.0",
     "fs": "0.0.1-security",
     "hex-rgb": "^4.2.0",
+    "moment": "^2.29.1",
     "mysql2": "^2.1.0",
     "nekos.life": "^2.0.7",
+    "node-fetch": "^2.6.1",
     "nodemon": "^2.0.4",
     "owoify-js": "^1.0.7",
     "path": "^0.12.7",
     "random-word": "^2.0.0",
     "spacy": "0.0.4",
     "urban": "^0.3.2",
+    "utf-8-validate": "^5.0.3",
     "util": "^0.12.3"
   }
 }

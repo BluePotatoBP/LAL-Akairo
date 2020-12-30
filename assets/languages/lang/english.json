@@ -62,6 +62,8 @@
     "command.rps.embed.title.userChose": "You chose:",
     "command.rps.embed.title.botChose": "I chose:",
 
+    "command.game.desc.content": "\nPlay one of the currently available games: \n`Connect4`\n`Hangman`\n`Snake`\n \nPlease keep in mind these games are very\nrough and dont have any channel locks/user locks.",
+
     "command.say.desc.content": "Make me say anything!",
     "command.say.noArgs": "Please give me some text to say. \nYou can `edit` the last message or `re-type` the command.",
 
@@ -144,12 +146,16 @@
     "command.poll.text.prompt.retry": "Please give me some text. \nYou can either send it now or you can `re-type` the command.",
     "command.poll.embed.pollAuthor": "Poll from",
 
+    "command.role.desc.content": "Add or remove roles from any user",
+    "command.role.prompt.start": "Would you like to add or remove roles? `(add/remove)` \nYou can either send it now or you can `re-type` the command.",
+    "command.role.prompt.retry": "Would you like to add or remove roles? `(add/remove)` \nYou can either send it now can `re-type` the command.",
+    
     "command.removerole.desc.content": "Remove any role from any user",
     "command.removerole.prompt.member.start": "Please give me a `user` to continue `(Mention/Username/Discrim/ID)`. \nYou can either send it now or you can `re-type` the command.",
     "command.removerole.prompt.member.retry": "Please give me a `user` to continue `(Mention/Username/Discrim/ID)`. \nYou can either send it now or you can `re-type` the command.",
     "command.removerole.prompt.role.start": "Please give me a `role` to continue `(Mention/ID)`. \nYou can either send it now or you can `re-type` the command.",
     "command.removerole.prompt.role.retry": "Please give me a `role` to continue `(Mention/ID)`. \nYou can either send it now or you can `re-type` the command.",
-    "command.removerole.embed.desc.one": "already doesn't have the",
+    "command.removerole.embed.desc.one": "already didn't have the", 
     "command.removerole.embed.desc.two": "role.",
 
     "command.setprefix.desc.content": "Set the bot's prefix for this server",
@@ -236,10 +242,8 @@
     "command.help.embedtwo.desc.nine": "No syntax",
 
     "command.invite.desc.content": "Invite me to your server!",
-    "command.invite.iembed.desc.one": "Invite",
-    "command.invite.iembed.desc.two": "me with `ADMINISTRATOR` perms! `(Recommended)` \n or \n",
-    "command.invite.iembed.desc.three": "me with `ESSENTIAL` perms! `(2nd best option)`\n or \n",
-    "command.invite.iembed.desc.four": "me with only `SEND MESSAGES` perms! `(Not Recommended)`\n \nThe reason why I recommend administrator is so the bot can do \nmost stuff like delete messages after sent commands, send \na message to a channel in lockdown, etc. without interruptions! \nOr if you're not comfortable with that you can pick the \n\"essential\" permissions.",
+    "command.invite.iembed.desc.one": "Click here!",
+    "command.invite.iembed.desc.two": "(You can pick and choose what \npermissions to give me, or keep it as is)",
 
     "command.ping.desc.content": "Shows the bot message latency and API latency",
 
