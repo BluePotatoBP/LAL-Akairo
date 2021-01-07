@@ -1,6 +1,5 @@
 const { Command } = require('discord-akairo');
-const Discord = require('discord.js');
-const { crimson } = require('../../assets/colors.json');
+const chalk = require('chalk');
 
 class Restart extends Command {
 	constructor() {
@@ -22,6 +21,11 @@ class Restart extends Command {
 
 		try {
 			await message.react('✅');
+			console.log(
+				`${debug('[DEBUG]')} '${message.author.tag}'[${message.author.id}] in '${message.guild.name}'[${message
+					.guild.id}] used: \n${chalk.gray(`${process.env.PREFIX}restart`)}`
+			);
+
 			process.exit();
 		} catch (error) {
 			console.log(error);

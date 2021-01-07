@@ -88,7 +88,7 @@ class Client extends AkairoClient {
 
 		this.commandHandler = new CommandHandler(this, {
 			prefix: async (message) => {
-				let [ data ] = await DB.query(`SELECT * FROM prefixes WHERE guildId = ?`, [ message.guild.id ]);
+				let [ data ] = await DB.query(`SELECT * FROM prefixes WHERE guild = ?`, [ message.guild.id ]);
 				let customPrefix;
 
 				if (data.length === 0) {

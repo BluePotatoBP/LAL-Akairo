@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
-const { darkRed } = require('../../assets/colors.json');
+const { darkRed } = require('../../../assets/colors.json');
 
 class Addrole extends Command {
 	constructor() {
@@ -55,7 +55,8 @@ class Addrole extends Command {
 			await m.roles.remove(r.id);
 			await message.react('<a:check:773208316624240710>');
 		} catch (error) {
-			message.channel.send(error);
+			console.log(error);
+			message.channel.send("Please move my role above the one you're trying to remove.");
 		}
 	}
 }

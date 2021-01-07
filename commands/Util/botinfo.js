@@ -1,6 +1,7 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const { crimson } = require('../../assets/colors.json');
+const Akairo = require('discord-akairo');
 
 class Botinfo extends Command {
 	constructor() {
@@ -10,7 +11,9 @@ class Botinfo extends Command {
 			cooldown: 10000,
 			ownerOnly: false,
 			description: {
-				content: 'Shows information about the bot'
+				content: 'Shows information about the bot',
+				usage: '',
+				syntax: ''
 			}
 		});
 	}
@@ -18,7 +21,9 @@ class Botinfo extends Command {
 	async exec(message) {
 		message.delete().catch((e) => {});
 
-		let bicon = client.user.avatarURL({ dynamic: true });
+		let bicon = client.user.avatarURL({
+			dynamic: true
+		});
 		let seconds = parseInt((client.uptime / 1000) % 60),
 			minutes = parseInt((client.uptime / (1000 * 60)) % 60),
 			hours = parseInt((client.uptime / (1000 * 60 * 60)) % 24);
@@ -41,6 +46,14 @@ class Botinfo extends Command {
 				true
 			)
 			.addField(
+				`**${lang(message, 'command.botinfo.embed.field.six')}**`,
+				`${lang(message, 'command.botinfo.embed.field.seven')} \`${client.users.cache.size}\`
+			${lang(message, 'command.botinfo.embed.field.eight')} \`${client.guilds.cache
+					.size}\` <a:blobSnowball1:773207107376906241><a:blobSnowball2:773207107398926357>
+			${lang(message, 'command.botinfo.embed.field.nine')} \`${client.channels.cache.size}\``,
+				true
+			)
+			.addField(
 				`**${lang(message, 'command.botinfo.embed.field.four')}**`,
 				`\`${client.user.createdAt.toUTCString().substr(0, 16)}\` <a:blobdj:605180387584507917>`,
 				true
@@ -51,13 +64,19 @@ class Botinfo extends Command {
 				true
 			)
 			.addField(
-				`**${lang(message, 'command.botinfo.embed.field.six')}**`,
-				`${lang(message, 'command.botinfo.embed.field.seven')} \`${client.users.cache.size}\` 
-            \n${lang(message, 'command.botinfo.embed.field.eight')} \`${client.guilds.cache
-					.size}\` <a:blobSnowball1:773207107376906241><a:blobSnowball2:773207107398926357>\n${lang(
-					message,
-					'command.botinfo.embed.field.nine'
-				)} \`${client.channels.cache.size}\``,
+				`**Frameworks**`,
+				`Akairo: \`v${Akairo.version}\`\nDiscordJS: \`v${Discord.version}\`\nNodeJS: \`${process.version}\``,
+				true
+			)
+			.addField(
+				`**Help**`,
+				`If you need additional help you can join the support server [here.](https://discord.gg/v8zkSc9)`,
+				true
+			)
+			.addField(
+				`**Invite**`,
+				`If you want to invite the bot you can do so [here.](https://discordapp.com/oauth2/authorize?client_id=${client
+					.user.id}&scope=bot&permissions=2081291519)`,
 				true
 			)
 			.setFooter(`🎉 Copyright © BluePotatoBP - 2020 🎉`, bicon)

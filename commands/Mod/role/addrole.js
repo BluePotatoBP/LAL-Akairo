@@ -1,6 +1,6 @@
 const { Command, Util } = require('discord-akairo');
 const Discord = require('discord.js');
-const { crimson } = require('../../assets/colors.json');
+const { crimson } = require('../../../assets/colors.json');
 
 class Addrole extends Command {
 	constructor() {
@@ -59,7 +59,8 @@ class Addrole extends Command {
 			await m.roles.add(r.id);
 			await message.react('<a:check:773208316624240710>');
 		} catch (error) {
-			message.channel.send(error);
+			console.log(error);
+			message.channel.send("Please move my role above the one you're trying to add.");
 		}
 	}
 }

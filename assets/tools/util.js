@@ -30,7 +30,7 @@ module.exports = {
 				return output;
 			}
 		} else {
-			input = s;
+			//input = s;
 			return input;
 		}
 	},
