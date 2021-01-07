@@ -35,9 +35,9 @@ class Color extends Command {
 
 		try {
 			let CRed = hexRgb(c).red;
-			let CGreen = hexRgb(c).red;
-			let CBlue = hexRgb(c).red;
-			let CAlpha = hexRgb(c).red;
+			let CGreen = hexRgb(c).green;
+			let CBlue = hexRgb(c).blue;
+			let CAlpha = hexRgb(c).alpha;
 
 			let embed = new Discord.MessageEmbed()
 				.setAuthor(message.author.username, message.author.avatarURL({ dynamic: true }))
