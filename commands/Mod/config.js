@@ -63,7 +63,7 @@ class Config extends Command {
 						.username}*\n
 								 ┌─────────────────┄┄┄┄
 								 **├ Logs Channel:** ${logsData[0].channel ? `<#${logsData[0].channel}>` : '`-`'}
-								 **├ Staff Role: ᲼ ᲼** \`${staffRole}\`
+								 **├ Staff Role: ᲼ ᲼** ${staffRole}
 								 **├ Guild Prefix: ᲼** ${prefixData[0].prefix ? `\`${prefixData[0].prefix}\`` : `\`${process.env.PREFIX}\``}
 								 └─────────────────┄┄┄┄
 								 \n**INFO:** To change any of these settings use\n\`${prefixData[0].prefix

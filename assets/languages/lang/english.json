@@ -218,7 +218,7 @@
     "command.color.prompt.start": "Please provide me with a **#hex** color code. \nYou can either send it now or you can `re-type` the command.",
     "command.color.prompt.retry": "Please provide a valid color. \nYou can either send it now or you can `re-type` the command.",
     "command.color.embed.field1": "Hex value:",
-    "command.color.embed.field2": "RGBA value:",
+    "command.color.embed.field2": "RGB value:",
     "command.color.bigError": "Please give me a **valid hex color**. \nYou can `edit` the last message or `re-type` the command.",
 
     "command.help.desc.content": "Shows you this message",

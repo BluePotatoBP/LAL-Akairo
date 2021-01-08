@@ -218,7 +218,7 @@
     "command.color.prompt.start": "Bitte gib einen **#hex** Farbcode an.\nDu kannst es jetzt senden oder einfach den Command noch einmal schreiben.",
     "command.color.prompt.retry": "Bitte gib eine gültige Farbe an.\nDu kannst es jetzt senden oder einfach den Command noch einmal schreiben.",
     "command.color.embed.field1": "Hex Wert:",
-    "command.color.embed.field2": "RGBA Wert:",
+    "command.color.embed.field2": "RGB Wert:",
     "command.color.bigError": "Bitte gib einen gültigen **hex Farbcode**. \nDu kannst die Nachricht `bearbeiten` or den Comman `wiederholen`.",
 
     "command.help.desc.content": "Zeigt diese Nachricht",
