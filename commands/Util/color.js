@@ -62,7 +62,7 @@ class Color extends Command {
 				.setAuthor(message.author.username, message.author.avatarURL({ dynamic: true }))
 				.addField(
 					lang(message, 'command.color.embed.field1'),
-					`${c} [[?]](https://gist.github.com/BluePotatoBP/446f180644b331d9d71cfe24575f5adc)`
+					`${c} [[?]](https://gist.github.com/BluePotatoBP/446f180644b331d9d71cfe24575f5adc 'If the embed and image colors dont match, click here.')`
 				)
 				.addField(lang(message, 'command.color.embed.field2'), `${CRed}, ${CGreen}, ${CBlue}`)
 				.setThumbnail('attachment://color.png')
