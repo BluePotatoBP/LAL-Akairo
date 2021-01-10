@@ -1,7 +1,5 @@
 const { Command, Flag } = require('discord-akairo');
 const { MessageEmbed } = require('discord.js');
-const { MessageManager } = require('discord.js');
-const Discord = require('discord.js');
 const { crimson } = require('../../assets/colors.json');
 
 class Config extends Command {

@@ -43,7 +43,7 @@ class Say extends Command {
 			description: {
 				content: 'Make me say anything!',
 				usage:
-					'<text>\n \n[-e|-embed]  { [-av|-avatar], [-gi|-guildicon],\n [-ts|-timestamp], [-c:#hex|-color:#hex] }\n \n[-owo|-uwu|-uvu (intensity)], [-f|-flip], [-tts]',
+					'<text>\n \n[-e|-embed]  { [-av|-avatar], [-gi|-guildicon],\n [-ts|-timestamp], [color:#hex] }\n \n[-owo|-uwu|-uvu (intensity)], [-f|-flip], [-tts]',
 				syntax: '<> - necessary, [] - optional, {} - embed compatible'
 			},
 			args: [
@@ -79,8 +79,15 @@ class Say extends Command {
 				{
 					id: 'color',
 					match: 'option',
-					flag: [ '-c:', '-color:' ],
+					flag: [ '-color:' ],
 					default: crimson
+				},
+				{
+					id: 'channel',
+					match: 'option',
+					type: 'channel',
+					flag: [ '-channel: ' ],
+					default: (message) => message.channel
 				},
 				{
 					// Text type flags
@@ -158,7 +165,7 @@ class Say extends Command {
 					// Checks if both avatar and guildicon flags are in the message
 					if (args.avatar && args.guildicon) {
 						return message.channel.send(
-							'Pick one or the other, smh my head my head... <:thonkingong:568878623910526997>'
+							'Pick avatar or guild icon, smh my head my head... <:thonkingong:568878623910526997>'
 						);
 					}
 					// Checks if there should be a timestamp in the embed
@@ -174,24 +181,35 @@ class Say extends Command {
 					}
 					//#endregion EmbedTextTypes
 
-					return message.channel.send(eembed);
+					if (args.channel) {
+						try {
+							let ch = message.guild.channels.cache.get(args.channel);
+							console.log(ch);
+							message.ch.send(eembed);
+						} catch (error) {
+							console.log(error);
+							message.channel.send(eembed);
+						}
+					}
 
 					//#region NormalSay
 					// Check what type of text the user wants to be sent
-				} else if (args.uvu) {
-					return message.channel.send(owoify(args.text), 'uvu');
-				} else if (args.uwu) {
-					return message.channel.send(owoify(args.text), 'uwu');
-				} else if (args.owo) {
-					return message.channel.send(owoify(args.text), 'owo');
-				} else if (args.tts) {
-					return message.channel.send(args.text, { tts: true });
-				} else if (args.flip) {
-					return message.channel.send(flipText);
 				} else {
-					return message.channel.send(args.text);
+					if (args.uvu) {
+						return message.channel.send(owoify(args.text), 'uvu');
+					} else if (args.uwu) {
+						return message.channel.send(owoify(args.text), 'uwu');
+					} else if (args.owo) {
+						return message.channel.send(owoify(args.text), 'owo');
+					} else if (args.tts) {
+						return message.channel.send(args.text, { tts: true });
+					} else if (args.flip) {
+						return message.channel.send(flipText);
+					} else {
+						return message.channel.send(args.text);
+					}
+					//#endregion NormalSay
 				}
-				//#endregion NormalSay
 			}
 		} catch (error) {
 			console.log(error);
