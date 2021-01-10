@@ -25,6 +25,21 @@ npm run dev
 * Discord: [BluePotatoBP#5214](https://discord.gg/v8zkSc9)
 * Github: [@bluepotatobp](https://github.com/bluepotatobp)
 
+# List of features
+> Fun (13):
+*eightball, bean, game, google, hack, hug, ppsize, rps, say, slap, urban, warm, what*
+> Mod (8):
+*setprefix, ban, config, kick, language, poll, role, slowmode*
+> Nsfw (8):
+>!boobs , feet , hentai , neko , panties , randomporn , pussy , thighs
+> Util (9):
+*avatar, botinfo, changelog, color, help, invite, ping, serverinfo, userinfo*
+
+**You can invite me [here](https://discordapp.com/oauth2/authorize?client_id=528001824566018068&scope=bot&permissions=2081291519 'Click here for the invite link!')**
+# Images
+<img src="https://i.imgur.com/J5pHEpo.png" data-canonical-src="https://i.imgur.com/J5pHEpo.png" width="500"/>
+<img src="https://i.imgur.com/PesHXmj.png" data-canonical-src="https://i.imgur.com/PesHXmj.png" width="500"/>
+
 ## Show your support
 
 Give a ⭐️ if this project helped you!
