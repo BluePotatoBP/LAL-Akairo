@@ -57,6 +57,13 @@ class Config extends Command {
             staffRole = '-';
         }
 
+        let prefixx;
+        if (!prefixData.length === 0) {
+            prefixx = '.';
+        } else {
+            prefixx = prefixData[0].prefix;
+        }
+
         if (action === 'list') {
             const embed = new MessageEmbed()
                 .setAuthor(message.author.username, message.author.avatarURL({ dynamic: true }))
@@ -66,7 +73,7 @@ class Config extends Command {
 								 ┌─────────────────┄┄┄┄
 								 **├ Logs Channel:** ${logsData[0].channel ? `<#${logsData[0].channel}>` : '`-`'}
 								 **├ Staff Role: ᲼ ᲼** ${staffRole}
-								 **├ Guild Prefix: ᲼** ${prefixData[0].prefix ? `\`${prefixData[0].prefix}\`` : `\`${process.env.PREFIX}\``}
+								 **├ Guild Prefix: ᲼** ${prefixx}
 								 └─────────────────┄┄┄┄
 								 \n**INFO:** To change any of these settings use\n\`${prefixData[0].prefix
 										? process.env.PREFIX
