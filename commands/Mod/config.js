@@ -58,7 +58,7 @@ class Config extends Command {
         }
 
         let prefixx;
-        if (!prefixData.length === 0) {
+        if (prefixData.length === 0) {
             prefixx = '.';
         } else {
             prefixx = prefixData[0].prefix;
