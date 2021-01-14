@@ -64,6 +64,13 @@ class Config extends Command {
             prefixx = prefixData[0].prefix;
         }
 
+        let logsChannel;
+        if (logsData.length === 0) {
+            logsChannel = '-';
+        } else {
+            logsChannel = logsData[0].channel;
+        }
+
         if (action === 'list') {
             const embed = new MessageEmbed()
                 .setAuthor(message.author.username, message.author.avatarURL({ dynamic: true }))
@@ -71,7 +78,7 @@ class Config extends Command {
                     `This is all the possible settings you can edit\nto change the behaviour of *${client.user
 						.username}*\n
 								 ┌─────────────────┄┄┄┄
-								 **├ Logs Channel:** ${logsData[0].channel ? `<#${logsData[0].channel}>` : '`-`'}
+								 **├ Logs Channel:** ${logsChannel}
 								 **├ Staff Role: ᲼ ᲼** ${staffRole}
 								 **├ Guild Prefix: ᲼** ${prefixx}
 								 └─────────────────┄┄┄┄
