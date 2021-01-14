@@ -75,9 +75,7 @@ class Config extends Command {
 								 **├ Staff Role: ᲼ ᲼** ${staffRole}
 								 **├ Guild Prefix: ᲼** ${prefixx}
 								 └─────────────────┄┄┄┄
-								 \n**INFO:** To change any of these settings use\n\`${prefixData[0].prefix
-										? process.env.PREFIX
-										: '.'}config <logs/staffrole/prefix>\``
+								 \n**INFO:** To change any of these settings use\n\`${prefixx}config <logs/staffrole/prefix>\``
                 )
                 .setColor(crimson);
 
