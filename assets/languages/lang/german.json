@@ -36,8 +36,8 @@
     "command.bean.prompt.retry": "Welchen Nutzer willst du beanen? `(@Erwähnung/Benutzername/Diskriminator/ID)`.\nDu kannst es jetzt senden oder einfach den Command noch einmal schreiben.",
 
     "command.google.desc.content": "Für diejenigen die nicht selbständig Google nutzen können",
-    "command.google.prompt.start": "Wonach soll gesucht werden? `(@Erwähnung/Benutzername/Diskriminator/ID)`.\nDu kannst es jetzt senden oder einfach den Command noch einmal schreiben.",
-    "command.google.prompt.retry": "Wonach soll gesucht werden? `(@Erwähnung/Benutzername/Diskriminator/ID)`.\nDu kannst es jetzt senden oder einfach den Command noch einmal schreiben.",
+    "command.google.prompt.start": "Wonach soll gesucht werden? \nDu kannst es jetzt senden oder einfach den Command noch einmal schreiben.",
+    "command.google.prompt.retry": "Wonach soll gesucht werden? \nDu kannst es jetzt senden oder einfach den Command noch einmal schreiben.",
     "command.google.embed.desc": "Ich habe es für dich gegoogled!",
 
     "command.hack.desc.content": "Hacke in die Benutzerkonten.",

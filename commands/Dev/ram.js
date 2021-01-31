@@ -21,7 +21,7 @@ class Ram extends Command {
 			let usage = usageMb.toFixed(2);
 
 			let rembed = new Discord.MessageEmbed()
-				.setAuthor(message.author.tag, message.author.avatarURL({ dynamic: true }))
+				.setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
 				.setDescription(`Im currently chewing on \`${usage}mb\` of RAM <:sadpepe:774640053020000266>`)
 				.setColor(crimson)
 				.setTimestamp();

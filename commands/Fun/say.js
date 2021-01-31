@@ -3,33 +3,7 @@ const Discord = require('discord.js');
 const owoify = require('owoify-js').default;
 const mapping = '¡"#$%⅋,)(*+\'-˙/0ƖᘔƐᔭϛ9Ɫ86:;<=>?@∀qƆpƎℲפHIſʞ˥WNOԀQɹS┴∩ΛMX⅄Z[/]^_`ɐqɔpǝɟƃɥᴉɾʞlɯuodbɹsʇnʌʍxʎz{|}~';
 const OFFSET = '!'.charCodeAt(0);
-const {
-    red,
-    lightRed,
-    darkRed,
-    pink,
-    darkPink,
-    yellow,
-    lightYellow,
-    orange,
-    darkOrange,
-    darkGreen,
-    lightGreen,
-    veryBrightGreen,
-    blue,
-    darkBlue,
-    lightBlue,
-    purple,
-    lightPurple,
-    black,
-    gray,
-    white,
-    dcBlack,
-    banana,
-    clear,
-    gold,
-    crimson
-} = require('../../assets/colors.json');
+const { red, lightRed, darkRed, pink, darkPink, yellow, lightYellow, orange, darkOrange, darkGreen, lightGreen, veryBrightGreen, blue, darkBlue, lightBlue, purple, lightPurple, black, gray, white, dcBlack, banana, clear, gold, ultraBlue, checkGreen, crimson } = require('../../assets/colors.json');
 
 class Say extends Command {
     constructor() {
@@ -117,7 +91,7 @@ class Say extends Command {
         try {
             if (!args.text) {
                 const noArgs = new Discord.MessageEmbed()
-                    .setAuthor(message.author.username, message.author.avatarURL({ dynamic: true }))
+                    .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
                     .setDescription(lang(message, 'command.say.noArgs'))
                     .setColor(crimson);
 
@@ -148,7 +122,7 @@ class Say extends Command {
 
                     // Checks if the embed should have the user avatar as the thumbnail
                     if (args.avatar) {
-                        eembed.setThumbnail(message.author.avatarURL({ dynamic: true }));
+                        eembed.setThumbnail(message.author.displayAvatarURL({ dynamic: true }));
                     }
                     // Checks if the embed should have the guild icon as the thumbnail
                     if (args.guildicon) {

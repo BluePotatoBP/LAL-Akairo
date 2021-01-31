@@ -4,3 +4,4 @@ scraps
 run.bat
 .vscode
 .jsbeautifyrc
+commands/Dev/test.js

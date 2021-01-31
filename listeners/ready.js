@@ -15,19 +15,6 @@ class ReadyListener extends Listener {
         global.client = this.client;
         let statuses = [` you type ${prefix}help`, ' the support server!'];
 
-        // Keep the database alive (ping it every 2.5 minutes)
-        setInterval(async () => {
-            let [data] = await DB.query(`SELECT * FROM keepAlive`);
-
-            if (data.length === 0) {
-                await DB.query(`INSERT INTO keepAlive VALUES(?)`, ['.']);
-                await DB.query('DELETE FROM keepAlive');
-            } else {
-                await DB.query('DELETE FROM keepAlive');
-                console.log('[DEBUG] No items were deleted (Table was already empty)');
-            }
-        }, 150000);
-
         // Automatic status changer
         setInterval(() => {
             let status = statuses[Math.floor(Math.random() * statuses.length)];
@@ -69,19 +56,29 @@ class ReadyListener extends Listener {
             }
         }, 300000);
 
-        /* // Anti advertisement
-        let [data3] = await DB.query(`SELECT * FROM antiAdvert WHERE guild = ?`, [antiAdvertMessage.guild.id]);
+        // Anti advertisement
+        let [data3] = await DB.query(`SELECT * FROM antiAdvert`);
 
-        if (data3.length === 0) {
-            for (let i = 0; i < data3.length; i++) {
-                antiAdvertise.push({
-                    guild: message.guild.id,
-                    enabled: enabled,
-                    exclude: exclude,
-                    whitelist: whitelist
-                })
-            }
-        } */
+        for (let i = 0; i < data3.length; i++) {
+            antiAdvertise.push({
+                guild: data3[i].guild,
+                enabled: data3[i].enabled,
+                excludeStaff: data3[i].excludeStaff,
+                excludeBots: data3[i].excludeBots,
+                warn: data3[i].warn,
+                preset: data3[i].preset
+            })
+        }
+
+        //StaffRole 
+        let [data4] = await DB.query(`SELECT * FROM staffrole`);
+
+        for (let i = 0; i < data4.length; i++) {
+            staffRole.push({
+                guild: data4[i].guild,
+                role: data4[i].role,
+            })
+        }
 
 
 

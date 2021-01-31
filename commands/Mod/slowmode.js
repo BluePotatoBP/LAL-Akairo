@@ -44,7 +44,7 @@ class Slowmode extends Command {
 				.setTitle(lang(message, 'command.slowmode.embed.title'))
 				.setDescription(lang(message, 'command.slowmode.embed.desc'))
 				.setColor(crimson)
-				.setFooter(message.author.username, message.author.avatarURL({ dynamic: true }))
+				.setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
 				.setTimestamp();
 			message.channel.send(embed2);
 		} else {
@@ -74,7 +74,7 @@ class Slowmode extends Command {
 
 			embed.setTitle(`${slowMessage} \`${nr}\` ${lang(message, 'command.slowmode.embed.slowMessage.seconds')}`);
 			embed.setColor(crimson);
-			embed.setFooter(message.author.username, message.author.avatarURL({ dynamic: true }));
+			embed.setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true }));
 			embed.setTimestamp();
 			message.channel.send(embed);
 		}

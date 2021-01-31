@@ -47,7 +47,7 @@ class Ping extends Command {
 
                 const pembed = new Discord.MessageEmbed()
                     .setDescription(`🏓 Pong! \n \n**Bot Latency:** \`${ping}ms\` \n**API Latency:** \`${Math.round(this.client.ws.ping).toString()}ms\`\n**Database latency:** \`${dbPing}\`\n \n[Discord Status Page](https://status.discord.com/)`)
-                    .setThumbnail(this.client.user.avatarURL({ dynamic: true }))
+                    .setThumbnail(this.client.user.displayAvatarURL({ dynamic: true }))
                     .setColor(crimson)
                 m.edit(`${response}`, pembed)
             })

@@ -17,11 +17,9 @@ class test extends Command {
             },
             args: [{
                 id: 's',
-                match: 'text',
-                type: 'string',
                 prompt: {
-                    start: 'benis give me username',
-                    retry: 'benis 2 give me username'
+                    start: 'benis give me shit 1',
+                    retry: 'benis give me shit 2'
                 }
             }]
         });
@@ -30,7 +28,21 @@ class test extends Command {
     async exec(message, { s }) {
         message.delete({ timeout: 60000 }).catch((e) => {});
 
-        // Mojang API
+        var expression = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gi;
+        var regex = new RegExp(expression);
+
+        if (s.match(regex)) {
+            message.util.send(`Successful match`);
+        } else {
+            message.util.send("No match");
+
+            let a = ['test']
+            if ('test' === a[0]) {
+                message.channel.send('yes')
+            }
+        }
+
+        /* // Mojang API
         const mojangData = await fetch(`https://api.mojang.com/users/profiles/minecraft/${s}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }

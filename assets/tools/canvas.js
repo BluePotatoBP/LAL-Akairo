@@ -10,7 +10,7 @@ module.exports = class CanvasUtil {
         ctx.putImageData(data, x, y);
         return ctx;
     }
- 
+
     static invert(ctx, x, y, width, height) {
         const data = ctx.getImageData(x, y, width, height);
         for (let i = 0; i < data.data.length; i += 4) {
@@ -21,7 +21,7 @@ module.exports = class CanvasUtil {
         ctx.putImageData(data, x, y);
         return ctx;
     }
- 
+
     static silhouette(ctx, x, y, width, height) {
         const data = ctx.getImageData(x, y, width, height);
         for (let i = 0; i < data.data.length; i += 4) {
@@ -32,7 +32,7 @@ module.exports = class CanvasUtil {
         ctx.putImageData(data, x, y);
         return ctx;
     }
- 
+
     static sepia(ctx, x, y, width, height) {
         const data = ctx.getImageData(x, y, width, height);
         for (let i = 0; i < data.data.length; i += 4) {
@@ -44,10 +44,10 @@ module.exports = class CanvasUtil {
         ctx.putImageData(data, x, y);
         return ctx;
     }
- 
+
     static contrast(ctx, x, y, width, height) {
         const data = ctx.getImageData(x, y, width, height);
-        const factor = (259 / 100) + 1;
+        const factor = (15 / 100) + 1;
         const intercept = 128 * (1 - factor);
         for (let i = 0; i < data.data.length; i += 4) {
             data.data[i] = (data.data[i] * factor) + intercept;
@@ -57,7 +57,7 @@ module.exports = class CanvasUtil {
         ctx.putImageData(data, x, y);
         return ctx;
     }
- 
+
     static distort(ctx, amplitude, x, y, width, height, strideLevel = 4) {
         const data = ctx.getImageData(x, y, width, height);
         const temp = ctx.getImageData(x, y, width, height);
@@ -76,7 +76,7 @@ module.exports = class CanvasUtil {
         ctx.putImageData(data, x, y);
         return ctx;
     }
- 
+
     static drawImageWithTint(ctx, image, color, x, y, width, height) {
         const { fillStyle, globalAlpha } = ctx;
         ctx.fillStyle = color;
@@ -86,7 +86,7 @@ module.exports = class CanvasUtil {
         ctx.fillStyle = fillStyle;
         ctx.globalAlpha = globalAlpha;
     }
- 
+
     static shortenText(ctx, text, maxWidth) {
         let shorten = false;
         while (ctx.measureText(text).width > maxWidth) {
@@ -95,7 +95,7 @@ module.exports = class CanvasUtil {
         }
         return shorten ? `${text}...` : text;
     }
- 
+
     static wrapText(ctx, text, maxWidth) {
         return new Promise(resolve => {
             if (ctx.measureText(text).width < maxWidth) return resolve([text]);

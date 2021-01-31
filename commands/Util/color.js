@@ -59,7 +59,7 @@ class Color extends Command {
 
 			// Output embed
 			let embed = new Discord.MessageEmbed()
-				.setAuthor(message.author.username, message.author.avatarURL({ dynamic: true }))
+				.setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
 				.addField(
 					lang(message, 'command.color.embed.field1'),
 					`${c} [[?]](https://gist.github.com/BluePotatoBP/446f180644b331d9d71cfe24575f5adc 'If the embed and image colors dont match, click here.')`

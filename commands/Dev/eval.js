@@ -83,7 +83,7 @@ class Eval extends Command {
 										let evalembed = new Discord.MessageEmbed()
 											.setAuthor(
 												'I did it boss, maywe thewes an oopsie hewe or thewe tho...',
-												client.user.avatarURL({ dynamic: true })
+												client.user.displayAvatarURL({ dynamic: true })
 											)
 											.addField('Input Code', `\`\`\`\n${code}\n\`\`\``)
 											.addField('Output Code', `\n[Click here](${data}) for full output`, {
@@ -95,7 +95,7 @@ class Eval extends Command {
 										let embedo = new Discord.MessageEmbed()
 											.setAuthor(
 												message.author.username,
-												message.author.avatarURL({ dynamic: true })
+												message.author.displayAvatarURL({ dynamic: true })
 											)
 											.setDescription(
 												`<:redxmark:627905972731510784> Too few arguments given. \n \nUsage: \`${module
@@ -114,7 +114,7 @@ class Eval extends Command {
 					});
 				} catch (e) {
 					let badevalembed = new Discord.MessageEmbed()
-						.setAuthor('An error occurred whilst evaluating:', client.user.avatarURL({ dynamic: true }))
+						.setAuthor('An error occurred whilst evaluating:', client.user.displayAvatarURL({ dynamic: true }))
 						.addField('Input Code', `\`\`\`\n${code}\n\`\`\``)
 						.addField('Error', `\`\`\`\n${e.message}\n\`\`\``)
 						.setColor(darkRed);
@@ -125,7 +125,7 @@ class Eval extends Command {
 					let evalembed = new Discord.MessageEmbed()
 						.setAuthor(
 							'I did it boss, maywe thewes an oopsie hewe or thewe tho...',
-							client.user.avatarURL({ dynamic: true })
+							client.user.displayAvatarURL({ dynamic: true })
 						)
 						.addField('Input Code', `\`\`\`\n${code}\n\`\`\``)
 						.addField('Output Code', `\nJust below this, boss`)
@@ -136,7 +136,7 @@ class Eval extends Command {
 					);
 				} else {
 					let embedo = new Discord.MessageEmbed()
-						.setAuthor(message.author.username, message.author.avatarURL({ dynamic: true }))
+						.setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
 						.setDescription(
 							`<:redxmark:627905972731510784> Too few arguments given. \n \nUsage: \`${module.exports.help
 								.name} ${module.exports.help.usage}\` \nAliases: \`none\``
@@ -147,7 +147,7 @@ class Eval extends Command {
 			}
 		} catch (error) {
 			let evalembed = new Discord.MessageEmbed()
-				.setAuthor('I did it boss, bwut thewes an oopsie fow suwe...', client.user.avatarURL({ dynamic: true }))
+				.setAuthor('I did it boss, bwut thewes an oopsie fow suwe...', client.user.displayAvatarURL({ dynamic: true }))
 				.addField('Input Code', `\`\`\`\n${code}\n\`\`\``)
 				.addField('Output Code', `\n\`\`\`${error.message}\`\`\`\n`, { maxLength: 1900 })
 				.setColor(darkRed);

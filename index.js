@@ -13,13 +13,15 @@ global.info = chalk.keyword('orange');
 global.debug = chalk.black.bgWhite;
 global.promptFilter = [];
 global.guildLanguages = [];
+global.staffRole = [];
 global.antiAdvertise = [];
+global.DB = require('./assets/tools/establishDBConnection')
 global.lang = require('./assets/languages/languageTranslate');
 let promptMsg;
 
 // Connect to database
 (async () => {
-    global.DB = await mysql2.createConnection({
+    global.dbConnection = await mysql2.createConnection({
         host: process.env.DB_HOST,
         user: process.env.DB_USER,
         password: process.env.DB_PASS,
@@ -31,9 +33,7 @@ let promptMsg;
 
 // Custom prompt system
 async function editPrompt(message, embed) {
-    let promptMsgFind = await promptFilter.find(
-        (c) => c.userID === message.author.id && c.channelID === message.channel.id
-    );
+    let promptMsgFind = await promptFilter.find(c => c.userID === message.author.id && c.channelID === message.channel.id);
 
     if (!promptMsgFind) {
         promptMsg = await message.util.send(embed);
@@ -41,16 +41,26 @@ async function editPrompt(message, embed) {
         promptFilter.push({
             userID: message.author.id,
             msgID: promptMsg.id,
-            channelID: message.channel.id
+            channelID: message.channel.id,
         });
+        return;
     }
-
+    //MSG FOUND
     if (promptMsgFind) {
-        let promptMsgFetch = await message.channel.messages.fetch(promptMsgFind.msgID);
-        if (!promptMsgFetch) promptMsg = await message.util.send(embed);
-
-        promptMsg = await promptMsgFetch.edit(embed);
+        try {
+            let promptMsgFetch = await message.channel.messages.fetch(promptMsgFind.msgID);
+            promptMsg = await promptMsgFetch.edit(embed);
+            return
+        } catch (e) {
+            promptMsg = await message.util.send(embed);
+            promptFilter.push({
+                userID: message.author.id,
+                msgID: promptMsg.id,
+                channelID: message.channel.id,
+            });
+        }
     }
+    return promptMsg;
 }
 //#endregion Utility for other stuff
 
@@ -59,17 +69,19 @@ class Client extends AkairoClient {
     constructor() {
         super({
             ownerID: process.env.OWNER
+        }, {
+            disableMentions: 'everyone',
         });
 
         this.commandHandler = new CommandHandler(this, {
             prefix: async (message) => {
+                if (message.channel.type === 'dm') return process.env.PREFIX;
                 let [data] = await DB.query(`SELECT * FROM prefixes WHERE guild = ?`, [message.guild.id]);
                 let customPrefix;
                 if (data.length === 0) { customPrefix = process.env.PREFIX } else { customPrefix = data[0].prefix }
                 return customPrefix;
             },
             blockBots: true,
-            disableMentions: 'everyone',
             blockClient: true,
             allowMention: true,
             automateCategories: false,
@@ -138,6 +150,6 @@ class Client extends AkairoClient {
     }
 }
 
-const client = new Client({ ws: { intents: ['GUILD_PRESENCES', 'GUILD_MEMBERS'] } });
+const client = new Client({ ws: { intents: ['GUILD_PRESENCES', 'GUILD_MEMBERS'] }, disableMentions: 'all' });
 
 client.login();

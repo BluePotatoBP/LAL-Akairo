@@ -69,7 +69,7 @@ class HangmanGame {
 				'How To Play:',
 				'React to this message using the emoji \nthat look like letters (🅰️), usually named \n`:regional_indicator_<a,b,c...>:`'
 			)
-			//.setFooter(message.author.username, message.author.avatarURL({ dynamic: true }))
+			//.setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
 			.setTimestamp();
 
 		msg.channel.send(embed).then((emsg) => {
@@ -106,7 +106,7 @@ class HangmanGame {
 					'How To Play:',
 					'React to this message using the emoji \nthat look like letters (🅰️), usually named \n`:regional_indicator_<a,b,c...>:`'
 				)
-				//.setFooter(message.author.username, message.author.avatarURL({ dynamic: true }))
+				//.setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
 				.setTimestamp();
 			this.gameEmbed.edit(editEmbed);
 			this.waitForReaction();

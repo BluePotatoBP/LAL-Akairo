@@ -1,14 +1,14 @@
 const { Listener } = require('discord-akairo');
 
-module.exports = class antiAdvertisement extends Listener {
+module.exports = class antiAdvertEdit extends Listener {
     constructor() {
-        super('antiAdvertisement', {
-            event: 'message',
+        super('antiadvertedit', {
+            event: 'messageUpdate',
             emitter: 'client'
         });
     }
 
-    async exec(message) {
+    async exec(oldMessage, message) {
         if (message.channel.type === "dm") return;
         let cachedGuild = antiAdvertise.find(c => c.guild == message.guild.id)
         let regex;
@@ -56,5 +56,5 @@ module.exports = class antiAdvertisement extends Listener {
                 return del()
             }
         }
-    };
-}
+    }
+};

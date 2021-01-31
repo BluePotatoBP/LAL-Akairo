@@ -37,11 +37,11 @@ class Avatar extends Command {
 			.setColor(crimson);
 
 		avembed.setTitle(`Avatar for ${u.tag}`);
-		avatar = u.avatarURL({ dynamic: true, size: 4096 });
+		avatar = u.displayAvatarURL({ dynamic: true, size: 4096 });
 		avembed.setImage(avatar);
-		pngicon = u.avatarURL({ format: 'png', size: 4096 });
-		jpgicon = u.avatarURL({ format: 'jpg', size: 4096 });
-		gificon = u.avatarURL({ format: 'gif', size: 4096 });
+		pngicon = u.displayAvatarURL({ format: 'png', size: 4096 });
+		jpgicon = u.displayAvatarURL({ format: 'jpg', size: 4096 });
+		gificon = u.displayAvatarURL({ format: 'gif', size: 4096 });
 		avembed.setDescription(`Link as \n[PNG](${pngicon}) | [JPG](${jpgicon}) | [GIF](${gificon})`, true);
 
 		message.channel.send(avembed).catch((err) => console.log(err));

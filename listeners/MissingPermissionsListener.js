@@ -18,7 +18,7 @@ module.exports = class MissingPermissionsListener extends Listener {
 				const clientMP = client.util
 					.embed()
 					.setColor(darkRed)
-					.setAuthor(message.author.tag, message.author.avatarURL({ dynamic: true }))
+					.setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
 					.setDescription(`:x: Im missing the ${str} permissions.`);
 				return clientMP;
 			},
@@ -29,7 +29,7 @@ module.exports = class MissingPermissionsListener extends Listener {
 				const userMP = client.util
 					.embed()
 					.setColor(darkRed)
-					.setAuthor(message.author.tag, message.author.avatarURL({ dynamic: true }))
+					.setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
 					.setDescription(`:x: You are missing the ${str} permissions.`);
 				return userMP;
 			}

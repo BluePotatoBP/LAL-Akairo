@@ -69,7 +69,7 @@ class Eightball extends Command {
 
 		// If input is less then 3 return an error embed
 		let qembed = new Discord.MessageEmbed()
-			.setAuthor(message.author.username, message.author.avatarURL({ dynamic: true }))
+			.setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
 			.setDescription(lang(message, 'command.eightball.qembed.desc'))
 			.setFooter(`${lang(message, 'command.eightball.qembed.footer')} ${input}`)
 			.setColor(lightYellow)
@@ -81,7 +81,7 @@ class Eightball extends Command {
 		let ballembed = new Discord.MessageEmbed()
 			.setAuthor(
 				`${message.author.username} ${lang(message, 'command.eightball.ballembed.author')}`,
-				message.author.avatarURL({ dynamic: true })
+				message.author.displayAvatarURL({ dynamic: true })
 			)
 			.setThumbnail('https://browsergameita.com/images/discord-emoji-transparent-7.png')
 			.setColor(lightYellow)
