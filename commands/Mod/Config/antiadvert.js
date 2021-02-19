@@ -16,7 +16,7 @@ class AntiAdvert extends Command {
                 usage: '[enable|disable] [includestaff|excludestaff] [includebots|excludebots] [warn(togglable)] [preset light|moderate|heavy]',
                 syntax: '[] - optional'
             },
-            args: [{
+            args: [{ //#region args
                     id: 'enable',
                     match: 'flag',
                     flag: 'enable',
@@ -116,7 +116,7 @@ class AntiAdvert extends Command {
                         retry: (message) => lang(message, "command.antiadvert.args.preset.retry")
                     }
                 },
-            ]
+            ] //#endregion args
         });
     }
 
@@ -133,14 +133,18 @@ class AntiAdvert extends Command {
             .setTimestamp()
 
         if (enable || disable || includestaff || excludestaff || includebots || excludebots || warn || presetLight || presetModerate || presetHeavy) {
-
+            //#region Init
             ////////////////// UPDATE ENABLED STATE
             if (enable) {
                 if (getData.length === 0) {
-                    await DB.query(`INSERT INTO antiAdvert (guild, enabled) VALUES(?,?)`, [message.guild.id, 'true']);
+                    await DB.query(`INSERT INTO antiAdvert (guild, enabled, excludeStaff, excludeBots, warn, preset) VALUES(?,?,?,?,?,?)`, [message.guild.id, 'true', 'false', 'false', 'false', 'moderate']);
                     await antiAdvertise.push({
+                        enabled: 'true',
+                        excludeStaff: 'false',
+                        excludeBots: 'false',
+                        preset: 'moderate',
                         guild: message.guild.id,
-                        enabled: 'true'
+                        warn: 'false',
                     })
 
                     updateEmbed.addField(lang(message, "command.antiadvert.updateEmbed.changes.enabled"), `\`\`\`js\n${lang(message, "command.antiadvert.updateEmbed.changes.true")}\n\`\`\``)
@@ -156,10 +160,14 @@ class AntiAdvert extends Command {
                 }
             } else if (disable) {
                 if (getData.length === 0) {
-                    await DB.query(`INSERT INTO antiAdvert (guild, enabled) VALUES(?,?)`, [message.guild.id, 'false']);
+                    await DB.query(`INSERT INTO antiAdvert (guild, enabled, excludeStaff, excludeBots, warn, preset) VALUES(?,?,?,?,?,?)`, [message.guild.id, 'false', 'false', 'false', 'false', 'moderate']);
                     await antiAdvertise.push({
+                        enabled: 'false',
+                        excludeStaff: 'false',
+                        excludeBots: 'false',
+                        preset: 'moderate',
                         guild: message.guild.id,
-                        enabled: 'false'
+                        warn: 'false',
                     })
 
                     updateEmbed.addField(lang(message, "command.antiadvert.updateEmbed.changes.enabled"), `\`\`\`js\n${lang(message, "command.antiadvert.updateEmbed.changes.false")}\n\`\`\``)
@@ -178,10 +186,14 @@ class AntiAdvert extends Command {
             ////////////////// UPDATE STAFF EXCLUSION
             if (includestaff) {
                 if (getData.length === 0) {
-                    await DB.query(`INSERT INTO antiAdvert (guild, excludeStaff) VALUES(?,?)`, [message.guild.id, 'true']);
+                    await DB.query(`INSERT INTO antiAdvert (guild, enabled, excludeStaff, excludeBots, warn, preset) VALUES(?,?,?,?,?,?)`, [message.guild.id, 'false', 'true', 'false', 'false', 'moderate']);
                     await antiAdvertise.push({
+                        enabled: 'false',
+                        excludeStaff: 'true',
+                        excludeBots: 'false',
+                        preset: 'moderate',
                         guild: message.guild.id,
-                        excludeStaff: 'true'
+                        warn: 'false',
                     })
 
                     updateEmbed.addField(lang(message, "command.antiadvert.updateEmbed.changes.checkStaff"), `\`\`\`js\n${lang(message, "command.antiadvert.updateEmbed.changes.true")}\n\`\`\``)
@@ -198,10 +210,14 @@ class AntiAdvert extends Command {
 
             } else if (excludestaff) {
                 if (getData.length === 0) {
-                    await DB.query(`INSERT INTO antiAdvert (guild, excludeStaff) VALUES(?,?)`, [message.guild.id, 'false']);
+                    await DB.query(`INSERT INTO antiAdvert (guild, enabled, excludeStaff, excludeBots, warn, preset) VALUES(?,?,?,?,?,?)`, [message.guild.id, 'false', 'false', 'false', 'false', 'moderate']);
                     await antiAdvertise.push({
+                        enabled: 'false',
+                        excludeStaff: 'false',
+                        excludeBots: 'false',
+                        preset: 'moderate',
                         guild: message.guild.id,
-                        excludeStaff: 'false'
+                        warn: 'false',
                     })
 
                     updateEmbed.addField(lang(message, "command.antiadvert.updateEmbed.changes.checkStaff"), `\`\`\`js\n${lang(message, "command.antiadvert.updateEmbed.changes.false")}\n\`\`\``)
@@ -220,10 +236,14 @@ class AntiAdvert extends Command {
             ////////////////// UPDATE BOT EXCLUSION
             if (includebots) {
                 if (getData.length === 0) {
-                    await DB.query(`INSERT INTO antiAdvert (guild, excludeBots) VALUES(?,?)`, [message.guild.id, 'true']);
+                    await DB.query(`INSERT INTO antiAdvert (guild, enabled, excludeStaff, excludeBots, warn, preset) VALUES(?,?,?,?,?,?)`, [message.guild.id, 'false', 'false', 'true', 'false', 'moderate']);
                     await antiAdvertise.push({
+                        enabled: 'false',
+                        excludeStaff: 'false',
+                        excludeBots: 'true',
+                        preset: 'moderate',
                         guild: message.guild.id,
-                        excludeBots: 'true'
+                        warn: 'false',
                     })
 
                     updateEmbed.addField(lang(message, "command.antiadvert.updateEmbed.changes.checkBots"), `\`\`\`js\n${lang(message, "command.antiadvert.updateEmbed.changes.true")}\n\`\`\``)
@@ -240,10 +260,14 @@ class AntiAdvert extends Command {
 
             } else if (excludebots) {
                 if (getData.length === 0) {
-                    await DB.query(`INSERT INTO antiAdvert (guild, excludeBots) VALUES(?,?)`, [message.guild.id, 'false']);
+                    await DB.query(`INSERT INTO antiAdvert (guild, enabled, excludeStaff, excludeBots, warn, preset) VALUES(?,?,?,?,?,?)`, [message.guild.id, 'false', 'false', 'false', 'false', 'moderate']);
                     await antiAdvertise.push({
+                        enabled: 'false',
+                        excludeStaff: 'false',
+                        excludeBots: 'false',
+                        preset: 'moderate',
                         guild: message.guild.id,
-                        excludeBots: 'false'
+                        warn: 'false',
                     })
 
                     updateEmbed.addField(lang(message, "command.antiadvert.updateEmbed.changes.checkBots"), `\`\`\`js\n${lang(message, "command.antiadvert.updateEmbed.changes.false")}\n\`\`\``)
@@ -262,10 +286,15 @@ class AntiAdvert extends Command {
             ////////////////// UPDATE WARN
             if (warn) {
                 if (getData.length === 0) {
-                    await DB.query(`INSERT INTO antiAdvert (guild, warn) VALUES(?,?)`, [message.guild.id, 'true']);
+                    await DB.query(`INSERT INTO antiAdvert (guild, enabled, excludeStaff, excludeBots, warn, preset) VALUES(?,?,?,?,?,?)`, [message.guild.id, 'false', 'false', 'false', 'true', 'moderate']);
                     await antiAdvertise.push({
+                        enabled: 'false',
+                        excludeStaff: 'false',
+                        excludeBots: 'false',
+                        preset: 'moderate',
                         guild: message.guild.id,
-                        warn: 'true'
+                        warn: 'true',
+
                     })
 
                     updateEmbed.addField(lang(message, "command.antiadvert.updateEmbed.changes.warnEveryone"), `\`\`\`js\n${lang(message, "command.antiadvert.updateEmbed.changes.true")}\n\`\`\``)
@@ -283,15 +312,19 @@ class AntiAdvert extends Command {
                     }
                 }
             }
-
+            //#endregion Init
             ////////////////// CHECK PRESETS
-
+            //#region Presets
             if (presetLight) {
                 if (getData.length === 0) {
-                    await DB.query(`INSERT INTO antiAdvert (guild, preset) VALUES(?,?)`, [message.guild.id, 'light']);
+                    await DB.query(`INSERT INTO antiAdvert (guild, enabled, excludeStaff, excludeBots, warn, preset) VALUES(?,?,?,?,?,?)`, [message.guild.id, 'false', 'false', 'false', 'false', 'light']);
                     await antiAdvertise.push({
+                        enabled: 'false',
+                        excludeStaff: 'false',
+                        excludeBots: 'false',
+                        preset: 'light',
                         guild: message.guild.id,
-                        preset: 'light'
+                        warn: 'false',
                     })
 
                     updateEmbed.addField(lang(message, "command.antiadvert.updateEmbed.changes.preset"), `\`\`\`js\n${lang(message, "command.antiadvert.updateEmbed.changes.preset.light")}\n\`\`\``)
@@ -308,10 +341,14 @@ class AntiAdvert extends Command {
             }
             if (presetModerate) {
                 if (getData.length === 0) {
-                    await DB.query(`INSERT INTO antiAdvert (guild, preset) VALUES(?,?)`, [message.guild.id, 'moderate']);
+                    await DB.query(`INSERT INTO antiAdvert (guild, enabled, excludeStaff, excludeBots, warn, preset) VALUES(?,?,?,?,?,?)`, [message.guild.id, 'false', 'false', 'false', 'false', 'moderate']);
                     await antiAdvertise.push({
+                        enabled: 'false',
+                        excludeStaff: 'false',
+                        excludeBots: 'false',
+                        preset: 'moderate',
                         guild: message.guild.id,
-                        preset: 'moderate'
+                        warn: 'false',
                     })
 
                     updateEmbed.addField(lang(message, "command.antiadvert.updateEmbed.changes.preset"), `\`\`\`js\n${lang(message, "command.antiadvert.updateEmbed.changes.preset.moderate")}\n\`\`\``)
@@ -328,10 +365,15 @@ class AntiAdvert extends Command {
             }
             if (presetHeavy) {
                 if (getData.length === 0) {
-                    await DB.query(`INSERT INTO antiAdvert (guild, preset) VALUES(?,?)`, [message.guild.id, 'heavy']);
+                    await DB.query(`INSERT INTO antiAdvert (guild, enabled, excludeStaff, excludeBots, warn, preset) VALUES(?,?,?,?,?,?)`, [message.guild.id, 'false', 'false', 'false', 'false', 'heavy']);
                     await antiAdvertise.push({
                         guild: message.guild.id,
-                        preset: 'heavy'
+                        enabled: 'false',
+                        excludeStaff: 'false',
+                        excludeBots: 'false',
+                        preset: 'heavy',
+                        guild: message.guild.id,
+                        warn: 'false',
                     })
 
                     updateEmbed.addField(lang(message, "command.antiadvert.updateEmbed.changes.preset"), `\`\`\`js\n${lang(message, "command.antiadvert.updateEmbed.changes.preset.heavy")}\n\`\`\``)
@@ -346,10 +388,10 @@ class AntiAdvert extends Command {
                     }
                 }
             }
-
+            //#endregion Presets
             await message.channel.send(updateEmbed);
         } else {
-
+            //#region Embed
             let advertEnabled;
             if (getData.length === 0) {
                 advertEnabled = `[FALSE](${message.author.lastMessage.url} 'Anti-Advertising is not enabled.')`;
@@ -404,7 +446,7 @@ class AntiAdvert extends Command {
             } else if (getData[0].preset === 'heavy') {
                 advertPreset = `[${lang(message, "command.antiadvert.updateEmbed.changes.preset.heavy")}](https://gist.github.com/BluePotatoBP/9415fb46a72480363926c74027307188 'Click here for info.')`;
             }
-
+            //#endregion Embed
 
             const listEmbed = new Discord.MessageEmbed()
                 .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
