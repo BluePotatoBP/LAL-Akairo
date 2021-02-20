@@ -23,12 +23,12 @@ class ReadyListener extends Listener {
 
         // Log basic bot info on startup
         console.log(
-            `${startup('[STARTUP]')} ${chalk.magenta(this.client.user.username)} is online in ${chalk.red(
+            `${chalk.yellow('[INFO]')} ${chalk.magenta(this.client.user.username)} is online in ${chalk.red(
 				this.client.guilds.cache.size
 			)} guilds and ready!`
         );
         console.log(
-            `${info('[INFO]')} You can kill the bot instance by pressing ${chalk.red.bold('Ctrl+C')} at any time.`
+            `${chalk.yellow('[INFO]')} You can kill the bot instance by pressing ${chalk.red.bold('Ctrl+C')} at any time.`
         );
 
         // Set client status to do not disturb

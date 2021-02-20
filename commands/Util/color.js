@@ -58,11 +58,11 @@ class Color extends Command {
             // Output embed
             let embed = new Discord.MessageEmbed()
                 .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
-                .addField(lang(message, 'command.color.embed.field1'), `${c} [[?]](https://gist.github.com/BluePotatoBP/446f180644b331d9d71cfe24575f5adc 'If the embed and image colors dont match, click here.')`)
+                .addField(lang(message, 'command.color.embed.field1'), `${c.includes("#") ? c : `#${c}`} [[?]](https://gist.github.com/BluePotatoBP/446f180644b331d9d71cfe24575f5adc 'If the embed and image colors dont match, click here.')`)
                 .addField(lang(message, 'command.color.embed.field2'), `${CRed}, ${CGreen}, ${CBlue}`)
                 .setThumbnail('attachment://color.png')
                 .attachFiles(attachment)
-                .setColor(c)
+                .setColor(c.includes("#") ? c : `#${c}`)
                 .setTimestamp();
 
             // Ship it
@@ -70,7 +70,8 @@ class Color extends Command {
         } catch (error) {
             // Make an "error" embed (only used when a wrong hex is given) and send it
             const errorEmbed = new Discord.MessageEmbed()
-                .setDescription(lang(message, 'command.color.bigError'))
+                .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
+                .setDescription(`<a:cancel:773201205056503849> ${lang(message, 'command.color.bigError')}`)
                 .setColor(crimson);
             await message.util.send(errorEmbed);
         }

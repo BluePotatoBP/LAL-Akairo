@@ -8,8 +8,6 @@ const chalk = require('chalk');
 //#region Utility for other stuff
 
 console.clear();
-global.startup = chalk.greenBright;
-global.info = chalk.keyword('orange');
 global.debug = chalk.black.bgWhite;
 global.promptFilter = [];
 global.guildLanguages = [];
@@ -28,7 +26,7 @@ let promptMsg;
         database: process.env.DB_NAME,
         enableKeepAlive: true
     });
-    console.log(`${startup('[STARTUP]')} Connected to Database ${chalk.yellow(`${process.env.DB_NAME} (Ricardo)`)}!`);
+    console.log(`${chalk.greenBright('[STARTUP]')} Connected to Database ${chalk.yellow(`${process.env.DB_NAME} (Ricardo)`)}!`);
 })();
 
 // Custom prompt system
@@ -116,9 +114,7 @@ class Client extends AkairoClient {
                     cancel: async (message) => {
                         let embed = new Discord.MessageEmbed()
                             .setColor(darkRed)
-                            .setDescription(
-                                `<a:cancel:773201205056503849> ${lang(message, 'index.prompt.cancel.footer')}`
-                            );
+                            .setDescription(`<a:cancel:773201205056503849> ${lang(message, 'index.prompt.cancel.footer')}`);
 
                         editPrompt(message, embed);
                     },

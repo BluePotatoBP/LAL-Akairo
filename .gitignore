@@ -5,3 +5,4 @@ run.bat
 .vscode
 .jsbeautifyrc
 commands/Dev/test.js
+listeners/messageReactionAdd.js
