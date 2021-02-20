@@ -21,6 +21,7 @@ class Config extends Command {
                         ['logs', 'setlogs'],
                         ['staffrole'],
                         ['prefix', 'setprefix'],
+                        ['antiadvert', 'antiad'],
                         ['lang', 'language']
                     ],
                     default: 'list',
@@ -38,6 +39,8 @@ class Config extends Command {
                 if (action == 'prefix') return Flag.continue('setprefix');
 
                 if (action == 'lang') return Flag.continue('language');
+
+                if (action == 'antiadvert') return Flag.continue('antiadvert');
 
                 // Default msg
                 if (action == 'list') return { action };

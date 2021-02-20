@@ -13,7 +13,7 @@ global.promptFilter = [];
 global.guildLanguages = [];
 global.staffRole = [];
 global.antiAdvertise = [];
-global.DB = require('./assets/tools/establishDBConnection')
+global.DB = require('./assets/tools/establishDBConnection');
 global.lang = require('./assets/languages/languageTranslate');
 let promptMsg;
 
