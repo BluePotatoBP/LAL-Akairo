@@ -50,7 +50,7 @@ class Eval extends Command {
 
     async exec(message, { code }) {
         try {
-            let evaluated = inspect(eval((async () => { code })(), { depth: 1 }));
+            let evaluated = inspect(eval(code, { depth: 1 }));
             console.log(
                 `${debug('[DEBUG]')} '${message.author.tag}'[${message.author.id}] in '${message.guild.name}'[${message
 					.guild.id}] used: \n${chalk.gray(`${process.env.PREFIX}eval ${code}`)}`
