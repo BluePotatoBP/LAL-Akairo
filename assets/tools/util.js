@@ -1,58 +1,72 @@
 module.exports = {
-	getMember: function(message, toFind = '') {
-		toFind = toFind.toLowerCase();
+    getMember: function(message, toFind = '') {
+        toFind = toFind.toLowerCase();
 
-		let target = message.guild.members.cache.get(toFind);
+        let target = message.guild.members.cache.get(toFind);
 
-		if (!target && message.mentions.members) target = message.mentions.members.first();
+        if (!target && message.mentions.members) target = message.mentions.members.first();
 
-		if (!target && toFind) {
-			target = message.guild.members.find((member) => {
-				return (
-					member.displayName.toLowerCase().includes(toFind) || member.user.tag.toLowerCase().includes(toFind)
-				);
-			});
-		}
+        if (!target && toFind) {
+            target = message.guild.members.find((member) => {
+                return (
+                    member.displayName.toLowerCase().includes(toFind) || member.user.tag.toLowerCase().includes(toFind)
+                );
+            });
+        }
 
-		if (!target) target = message.member;
+        if (!target) target = message.member;
 
-		return target;
-	},
+        return target;
+    },
 
-	cutTo: function(input, from = 0, to = 250, ending = true) {
-		/* NOTE: Does not check for ' '(spaces) */
-		if (input.length > to) {
-			let output = input.substring(from, to);
+    cutTo: function(input, from = 0, to = 250, ending = true) {
+        /* NOTE: Does not check for ' '(spaces) */
+        if (input.length > to) {
+            let output = input.substring(from, to);
 
-			if (ending) {
-				return output + '...';
-			} else {
-				return output;
-			}
-		} else {
-			//input = s;
-			return input;
-		}
-	},
+            if (ending) {
+                return output + '...';
+            } else {
+                return output;
+            }
+        } else {
+            //input = s;
+            return input;
+        }
+    },
 
-	formatDate: function(date) {
-		return new Intl.DateTimeFormat('en-US').format(date);
-	},
+    softWrap: function(input, length) {
+        const wrap = input.replace(
+            new RegExp(`(?![^\\n]{1,${length}}$)([^\\n]{1,${length}})\\s`, 'g'), '$1\n'
+        );
 
-	promptMessage: async function(message, author, time, validReactions) {
-		// We put in the time as seconds, with this it's being transfered to MS
-		time *= 1000;
+        return wrap;
+    },
 
-		// For every emoji in the function parameters, react in the good order.
-		for (const reaction of validReactions) await message.react(reaction);
+    capitalize: function(input) {
+        let capitalize = input.charAt(0).toUpperCase() + input.slice(1);
 
-		// Only allow reactions from the author,
-		// and the emoji must be in the array we provided.
-		const filter = (reaction, user) => validReactions.includes(reaction.emoji.name) && user.id === author.id;
+        return capitalize;
+    },
 
-		// And ofcourse, await the reactions
-		return message
-			.awaitReactions(filter, { max: 1, time: time })
-			.then((collected) => collected.first() && collected.first().emoji.name);
-	}
+    formatDate: function(date) {
+        return new Intl.DateTimeFormat('en-US').format(date);
+    },
+
+    promptMessage: async function(message, author, time, validReactions) {
+        // We put in the time as seconds, with this it's being transfered to MS
+        time *= 1000;
+
+        // For every emoji in the function parameters, react in the good order.
+        for (const reaction of validReactions) await message.react(reaction);
+
+        // Only allow reactions from the author,
+        // and the emoji must be in the array we provided.
+        const filter = (reaction, user) => validReactions.includes(reaction.emoji.name) && user.id === author.id;
+
+        // And ofcourse, await the reactions
+        return message
+            .awaitReactions(filter, { max: 1, time: time })
+            .then((collected) => collected.first() && collected.first().emoji.name);
+    }
 };

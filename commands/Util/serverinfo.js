@@ -61,12 +61,9 @@ class Serverinfo extends Command {
         const botMessage = await message.channel.send(loadingEmbed);
 
         const rolesSize = message.guild.roles.cache.filter((c) => c.managed == false).size;
-        const rolesFilterSort = message.guild.roles.cache
-            .filter((c) => c.managed == false)
-            .sort((a, b) => b.rawPosition - a.rawPosition);
+        const rolesFilterSort = message.guild.roles.cache.filter((c) => c.managed == false).sort((a, b) => b.rawPosition - a.rawPosition);
 
-        const rolesEmbed = this.client.util
-            .embed()
+        const rolesEmbed = this.client.util.embed()
             .setAuthor(`${message.guild.name} • Page [2/2]`, sicon)
             .setDescription(`Roles managed by other applications\nwill not be shown. [Something wrong?](https://discord.gg/v8zkSc9 'Support Server')\n\n**Roles [${rolesSize}]:**`)
             .setThumbnail(sicon)
@@ -95,29 +92,12 @@ class Serverinfo extends Command {
                 .addField('ID', `\`${message.guild.id}\`  👌`, true)
                 .addField('Owner', `<@${message.guild.ownerID}> <a:animatedCool:773205297782325259>`, true)
                 .addField('Region', `${region[message.guild.region]}`, true)
-                .addField(
-                    'Custom Emoji',
-                    `\`${message.guild.emojis.cache.size}\` <a:blobWobble:773208612776181800>`,
-                    true
-                )
+                .addField('Custom Emoji', `\`${message.guild.emojis.cache.size}\` <a:blobWobble:773208612776181800>`, true)
                 .addField('Roles', `\`${message.guild.roles.cache.size}\` <a:blobEat:773207674015055912>`, true)
-                .addField(
-                    'Channels',
-                    `\`${message.guild.channels.cache.size}\` <a:blobGimmeLeft:773217828052402186>`,
-                    true
-                )
+                .addField('Channels', `\`${message.guild.channels.cache.size}\` <a:blobGimmeLeft:773217828052402186>`, true)
                 .addField('You joined', `\`${message.member.joinedAt.toUTCString().substr(0, 16)}\` 🖖`, true)
-                .addField(
-                    'Verification Level',
-                    `\`${verifLevels[message.guild.verificationLevel]}\` <:captcha:773217509850873886>`,
-                    true
-                )
-                .addField(
-                    'Total Members',
-                    `\`${message.guild
-							.memberCount}\` <a:blobKnight1:773218186694098994><a:blobKnight2:773218752405307392>`,
-                    true
-                )
+                .addField('Verification Level', `\`${verifLevels[message.guild.verificationLevel]}\` <:captcha:773217509850873886>`, true)
+                .addField('Total Members', `\`${message.guild.memberCount}\` <a:blobKnight1:773218186694098994><a:blobKnight2:773218752405307392>`, true)
                 .addField(
                     'Status List',
                     `${message.guild.members.cache.filter((o) => o.presence.status === 'online')
@@ -132,16 +112,8 @@ class Serverinfo extends Command {
 								.size} <:offline:773212850755862538> Offline`,
                     true
                 )
-                .addField(
-                    'Highest Role',
-                    `\`${message.guild.roles.highest.name}\` <a:dancingSquidward:773219104479379467>`,
-                    true
-                )
-                .addField(
-                    'Voice AFK Timeout',
-                    `\`${message.guild.afkTimeout / 60} min\` <a:sleepyCat:773219103933464616>`,
-                    true
-                )
+                .addField('Highest Role', `\`${message.guild.roles.highest.name}\` <a:dancingSquidward:773219104479379467>`, true)
+                .addField('Voice AFK Timeout', `\`${message.guild.afkTimeout / 60} min\` <a:sleepyCat:773219103933464616>`, true)
                 .setThumbnail(sicon)
                 .setColor(crimson)
                 .setTimestamp(),
