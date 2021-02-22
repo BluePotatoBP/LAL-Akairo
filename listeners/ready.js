@@ -13,23 +13,17 @@ class ReadyListener extends Listener {
     async exec() {
 
         global.client = this.client;
-        let statuses = [` you type ${prefix}help`, ' the support server!'];
 
         // Automatic status changer
+        let statuses = [`you type ${prefix}help`, 'the support server!'];
         setInterval(() => {
             let status = statuses[Math.floor(Math.random() * statuses.length)];
             this.client.user.setActivity(`${status}`, { type: 'WATCHING' });
         }, 10000);
 
         // Log basic bot info on startup
-        console.log(
-            `${chalk.yellow('[INFO]')} ${chalk.magenta(this.client.user.username)} is online in ${chalk.red(
-				this.client.guilds.cache.size
-			)} guilds and ready!`
-        );
-        console.log(
-            `${chalk.yellow('[INFO]')} You can kill the bot instance by pressing ${chalk.red.bold('Ctrl+C')} at any time.`
-        );
+        console.log(`${chalk.yellow('[INFO]')} ${chalk.magenta(this.client.user.username)} is online in ${chalk.red(this.client.guilds.cache.size)} guilds and ready!`);
+        console.log(`${chalk.yellow('[INFO]')} You can kill the bot instance by pressing ${chalk.red.bold('Ctrl+C')} at any time.`);
 
         // Set client status to do not disturb
         this.client.user.setStatus('dnd');
