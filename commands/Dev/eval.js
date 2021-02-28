@@ -52,14 +52,11 @@ class Eval extends Command {
         try {
             let evaluated = inspect(eval(code, { depth: 1 }));
             console.log(
-                `${debug('[DEBUG]')} '${message.author.tag}'[${message.author.id}] in '${message.guild.name}'[${message
-					.guild.id}] used: \n${chalk.gray(`${process.env.PREFIX}eval ${code}`)}`
+                `${debug('[DEBUG]')} '${message.author.tag}'[${message.author.id}] in '${message.guild.name}'[${message.guild.id}] used: \n${chalk.gray(`${process.env.PREFIX}eval ${code}`)}`
             );
 
             if (evaluated.length >= 1900) {
-                let wmessage = await message.channel.send(
-                    'Output is too long, creating a pastebin link... <a:gears:773203929507823617>'
-                );
+                let wmessage = await message.channel.send('Output is too long, creating a pastebin link... <a:gears:773203929507823617>');
                 try {
                     // Log into pastebin and create a paste
                     paste.login('BluePotatoBP', process.env.PASTEBINPASSWORD, function(success, data) {
@@ -78,27 +75,15 @@ class Eval extends Command {
                                 if (success) {
                                     if (code) {
                                         let evalembed = new Discord.MessageEmbed()
-                                            .setAuthor(
-                                                'I did it boss, maywe thewes an oopsie hewe or thewe tho...',
-                                                client.user.displayAvatarURL({ dynamic: true })
-                                            )
+                                            .setAuthor('I did it boss, maywe thewes an oopsie hewe or thewe tho...', client.user.displayAvatarURL({ dynamic: true }))
                                             .addField('Input Code', `\`\`\`\n${code}\n\`\`\``)
-                                            .addField('Output Code', `\n[Click here](${data}) for full output`, {
-                                                maxLength: 1900
-                                            })
+                                            .addField('Output Code', `\n[Click here](${data}) for full output`, { maxLength: 1900 })
                                             .setColor(veryBrightGreen);
                                         wmessage.edit(evalembed);
                                     } else {
                                         let embedo = new Discord.MessageEmbed()
-                                            .setAuthor(
-                                                message.author.username,
-                                                message.author.displayAvatarURL({ dynamic: true })
-                                            )
-                                            .setDescription(
-                                                `<:redxmark:627905972731510784> Too few arguments given. \n \nUsage: \`${module
-													.exports.help.name} ${module.exports.help
-													.usage}\` \nAliases: \`none\``
-                                            )
+                                            .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
+                                            .setDescription(`<:redxmark:627905972731510784> Too few arguments given. \n \nUsage: \`${module.exports.help.name} ${module.exports.help.usage}\` \nAliases: \`none\``)
                                             .setColor(crimson);
                                         await message.channel.send(embedo);
                                     }
@@ -120,24 +105,17 @@ class Eval extends Command {
             } else {
                 if (code) {
                     let evalembed = new Discord.MessageEmbed()
-                        .setAuthor(
-                            'I did it boss, maywe thewes an oopsie hewe or thewe tho...',
-                            client.user.displayAvatarURL({ dynamic: true })
-                        )
+                        .setAuthor('I did it boss, maywe thewes an oopsie hewe or thewe tho...', client.user.displayAvatarURL({ dynamic: true }))
                         .addField('Input Code', `\`\`\`\n${code}\n\`\`\``)
                         .addField('Output Code', `\nJust below this, boss`)
                         .setColor(veryBrightGreen);
-                    return (
-                        (await message.channel.send(evalembed)) +
-                        (await message.channel.send(`\`\`\`javascript\n${evaluated}\n\`\`\``))
-                    );
+
+                    console.log(debug('[DEBUG]') + " Eval Output:" + chalk.gray(`\n${evaluated}`))
+                    return ((await message.channel.send(evalembed)) + (await message.channel.send(`\`\`\`javascript\n${evaluated}\n\`\`\``)));
                 } else {
                     let embedo = new Discord.MessageEmbed()
                         .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
-                        .setDescription(
-                            `<:redxmark:627905972731510784> Too few arguments given. \n \nUsage: \`${module.exports.help
-								.name} ${module.exports.help.usage}\` \nAliases: \`none\``
-                        )
+                        .setDescription(`<:redxmark:627905972731510784> Too few arguments given. \n \nUsage: \`${module.exports.help.name} ${module.exports.help.usage}\` \nAliases: \`none\``)
                         .setColor(crimson);
                     await message.channel.send(embedo);
                 }

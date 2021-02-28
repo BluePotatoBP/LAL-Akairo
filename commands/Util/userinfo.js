@@ -1,4 +1,5 @@
 const { Command } = require('discord-akairo');
+const { MessageEmbed } = require('discord.js');
 const Discord = require('discord.js');
 const { crimson } = require('../../assets/colors.json');
 
@@ -28,6 +29,25 @@ class Userinfo extends Command {
         let question = u.presence.status;
         let capitalize = question.charAt(0).toUpperCase() + question.slice(1);
         let m = message.guild.members.cache.get(u.id);
+        if (!m) {
+            let status = {
+                dnd: '\`Do Not Disturb\` <:dnd:773212850364743742>',
+                online: '\`Online\` <:online:773212850733711360>',
+                idle: '\`Idle\` <:idle:773212850533171211>',
+                offline: '\`Offline\` <:offline:773212850755862538>',
+                streaming: '\`Streaming\` <:streaming:773212851174506565>'
+            }
+            const alternateEmbed = this.client.util.embed()
+                .setAuthor(u.tag, u.displayAvatarURL({ dynamic: true }))
+                .setDescription(`${u}\n \n**Info:** This user is not in your current guild.`)
+                .addField(`Registered On:`, `\`${this.client.users.cache.get(u.id).createdAt.toUTCString().substr(0, 16)}\` <a:animatedCool:773205297782325259>`, true)
+                .addField(`Status:`, `${status[u.presence.status]}`, true)
+                .addField(`Avatar:`, `[PNG](${u.displayAvatarURL({ format: 'png', size: 4096 })} 'Link to the PNG Avatar')|[JPG](${u.displayAvatarURL({ format: 'jpg', size: 4096 })} 'Link to the PNG Avatar')|[GIF](${u.displayAvatarURL({ format: 'gif', size: 4096 })} 'Link to the GIF Avatar')`, true)
+                .setColor(crimson)
+                .setFooter(`ID: ${u.id}`)
+                .setTimestamp()
+            return message.channel.send(alternateEmbed)
+        }
         let highestRole = m.roles.highest.name;
 
         let usergame;
@@ -37,7 +57,7 @@ class Userinfo extends Command {
                 statusState = 'Custom Status:'
                 usergame = `\`${u.presence.activities[i].state}\``;
             } else if (u.presence.activities[i].type == 'PLAYING') {
-                statusState = 'Game:'
+                statusState = 'Playing:'
                 usergame = u.presence.activities[i].name;
                 if (usergame.length > 20) {
                     usergame = `\`${usergame.substr(0, 20)}...\``;
@@ -84,10 +104,9 @@ class Userinfo extends Command {
         }
 
 
-        const userInfoEmbed = this.client.util
-            .embed()
+        const userInfoEmbed = this.client.util.embed()
             .setAuthor(u.tag + mobileEmoji, u.displayAvatarURL({ dynamic: true }))
-            .setDescription(`<@${u.id}>`)
+            .setDescription(u)
             .setColor(crimson)
             .addField(`Joined on:`, `\`${message.guild.members.cache.get(u.id).joinedAt.toUTCString().substr(0, 16)}\` <a:blobDJ:773206358991962132>`, true)
             .addField(`Registered on:`, `\`${this.client.users.cache.get(u.id).createdAt.toUTCString().substr(0, 16)}\` <a:animatedCool:773205297782325259>`, true)
@@ -97,7 +116,7 @@ class Userinfo extends Command {
             .addField(`Last channel:`, u.lastMessage ? `<#${u.lastMessageChannelID}>` : `\`-\``, true)
             .addField(`Bot:`, `\`${u.bot ? 'True' : 'False'}\` <a:dancingSquidward:773219104479379467>`, true)
             .addField(`Highest role:`, `\`${highestRole}\` <a:handsClap:773222150676807716>`, true)
-            .addField(statusState ? statusState : 'Game:', usergame ? usergame : `\`-\``, true)
+            .addField(statusState ? statusState : 'Activity:', usergame ? usergame : `\`-\``, true)
             .setThumbnail(u.displayAvatarURL({ dynamic: true }))
             .setFooter(`ID: ${u.id}`)
             .setTimestamp();
