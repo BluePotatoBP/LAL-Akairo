@@ -6,4 +6,3 @@ run.bat
 .jsbeautifyrc
 commands/Dev/test.js
 listeners/messageReactionAdd.js
-commands/Mod/purge.js
