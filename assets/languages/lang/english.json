@@ -352,5 +352,11 @@
     "command.staffrole.noRoleDataEmbed.desc": "*No saved role found for this guild.*\n\nYou can set it to something else with",
     "command.staffrole.defaultEmbed.field1": "Saved Role:",
     "command.staffrole.defaultEmbed.field2": "If the bot leaves your guild, the\ndata is automatically deleted.\n*You can update the staff role with*",
-    "command.staffrole.defaultEmbed.field3": "Configure with"
+    "command.staffrole.defaultEmbed.field3": "Configure with",
+
+    "command.dice.desc.content": "Roll the dice!",
+
+    "command.purge.desc.content": "Quickly delete lots of messages",
+    "command.purge.args.number.start": "How many messages would you like to delete? `(MAX: 1000)`",
+    "command.purge.args.number.retry": "I didn't quite get that, how many messages would you like to delete? `(MAX: 1000)`"
 }

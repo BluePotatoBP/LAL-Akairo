@@ -16,7 +16,7 @@ class Say extends Command {
             ownerOnly: false,
             description: {
                 content: 'Make me say anything!',
-                usage: '<text>\n \n[-e|-embed]  { [-av|-avatar], [-gi|-guildicon],\n [-ts|-timestamp], [color:#hex] }\n \n[-owo|-uwu|-uvu (intensity)], [-f|-flip], [-tts]',
+                usage: '<text>\n \n[-e|-embed]\n[-owo|-uwu|-uvu (intensity)]\n[-f|-flip]\n[-tts]\n\n{ [-av|-avatar] [-gi|-guildicon] [-ts|-timestamp] [color:#hex] }\n',
                 syntax: '<> - necessary, [] - optional, {} - embed compatible'
             },
             args: [

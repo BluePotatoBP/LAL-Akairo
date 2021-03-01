@@ -23,6 +23,7 @@ class Config extends Command {
                         ['prefix', 'setprefix'],
                         ['antiadvert', 'antiad'],
                         ['lang', 'language']
+                        //['star']
                     ],
                     default: 'list',
                     prompt: {
@@ -41,6 +42,8 @@ class Config extends Command {
                 if (action == 'lang') return Flag.continue('language');
 
                 if (action == 'antiadvert') return Flag.continue('antiadvert');
+
+                //if (action == 'star') return Flag.continue('star');
 
                 // Default msg
                 if (action == 'list') return { action };

@@ -11,8 +11,8 @@ class Dice extends Command {
             cooldown: 10000,
             description: {
                 content: 'later',
-                usage: 'later',
-                syntax: 'later'
+                usage: '',
+                syntax: ''
             },
             args: [{
                 id: 'text',

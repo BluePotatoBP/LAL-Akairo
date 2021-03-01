@@ -5,20 +5,24 @@ const approx = require('approximate-number');
 class Purge extends Command {
     constructor() {
         super('purge', {
-            aliases: ['purge'],
+            aliases: ['purge', 'bulkdelete', 'massdelete', 'delete'],
             category: 'Mod',
             clientPermissions: ['MANAGE_MESSAGES '],
             userPermissions: ['MANAGE_MESSAGES '],
             ownerOnly: false,
             cooldown: 10000,
             description: {
-                content: 'later',
-                usage: 'later',
-                syntax: 'later'
+                content: '',
+                usage: '<amount>\n\n[-bot(s)]\n[-embed(s)]\n[-attachment(s)|-atch]\n\n[-user(:)] *\n[-include(s)(:)] *\n[-starts(:)|-startswith(:)] *\n[-ends(:)|-endswith(:)] *\n\n*These options can check for multiple\nentries within quotes (ex. -user: "ID1, ID2")\n',
+                syntax: '<> - necessary, [] - optional, () - optional symbol'
             },
             args: [{
                     id: 'messagesAmount',
                     type: 'number',
+                    prompt: {
+                        start: (message) => lang(message, "command.purge.args.number.start"),
+                        retry: (message) => lang(message, "command.purge.args.number.retry")
+                    }
                 },
                 {
                     id: 'bots',
@@ -121,7 +125,7 @@ class Purge extends Command {
             } // End of loop
 
             let actuallyPurged = allDeletedAmount.length == 0 ? 0 : allDeletedAmount.reduce((a, b) => a + b);
-            await wait(1000).then(message.channel.send(`Purged \`${actuallyPurged}\` messages.`).then(msg => msg.delete({ timeout: 10000 })))
+            await wait(1000).then(message.channel.send(`Purged \`${actuallyPurged}\` messages.`).then(msg => msg.delete({ timeout: 10000 })).catch(e => {}))
             // End of purge/Start of staffrole check 2nd part
 
         } else {
@@ -130,7 +134,7 @@ class Purge extends Command {
                 .setDescription(`${lang(message, "staffroleEmbed.desc1")} ${role} ${lang(message, "staffroleEmbed.desc2")}`)
                 .setColor(darkRed)
                 .setTimestamp()
-            message.channel.send(staffroleEmbed).then(m => m.delete({ timeout: 5000 }));
+            message.channel.send(staffroleEmbed).then(m => m.delete({ timeout: 5000 })).catch(e => {});
         }
         // End of staffrole check 2nd part
     }
