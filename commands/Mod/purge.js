@@ -8,7 +8,7 @@ class Purge extends Command {
         super('purge', {
             aliases: ['purge', 'bulkdelete', 'massdelete', 'delete'],
             category: 'Mod',
-            clientPermissions: ['MANAGE_MESSAGES '],
+            clientPermissions: ['MANAGE_MESSAGES'],
             userPermissions: ['MANAGE_MESSAGES '],
             ownerOnly: false,
             cooldown: 10000,
@@ -94,15 +94,16 @@ class Purge extends Command {
 
                     let messagesLeftToDelete = messagesAmount - (currentRun * 100)
                     let fetch = await message.channel.messages.fetch({ limit: messagesLeftToDelete })
+                    fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false)
 
                     ////////////////// Variations: //////////////////
-                    if (bots) { fetch = fetch.filter(e => e.author.bot) }
-                    if (embeds) { fetch = fetch.filter(c => c.embeds.size > 0) }
-                    if (userOpt) { fetch = fetch.filter(c => c.author.id === userOpt.id) }
-                    if (includesOpt) { fetch = fetch.filter(c => c.content.match(includesOpt)) }
-                    if (startsWithOpt) { fetch = fetch.filter(c => c.content.startsWith(startsWithOpt)) }
-                    if (endsWithOpt) { fetch = fetch.filter(c => c.content.endsWith(endsWithOpt)) }
-                    if (attachments) { fetch = fetch.filter(c => c.attachments.size > 0) }
+                    if (bots) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.author.bot) }
+                    if (embeds) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.embeds.size > 0) }
+                    if (userOpt) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.author.id === userOpt.id) }
+                    if (includesOpt) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.content.match(includesOpt)) }
+                    if (startsWithOpt) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.content.startsWith(startsWithOpt)) }
+                    if (endsWithOpt) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.content.endsWith(endsWithOpt)) }
+                    if (attachments) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.attachments.size > 0) }
 
                     let deletedAmount = await message.channel.bulkDelete(fetch)
                     allDeletedAmount.push(deletedAmount.size)
@@ -112,15 +113,16 @@ class Purge extends Command {
 
                 //Messages over 100
                 let fetch = await message.channel.messages.fetch({ limit: 100 })
+                fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false)
 
                 ////////////////// Variations: //////////////////
-                if (bots) { fetch = fetch.filter(e => e.author.bot) }
-                if (embeds) { fetch = fetch.filter(c => c.embeds.size > 0) }
-                if (userOpt) { fetch = fetch.filter(c => c.author.id === userOpt.id) }
-                if (includesOpt) { fetch = fetch.filter(c => c.content.match(includesOpt)) }
-                if (startsWithOpt) { fetch = fetch.filter(c => c.content.startsWith(startsWithOpt)) }
-                if (endsWithOpt) { fetch = fetch.filter(c => c.content.endsWith(endsWithOpt)) }
-                if (attachments) { fetch = fetch.filter(c => c.attachments.size > 0) }
+                if (bots) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.author.bot) }
+                if (embeds) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.embeds.size > 0) }
+                if (userOpt) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.author.id === userOpt.id) }
+                if (includesOpt) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.content.match(includesOpt)) }
+                if (startsWithOpt) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.content.startsWith(startsWithOpt)) }
+                if (endsWithOpt) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.content.endsWith(endsWithOpt)) }
+                if (attachments) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.attachments.size > 0) }
 
                 let deletedAmount = await message.channel.bulkDelete(fetch)
                 allDeletedAmount.push(deletedAmount.size)
