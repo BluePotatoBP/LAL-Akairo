@@ -39,6 +39,12 @@ class Eval extends Command {
         super('eval', {
             aliases: ['eval'],
             ownerOnly: true,
+            category: '',
+            description: {
+                content: '',
+                usage: '',
+                syntax: ''
+            },
             args: [{
                 id: 'code',
                 match: 'text',

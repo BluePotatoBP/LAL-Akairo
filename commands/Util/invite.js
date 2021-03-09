@@ -25,7 +25,7 @@ class Invite extends Command {
             .setColor(crimson)
             .setTimestamp();
 
-        message.channel.send(iembed);
+        await message.channel.send(iembed);
     }
 }
 module.exports = Invite;

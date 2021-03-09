@@ -1,6 +1,7 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const approx = require('approximate-number');
+const { darkRed } = require('../../assets/colors.json')
 
 class Purge extends Command {
     constructor() {
@@ -13,7 +14,7 @@ class Purge extends Command {
             cooldown: 10000,
             description: {
                 content: '',
-                usage: '<amount>\n\n[-bot(s)]\n[-embed(s)]\n[-attachment(s)|-atch]\n\n[-user(:)] *\n[-include(s)(:)] *\n[-starts(:)|-startswith(:)] *\n[-ends(:)|-endswith(:)] *\n\n*These options can check for multiple\nentries within quotes (ex. -user: "ID1, ID2")\n',
+                usage: '<amount>\n\n[-bot(s)]\n[-embed(s)]\n[-attachment(s)|-atch]\n\n[-user(:)] *\n[-include(s)(:)] *\n[-starts(:)|-startswith(:)] *\n[-ends(:)|-endswith(:)] *\n\n*These options can check for multiple entries within quotes\n(ex. -user: "ID1, ID2" or -includes: "blue is funny")\n',
                 syntax: '<> - necessary, [] - optional, () - optional symbol'
             },
             args: [{
@@ -69,9 +70,10 @@ class Purge extends Command {
 
         // Staffrole Check
         let cachedGuild = staffRole.find(c => c.guild == message.guild.id)
+        if (!cachedGuild) return message.channel.send(`${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\``);
         let role = message.guild.roles.cache.get(cachedGuild.role)
-        let memberRoles = message.member._roles;
         if (!role) return message.channel.send(`${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\``);
+        let memberRoles = message.member._roles;
 
         if (memberRoles.some(r => role.id === r)) {
             // End of staffrole check/Start of purge

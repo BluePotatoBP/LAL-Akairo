@@ -42,9 +42,10 @@ class Poll extends Command {
         message.delete({ timeout: 30000 }).catch((e) => {});
 
         let cachedGuild = staffRole.find(c => c.guild == message.guild.id)
+        if (!cachedGuild) return message.channel.send(`${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\``);
         let role = message.guild.roles.cache.get(cachedGuild.role)
-        let memberRoles = message.member._roles;
         if (!role) return message.channel.send(`${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\``);
+        let memberRoles = message.member._roles;
 
         if (memberRoles.some(r => role.id === r)) {
             let sicon = message.guild.iconURL({ dynamic: true });
