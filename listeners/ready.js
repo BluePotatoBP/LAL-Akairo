@@ -52,27 +52,15 @@ class ReadyListener extends Listener {
 
         // Anti advertisement
         let [data3] = await DB.query(`SELECT * FROM antiAdvert`);
-
-        for (let i = 0; i < data3.length; i++) {
-            antiAdvertise.push({
-                guild: data3[i].guild,
-                enabled: data3[i].enabled,
-                excludeStaff: data3[i].excludeStaff,
-                excludeBots: data3[i].excludeBots,
-                warn: data3[i].warn,
-                preset: data3[i].preset
-            })
-        }
+        antiAdvertise = data3
 
         //StaffRole 
         let [data4] = await DB.query(`SELECT * FROM staffrole`);
+        staffRole = data4
 
-        for (let i = 0; i < data4.length; i++) {
-            staffRole.push({
-                guild: data4[i].guild,
-                role: data4[i].role,
-            })
-        }
+        //Blacklist
+        const [blackListData] = await DB.query(`SELECT * FROM starBlacklist`)
+        starBlacklistCache = blackListData
 
     }
 }

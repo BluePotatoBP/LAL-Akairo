@@ -12,6 +12,7 @@ global.debug = chalk.black.bgWhite;
 global.promptFilter = [];
 global.guildLanguages = [];
 global.staffRole = [];
+global.starBlacklistCache = [];
 global.antiAdvertise = [];
 global.DB = require('./assets/tools/establishDBConnection');
 global.lang = require('./assets/languages/languageTranslate');

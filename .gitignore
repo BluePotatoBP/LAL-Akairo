@@ -4,6 +4,4 @@ scraps
 run.bat
 .vscode
 .jsbeautifyrc
-listeners/messageReactionAdd.js
-commands/Mod/Config/star.js
 commands/Dev/test.js

@@ -48,7 +48,7 @@ class Help extends Command {
         } else {
             prefix = `${data[0].prefix}`;
         }
-        console.log(message.guild.members.cache.get(this.client.user.id).permissions)
+
         if (message.guild.members.cache.get(this.client.user.id).permissions.has('ADD_REACTIONS')) {
 
             if (command) {
