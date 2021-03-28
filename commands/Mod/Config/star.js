@@ -35,6 +35,7 @@ class Star extends Command {
                     prompt: {
                         start: 'Minimum cannot be lower then \`1\`',
                         retry: 'Minimum cannot be lower then \`1\`',
+                        optional: true
                     }
                 },
                 {
@@ -45,6 +46,7 @@ class Star extends Command {
                     prompt: {
                         start: 'Maximum cannot be higher then \`1,000,000\`',
                         retry: 'Maximum cannot be higher then \`1,000,000\`',
+                        optional: true
                     }
                 },
                 {
