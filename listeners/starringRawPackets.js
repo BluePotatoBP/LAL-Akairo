@@ -54,6 +54,7 @@ module.exports = class clientReadyListener extends Listener {
 			const [starredMessages] = await DB.query(`SELECT * FROM starred WHERE userMessageID = ?`, [packet.d.message_id])
 			const originalStar = starredMessages.length == 0 ? user.user.username : starredMessages[0].originalStar
 
+
 			//Bot Messages vars
 			const botChannel = await getBotChannel()
 			if (!botChannel) return;
@@ -63,6 +64,11 @@ module.exports = class clientReadyListener extends Listener {
 			//Resend logger embed
 
 			if (!botMessage) {
+
+
+				if (starCount < minStars) {
+					return starredMessages.length == 0 ? await DB.query(`INSERT INTO starred VALUES (?,?,?,?,?,?,?)`, [guild.id, userMessage.id, "NONE", userMessage.reactions.cache.get('⭐').users.cache.map(c => c.username).slice(0, 1).join(""), "false", Date.now(), starCount]) : await DB.query(`UPDATE starred SET botMessageID = ? WHERE userMessageID = ?`, [sentBotMsg.id, packet.d.message_id])
+				}
 
 				//Locked
 				if (starCount >= maxStars) {
@@ -187,10 +193,26 @@ module.exports = class clientReadyListener extends Listener {
 
 			const user = guild.members.cache.get(packet.d.user_id)
 			const userMessage = await userChannel.messages.fetch(packet.d.message_id)
+
+			// Get settings from db
+			const [guildSettings] = await DB.query(`SELECT * FROM starSettings WHERE guild = ?`, [guild.id])
+
+			// Blacklist triger
+			if (getBlackList(userChannel, user, guild)) return console.log("blacklist")
+
+			// If settings are set to off, return in that guild
+			if (guildSettings.length == 0 ? "false" : guildSettings[0].enabled === 'false') return;
+			if (guildSettings.length == 0 ? "false" : guildSettings[0].allowSelfStar === 'false' && packet.d.user_id === userMessage.author.id) return;
+			if (guildSettings.length == 0 ? "false" : guildSettings[0].allowNsfw === 'false' && userChannel.nsfw) return;
+
 			const starCount = userMessage.reactions.cache.get('⭐') ? userMessage.reactions.cache.get('⭐').count : 0
+			const minStars = guildSettings.length == 0 ? 1 : guildSettings[0].minStars
+			const maxStars = guildSettings.length == 0 ? 200 : guildSettings[0].maxStars
 
 			const [starredMessages] = await DB.query(`SELECT * FROM starred WHERE userMessageID = ?`, [packet.d.message_id])
 			const originalStar = starredMessages.length == 0 ? user.user.username : starredMessages[0].originalStar
+
+
 			//Bot Messages vars
 			const botChannel = await getBotChannel()
 			if (!botChannel) return;
@@ -199,7 +221,8 @@ module.exports = class clientReadyListener extends Listener {
 			//Resend logger embed
 			if (!botMessage) {
 
-				if (starCount < 1) {
+				if (starCount <= minStars) {
+					console.log("YES ASSH")
 					await DB.query(`DELETE FROM starred WHERE userMessageID = ?`, [userMessage.id])
 					try { await botMessage.delete() } catch (error) { }
 					return;
@@ -220,7 +243,7 @@ module.exports = class clientReadyListener extends Listener {
 
 			} else {
 
-				if (starCount < 1) {
+				if (starCount <= minStars) {
 					await DB.query(`DELETE FROM starred WHERE userMessageID = ?`, [userMessage.id])
 					await botMessage.delete().catch(e => { })
 
