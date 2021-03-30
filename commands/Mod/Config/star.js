@@ -18,61 +18,61 @@ class Star extends Command {
                 syntax: '[] - optional, () - optional symbol'
             },
             args: [{
-                    id: 'enableOpt',
-                    match: 'flag',
-                    flag: ['enable', 'on']
-                },
-                {
-                    id: 'disableOpt',
-                    match: 'flag',
-                    flag: ['disable', 'off']
-                },
-                {
-                    id: 'minOpt',
-                    match: 'option',
-                    type: Argument.range('number', 1, 1000000),
-                    flag: ['min', 'minimum', 'min:', 'minimum:'],
-                    prompt: {
-                        start: 'Minimum cannot be lower then \`1\`',
-                        retry: 'Minimum cannot be lower then \`1\`',
-                        optional: true
-                    }
-                },
-                {
-                    id: 'maxOpt',
-                    match: 'option',
-                    type: Argument.range('number', 1, 1000000),
-                    flag: ['max', 'maximum', 'max:', 'maximum:'],
-                    prompt: {
-                        start: 'Maximum cannot be higher then \`1,000,000\`',
-                        retry: 'Maximum cannot be higher then \`1,000,000\`',
-                        optional: true
-                    }
-                },
-                {
-                    id: 'channelOpt',
-                    match: 'option',
-                    type: 'textChannel',
-                    flag: ['ch', 'channel', 'ch:', 'channel:']
-                },
-                {
-                    id: 'selfStarsOpt',
-                    match: 'option',
-                    type: 'string',
-                    flag: ['selfstar', 'selfstar:', 'self', 'self:']
-                },
-                {
-                    id: 'nsfwOpt',
-                    match: 'option',
-                    type: 'string',
-                    flag: ['nsfw', 'nsfw:']
-                },
+                id: 'enableOpt',
+                match: 'flag',
+                flag: ['enable', 'on']
+            },
+            {
+                id: 'disableOpt',
+                match: 'flag',
+                flag: ['disable', 'off']
+            },
+            {
+                id: 'minOpt',
+                match: 'option',
+                type: Argument.range('number', 1, 1000000),
+                flag: ['min', 'minimum', 'min:', 'minimum:'],
+                prompt: {
+                    start: 'Minimum cannot be lower then \`1\`',
+                    retry: 'Minimum cannot be lower then \`1\`',
+                    optional: true
+                }
+            },
+            {
+                id: 'maxOpt',
+                match: 'option',
+                type: Argument.range('number', 1, 1000000),
+                flag: ['max', 'maximum', 'max:', 'maximum:'],
+                prompt: {
+                    start: 'Maximum cannot be higher then \`1,000,000\`',
+                    retry: 'Maximum cannot be higher then \`1,000,000\`',
+                    optional: true
+                }
+            },
+            {
+                id: 'channelOpt',
+                match: 'option',
+                type: 'textChannel',
+                flag: ['ch', 'channel', 'ch:', 'channel:']
+            },
+            {
+                id: 'selfStarsOpt',
+                match: 'option',
+                type: 'string',
+                flag: ['selfstar', 'selfstar:', 'self', 'self:']
+            },
+            {
+                id: 'nsfwOpt',
+                match: 'option',
+                type: 'string',
+                flag: ['nsfw', 'nsfw:']
+            },
             ]
         });
     }
 
     async exec(message, { enableOpt, disableOpt, minOpt, maxOpt, channelOpt, selfStarsOpt, nsfwOpt }) {
-        message.delete({ timeout: 1000 }).catch(e => {});
+        message.delete({ timeout: 1000 }).catch(e => { });
 
         /////////////////////////////// STAFFROLE CHECK
         let cachedGuild = staffRole.find(c => c.guild == message.guild.id)
@@ -97,10 +97,10 @@ class Star extends Command {
             const channelCount = mappedList.filter(c => message.guild.channels.cache.get(c))
 
             /////////////////////////////// Send list to Paste.gg 
-            let pasteContent = await starBlacklistCache.filter(c => c.guild === message.guild.id).map(c => stripIndents `-=+ ${this.client.user.username} Starboard Blacklist +=-\n⤷ Roles: ${rolesCount.length}\n⤷ Users: ${usersCount.length}\n⤷ Channels: ${channelCount.length}\n-=+ ${this.client.user.username} Starboard Blacklist +=-\n\n${message.guild.channels.cache.get(c.blacklistedID) ? `Channel - ${message.guild.channels.cache.get(c.blacklistedID).name} [${message.guild.channels.cache.get(c.blacklistedID).id}]` :
-                    message.guild.members.cache.get(c.blacklistedID) ? `User - ${message.guild.members.cache.get(c.blacklistedID).username} [${message.guild.members.cache.get(c.blacklistedID).id}]` :
-                        message.guild.roles.cache.get(c.blacklistedID) ? `Role - ${message.guild.roles.cache.get(c.blacklistedID).name} [${message.guild.roles.cache.get(c.blacklistedID).id}]` :
-                            '\`ERROR\`'}`).join("\n")
+            let pasteContent = await starBlacklistCache.filter(c => c.guild === message.guild.id).map(c => stripIndents`-=+ ${this.client.user.username} Starboard Blacklist +=-\n⤷ Roles: ${rolesCount.length}\n⤷ Users: ${usersCount.length}\n⤷ Channels: ${channelCount.length}\n-=+ ${this.client.user.username} Starboard Blacklist +=-\n\n${message.guild.channels.cache.get(c.blacklistedID) ? `Channel - ${message.guild.channels.cache.get(c.blacklistedID).name} [${message.guild.channels.cache.get(c.blacklistedID).id}]` :
+                message.guild.members.cache.get(c.blacklistedID) ? `User - ${message.guild.members.cache.get(c.blacklistedID).username} [${message.guild.members.cache.get(c.blacklistedID).id}]` :
+                    message.guild.roles.cache.get(c.blacklistedID) ? `Role - ${message.guild.roles.cache.get(c.blacklistedID).name} [${message.guild.roles.cache.get(c.blacklistedID).id}]` :
+                        '\`ERROR\`'}`).join("\n")
 
             if (pasteContent) {
                 const paste = await pasteGG.post({
@@ -143,7 +143,7 @@ class Star extends Command {
 
                 await DB.query(`INSERT INTO starSettings (enabled, guild, channel, minStars, maxStars, allowSelfStar, allowNsfw ) VALUES(?,?,?,?,?,?,?)`, [enabled, message.guild.id, logChannel, minStars, maxStars, selfStars, nsfwAllowed])
 
-                listEmbed.setDescription(stripIndents `
+                listEmbed.setDescription(stripIndents`
                         ┌────────┄┄┄┄
                         **├** <:checkCircle:801085028938285088> **Enabled:** \`${enabled}\`
                         **├** <:logs:801080508310093834> **Channel:** \`-\`
@@ -153,7 +153,7 @@ class Star extends Command {
                         **├** <:nonsfw:823990821794873385> **Allow NSFW Msgs:** \`${nsfwAllowed}\`${blacklisted}
                         └────────┄┄┄┄`)
 
-                return await message.channel.send(listEmbed)
+                return await message.util.send(listEmbed)
             }
 
             // If there is data saved
@@ -168,7 +168,7 @@ class Star extends Command {
             await DB.query(`UPDATE starSettings SET enabled = ?, minStars = ?, maxStars = ?, channel = ?, allowSelfStar = ?, allowNsfw = ? WHERE guild = ?`, [enabled, newMinStars, newMaxStars, newChannel, selfStars, nsfwAllowed, message.guild.id])
 
             // If there is data, updated embed
-            listEmbed.setDescription(stripIndents `
+            listEmbed.setDescription(stripIndents`
                         ┌────────┄┄┄┄
                         **├** <:checkCircle:801085028938285088> **Enabled:** \`${enabled}\`
                         ${channelArray[newChannel] ? channelArray[newChannel] : `**├** <:logs:801080508310093834> **Channel:** <#${newChannel}>`}
@@ -187,7 +187,7 @@ class Star extends Command {
                 .setDescription(`${lang(message, "staffroleEmbed.desc1")} ${role} ${lang(message, "staffroleEmbed.desc2")}`)
                 .setColor(darkRed)
                 .setTimestamp()
-            message.channel.send(staffroleEmbed).then(m => m.delete({ timeout: 5000 }));
+            await message.util.send(staffroleEmbed).then(m => m.delete({ timeout: 5000 }));
         }
         /////////////////////////////// END OF STAFFROLE CHECK
     }
