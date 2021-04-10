@@ -19,11 +19,11 @@ module.exports = class ErrorListener extends Listener {
             .setColor('RANDOM')
             .setThumbnail(this.client.user.avatarURL({ dynamic: true }))
             .setTitle(`${this.client.user.username} ERROR HANDLER - INFO\n`)
-            .setDescription(stripIndents `
+            .setDescription(stripIndents`
                                     Guild: \`${message.guild.name}\`
                                     Channel: ${message.channel} \`[${message.channel.id}]\`
                                     User: ${message.author} \`[${message.author.id}]\`
-                                    Command: \`${command.id}\`
+                                    Command: \`${command.id || 'Not a command.'}\`
                                     Error: \`${err.toString()}\``)
             .setFooter(`ID: ${errorID}`, message.author.avatarURL({ dynamic: true }))
             .setTimestamp()
@@ -32,7 +32,7 @@ module.exports = class ErrorListener extends Listener {
             const userEmbed = this.client.util.embed()
                 .setColor(lightRed)
                 .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
-                .setDescription(stripIndents `The \`${command.id}\` command could not be executed, if you'd
+                .setDescription(stripIndents`The \`${command.id}\` command could not be executed, if you'd
                                             like to report this, heres the error ID: \`${errorID}\`\n
                                             Click [here](https://discord.gg/v8zkSc9 'Like a Light Support') to join the support server.`)
 
@@ -40,7 +40,7 @@ module.exports = class ErrorListener extends Listener {
             await logChannel.send(devLog)
 
         } else if (message.guild ? message.channel.permissionsFor(this.client.user).has(['SEND_MESSAGES']) : true) {
-            await message.util.send(stripIndents `The \`${command.id}\` command could not be executed.
+            await message.util.send(stripIndents`The \`${command.id}\` command could not be executed.
                                                  If you decide to report this, heres the error ID: \`${errorID}\`
                                                  And heres the invite to the support server: 
                                                  https://discord.gg/v8zkSc9`)

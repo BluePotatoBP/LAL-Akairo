@@ -74,11 +74,16 @@ class Client extends AkairoClient {
 
         this.commandHandler = new CommandHandler(this, {
             prefix: async (message) => {
-                if (message.channel.type === 'dm') return process.env.PREFIX;
-                let [data] = await DB.query(`SELECT * FROM prefixes WHERE guild = ?`, [message.guild.id]);
-                let customPrefix;
-                if (data.length === 0) { customPrefix = process.env.PREFIX } else { customPrefix = data[0].prefix }
-                return customPrefix;
+                try {
+                    if (message.channel.type === 'dm') return process.env.PREFIX;
+                    let [data] = await DB.query(`SELECT * FROM prefixes WHERE guild = ?`, [message.guild.id]);
+                    let customPrefix;
+                    if (data.length === 0) { customPrefix = process.env.PREFIX } else { customPrefix = data[0].prefix }
+                    return customPrefix;
+                } catch (error) {
+                    console.log(error)
+                }
+
             },
             blockBots: true,
             blockClient: true,
@@ -111,7 +116,7 @@ class Client extends AkairoClient {
 
                         editPrompt(message, embed);
                     },
-                    ended: () => {},
+                    ended: () => { },
                     cancel: async (message) => {
                         let embed = new Discord.MessageEmbed()
                             .setColor(darkRed)
@@ -122,7 +127,7 @@ class Client extends AkairoClient {
 
                     retries: 4,
                     time: 60000,
-                    timeout: () => {}
+                    timeout: () => { }
                 }
                 //#endregion prompt
             }
