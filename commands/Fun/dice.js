@@ -1,3 +1,4 @@
+const { MessageEmbed } = require('discord.js');
 const { Command } = require('discord-akairo');
 const { dice } = require('random-js')
 const { crimson } = require('../../assets/colors.json');
@@ -18,12 +19,12 @@ class Dice extends Command {
                 id: 'text',
                 match: 'text',
                 type: 'string',
-            }, ]
+            },]
         });
     }
 
     async exec(message, args) {
-        message.delete().catch(e => {});
+        message.delete().catch(e => { });
 
         function getRandomInt(max) {
             return Math.floor(Math.random() * Math.floor(max));
@@ -39,7 +40,7 @@ class Dice extends Command {
             6: "https://i.imgur.com/0YwYQeW.png"
         }
 
-        const embed = this.client.util.embed()
+        const embed = new MessageEmbed()
             .setImage(sides[number])
             .setColor(crimson)
 

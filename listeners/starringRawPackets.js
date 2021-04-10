@@ -198,7 +198,7 @@ module.exports = class clientReadyListener extends Listener {
 			const [guildSettings] = await DB.query(`SELECT * FROM starSettings WHERE guild = ?`, [guild.id])
 
 			// Blacklist triger
-			if (getBlackList(userChannel, user, guild)) return console.log("blacklist")
+			if (getBlackList(userChannel, user, guild)) return;
 
 			// If settings are set to off, return in that guild
 			if (guildSettings.length == 0 ? "false" : guildSettings[0].enabled === 'false') return;
@@ -220,9 +220,7 @@ module.exports = class clientReadyListener extends Listener {
 
 			//Resend logger embed
 			if (!botMessage) {
-
 				if (starCount <= minStars) {
-					console.log("YES ASSH")
 					await DB.query(`DELETE FROM starred WHERE userMessageID = ?`, [userMessage.id])
 					try { await botMessage.delete() } catch (error) { }
 					return;
@@ -294,10 +292,10 @@ module.exports = class clientReadyListener extends Listener {
 				removeCooldown.delete(user.id)
 			}, 5000)
 		}
+
 		//#endregion Reaction removed EVENT
 		if (packet.t === 'MESSAGE_REACTION_REMOVE_ALL') {
-			//if (packet.d.emoji.name !== "⭐") return;
-			console.log(packet)
+
 			const guild = this.client.guilds.cache.get(packet.d.guild_id)
 			if (!guild) return;
 
