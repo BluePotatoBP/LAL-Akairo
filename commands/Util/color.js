@@ -31,7 +31,7 @@ class Color extends Command {
     }
 
     async exec(message, { c }) {
-        message.delete({ timeout: 60000 }).catch((e) => {});
+        message.delete({ timeout: 60000 }).catch((e) => { });
 
         // Using a trycatch just because user input can be invalid sometimes (wrong hex code)
         try {

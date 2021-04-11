@@ -19,18 +19,18 @@ class Ban extends Command {
                 syntax: '<> - necessary, [] - optional'
             },
             args: [{
-                    id: 'm',
-                    type: 'member',
-                    prompt: {
-                        start: (message) => lang(message, 'command.ban.prompt.start'),
-                        retry: (message) => lang(message, 'command.ban.prompt.retry')
-                    }
-                },
-                {
-                    id: 'r',
-                    match: 'rest',
-                    type: 'string'
+                id: 'm',
+                type: 'member',
+                prompt: {
+                    start: (message) => lang(message, 'command.ban.prompt.start'),
+                    retry: (message) => lang(message, 'command.ban.prompt.retry')
                 }
+            },
+            {
+                id: 'r',
+                match: 'rest',
+                type: 'string'
+            }
             ]
         });
     }
@@ -44,7 +44,7 @@ class Ban extends Command {
         if (!role) return message.channel.send(`${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\``);
         let memberRoles = message.member._roles;
 
-        if (memberRoles.some(r => role.id === r)) {
+        if (memberRoles.some(r => role.id === r) || message.member.hasPermission('BAN_MEMBERS')) {
             // If theres no reason change 'r' args to "No Reason"
             if (!r) {
                 r = lang(message, 'command.ban.reason.noReason');
@@ -76,9 +76,9 @@ class Ban extends Command {
                 .setTitle(lang(message, 'command.ban.promptEmbed.title'))
                 .setDescription(
                     `${lang(message, 'command.ban.promptEmbed.desc.one')} \`${m.displayName}\` ${lang(
-						message,
-						'command.ban.promptEmbed.desc.two'
-					)} **${r}**?`
+                        message,
+                        'command.ban.promptEmbed.desc.two'
+                    )} **${r}**?`
                 );
 
             // Ban prompt initiation
@@ -94,13 +94,13 @@ class Ban extends Command {
                 message.channel.send(`**${message.author.tag}** ${lang(message, 'command.ban.messageAfterBan.one')} **${m.user.tag}**. \n${lang(message, 'command.ban.messageAfterBan.two')} ${r}`);
 
                 /*const banEmbed = new Discord.MessageEmbed() // When i figure out how to use a database, nice embed
-					.setAuthor("Action: Ban", "https://i.imgur.com/CQjspzn.png")
-					.setThumbnail(m.user.displayAvatarURL({ dynamic: true }))
-					.setColor(salmon)
-					.setDescription(`**Offender:** ${m.tag} *(${m.id})*\n **Moderator:** ${message.author.tag} *(${message.author.id})* \n**Channel:** ${message.channel.name} *(${message.channel.id})* \n**Reason:** ${r}`)
-					.setTimestamp()
+                    .setAuthor("Action: Ban", "https://i.imgur.com/CQjspzn.png")
+                    .setThumbnail(m.user.displayAvatarURL({ dynamic: true }))
+                    .setColor(salmon)
+                    .setDescription(`**Offender:** ${m.tag} *(${m.id})*\n **Moderator:** ${message.author.tag} *(${message.author.id})* \n**Channel:** ${message.channel.name} *(${message.channel.id})* \n**Reason:** ${r}`)
+                    .setTimestamp()
 	
-				logchannel.send(banEmbed);*/
+                logchannel.send(banEmbed);*/
 
                 // If the moderator reacted with an x cancel the action
             } else if (emoji === '❌') {

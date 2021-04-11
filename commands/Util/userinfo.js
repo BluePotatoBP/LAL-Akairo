@@ -24,7 +24,7 @@ class Userinfo extends Command {
     }
 
     async exec(message, { u }) {
-        await message.delete().catch((e) => {});
+        await message.delete().catch((e) => { });
 
         let question = u.presence.status;
         let capitalize = question.charAt(0).toUpperCase() + question.slice(1);
@@ -110,7 +110,7 @@ class Userinfo extends Command {
             .setColor(crimson)
             .addField(`Joined on:`, `\`${message.guild.members.cache.get(u.id).joinedAt.toUTCString().substr(0, 16)}\` <a:blobDJ:773206358991962132>`, true)
             .addField(`Registered on:`, `\`${this.client.users.cache.get(u.id).createdAt.toUTCString().substr(0, 16)}\` <a:animatedCool:773205297782325259>`, true)
-            .addField(`Status:`, `\`${capitalize}\` <a:blobParty:773205661499916328>`, true)
+            .addField(`Status:`, `\`${capitalize}\` <a:extremeShy:830640970642227211>`, true)
             .addField(`Nickname:`, `${u.nickname ? u.nickname : '`-` <a:superRotating:773222147148742657>'}`, true)
             .addField(`Last message`, `${m.lastMessage ? `[${lastmsg}](${m.lastMessage.url})` : '`-`'}`, true)
             .addField(`Last channel:`, u.lastMessage ? `<#${u.lastMessageChannelID}>` : `\`-\``, true)

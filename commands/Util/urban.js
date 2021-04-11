@@ -21,17 +21,16 @@ class Urban extends Command {
                 match: 'text',
                 type: 'string',
                 prompt: {
-                    start: 'start',
-                    retry: 'retry',
+                    start: 'What would you like to search for?',
+                    retry: 'Didnt quite catch that, what would you like to search for?',
                     optional: false
                 }
-
             }]
         });
     }
 
     async exec(message, { args }) {
-        message.delete().catch((e) => {});
+        message.delete().catch((e) => { });
         // Call the urban dictionary API
         let search = await urban(args)
 
@@ -62,7 +61,7 @@ class Urban extends Command {
                         \`${lang(message, 'command.urban.nembed.desc.example')}\` \n${example || lang(message, 'command.urban.nembed.desc.noExample')}
                         \`${lang(message, 'command.urban.nembed.desc.upvotes')}\` ${thumbs_up || 0}
                         \`${lang(message, 'command.urban.nembed.desc.downvotes')}\` ${thumbs_down || 0}
-                        \`${lang(message, 'command.urban.nembed.desc.link')}\` [${lang(message,'command.urban.nembed.desc.linkTo')} '${word}'](${permalink || 'https://www.urbandictionary.com/'})`)
+                        \`${lang(message, 'command.urban.nembed.desc.link')}\` [${lang(message, 'command.urban.nembed.desc.linkTo')} '${word}'](${permalink || 'https://www.urbandictionary.com/'})`)
                     .setTimestamp()
                     .setFooter(`${lang(message, 'command.urban.nembed.desc.author')} ${author || 'unknown'}`);
 

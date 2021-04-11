@@ -18,18 +18,18 @@ class Kick extends Command {
                 syntax: '<> - necessary, [] - optional'
             },
             args: [{
-                    id: 'm',
-                    type: 'member',
-                    prompt: {
-                        start: (message) => lang(message, 'command.kick.prompt.start'),
-                        retry: (message) => lang(message, 'command.kick.prompt.retry')
-                    }
-                },
-                {
-                    id: 'r',
-                    match: 'rest',
-                    type: 'string'
+                id: 'm',
+                type: 'member',
+                prompt: {
+                    start: (message) => lang(message, 'command.kick.prompt.start'),
+                    retry: (message) => lang(message, 'command.kick.prompt.retry')
                 }
+            },
+            {
+                id: 'r',
+                match: 'rest',
+                type: 'string'
+            }
             ]
         });
     }
@@ -43,7 +43,7 @@ class Kick extends Command {
         if (!role) return message.channel.send(`${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\``);
         let memberRoles = message.member._roles;
 
-        if (memberRoles.some(r => role.id === r)) {
+        if (memberRoles.some(r => role.id === r) || message.member.hasPermission('KICK_MEMBERS')) {
             // If theres no reason change 'r' args to "No Reason"
             if (!r) {
                 r = lang(message, 'command.kick.reason.noReason');
@@ -75,9 +75,9 @@ class Kick extends Command {
                 .setTitle(lang(message, 'command.kick.promptEmbed.title'))
                 .setDescription(
                     `${lang(message, 'command.kick.promptEmbed.desc.one')} \`${m.displayName}\` ${lang(
-						message,
-						'command.kick.promptEmbed.desc.two'
-					)} **${r}**?`
+                        message,
+                        'command.kick.promptEmbed.desc.two'
+                    )} **${r}**?`
                 );
 
             // Kick prompt initiation
@@ -92,14 +92,14 @@ class Kick extends Command {
 
                 message.channel.send(
                     `**${message.author.tag}** ${lang(message, 'command.kick.messageAfterBan.one')} **${m.user
-						.tag}**. \n${lang(message, 'command.kick.messageAfterBan.two')} ${r}`
+                        .tag}**. \n${lang(message, 'command.kick.messageAfterBan.two')} ${r}`
                 );
                 /*const kickEmbed = new Discord.MessageEmbed() // When i figure out how to use a database, nice embed
-                	.setAuthor("Action: Kick", "https://i.imgur.com/CQjspzn.png")
-                	.setThumbnail(u.user.displayAvatarURL({ dynamic: true }))
-                	.setColor(salmon)
-                	.setDescription(`**Offender:** ${u.tag} *(${u.id})*\n **Moderator:** ${message.author.tag} *(${message.author.id})* \n**Channel:** ${message.channel.name} *(${message.channel.id})* \n**Reason:** ${r}`)
-                	.setTimestamp()
+                    .setAuthor("Action: Kick", "https://i.imgur.com/CQjspzn.png")
+                    .setThumbnail(u.user.displayAvatarURL({ dynamic: true }))
+                    .setColor(salmon)
+                    .setDescription(`**Offender:** ${u.tag} *(${u.id})*\n **Moderator:** ${message.author.tag} *(${message.author.id})* \n**Channel:** ${message.channel.name} *(${message.channel.id})* \n**Reason:** ${r}`)
+                    .setTimestamp()
                 logchannel.send(kickEmbed);*/
                 // If the moderator reacted with an x cancel the action
             } else if (emoji === '❌') {

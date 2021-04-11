@@ -16,30 +16,31 @@ class Poll extends Command {
                 syntax: '<> - necessary, [] - optional'
             },
             args: [{
-                    id: 'c',
-                    match: 'phrase',
-                    type: 'channel',
-                    prompt: {
-                        start: (message) => lang(message, 'command.poll.channel.prompt.start'),
-                        retry: (message) => lang(message, 'command.poll.channel.prompt.retry'),
-                        optional: true
-                    }
-                },
-                {
-                    id: 't',
-                    match: 'rest',
-                    type: 'string',
-                    prompt: {
-                        start: (message) => lang(message, 'command.poll.text.prompt.start'),
-                        retry: (message) => lang(message, 'command.poll.text.prompt.retry')
-                    }
+                id: 'c',
+                match: 'phrase',
+                type: 'channel',
+                prompt: {
+                    start: (message) => lang(message, 'command.poll.channel.prompt.start'),
+                    retry: (message) => lang(message, 'command.poll.channel.prompt.retry'),
+                    optional: true
                 }
+            },
+            {
+                id: 't',
+                match: 'rest',
+                type: 'string',
+                unordered: true,
+                prompt: {
+                    start: (message) => lang(message, 'command.poll.text.prompt.start'),
+                    retry: (message) => lang(message, 'command.poll.text.prompt.retry')
+                }
+            }
             ]
         });
     }
 
     async exec(message, { c, t }) {
-        message.delete({ timeout: 30000 }).catch((e) => {});
+        message.delete({ timeout: 30000 }).catch((e) => { });
 
         let cachedGuild = staffRole.find(c => c.guild == message.guild.id)
         if (!cachedGuild) return message.channel.send(`${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\``);

@@ -28,34 +28,32 @@ class Help extends Command {
                     }
                 }
 
-                return { command, }
+                return { command }
             }
         });
     }
     async exec(message, { command }) {
-        message.delete().catch((e) => {});
+        message.delete().catch((e) => { });
 
         let SearchCollector;
         let prefix;
+
         let [data] = await DB.query(`SELECT * FROM prefixes WHERE guild = ?`, [message.guild.id]);
+
+        data.length === 0 ? prefix = process.env.PREFIX : prefix = data[0].prefix
+
         const embed = new Discord.MessageEmbed()
             .setColor(crimson)
             .setAuthor(`${this.client.user.username} Help`, this.client.user.displayAvatarURL({ dynamic: true }))
             .setThumbnail(message.guild.iconURL({ dynamic: true }));
 
-        if (data.length === 0) {
-            prefix = process.env.PREFIX;
-        } else {
-            prefix = `${data[0].prefix}`;
-        }
-
         if (message.guild.members.cache.get(this.client.user.id).permissions.has('ADD_REACTIONS')) {
 
             if (command) {
                 const embed = new Discord.MessageEmbed()
-                    .setDescription(stripIndents `${lang(message, 'command.help.embedtwo.desc.one')} \`${prefix}\`\n 
+                    .setDescription(stripIndents`${lang(message, 'command.help.embedtwo.desc.one')} \`${prefix}\`\n 
                  **${lang(message, 'command.help.embedtwo.desc.two')} **${command.categoryID.toLowerCase() === 'nsfw' ? `|| \`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\` ||` : `\`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\``}
-                 **${lang(message, 'command.help.embedtwo.desc.three')}** ${lang(message,`command.${command.id}.desc.content`)}
+                 **${lang(message, 'command.help.embedtwo.desc.three')}** ${lang(message, `command.${command.id}.desc.content`)}
                  **${lang(message, 'command.help.embedtwo.desc.four')}** ${command.description.usage ? `\`${prefix}${command.id} ${command.description.usage}\`` : lang(message, 'command.help.embedtwo.desc.five')}
                  **${lang(message, "command.help.embedtwo.desc.ten")}** ${command.cooldown ? `\`${ms(command.cooldown)}\`` : '\`2s\`'}
                  **${lang(message, 'command.help.embedtwo.desc.six')}** ${command.aliases ? command.aliases.join(', ') : lang(message, 'command.help.embedtwo.desc.seven')}`)
@@ -92,13 +90,14 @@ class Help extends Command {
                 }
 
                 const msg = await message.util.send(homeEmbed)
+
                 await msg.react('<:home:817848932209393725>');
                 await msg.react('<:library:817848932364845067>');
                 await msg.react('<:search:817848932566695986>');
                 await msg.react('<:exit:817890713190662146>');
 
                 const emojiCollector = msg.createReactionCollector((reaction, user) => {
-                    return ["817848932209393725", "817848932364845067", "817848932566695986", "817890713190662146"].includes(reaction.emoji.id) && !user.bot;
+                    return ["817848932209393725", "817848932364845067", "817848932566695986", "817890713190662146"].includes(reaction.emoji.id) && !user.bot && user.id === message.author.id;
                 }, { time: 120000 });
 
                 emojiCollector.on("collect", async (reaction, user) => {
@@ -155,9 +154,9 @@ class Help extends Command {
 
                                     const commandHelp = this.client.util.embed()
                                         .setTitle(`${this.client.user.username} Help | Search Result`)
-                                        .setDescription(stripIndents `${lang(message, 'command.help.embedtwo.desc.one')} \`${prefix}\`\n
+                                        .setDescription(stripIndents`${lang(message, 'command.help.embedtwo.desc.one')} \`${prefix}\`\n
                                                                       **Command:** ${command.categoryID.toLowerCase() === 'nsfw' ? `|| \`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\` ||` : `\`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\``}
-                                                                      **Description:** ${lang(message,`command.${command.id}.desc.content`)}
+                                                                      **Description:** ${lang(message, `command.${command.id}.desc.content`)}
                                                                       **Usage:** ${command.description.usage ? `\`${prefix}${command.id} ${command.description.usage}\`` : lang(message, 'command.help.embedtwo.desc.five')}
                                                                       **Cooldown:** ${command.cooldown ? `\`${ms(command.cooldown)}\`` : '\`2s\`'}
                                                                       **Aliases:** ${command.aliases ? command.aliases.join(', ') : lang(message, 'command.help.embedtwo.desc.seven')}`)
@@ -204,9 +203,9 @@ class Help extends Command {
 
                 console.log(`${debug('[DEBUG]')} '${message.author.tag}'[${message.author.id}] used ${chalk.gray(`"${prefix}help ${command.id.toLowerCase()}"`)} in '${message.guild.name}'[${message.guild.id}]`);
 
-                embed.setDescription(stripIndents `${lang(message, 'command.help.embedtwo.desc.one')} \`${prefix}\`\n 
+                embed.setDescription(stripIndents`${lang(message, 'command.help.embedtwo.desc.one')} \`${prefix}\`\n 
                 **${lang(message, 'command.help.embedtwo.desc.two')} **${command.categoryID.toLowerCase() === 'nsfw' ? `|| \`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\` ||` : `\`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\``}
-                **${lang(message, 'command.help.embedtwo.desc.three')}** ${lang(message,`command.${command.id}.desc.content`)}
+                **${lang(message, 'command.help.embedtwo.desc.three')}** ${lang(message, `command.${command.id}.desc.content`)}
                 **${lang(message, 'command.help.embedtwo.desc.four')}** ${command.description.usage ? `\`${prefix}${command.id} ${command.description.usage}\`` : lang(message, 'command.help.embedtwo.desc.five')}
                 **${lang(message, "command.help.embedtwo.desc.ten")}** ${command.cooldown ? `\`${ms(command.cooldown)}\`` : '\`2s\`'}
                 **${lang(message, 'command.help.embedtwo.desc.six')}** ${command.aliases ? command.aliases.join(', ') : lang(message, 'command.help.embedtwo.desc.seven')}`);
@@ -218,4 +217,5 @@ class Help extends Command {
         }
     }
 }
+
 module.exports = Help;

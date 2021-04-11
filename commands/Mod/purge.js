@@ -9,7 +9,7 @@ class Purge extends Command {
             aliases: ['purge', 'bulkdelete', 'massdelete', 'delete'],
             category: 'Mod',
             clientPermissions: ['MANAGE_MESSAGES'],
-            userPermissions: ['MANAGE_MESSAGES '],
+            userPermissions: ['MANAGE_MESSAGES'],
             ownerOnly: false,
             cooldown: 10000,
             description: {
@@ -18,55 +18,55 @@ class Purge extends Command {
                 syntax: '<> - necessary, [] - optional, () - optional symbol'
             },
             args: [{
-                    id: 'messagesAmount',
-                    type: 'number',
-                    prompt: {
-                        start: (message) => lang(message, "command.purge.args.number.start"),
-                        retry: (message) => lang(message, "command.purge.args.number.retry")
-                    }
-                },
-                {
-                    id: 'bots',
-                    match: 'flag',
-                    flag: ['-bot', '-bots']
-                },
-                {
-                    id: 'embeds',
-                    match: 'flag',
-                    flag: ['-embed', '-embeds']
-                },
-                {
-                    id: 'attachments',
-                    match: 'flag',
-                    flag: ['-attachment', '-attachments', '-atch']
-                },
-                {
-                    id: 'userOpt',
-                    match: 'option',
-                    type: 'member',
-                    flag: ['-user:', '-user'],
-                },
-                {
-                    id: 'includesOpt',
-                    match: 'option',
-                    flag: ['-includes:', '-includes'],
-                },
-                {
-                    id: 'startsWithOpt',
-                    match: 'option',
-                    flag: ['-starts:', '-starts', '-startswith:', '-startswith'],
-                },
-                {
-                    id: 'endsWithOpt',
-                    match: 'option',
-                    flag: ['-ends:', '-ends', '-endswith:', '-endsswith'],
-                },
+                id: 'messagesAmount',
+                type: 'number',
+                prompt: {
+                    start: (message) => lang(message, "command.purge.args.number.start"),
+                    retry: (message) => lang(message, "command.purge.args.number.retry")
+                }
+            },
+            {
+                id: 'bots',
+                match: 'flag',
+                flag: ['-bot', '-bots']
+            },
+            {
+                id: 'embeds',
+                match: 'flag',
+                flag: ['-embed', '-embeds']
+            },
+            {
+                id: 'attachments',
+                match: 'flag',
+                flag: ['-attachment', '-attachments', '-atch']
+            },
+            {
+                id: 'userOpt',
+                match: 'option',
+                type: 'member',
+                flag: ['-user:', '-user'],
+            },
+            {
+                id: 'includesOpt',
+                match: 'option',
+                flag: ['-includes:', '-includes'],
+            },
+            {
+                id: 'startsWithOpt',
+                match: 'option',
+                flag: ['-starts:', '-starts', '-startswith:', '-startswith'],
+            },
+            {
+                id: 'endsWithOpt',
+                match: 'option',
+                flag: ['-ends:', '-ends', '-endswith:', '-endsswith'],
+            },
             ]
         });
     }
 
     async exec(message, { messagesAmount, bots, embeds, attachments, userOpt, includesOpt, startsWithOpt, endsWithOpt }) {
-        message.delete().catch(e => {});
+        message.delete().catch(e => { });
 
         // Staffrole Check
         let cachedGuild = staffRole.find(c => c.guild == message.guild.id)
@@ -129,7 +129,7 @@ class Purge extends Command {
             } // End of loop
 
             let actuallyPurged = allDeletedAmount.length == 0 ? 0 : allDeletedAmount.reduce((a, b) => a + b);
-            await wait(1000).then(message.channel.send(`Purged \`${actuallyPurged}\` messages.`).then(msg => msg.delete({ timeout: 10000 })).catch(e => {}))
+            await wait(1000).then(message.channel.send(`Purged \`${actuallyPurged}\` messages.`).then(msg => msg.delete({ timeout: 10000 })).catch(e => { }))
             // End of purge/Start of staffrole check 2nd part
 
         } else {
@@ -138,7 +138,7 @@ class Purge extends Command {
                 .setDescription(`${lang(message, "staffroleEmbed.desc1")} ${role} ${lang(message, "staffroleEmbed.desc2")}`)
                 .setColor(darkRed)
                 .setTimestamp()
-            message.channel.send(staffroleEmbed).then(m => m.delete({ timeout: 5000 })).catch(e => {});
+            message.channel.send(staffroleEmbed).then(m => m.delete({ timeout: 5000 })).catch(e => { });
         }
         // End of staffrole check 2nd part
     }

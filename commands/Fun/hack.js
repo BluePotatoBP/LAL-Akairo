@@ -27,7 +27,7 @@ class Hack extends Command {
     }
 
     async exec(message, { u }) {
-        message.delete().catch((e) => {});
+        message.delete().catch((e) => { });
 
         let region = {
             brazil: 'Brazil :flag_br:',
@@ -61,53 +61,53 @@ class Hack extends Command {
                 `\`[Startup]\` Loading the sequence with upboot SQL on user **${u.tag}**... <a:gears:773203929507823617>`
             );
             setTimeout(() => {
-                firstMsg.edit('`[10%]` Fetching the IP address... <a:gears:773203929507823617>').catch(e => {});
+                firstMsg.edit('`[10%]` Fetching the IP address... <a:gears:773203929507823617>').catch(e => { });
             }, 5000);
             setTimeout(() => {
-                firstMsg.edit('`[15%]` IP found: `192.***.***.***` <a:gears:773203929507823617>').catch(e => {});
+                firstMsg.edit('`[15%]` IP found: `192.***.***.***` <a:gears:773203929507823617>').catch(e => { });
             }, 10000);
 
             setTimeout(() => {
-                firstMsg.edit('`[23%]` Starting GeoIP lookup... <a:gears:773203929507823617>').catch(e => {});
+                firstMsg.edit('`[23%]` Starting GeoIP lookup... <a:gears:773203929507823617>').catch(e => { });
             }, 15000);
 
             setTimeout(() => {
-                firstMsg.edit(`\`[38%]\` Location: Somewhere in **${region[message.guild.region]}** <a:gears:773203929507823617>`).catch(e => {});
+                firstMsg.edit(`\`[38%]\` Location: Somewhere in **${region[message.guild.region]}** <a:gears:773203929507823617>`).catch(e => { });
             }, 20000);
 
             setTimeout(() => {
-                firstMsg.edit('`[49%]` Searching for Discord credentials... <a:gears:773203929507823617>').catch(e => {});
+                firstMsg.edit('`[49%]` Searching for Discord credentials... <a:gears:773203929507823617>').catch(e => { });
             }, 25000);
 
             setTimeout(() => {
-                firstMsg.edit(`\`[55%]\` Credentials found (2fa bypassed): \`Email:${u.username.split(' ').join('')}@\*\*\*\*\*.\*\*\* Password: \*\*\*\*\*\*\*\*\` <a:gears:773203929507823617>`).catch(e => {});
+                firstMsg.edit(`\`[55%]\` Credentials found (2fa bypassed): \`Email:${u.username.split(' ').join('')}@\*\*\*\*\*.\*\*\* Password: \*\*\*\*\*\*\*\*\` <a:gears:773203929507823617>`).catch(e => { });
             }, 30000);
 
             setTimeout(() => {
-                firstMsg.edit(`\`[69%]\` Searching for the user token <a:gears:773203929507823617>`).catch(e => {});
+                firstMsg.edit(`\`[69%]\` Searching for the user token <a:gears:773203929507823617>`).catch(e => { });
             }, 35000);
             setTimeout(() => {
-                firstMsg.edit(`\`[81%]\` User token found: \`${generateId(12)}.******.**-*******************${generateId(5)}\` <a:gears:773203929507823617>`).catch(e => {});
+                firstMsg.edit(`\`[81%]\` User token found: \`${generateId(12)}.******.**-*******************${generateId(5)}\` <a:gears:773203929507823617>`).catch(e => { });
             }, 40000);
             setTimeout(() => {
-                firstMsg.edit(`\`[99%]\` Cleaning up the mess... <a:gears:773203929507823617>`).catch(e => {});
+                firstMsg.edit(`\`[99%]\` Cleaning up the mess... <a:gears:773203929507823617>`).catch(e => { });
             }, 45000);
             setTimeout(() => {
-                firstMsg.edit(`\`[COMPLETE]\` I will be sending you the user info in your DMs shortly. <a:gears:773203929507823617>`).catch(e => {});
+                firstMsg.edit(`\`[COMPLETE]\` I will be sending you the user info in your DMs shortly. <a:gears:773203929507823617>`).catch(e => { });
             }, 50000);
 
             setTimeout(() => {
-                firstMsg.edit(`\`[COMPLETE]\` User info has been sent to your DMs (Unless they're locked.)`).catch(e => {});
+                firstMsg.edit(`\`[COMPLETE]\` User info has been sent to your DMs (Unless they're locked.)`).catch(e => { });
             }, 55100);
             setTimeout(() => {
-                message.author.send('For all your doxxing needs: 🤡').catch((e) => {});
+                message.author.send('For all your doxxing needs: 🤡').catch((e) => { });
             }, 55000);
 
 
         } catch (error) {
             console.log(error);
             message.channel.send(
-                'Who deleted the message? <a:blobParty:773205661499916328><a:blobParty:773205661499916328><a:blobParty:773205661499916328>'
+                'Who deleted the message? <a:extremeShy:830640970642227211>'
             );
         }
     }

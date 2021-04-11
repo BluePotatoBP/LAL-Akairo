@@ -26,11 +26,6 @@ class Dice extends Command {
     async exec(message, args) {
         message.delete().catch(e => { });
 
-        function getRandomInt(max) {
-            return Math.floor(Math.random() * Math.floor(max));
-        }
-
-        let number = getRandomInt(6);
         let sides = {
             1: "https://i.imgur.com/epZt2e0.png",
             2: "https://i.imgur.com/9W3PLvx.png",
@@ -40,11 +35,20 @@ class Dice extends Command {
             6: "https://i.imgur.com/0YwYQeW.png"
         }
 
+        let number = getRandomInt(6);
+        if (number === 0) number === 1
+
         const embed = new MessageEmbed()
             .setImage(sides[number])
             .setColor(crimson)
+            .setFooter(`You rolled a [${number}]`, message.author.displayAvatarURL({ dynamic: true }))
+            .setTimestamp()
 
         await message.channel.send(embed);
+
+        function getRandomInt(max) {
+            return Math.floor(Math.floor(Math.random() * max));
+        }
     }
 }
 module.exports = Dice;

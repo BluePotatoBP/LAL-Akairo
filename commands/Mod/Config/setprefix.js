@@ -25,7 +25,7 @@ class SetPrefix extends Command {
     }
 
     async exec(message, { p }) {
-        message.delete().catch((e) => {});
+        message.delete().catch((e) => { });
         const prefixEmbed = new Discord.MessageEmbed()
             .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp();
@@ -37,9 +37,9 @@ class SetPrefix extends Command {
                 prefixEmbed.setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }));
                 prefixEmbed.setDescription(
                     `${lang(message, 'command.setprefix.prefixEmbed.desc.one')} \`${process.env.PREFIX}\` \n${lang(
-						message,
-						'command.setprefix.prefixEmbed.desc.two'
-					)} \`${process.env.PREFIX}setprefix [prefix]\``
+                        message,
+                        'command.setprefix.prefixEmbed.desc.two'
+                    )} \`${process.env.PREFIX}setprefix [prefix]\``
                 );
                 prefixEmbed.setFooter('Syntax: [] - optional')
                 prefixEmbed.setColor(pastelGreen);
@@ -84,15 +84,6 @@ class SetPrefix extends Command {
                 message.channel.send(prefixEmbed);
             }
         }
-
-        //DB.query(`INSERT INTO prefixes (guild, prefix VALUES(?, ?)`,[message.guild.id, p])
-
-        //DB.query("UPDATE prefixes SET prefix = ? WHERE guild = ?", [p, message.guild.id])
-
-        //DB.query("DELETE FROM prefixes WHERE guild = ?", [message.guild.id])
-
-        //console.log(data[0].prefix)
-        //console.log(data[0].guild)
     }
 }
 module.exports = SetPrefix;
