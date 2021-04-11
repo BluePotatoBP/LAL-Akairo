@@ -8,7 +8,8 @@ class Hangman extends Command {
             clientPermissions: ['ADD_REACTIONS', 'MANAGE_MESSAGES'],
             category: '',
             ownerOnly: false,
-            cooldown: 10000,
+            cooldown: 5000,
+            ratelimit: 2,
             description: {
                 content: '',
                 usage: '',
@@ -18,7 +19,7 @@ class Hangman extends Command {
     }
 
     async exec(message) {
-        message.delete().catch((e) => {});
+        message.delete().catch((e) => { });
         const hangman = new HangmanGame(client);
 
         hangman.newGame(message);

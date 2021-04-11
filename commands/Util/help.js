@@ -1,4 +1,4 @@
-const { Command } = require('discord-akairo');
+const { Command, Argument } = require('discord-akairo');
 const Discord = require('discord.js');
 const ms = require('ms');
 const { stripIndents } = require('common-tags');
@@ -11,7 +11,8 @@ class Help extends Command {
             aliases: ['help'],
             category: 'Util',
             ownerOnly: false,
-            cooldown: 10000,
+            cooldown: 5000,
+            ratelimit: 2,
             description: {
                 content: 'Shows you this message',
                 usage: '[command}',
@@ -20,10 +21,10 @@ class Help extends Command {
             * args(message) {
 
                 const command = yield {
-                    type: "commandAlias",
+                    type: Argument.union("commandAlias", ["commands", "list"]),
                     prompt: {
-                        start: `What command would you like to inspect?`,
-                        retry: `I didn't quite get that, what command would you like to inspect?`,
+                        start: `What command would you like to check?`,
+                        retry: `I didn't quite get that, what command would you like to check?`,
                         optional: true
                     }
                 }
@@ -32,7 +33,7 @@ class Help extends Command {
             }
         });
     }
-    async exec(message, { command }) {
+    async exec(message, { command, list }) {
         message.delete().catch((e) => { });
 
         let SearchCollector;
@@ -48,6 +49,118 @@ class Help extends Command {
             .setThumbnail(message.guild.iconURL({ dynamic: true }));
 
         if (message.guild.members.cache.get(this.client.user.id).permissions.has('ADD_REACTIONS')) {
+
+            const commandsEmbed = this.client.util.embed()
+                .setTitle(`${this.client.user.username} Help | Commands`)
+                .setDescription(`View all commands and their categories below\nFor further info about a specific command, use \`${prefix}help <Command>\``)
+                .setColor(crimson)
+                .setFooter(`Requested by ${message.author.username}`, message.author.displayAvatarURL({ dynamic: true }))
+                .setTimestamp()
+
+            for (const category of this.handler.categories.values()) {
+                if (category.id === 'default' || category.id === '') {
+                    continue;
+                } else if (category) {
+                    commandsEmbed.addField(`${category.id} [${category.size}]`, `${category.map((cmd) => `${cmd.categoryID.toLowerCase() == 'nsfw' ? `|| ${cmd} ||` : cmd}`).join(', ')}`);
+                }
+            }
+
+            //List commands
+            if (!command && ["commands", "list"].some(w => command.toLowerCase() === w)) {
+
+                let msg = await message.util.send(commandsEmbed)
+
+                await msg.react('<:home:817848932209393725>');
+                await msg.react('<:library:817848932364845067>');
+                await msg.react('<:search:817848932566695986>');
+                await msg.react('<:exit:817890713190662146>');
+
+                const emojiCollector = msg.createReactionCollector((reaction, user) => {
+                    return ["817848932209393725", "817848932364845067", "817848932566695986", "817890713190662146"].includes(reaction.emoji.id) && !user.bot && user.id === message.author.id;
+                }, { time: 120000 });
+
+                const homeEmbed = this.client.util.embed()
+                    .addField("<:home:817848932209393725> | Home", "Returns to this page")
+                    .addField("<:library:817848932364845067> | Commands", "Shows all categories along with their commands")
+                    .addField("<:search:817848932566695986> | Search", "Search for any command or alias")
+                    .setThumbnail(this.client.user.displayAvatarURL({ dynamic: true }))
+                    .setFooter(`Requested by ${message.author.username}`, message.author.displayAvatarURL({ dynamic: true }))
+                    .setColor(crimson)
+                    .setTimestamp();
+
+                emojiCollector.on("collect", async (reaction, user) => {
+                    reaction.users.remove(user.id);
+
+                    switch (reaction.emoji.id) {
+                        case "817848932209393725":
+                            message.util.send(homeEmbed)
+                            break;
+                        case "817848932364845067":
+                            message.util.send(commandsEmbed)
+                            break;
+                        case "817890713190662146":
+                            if (message.guild.members.cache.get(this.client.user.id).permissions.has('MANAGE_MESSAGES')) {
+                                msg.reactions.removeAll().catch(e => console.log(e))
+                            } else {
+                                await msg.react('<a:cancel:773201205056503849>')
+                            }
+
+                            break;
+                        case "817848932566695986":
+
+                            const searchEmbed = this.client.util.embed()
+                                .setTitle(`${this.client.user.username} Help | Search`)
+                                .setDescription("Find commands or aliases by typing a query")
+                                .setColor(crimson)
+                                .setFooter(`Requested by ${message.author.username}`, message.author.displayAvatarURL({ dynamic: true }))
+                                .setTimestamp()
+
+                            message.util.send(searchEmbed)
+
+
+                            const filter = m => !m.author.bot && m.author.id == message.author.id
+                            SearchCollector = msg.channel.createMessageCollector(filter, { time: 3e5 });
+                            SearchCollector.on("collect", async (commandInput) => {
+
+                                if (commandInput.content.toLowerCase() === "cancel") return message.util.send(homeEmbed)
+
+                                let resolveType = await this.client.commandHandler.resolver.type("commandAlias")
+                                let command = await resolveType(message, commandInput.content)
+
+                                if (!command) {
+
+                                    const noCommandFound = this.client.util.embed()
+                                        .setTitle(`${this.client.user.username} Help | Search`)
+                                        .setDescription("No command found, try again.")
+                                        .setColor(lightRed)
+                                        .setFooter(`Requested by ${message.author.username}`, message.author.displayAvatarURL({ dynamic: true }))
+                                        .setTimestamp()
+
+                                    message.util.send(noCommandFound)
+
+                                } else {
+
+                                    const commandHelp = this.client.util.embed()
+                                        .setTitle(`${this.client.user.username} Help | Search Result`)
+                                        .setDescription(stripIndents`${lang(message, 'command.help.embedtwo.desc.one')} \`${prefix}\`\n
+                                                                      **Command:** ${command.categoryID.toLowerCase() === 'nsfw' ? `|| \`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\` ||` : `\`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\``}
+                                                                      **Description:** ${lang(message, `command.${command.id}.desc.content`)}
+                                                                      **Usage:** ${command.description.usage ? `\`${prefix}${command.id} ${command.description.usage}\`` : lang(message, 'command.help.embedtwo.desc.five')}
+                                                                      **Cooldown:** ${command.cooldown ? `\`${ms(command.cooldown)}\`` : '\`2s\`'}
+                                                                      **Aliases:** ${command.aliases ? command.aliases.join(', ') : lang(message, 'command.help.embedtwo.desc.seven')}`)
+                                        .setColor(pastelGreen)
+                                        .setFooter(`${lang(message, 'command.help.embedtwo.desc.eight')} ${command.description.syntax ? `${command.description.syntax}` : lang(message, 'command.help.embedtwo.desc.nine')}`)
+
+                                    message.util.send(commandHelp)
+                                    SearchCollector.stop()
+                                }
+                            })
+                            break;
+                    }
+                })
+
+                return;
+            }
 
             if (command) {
                 const embed = new Discord.MessageEmbed()

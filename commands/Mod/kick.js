@@ -11,7 +11,8 @@ class Kick extends Command {
             clientPermissions: ['KICK_MEMBERS'],
             userPermissions: ['KICK_MEMBERS'],
             ownerOnly: false,
-            cooldown: 10000,
+            cooldown: 5000,
+            ratelimit: 2,
             description: {
                 content: 'Kick a user with a reason',
                 usage: '<user> [reason]',

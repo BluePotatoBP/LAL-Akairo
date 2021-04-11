@@ -11,7 +11,8 @@ class Color extends Command {
             aliases: ['color', 'hex', 'whatcolor', 'c'],
             category: 'Util',
             ownerOnly: false,
-            cooldown: 10000,
+            cooldown: 5000,
+            ratelimit: 2,
             description: {
                 content: 'Get a preview of a #hex color code',
                 usage: '<color>',

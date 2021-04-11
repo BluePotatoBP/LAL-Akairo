@@ -7,9 +7,11 @@ const { sfw } = new nekoClient();
 class Slap extends Command {
 	constructor() {
 		super('slap', {
-			aliases: [ 'slap' ],
+			aliases: ['slap'],
 			category: 'Fun',
 			ownerOnly: false,
+			ownerOnly: false,
+			cooldown: 5000,
 			description: {
 				content: 'Slap someone who deserves it',
 				usage: '[user]',
@@ -25,7 +27,7 @@ class Slap extends Command {
 	}
 
 	async exec(message, { m }) {
-		message.delete().catch((e) => {});
+		message.delete().catch((e) => { });
 
 		let image = await sfw.slap();
 

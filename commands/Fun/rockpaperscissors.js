@@ -9,7 +9,8 @@ class RPS extends Command {
             aliases: ['rps', 'rockpaperscissors'],
             clientPermissions: ['ADD_REACTIONS'],
             category: 'Fun',
-            cooldown: 10000,
+            cooldown: 5000,
+            ratelimit: 2,
             ownerOnly: false,
             description: {
                 content: 'Play RPS against me!',
@@ -26,7 +27,7 @@ class RPS extends Command {
     }
 
     async exec(message, { i }) {
-        message.delete({ timeout: 30000 }).catch((e) => {});
+        message.delete({ timeout: 30000 }).catch((e) => { });
 
         let result = Math.floor(Math.random() * 3 + 1);
         const endEmbed = new Discord.MessageEmbed();
@@ -42,9 +43,9 @@ class RPS extends Command {
                     endEmbed.setDescription(`${lang(message, 'command.rps.embed.desc.tied')} 🤝`);
                     endEmbed.setTitle(
                         `${lang(message, 'command.rps.embed.title.userChose')} 🗻 & ${lang(
-							message,
-							'command.rps.embed.title.botChose'
-						)} 🗻`
+                            message,
+                            'command.rps.embed.title.botChose'
+                        )} 🗻`
                     );
                 } else if (result === 2) {
                     // Paper 📰
@@ -52,9 +53,9 @@ class RPS extends Command {
                     endEmbed.setDescription(`${lang(message, 'command.rps.embed.desc.lost')} 😢`);
                     endEmbed.setTitle(
                         `${lang(message, 'command.rps.embed.title.userChose')} 🗻 & ${lang(
-							message,
-							'command.rps.embed.title.botChose'
-						)} 📰`
+                            message,
+                            'command.rps.embed.title.botChose'
+                        )} 📰`
                     );
                 } else if (result === 3) {
                     // Scissors ✂
@@ -62,9 +63,9 @@ class RPS extends Command {
                     endEmbed.setDescription(`${lang(message, 'command.rps.embed.desc.won')} 😁`);
                     endEmbed.setTitle(
                         `${lang(message, 'command.rps.embed.title.userChose')} 🗻 & ${lang(
-							message,
-							'command.rps.embed.title.botChose'
-						)} ✂`
+                            message,
+                            'command.rps.embed.title.botChose'
+                        )} ✂`
                     );
                 }
             } else if (i === 'paper') {
@@ -74,9 +75,9 @@ class RPS extends Command {
                     endEmbed.setDescription(`${lang(message, 'command.rps.embed.desc.won')} 😁`);
                     endEmbed.setTitle(
                         `${lang(message, 'command.rps.embed.title.userChose')} 📰 & ${lang(
-							message,
-							'command.rps.embed.title.botChose'
-						)} 🗻`
+                            message,
+                            'command.rps.embed.title.botChose'
+                        )} 🗻`
                     );
                 } else if (result === 2) {
                     // Paper 📰
@@ -84,9 +85,9 @@ class RPS extends Command {
                     endEmbed.setDescription(`${lang(message, 'command.rps.embed.desc.tied')} 🤝`);
                     endEmbed.setTitle(
                         `${lang(message, 'command.rps.embed.title.userChose')} 📰 & ${lang(
-							message,
-							'command.rps.embed.title.botChose'
-						)} 📰`
+                            message,
+                            'command.rps.embed.title.botChose'
+                        )} 📰`
                     );
                 } else if (result === 3) {
                     // Scissors ✂
@@ -94,9 +95,9 @@ class RPS extends Command {
                     endEmbed.setDescription(`${lang(message, 'command.rps.embed.desc.lost')} 😢`);
                     endEmbed.setTitle(
                         `${lang(message, 'command.rps.embed.title.userChose')} 📰 & ${lang(
-							message,
-							'command.rps.embed.title.botChose'
-						)} ✂`
+                            message,
+                            'command.rps.embed.title.botChose'
+                        )} ✂`
                     );
                 }
             } else if (i === 'scissors') {
@@ -106,9 +107,9 @@ class RPS extends Command {
                     endEmbed.setDescription(`${lang(message, 'command.rps.embed.desc.lost')} 😢`);
                     endEmbed.setTitle(
                         `${lang(message, 'command.rps.embed.title.userChose')} ✂ & ${lang(
-							message,
-							'command.rps.embed.title.botChose'
-						)} 🗻`
+                            message,
+                            'command.rps.embed.title.botChose'
+                        )} 🗻`
                     );
                 } else if (result === 2) {
                     // Paper 📰
@@ -116,9 +117,9 @@ class RPS extends Command {
                     endEmbed.setDescription(`${lang(message, 'command.rps.embed.desc.won')} 😁`);
                     endEmbed.setTitle(
                         `${lang(message, 'command.rps.embed.title.userChose')} ✂ & ${lang(
-							message,
-							'command.rps.embed.title.botChose'
-						)} 📰`
+                            message,
+                            'command.rps.embed.title.botChose'
+                        )} 📰`
                     );
                 } else if (result === 3) {
                     // Scissors ✂
@@ -126,9 +127,9 @@ class RPS extends Command {
                     endEmbed.setDescription(`${lang(message, 'command.rps.embed.desc.tied')} 🤝`);
                     endEmbed.setTitle(
                         `${lang(message, 'command.rps.embed.title.userChose')} ✂ & ${lang(
-							message,
-							'command.rps.embed.title.botChose'
-						)} ✂`
+                            message,
+                            'command.rps.embed.title.botChose'
+                        )} ✂`
                     );
                 }
             }
@@ -151,9 +152,9 @@ class RPS extends Command {
                     endEmbed.setDescription(`${lang(message, 'command.rps.embed.desc.tied')} 🤝`);
                     endEmbed.setTitle(
                         `${lang(message, 'command.rps.embed.title.userChose')} 🗻 & ${lang(
-							message,
-							'command.rps.embed.title.botChose'
-						)} 🗻`
+                            message,
+                            'command.rps.embed.title.botChose'
+                        )} 🗻`
                     );
 
                     editEmbed.edit(endEmbed);
@@ -164,9 +165,9 @@ class RPS extends Command {
                     endEmbed.setDescription(`${lang(message, 'command.rps.embed.desc.lost')} 😢`);
                     endEmbed.setTitle(
                         `${lang(message, 'command.rps.embed.title.userChose')} 🗻 & ${lang(
-							message,
-							'command.rps.embed.title.botChose'
-						)} 📰`
+                            message,
+                            'command.rps.embed.title.botChose'
+                        )} 📰`
                     );
 
                     editEmbed.edit(endEmbed);
@@ -177,9 +178,9 @@ class RPS extends Command {
                     endEmbed.setDescription(`${lang(message, 'command.rps.embed.desc.won')} 😁`);
                     endEmbed.setTitle(
                         `${lang(message, 'command.rps.embed.title.userChose')} 🗻 & ${lang(
-							message,
-							'command.rps.embed.title.botChose'
-						)} ✂`
+                            message,
+                            'command.rps.embed.title.botChose'
+                        )} ✂`
                     );
 
                     editEmbed.edit(endEmbed);
@@ -191,9 +192,9 @@ class RPS extends Command {
                     endEmbed.setDescription(`${lang(message, 'command.rps.embed.desc.won')} 😁`);
                     endEmbed.setTitle(
                         `${lang(message, 'command.rps.embed.title.userChose')} 📰 & ${lang(
-							message,
-							'command.rps.embed.title.botChose'
-						)} 🗻`
+                            message,
+                            'command.rps.embed.title.botChose'
+                        )} 🗻`
                     );
 
                     editEmbed.edit(endEmbed);
@@ -204,9 +205,9 @@ class RPS extends Command {
                     endEmbed.setDescription(`${lang(message, 'command.rps.embed.desc.tied')} 🤝`);
                     endEmbed.setTitle(
                         `${lang(message, 'command.rps.embed.title.userChose')} 📰 & ${lang(
-							message,
-							'command.rps.embed.title.botChose'
-						)} 📰`
+                            message,
+                            'command.rps.embed.title.botChose'
+                        )} 📰`
                     );
 
                     editEmbed.edit(endEmbed);
@@ -217,9 +218,9 @@ class RPS extends Command {
                     endEmbed.setDescription(`${lang(message, 'command.rps.embed.desc.lost')} 😢`);
                     endEmbed.setTitle(
                         `${lang(message, 'command.rps.embed.title.userChose')} 📰 & ${lang(
-							message,
-							'command.rps.embed.title.botChose'
-						)} ✂`
+                            message,
+                            'command.rps.embed.title.botChose'
+                        )} ✂`
                     );
 
                     editEmbed.edit(endEmbed);
@@ -231,9 +232,9 @@ class RPS extends Command {
                     endEmbed.setDescription(`${lang(message, 'command.rps.embed.desc.lost')} 😢`);
                     endEmbed.setTitle(
                         `${lang(message, 'command.rps.embed.title.userChose')} ✂ & ${lang(
-							message,
-							'command.rps.embed.title.botChose'
-						)} 🗻`
+                            message,
+                            'command.rps.embed.title.botChose'
+                        )} 🗻`
                     );
 
                     editEmbed.edit(endEmbed);
@@ -244,9 +245,9 @@ class RPS extends Command {
                     endEmbed.setDescription(`${lang(message, 'command.rps.embed.desc.won')} 😁`);
                     endEmbed.setTitle(
                         `${lang(message, 'command.rps.embed.title.userChose')} ✂ & ${lang(
-							message,
-							'command.rps.embed.title.botChose'
-						)} 📰`
+                            message,
+                            'command.rps.embed.title.botChose'
+                        )} 📰`
                     );
 
                     editEmbed.edit(endEmbed);
@@ -257,9 +258,9 @@ class RPS extends Command {
                     endEmbed.setDescription(`${lang(message, 'command.rps.embed.desc.tied')} 🤝`);
                     endEmbed.setTitle(
                         `${lang(message, 'command.rps.embed.title.userChose')} ✂ & ${lang(
-							message,
-							'command.rps.embed.title.botChose'
-						)} ✂`
+                            message,
+                            'command.rps.embed.title.botChose'
+                        )} ✂`
                     );
 
                     editEmbed.edit(endEmbed);

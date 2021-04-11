@@ -6,10 +6,11 @@ const { cutTo } = require('../../assets/tools/util');
 class Google extends Command {
 	constructor() {
 		super('google', {
-			aliases: [ 'google', 'whatis' ],
+			aliases: ['google', 'whatis'],
 			category: 'Fun',
 			ownerOnly: false,
-			cooldown: 10000,
+			cooldown: 5000,
+			ratelimit: 2,
 			description: {
 				content: "For the people that can't google themselves",
 				usage: '<query>',
@@ -30,7 +31,7 @@ class Google extends Command {
 	}
 
 	async exec(message, { s }) {
-		message.delete().catch((e) => {});
+		message.delete().catch((e) => { });
 		let query = s.split(' ').join('+');
 
 		let embed = new Discord.MessageEmbed()

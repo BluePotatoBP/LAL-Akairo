@@ -285,7 +285,7 @@
 
     "command.snake.desc.content": "Play the Snake game, but on discord",
 
-    "command.config.desc.content": "\nChange how the bot works \nusing these sub-commands:\n\n`antiadvert` **NEW**\n`language`\n`logs`\n`prefix`\n`staffrole`\n",
+    "command.config.desc.content": "Change how the bot works \nby sending one of these sub-commands:\n\n`antiadvert` **NEW**\n`language`\n`logs`\n`prefix`\n`staffrole`\n",
     "command.config.tooltip.noStaffrole": "Staff Role has not been set.",
     "command.config.tooltip.customPrefix": "Custom Prefix:",
     "command.config.tooltip.noLogs": "Logs Channel has not been set.",

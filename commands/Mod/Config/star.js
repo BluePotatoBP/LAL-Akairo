@@ -11,7 +11,8 @@ class Star extends Command {
             aliases: ['star'],
             category: '',
             ownerOnly: false,
-            cooldown: 10000,
+            cooldown: 5000,
+            ratelimit: 2,
             description: {
                 content: '',
                 usage: '\n[channel(:)]\n[min(:)|minimum(:)]\n[max(:)|maximum(:)]\n',

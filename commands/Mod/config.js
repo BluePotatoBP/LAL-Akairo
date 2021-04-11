@@ -9,7 +9,8 @@ class Config extends Command {
             userPermissions: ['MANAGE_GUILD'],
             category: 'Mod',
             ownerOnly: false,
-            cooldown: 10000,
+            cooldown: 5000,
+            ratelimit: 2,
             description: {
                 content: '',
                 usage: '[sub-command]',
@@ -52,7 +53,7 @@ class Config extends Command {
     }
 
     async exec(message, { action }) {
-        message.delete({ timeout: 60000 }).catch((e) => {});
+        message.delete({ timeout: 60000 }).catch((e) => { });
         let [logsData] = await DB.query(`SELECT * FROM logs WHERE guild = ?`, [message.guild.id]);
         let [staffroleData] = await DB.query(`SELECT * FROM staffrole WHERE guild = ?`, [message.guild.id]);
         let [prefixData] = await DB.query(`SELECT * FROM prefixes WHERE guild = ?`, [message.guild.id]);

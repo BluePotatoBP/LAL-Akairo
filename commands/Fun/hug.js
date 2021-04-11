@@ -7,10 +7,11 @@ const { sfw } = new nekoClient();
 class Hug extends Command {
 	constructor() {
 		super('hug', {
-			aliases: [ 'hug' ],
+			aliases: ['hug'],
 			category: 'Fun',
 			ownerOnly: false,
-			cooldown: 10000,
+			cooldown: 5000,
+			ratelimit: 2,
 			description: {
 				content: 'Hug someone who needs it',
 				usage: '[user]',
@@ -26,7 +27,7 @@ class Hug extends Command {
 	}
 
 	async exec(message, { m }) {
-		message.delete().catch((e) => {});
+		message.delete().catch((e) => { });
 
 		let image = await sfw.hug();
 

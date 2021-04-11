@@ -4,10 +4,9 @@ const chalk = require('chalk');
 class Restart extends Command {
 	constructor() {
 		super('restart', {
-			aliases: [ 'restart' ],
+			aliases: ['restart'],
 			category: '',
 			ownerOnly: true,
-			cooldown: 10000,
 			description: {
 				content: '',
 				usage: '',
@@ -17,7 +16,7 @@ class Restart extends Command {
 	}
 
 	async exec(message) {
-		message.delete({ timeout: 10000 }).catch((e) => {});
+		message.delete({ timeout: 10000 }).catch((e) => { });
 
 		try {
 			await message.react('✅');

@@ -10,118 +10,119 @@ class AntiAdvert extends Command {
             userPermissions: ['MANAGE_GUILD'],
             category: '',
             ownerOnly: false,
-            cooldown: 10000,
+            cooldown: 5000,
+            ratelimit: 2,
             description: {
                 content: 'later',
                 usage: '[enable|disable] [includestaff|excludestaff] [includebots|excludebots] [warn(togglable)] [preset light|moderate|heavy]',
                 syntax: '[] - optional'
             },
             args: [{ //#region args
-                    id: 'enable',
-                    match: 'flag',
-                    flag: 'enable',
-                    unordered: true,
-                    prompt: {
-                        start: (message) => lang(message, "command.antiadvert.args.enable.start"),
-                        retry: (message) => lang(message, "command.antiadvert.args.enable.retry")
-                    }
-                },
-                {
-                    id: 'disable',
-                    match: 'flag',
-                    flag: 'disable',
-                    unordered: true,
-                    prompt: {
-                        start: (message) => lang(message, "command.antiadvert.args.enable.start"),
-                        retry: (message) => lang(message, "command.antiadvert.args.enable.retry")
-                    }
-                },
-                {
-                    id: 'excludestaff',
-                    match: 'flag',
-                    flag: 'includestaff',
-                    unordered: true,
-                    prompt: {
-                        start: (message) => lang(message, "command.antiadvert.args.includestaff.start"),
-                        retry: (message) => lang(message, "command.antiadvert.args.includestaff.retry")
-                    }
-                },
-                {
-                    id: 'includestaff',
-                    match: 'flag',
-                    flag: 'excludestaff',
-                    unordered: true,
-                    prompt: {
-                        start: (message) => lang(message, "command.antiadvert.args.includestaff.start"),
-                        retry: (message) => lang(message, "command.antiadvert.args.includestaff.retry")
-                    }
-                },
-                {
-                    id: 'excludebots',
-                    match: 'flag',
-                    flag: 'includebots',
-                    unordered: true,
-                    prompt: {
-                        start: (message) => lang(message, "command.antiadvert.args.includebots.start"),
-                        retry: (message) => lang(message, "command.antiadvert.args.includebots.retry")
-                    }
-                },
-                {
-                    id: 'includebots',
-                    match: 'flag',
-                    flag: 'excludebots',
-                    unordered: true,
-                    prompt: {
-                        start: (message) => lang(message, "command.antiadvert.args.includebots.start"),
-                        retry: (message) => lang(message, "command.antiadvert.args.includebots.retry")
-                    }
-                },
-                {
-                    id: 'warn',
-                    match: 'flag',
-                    flag: 'warn',
-                    unordered: true,
-                    prompt: {
-                        start: (message) => lang(message, "command.antiadvert.args.warn.start"),
-                        retry: (message) => lang(message, "command.antiadvert.args.warn.retry")
-                    }
-                },
-                {
-                    id: 'presetLight',
-                    match: 'flag',
-                    flag: 'preset light',
-                    unordered: true,
-                    prompt: {
-                        start: (message) => lang(message, "command.antiadvert.args.preset.start"),
-                        retry: (message) => lang(message, "command.antiadvert.args.preset.retry")
-                    }
-                },
-                {
-                    id: 'presetModerate',
-                    match: 'flag',
-                    flag: 'preset moderate',
-                    unordered: true,
-                    prompt: {
-                        start: (message) => lang(message, "command.antiadvert.args.preset.start"),
-                        retry: (message) => lang(message, "command.antiadvert.args.preset.retry")
-                    }
-                },
-                {
-                    id: 'presetHeavy',
-                    match: 'flag',
-                    flag: 'preset Heavy',
-                    unordered: true,
-                    prompt: {
-                        start: (message) => lang(message, "command.antiadvert.args.preset.start"),
-                        retry: (message) => lang(message, "command.antiadvert.args.preset.retry")
-                    }
-                },
+                id: 'enable',
+                match: 'flag',
+                flag: 'enable',
+                unordered: true,
+                prompt: {
+                    start: (message) => lang(message, "command.antiadvert.args.enable.start"),
+                    retry: (message) => lang(message, "command.antiadvert.args.enable.retry")
+                }
+            },
+            {
+                id: 'disable',
+                match: 'flag',
+                flag: 'disable',
+                unordered: true,
+                prompt: {
+                    start: (message) => lang(message, "command.antiadvert.args.enable.start"),
+                    retry: (message) => lang(message, "command.antiadvert.args.enable.retry")
+                }
+            },
+            {
+                id: 'excludestaff',
+                match: 'flag',
+                flag: 'includestaff',
+                unordered: true,
+                prompt: {
+                    start: (message) => lang(message, "command.antiadvert.args.includestaff.start"),
+                    retry: (message) => lang(message, "command.antiadvert.args.includestaff.retry")
+                }
+            },
+            {
+                id: 'includestaff',
+                match: 'flag',
+                flag: 'excludestaff',
+                unordered: true,
+                prompt: {
+                    start: (message) => lang(message, "command.antiadvert.args.includestaff.start"),
+                    retry: (message) => lang(message, "command.antiadvert.args.includestaff.retry")
+                }
+            },
+            {
+                id: 'excludebots',
+                match: 'flag',
+                flag: 'includebots',
+                unordered: true,
+                prompt: {
+                    start: (message) => lang(message, "command.antiadvert.args.includebots.start"),
+                    retry: (message) => lang(message, "command.antiadvert.args.includebots.retry")
+                }
+            },
+            {
+                id: 'includebots',
+                match: 'flag',
+                flag: 'excludebots',
+                unordered: true,
+                prompt: {
+                    start: (message) => lang(message, "command.antiadvert.args.includebots.start"),
+                    retry: (message) => lang(message, "command.antiadvert.args.includebots.retry")
+                }
+            },
+            {
+                id: 'warn',
+                match: 'flag',
+                flag: 'warn',
+                unordered: true,
+                prompt: {
+                    start: (message) => lang(message, "command.antiadvert.args.warn.start"),
+                    retry: (message) => lang(message, "command.antiadvert.args.warn.retry")
+                }
+            },
+            {
+                id: 'presetLight',
+                match: 'flag',
+                flag: 'preset light',
+                unordered: true,
+                prompt: {
+                    start: (message) => lang(message, "command.antiadvert.args.preset.start"),
+                    retry: (message) => lang(message, "command.antiadvert.args.preset.retry")
+                }
+            },
+            {
+                id: 'presetModerate',
+                match: 'flag',
+                flag: 'preset moderate',
+                unordered: true,
+                prompt: {
+                    start: (message) => lang(message, "command.antiadvert.args.preset.start"),
+                    retry: (message) => lang(message, "command.antiadvert.args.preset.retry")
+                }
+            },
+            {
+                id: 'presetHeavy',
+                match: 'flag',
+                flag: 'preset Heavy',
+                unordered: true,
+                prompt: {
+                    start: (message) => lang(message, "command.antiadvert.args.preset.start"),
+                    retry: (message) => lang(message, "command.antiadvert.args.preset.retry")
+                }
+            },
             ] //#endregion args
         });
     }
 
     async exec(message, { enable, disable, includestaff, excludestaff, includebots, excludebots, warn, presetLight, presetModerate, presetHeavy }) {
-        message.delete({ timeout: 30000 }).catch(e => {});
+        message.delete({ timeout: 30000 }).catch(e => { });
         let [getData] = await DB.query(`SELECT * FROM antiAdvert WHERE guild = ?`, [message.guild.id]);
 
         let arrayData = antiAdvertise.find(c => c.guild === message.guild.id)

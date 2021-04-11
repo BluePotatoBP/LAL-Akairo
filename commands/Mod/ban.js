@@ -11,7 +11,8 @@ class Ban extends Command {
             category: 'Mod',
             clientPermissions: ['BAN_MEMBERS'],
             userPermissions: ['BAN_MEMBERS'],
-            cooldown: 10000,
+            cooldown: 5000,
+            ratelimit: 2,
             ownerOnly: false,
             description: {
                 content: 'Ban a user with a reason',

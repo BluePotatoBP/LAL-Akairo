@@ -9,7 +9,8 @@ class Dice extends Command {
             aliases: ['dice'],
             category: 'Fun',
             ownerOnly: false,
-            cooldown: 10000,
+            cooldown: 5000,
+            ratelimit: 2,
             description: {
                 content: 'later',
                 usage: '',

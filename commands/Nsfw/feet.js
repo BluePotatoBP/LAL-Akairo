@@ -7,11 +7,12 @@ const { nsfw } = new DabiImages.Client();
 class Feet extends Command {
 	constructor() {
 		super('feet', {
-			aliases: [ 'feet' ],
+			aliases: ['feet'],
 			category: 'Nsfw',
 			ownerOnly: false,
 			nsfw: true,
-			cooldown: 10000,
+			cooldown: 5000,
+			ratelimit: 2,
 			description: {
 				content: 'Get random feet images',
 				usage: '[user]',
@@ -27,7 +28,7 @@ class Feet extends Command {
 	}
 
 	async exec(message, { m }) {
-		message.delete().catch((e) => {});
+		message.delete().catch((e) => { });
 
 		try {
 			if (!message.channel.nsfw) {

@@ -8,7 +8,8 @@ class Language extends Command {
             aliases: ['language', 'lang'],
             category: 'Mod',
             ownerOnly: false,
-            cooldown: 10000,
+            cooldown: 5000,
+            ratelimit: 2,
             userPermissions: ['MANAGE_GUILD'],
             description: {
                 content: '',
@@ -48,7 +49,7 @@ class Language extends Command {
     }
 
     async exec(message, { action, i }) {
-        message.delete({ timeout: 30000 }).catch((e) => {});
+        message.delete({ timeout: 30000 }).catch((e) => { });
 
         if (action == 'translate') {
             let [guildLanguageDB] = await DB.query(`SELECT * FROM languages WHERE guildID = ? `, [

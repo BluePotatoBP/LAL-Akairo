@@ -8,7 +8,8 @@ class Eightball extends Command {
         super('eightball', {
             aliases: ['eightball', '8ball', '8b'],
             category: 'Fun',
-            cooldown: 10000,
+            cooldown: 5000,
+            ratelimit: 2,
             ownerOnly: false,
             description: {
                 content: 'It is certain, but also try again later',
@@ -28,7 +29,7 @@ class Eightball extends Command {
     }
 
     async exec(message, { input }) {
-        message.delete().catch((e) => {});
+        message.delete().catch((e) => { });
 
         // Roll the response
         function roll() {

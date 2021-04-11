@@ -11,7 +11,8 @@ class Purge extends Command {
             clientPermissions: ['MANAGE_MESSAGES'],
             userPermissions: ['MANAGE_MESSAGES'],
             ownerOnly: false,
-            cooldown: 10000,
+            cooldown: 5000,
+            ratelimit: 2,
             description: {
                 content: '',
                 usage: '<amount>\n\n[-bot(s)]\n[-embed(s)]\n[-attachment(s)|-atch]\n\n[-user(:)] *\n[-include(s)(:)] *\n[-starts(:)|-startswith(:)] *\n[-ends(:)|-endswith(:)] *\n\n*These options can check for multiple entries within quotes\n(ex. -user: "ID1, ID2" or -includes: "blue is funny")\n',

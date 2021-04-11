@@ -8,7 +8,8 @@ class Userinfo extends Command {
         super('userinfo', {
             aliases: ['userinfo', 'whois', 'who', 'uinfo', 'whos'],
             category: 'Util',
-            cooldown: 10000,
+            cooldown: 5000,
+            ratelimit: 2,
             ownerOnly: false,
             description: {
                 content: 'Shows useful information about any member',

@@ -5,9 +5,10 @@ const { crimson } = require('../../assets/colors.json');
 class Bean extends Command {
 	constructor() {
 		super('bean', {
-			aliases: [ 'bean' ],
+			aliases: ['bean'],
 			category: 'Fun',
-			cooldown: 10000,
+			cooldown: 5000,
+			ratelimit: 2,
 			ownerOnly: false,
 			description: {
 				content: 'Uh oh, you just got beaned!!!',
@@ -29,7 +30,7 @@ class Bean extends Command {
 	}
 
 	async exec(message, { u }) {
-		message.delete().catch((e) => {});
+		message.delete().catch((e) => { });
 
 		if (!u) {
 			let embed = new Discord.MessageEmbed()

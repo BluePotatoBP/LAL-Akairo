@@ -10,7 +10,8 @@ class Urban extends Command {
             aliases: ['urban'],
             category: 'Util',
             ownerOnly: false,
-            cooldown: 10000,
+            cooldown: 5000,
+            ratelimit: 2,
             description: {
                 content: "You're not sure what it means? The Urban Dictionary most likely has an answer.",
                 usage: '[query]',

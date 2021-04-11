@@ -10,7 +10,8 @@ class Bobross extends Command {
             aliases: ['bobross'],
             category: 'Fun',
             ownerOnly: false,
-            cooldown: 10000,
+            cooldown: 5000,
+            ratelimit: 2,
             description: {
                 content: 'later',
                 usage: '[user]',
@@ -20,12 +21,12 @@ class Bobross extends Command {
                 id: 'u',
                 type: 'user',
                 default: (message) => message.author
-            }, ]
+            },]
         });
     }
 
     async exec(message, { u }) {
-        message.delete().catch(e => {});
+        message.delete().catch(e => { });
 
         let base = await loadImage(path.join(__dirname, '../../../assets/images/bobrossBase.png'));
         let avatar = await loadImage(u.displayAvatarURL({ format: 'png' }))

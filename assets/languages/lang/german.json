@@ -3,6 +3,10 @@
     "index.prompt.modifyRetry.footer": "Schreib cancel um den Command abzubrechen.",
     "index.prompt.cancel.footer": "Der Command wurde abgebrochen.",
 
+    "staffroleEmbed.noneFound": "Ich konnte keine Moderator-Rolle finden, bitte lege eine fest mit ",
+    "staffroleEmbed.desc1": "❌ Nur Nutzer mit der Rolle",
+    "staffroleEmbed.desc2": "können diesen Command benutzen.",
+
     "command.eightball.desc.content": "Es ist sicher, aber versuche es später noch einmal.",
     "command.eightball.prompt.start": "Bitte stelle mir eine Frage.\nDu kannst es jetzt senden oder einfach den Command noch einmal schreiben.",
     "command.eightball.prompt.retry": "Bitte stelle mir eine Frage.\nDu kannst es jetzt senden oder einfach den Command noch einmal schreiben.",
@@ -62,6 +66,87 @@
     "command.rps.embed.title.userChose": "Du wählst:",
     "command.rps.embed.title.botChose": "Ich wähle:",
 
+    "command.bobross.desc.content": "Fröhliche kleine Unfälle!",
+
+    "command.respect.desc.content": "Drück (F) um Respekt zu zeigen.",
+
+    "command.trash.desc.content": "So viel Müll auf meinem PC...",
+
+    "command.connect4.desc.content": "Spiel \"Vier-Gewinnt\", aber auf Discord",
+
+    "command.hangman.desc.content": "Spiel \"Hangman\", aber auf Discord",
+
+    "command.snake.desc.content": "Spiel \"Snake\", aber auf Discord",
+
+    "command.config.desc.content": "Ändern Sie die Funktionsweise des Bots, indem Sie einen der folgenden Unterbefehle senden:\n\n`antiadvert` **Neu**\n`language`\n`logs`\n`prefix`\n`staffrole`\n",
+    "command.config.tooltip.noStaffrole": "Es ist keine Moderator-Rolle festgelegt.",
+    "command.config.tooltip.customPrefix": "Benuzerdefiniertes Prefix:",
+    "command.config.tooltip.noLogs": "Es ist kein Log-Kanal festgelegt.",
+    "command.config.tooltip.antiad.disabled": "Anti-Advertising ist nicht aktiviert.",
+    "command.config.tooltip.antiad.enabled": "Anti-Advertising ist aktiviert.",
+    "command.config.embed.desc1": "This is all the possible settings you can edit\nto change the behaviour of",
+    "command.config.embed.desc2": "**INFO:** Um die Einstellungen zu ändern nutze",
+
+    "command.antiadvert.desc.content": "Link-Scanning für den ganzen Server\n[Liste für mögliche Voreinstellungen](https://gist.github.com/BluePotatoBP/9415fb46a72480363926c74027307188)",
+    "command.antiadvert.updateEmbed.desc": "**ÄNDERUNGEN:**",
+    "command.antiadvert.updateEmbed.changes.enabled": "Aktiviert",
+    "command.antiadvert.updateEmbed.changes.checkStaff": "Überprüfe Moderatoren",
+    "command.antiadvert.updateEmbed.changes.excludeStaff": "Ignoriere Moderatoren",
+    "command.antiadvert.updateEmbed.changes.checkBots": "Überprüfe Bots",
+    "command.antiadvert.updateEmbed.changes.excludeBots": "Ignoriere Bots",
+    "command.antiadvert.updateEmbed.changes.warnEveryone": "Warne",
+    "command.antiadvert.updateEmbed.changes.preset": "Voreinstellung",
+    "command.antiadvert.updateEmbed.changes.preset.light": "leicht",
+    "command.antiadvert.updateEmbed.changes.preset.lightNoChanges": "leicht, nichts hat sich verändert",
+    "command.antiadvert.updateEmbed.changes.preset.moderate": "mäßig",
+    "command.antiadvert.updateEmbed.changes.preset.moderateNoChanges": "mäßig, nichts hat sich verändert",
+    "command.antiadvert.updateEmbed.changes.preset.heavy": "heavy",
+    "command.antiadvert.updateEmbed.changes.preset.heavyNoChanges": "schwer, nichts hat sich verändert",
+    "command.antiadvert.updateEmbed.changes.true": "true",
+    "command.antiadvert.updateEmbed.changes.false": "false",
+    "command.antiadvert.updateEmbed.changes.trueNoChanges": "true, nichts hat sich verändert",
+    "command.antiadvert.updateEmbed.changes.falseNoChanges": "false, nichts hat sich verändert",
+    "command.antiadvert.args.enable.start": "Soll das Anti-Werbung Modul aktiviert werden? `(enable|disable)`",
+    "command.antiadvert.args.enable.retry": "Bitte versuch es noch einmal, soll das Modul aktiviert werden? `(enable|disable)`",
+    "command.antiadvert.args.includestaff.start": "Soll das Anti-Werbung Modul Moderatoren überprüfen? `(includestaff|excludestaff)`",
+    "command.antiadvert.args.includestaff.retry": "Bitte versuch es noch einmal, soll das Modul Moderatoren überprüfen? `(includestaff|excludestaff)`",
+    "command.antiadvert.args.includebots.start": "Soll das Anti-Werbung Modul Bots überprüfen? `(includebots|excludebots)`",
+    "command.antiadvert.args.includebots.retry": "Bitte versuch es noch einmal, soll das Modul Bots überprüfen? `(includebots|excludebots)`",
+    "command.antiadvert.args.warn.start": "Soll das Anti-Werbung Modul Benutzer warnen wenn es Links erkennt? `(warn (umschaltbar))`",
+    "command.antiadvert.args.warn.retry": "Bitte versuch es noch einmal, soll das Modul Benutzer warnen wenn es Links erkennt? `(warn (umschaltbar))`",
+    "command.antiadvert.args.preset.start": "Auf welche Voreinstellung möchtest du prüfen [[?]](https://gist.github.com/BluePotatoBP/9415fb46a72480363926c74027307188 'Click here for the link') `(light|moderate|heavy)`",
+    "command.antiadvert.args.preset.retry": "Bitte versuch es noch einmal, auf welche Voreinstellung möchtest du prüfen [[?]](https://gist.github.com/BluePotatoBP/9415fb46a72480363926c74027307188 'Click here for the link') `(light|moderate|heavy)`",
+
+    "command.logs.desc.content": "Setze den Log-Kanal für den Server fest.",
+    "command.logs.prompt.start": "Bitte sende die Kanal-ID oder den Kanal als `(#Kanal)`",
+    "command.logs.prompt.retry": "Ich konnte diesen Kanal nicht finden. Bitte versuche es erneut.",
+    "command.logs.updatedLogsEmbed.desc": "Log-Kanal festgelegt: ",
+    "command.logs.updatedLogsEmbed.footer": "Du kannst den Kanal ändern mit ",
+    "command.logs.updatedLogsExistsEmbed.desc1": "Nichts verändert.",
+    "command.logs.updatedLogsExistsEmbed.desc2": "Der Log-Kanal wurde bereits festgelegt auf:",
+    "command.logs.updatedLogsExistsEmbed.footer": "Du kannst den Log auf einen anderen Kanal einstellen mit:",
+    "command.logs.updatedLogsEmbed2.desc": "Log festgelegt:",
+    "command.logs.updatedLogsEmbed2.footer": "Du kannst den Log wieder auf einen anderen Kanal einstellen mit:",
+    "command.logs.noLogsDataEmbed.desc": "*Keine Daten über diesen Server gefunden.*\n\nDu kannst den Log-Kanal festlegen\nmit:",
+    "command.logs.defaultEmbed.field1": "Kanal gespeichert:",
+    "command.logs.defaultEmbed.field2": "Sobald der Bot diesen Server verlässt\nwerden all Daten gelöscht\n*Du kannst den Log-Kanal ändern mit:*",
+    "command.logs.defaultEmbed.field3": "Moderator Rolle:",
+    "command.logs.defaultEmbed.field4": "Konfigurierbar mit",
+
+    "command.staffrole.desc.content": "Lege eine Moderator-Rolle fest.",
+    "command.staffrole.args.start": "Welche Rolle soll die Moderator-Rolle werden? `(id|@Erwähnung)`",
+    "command.staffrole.args.retry": "Bitte versuch es noch einmal, welche Rolle soll die Moderator-Rolle werden? `(id|@Erwähnung)`",
+    "command.staffrole.updatedRoleEmbed.desc": "Moderator-Rolle festgelegt:",
+    "command.staffrole.updatedRoleEmbed.footer": "Du kannst die Moderator-Rolle verändern mit:",
+    "command.staffrole.updatedRoleExistsEmbed.desc": "*Nichts verändert.*\n\nModerator-Rolle ist bereits",
+    "command.staffrole.updatedRoleExistsEmbed.footer": "Du kannst die Rolle verändern mit",
+    "command.staffrole.updatedRole2Embed.desc": "Moderator-Rolle festgelegt:",
+    "command.staffrole.updatedRole2Embed.footer": "Du kannst sie wieder verändern mit",
+    "command.staffrole.noRoleDataEmbed.desc": "*Keine gespeicherte Rolle gefunden.*\n\nDu kannst sie zu einer anderen Rolle einstellen mit:",
+    "command.staffrole.defaultEmbed.field1": "Rolle gespeichert:",
+    "command.staffrole.defaultEmbed.field2": "Sobald der Bot diesen Server verlässt\nwerden all Daten gelöscht\n*Du kannst die Moderator-Rolle ändern mit:*",
+    "command.staffrole.defaultEmbed.field3": "Konfigurierbar mit",
+
     "command.game.desc.content": "\nSpiele eines der verfügbaren Spiele: \n`Connect4`\n`Hangman`\n`Snake`\n \nDie Spiele sind noch in Entwicklung und haben noch keine Channel- oder Nutzer-Sperre.",
 
     "command.say.desc.content": "Lass mich etwas sagen!",
@@ -100,6 +185,8 @@
     "command.addrole.prompt.role.retry": "Bitte gib eine `Rolle` an. `(@Erwähnung/ID)`.\nDu kannst es jetzt senden oder einfach den Command noch einmal schreiben.",
     "command.addrole.embed.desc.one": "hat bereits die",
     "command.addrole.embed.desc.two": "Rolle.",
+    "command.addrole.noPermsError": "Bitte ziehe meine Rolle über die Rolle die ich vergeben soll.\n(Außerdem stelle sicher, dass ich die `MANAGE_ROLES` Berechtigung habe.)",
+
     
     "command.ban.desc.content": "Banne einen Nutzer mit einem Grund.",
     "command.ban.prompt.start": "Bitte gib einen Nutzer an. `(@Erwähnung/Benutzername/Diskriminator/ID)`.\nDu kannst es jetzt senden oder einfach den Command noch einmal schreiben.",
@@ -137,6 +224,9 @@
     "command.language.currentLang.desc": "Aktuell ausgewählte Sprache:",
     "command.language.langSet.desc": "Festgelegte Sprache:",
     "command.language.langUpdate.desc": "Aktualisierte Sprache:",
+    "command.language.currentLang.desc1": "Ausgewählte Sprache:",
+    "command.language.currentLang.desc2": "Um eine andere Sprache auszuwählen nutze",
+    "command.language.currentLang.desc3": "Verfügbare Sprachen:",
     "command.language.contEmbed.desc": "Falls du helfen möchtest, LAL in deine Sprache zu übersetzen,\n kannst du die `english.json` Datei übersetzen und die Übersetzung \nzur Überprüfung in unseren [Support Server](https://discord.gg/v8zkSc9) schicken.",
 
     "command.poll.desc.content": "Erstelle eine Umfrage.",
@@ -157,6 +247,7 @@
     "command.removerole.prompt.role.retry": "Bitte gib eine `Rolle` an. `(@Erwähnung/ID)`.\nDu kannst es jetzt senden oder einfach den Command noch einmal schreiben.",
     "command.removerole.embed.desc.one": "hat nicht",
     "command.removerole.embed.desc.two": "nicht.",
+    "command.removerole.noPermsError": "Bitte ziehe meine Rolle über die rolle die ich entfernen soll.\n(Außerdem stelle sicher, dass ich die `MANAGE_ROLES` Berechtigung habe.)",
 
     "command.setprefix.desc.content": "Das Prefix wurde festgelegt.",
     "command.setprefix.prefixEmbed.desc.one": "Das prefix für diesen server ist:",
@@ -213,6 +304,11 @@
     "command.botinfo.embed.field.seven": "Nutzer:",
     "command.botinfo.embed.field.eight": "Server:",
     "command.botinfo.embed.field.nine": "Kanäle:",
+    "command.botinfo.embed.field.ten": "Frameworks",
+    "command.botinfo.embed.field.eleven": "Hilfe",
+    "command.botinfo.embed.field.twelve": "Einladen",
+    "command.botinfo.embed.field.thirteen": "Falls du mehr Hilfe brauchst kannst du den Support Server beitreten:",
+    "command.botinfo.embed.field.fourteen": "Falls du den Bot auf deinem Server willst kannst du ihn einladen:",
 
     "command.color.desc.content": "Bekomm eine Vorschau eines #hex Farbcodes.",
     "command.color.prompt.start": "Bitte gib einen **#hex** Farbcode an.\nDu kannst es jetzt senden oder einfach den Command noch einmal schreiben.",
@@ -240,6 +336,7 @@
     "command.help.embedtwo.desc.seven": "Keine",
     "command.help.embedtwo.desc.eight": "Syntax:",
     "command.help.embedtwo.desc.nine": "Keine Syntax",
+    "command.help.embedtwo.desc.ten": "Cooldown:",
 
     "command.invite.desc.content": "Lade mich in deinen Server ein!",
     "command.invite.iembed.desc.one": "Klicke hier!",
@@ -257,5 +354,5 @@
     "command.slowmode.embed.slowMessage.reset": "Der Langsame Modus wurde zurückgesetzt auf:",
     "command.slowmode.embed.slowMessage.updated": "Der Langsame Modus wurde geändert zu:",
     "command.slowmode.embed.slowMessage.previous": "Vorheriger Langsamer Modus:",
-    "command.slowmode.embed.slowMessage.seconds": "Sekunde(n)"
+    "command.slowmode.embed.slowMessage.seconds": "Sekunden(s)"
 }

@@ -9,7 +9,8 @@ class Staffrole extends Command {
             userPermissions: ['MANAGE_ROLES'],
             category: '',
             ownerOnly: false,
-            cooldown: 10000,
+            cooldown: 5000,
+            ratelimit: 2,
             description: {
                 content: 'later',
                 usage: '[role]',
@@ -28,7 +29,7 @@ class Staffrole extends Command {
     }
 
     async exec(message, { ch }) {
-        message.delete({ timeout: 30000 }).catch((e) => {});
+        message.delete({ timeout: 30000 }).catch((e) => { });
         let [getData] = await DB.query(`SELECT * FROM staffrole WHERE guild = ?`, [message.guild.id]);
         let [getData2] = await DB.query(`SELECT * FROM logs WHERE guild = ?`, [message.guild.id]);
         let rolee;

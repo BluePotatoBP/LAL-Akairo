@@ -8,7 +8,8 @@ class Hack extends Command {
         super('hack', {
             aliases: ['hack'],
             category: 'Fun',
-            cooldown: 10000,
+            cooldown: 5000,
+            ratelimit: 2,
             ownerOnly: false,
             description: {
                 content: 'Hack into the selected users account',

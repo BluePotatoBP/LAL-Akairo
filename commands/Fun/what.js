@@ -4,11 +4,12 @@ const Discord = require('discord.js');
 class What extends Command {
 	constructor() {
 		super('what', {
-			aliases: [ 'what' ],
+			aliases: ['what'],
 			category: 'Fun',
-			clientPermissions: [ 'ADD_REACTIONS' ],
+			clientPermissions: ['ADD_REACTIONS'],
 			ownerOnly: false,
-			cooldown: 10000,
+			cooldown: 5000,
+			ratelimit: 2,
 			description: {
 				content: 'what',
 				usage: '[message id]',
@@ -37,7 +38,7 @@ class What extends Command {
 	}
 
 	async exec(message, { id }) {
-		message.delete().catch((e) => {});
+		message.delete().catch((e) => { });
 
 		if (id) {
 			try {

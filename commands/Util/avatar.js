@@ -5,8 +5,9 @@ const { crimson } = require('../../assets/colors.json');
 class Avatar extends Command {
 	constructor() {
 		super('avatar', {
-			aliases: [ 'avatar', 'av' ],
+			aliases: ['avatar', 'av'],
 			category: 'Util',
+			ownerOnly: false,
 			cooldown: 5000,
 			ownerOnly: false,
 			description: {
@@ -25,7 +26,7 @@ class Avatar extends Command {
 	}
 
 	async exec(message, { u }) {
-		message.delete().catch((e) => {});
+		message.delete().catch((e) => { });
 
 		let avatar;
 		let pngicon;

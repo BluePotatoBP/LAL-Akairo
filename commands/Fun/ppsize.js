@@ -6,7 +6,8 @@ class PPSize extends Command {
         super('ppsize', {
             aliases: ['ppsize', 'pp', 'pplength'],
             category: 'Fun',
-            cooldown: 10000,
+            cooldown: 5000,
+            ratelimit: 2,
             ownerOnly: false,
             description: {
                 content: 'Accurately measures your pp size',
@@ -22,7 +23,7 @@ class PPSize extends Command {
     }
 
     async exec(message, { u }) {
-        message.delete().catch((e) => {});
+        message.delete().catch((e) => { });
 
         let sizes = [
             'An error occurred: Not visible by the human eye',

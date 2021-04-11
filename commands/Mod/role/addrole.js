@@ -10,45 +10,46 @@ class Addrole extends Command {
             clientPermissions: ['ADD_REACTIONS', 'MANAGE_ROLES'],
             userPermissions: ['MANAGE_ROLES'],
             ownerOnly: false,
-            cooldown: 10000,
+            cooldown: 5000,
+            ratelimit: 2,
             description: {
                 content: 'Add any role to any user',
                 usage: '<user> <role>',
                 syntax: '<> - necessary'
             },
             args: [{
-                    id: 'm',
-                    type: 'member',
-                    unordered: true,
-                    prompt: {
-                        start: (message) => lang(message, 'command.addrole.prompt.member.start'),
-                        retry: (message) => lang(message, 'command.addrole.prompt.member.retry')
-                    }
-                },
-                {
-                    id: 'r',
-                    match: 'phrase',
-                    type: 'role',
-                    unordered: true,
-                    prompt: {
-                        start: (message) => lang(message, 'command.addrole.prompt.role.start'),
-                        retry: (message) => lang(message, 'command.addrole.prompt.role.retry')
-                    }
+                id: 'm',
+                type: 'member',
+                unordered: true,
+                prompt: {
+                    start: (message) => lang(message, 'command.addrole.prompt.member.start'),
+                    retry: (message) => lang(message, 'command.addrole.prompt.member.retry')
                 }
+            },
+            {
+                id: 'r',
+                match: 'phrase',
+                type: 'role',
+                unordered: true,
+                prompt: {
+                    start: (message) => lang(message, 'command.addrole.prompt.role.start'),
+                    retry: (message) => lang(message, 'command.addrole.prompt.role.retry')
+                }
+            }
             ]
         });
     }
 
     async exec(message, { m, r }) {
-        message.delete({ timeout: 30000 }).catch((e) => {});
+        message.delete({ timeout: 30000 }).catch((e) => { });
 
         const embed = new Discord.MessageEmbed()
             .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
             .setDescription(
                 `${m.user.username} ${lang(message, 'command.addrole.embed.desc.one')} ${r} ${lang(
-					message,
-					'command.addrole.embed.desc.two'
-				)}`
+                    message,
+                    'command.addrole.embed.desc.two'
+                )}`
             )
             .setColor(crimson);
 

@@ -9,7 +9,8 @@ class Ping extends Command {
             aliases: ['ping'],
             category: 'Util',
             ownerOnly: false,
-            cooldown: 10000,
+            cooldown: 5000,
+            ratelimit: 2,
             description: {
                 content: 'Shows the bot message latency and API latency'
             }

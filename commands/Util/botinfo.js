@@ -8,7 +8,8 @@ class Botinfo extends Command {
         super('botinfo', {
             aliases: ['botinfo', 'binfo'],
             category: 'Util',
-            cooldown: 10000,
+            cooldown: 5000,
+            ratelimit: 2,
             ownerOnly: false,
             description: {
                 content: 'Shows information about the bot',
@@ -19,7 +20,7 @@ class Botinfo extends Command {
     }
 
     async exec(message) {
-        message.delete().catch((e) => {});
+        message.delete().catch((e) => { });
 
         let bicon = client.user.displayAvatarURL({
             dynamic: true
@@ -49,7 +50,7 @@ class Botinfo extends Command {
                 `**${lang(message, 'command.botinfo.embed.field.six')}**`,
                 `${lang(message, 'command.botinfo.embed.field.seven')} \`${client.users.cache.size}\`
 			${lang(message, 'command.botinfo.embed.field.eight')} \`${client.guilds.cache
-					.size}\` <a:blobSnowball1:773207107376906241><a:blobSnowball2:773207107398926357>
+                    .size}\` <a:blobSnowball1:773207107376906241><a:blobSnowball2:773207107398926357>
 			${lang(message, 'command.botinfo.embed.field.nine')} \`${client.channels.cache.size}\``,
                 true
             )

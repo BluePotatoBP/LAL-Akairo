@@ -10,7 +10,8 @@ class Suntzu extends Command {
             aliases: ['suntzu'],
             category: 'Fun',
             ownerOnly: false,
-            cooldown: 10000,
+            cooldown: 5000,
+            ratelimit: 2,
             description: {
                 content: 'later',
                 usage: '[user]',
@@ -20,12 +21,12 @@ class Suntzu extends Command {
                 id: 'input',
                 match: 'rest',
                 default: "It is better to cum in the shower then to shower in the cum."
-            }, ]
+            },]
         });
     }
 
     async exec(message, { input }) {
-        message.delete().catch(e => {});
+        message.delete().catch(e => { });
 
         registerFont(path.join(__dirname, '../../../assets/fonts/whitney-medium.otf'), { family: 'Whitney' });
 

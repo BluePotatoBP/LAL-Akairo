@@ -10,7 +10,8 @@ class SetPrefix extends Command {
             category: 'Mod',
             userPermissions: ['MANAGE_MESSAGES'],
             ownerOnly: false,
-            cooldown: 10000,
+            cooldown: 5000,
+            ratelimit: 2,
             description: {
                 content: "Set the bot's prefix for this server",
                 usage: '[prefix]',

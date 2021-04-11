@@ -7,11 +7,12 @@ const { nsfw } = new nekoClient();
 class Hentai extends Command {
 	constructor() {
 		super('hentai', {
-			aliases: [ 'hentai' ],
+			aliases: ['hentai'],
 			category: 'Nsfw',
 			ownerOnly: false,
 			nsfw: true,
-			cooldown: 10000,
+			cooldown: 5000,
+			ratelimit: 2,
 			description: {
 				content: 'Get a random hentai image',
 				usage: '[user]',
@@ -27,7 +28,7 @@ class Hentai extends Command {
 	}
 
 	async exec(message, { m }) {
-		message.delete().catch((e) => {});
+		message.delete().catch((e) => { });
 
 		if (!message.channel.nsfw) {
 			message.channel.send(lang(message, 'command.nsfw.warning'));

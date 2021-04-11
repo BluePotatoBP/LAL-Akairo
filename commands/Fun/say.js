@@ -10,7 +10,8 @@ class Say extends Command {
         super('say', {
             aliases: ['say', 's'],
             category: 'Fun',
-            cooldown: 10000,
+            cooldown: 5000,
+            ratelimit: 2,
             clientPermissions: ['SEND_MESSAGES'],
             userPermissions: ['MANAGE_MESSAGES'],
             ownerOnly: false,
@@ -86,7 +87,7 @@ class Say extends Command {
         });
     }
     async exec(message, args) {
-        message.delete().catch((e) => {});
+        message.delete().catch((e) => { });
 
         try {
             if (!args.text) {

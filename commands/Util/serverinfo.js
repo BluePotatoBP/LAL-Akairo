@@ -9,7 +9,8 @@ class Serverinfo extends Command {
             aliases: ['serverinfo', 'sinfo', 'guildinfo', 'ginfo'],
             clientPermissions: ['ADD_REACTIONS', 'MANAGE_MESSAGES'],
             category: 'Util',
-            cooldown: 10000,
+            cooldown: 5000,
+            ratelimit: 2,
             ownerOnly: false,
             description: {
                 content: '',
@@ -20,7 +21,7 @@ class Serverinfo extends Command {
     }
 
     async exec(message) {
-        message.delete().catch((e) => {});
+        message.delete().catch((e) => { });
 
         let sicon = message.guild.iconURL({ dynamic: true });
         let region = {
@@ -88,35 +89,35 @@ class Serverinfo extends Command {
             user: message.author,
             pages: [
                 new MessageEmbed()
-                .setAuthor(`${message.guild.name} • Page [1/2]`, sicon)
-                .addField('ID', `\`${message.guild.id}\`  👌`, true)
-                .addField('Owner', `<@${message.guild.ownerID}> <a:animatedCool:773205297782325259>`, true)
-                .addField('Region', `${region[message.guild.region]}`, true)
-                .addField('Custom Emoji', `\`${message.guild.emojis.cache.size}\` <a:blobWobble:773208612776181800>`, true)
-                .addField('Roles', `\`${message.guild.roles.cache.size}\` <a:blobEat:773207674015055912>`, true)
-                .addField('Channels', `\`${message.guild.channels.cache.size}\` <a:blobGimmeLeft:773217828052402186>`, true)
-                .addField('You joined', `\`${message.member.joinedAt.toUTCString().substr(0, 16)}\` 🖖`, true)
-                .addField('Verification Level', `\`${verifLevels[message.guild.verificationLevel]}\` <:captcha:773217509850873886>`, true)
-                .addField('Total Members', `\`${message.guild.memberCount}\` <a:blobKnight1:773218186694098994><a:blobKnight2:773218752405307392>`, true)
-                .addField(
-                    'Status List',
-                    `${message.guild.members.cache.filter((o) => o.presence.status === 'online')
-							.size} <:online:773212850733711360> Online` +
-                    `\n${message.guild.members.cache.filter((o) => o.presence.status === 'streaming')
-								.size} <:streaming:773212851174506565> Streaming` +
-                    `\n${message.guild.members.cache.filter((o) => o.presence.status === 'dnd')
-								.size} <:dnd:773212850364743742> DND` +
-                    `\n${message.guild.members.cache.filter((o) => o.presence.status === 'idle')
-								.size} <:idle:773212850533171211> Idle` +
-                    `\n${message.guild.members.cache.filter((o) => o.presence.status === 'offline')
-								.size} <:offline:773212850755862538> Offline`,
-                    true
-                )
-                .addField('Highest Role', `\`${message.guild.roles.highest.name}\` <a:dancingSquidward:773219104479379467>`, true)
-                .addField('Voice AFK Timeout', `\`${message.guild.afkTimeout / 60} min\` <a:sleepyCat:773219103933464616>`, true)
-                .setThumbnail(sicon)
-                .setColor(crimson)
-                .setTimestamp(),
+                    .setAuthor(`${message.guild.name} • Page [1/2]`, sicon)
+                    .addField('ID', `\`${message.guild.id}\`  👌`, true)
+                    .addField('Owner', `<@${message.guild.ownerID}> <a:animatedCool:773205297782325259>`, true)
+                    .addField('Region', `${region[message.guild.region]}`, true)
+                    .addField('Custom Emoji', `\`${message.guild.emojis.cache.size}\` <a:blobWobble:773208612776181800>`, true)
+                    .addField('Roles', `\`${message.guild.roles.cache.size}\` <a:blobEat:773207674015055912>`, true)
+                    .addField('Channels', `\`${message.guild.channels.cache.size}\` <a:blobGimmeLeft:773217828052402186>`, true)
+                    .addField('You joined', `\`${message.member.joinedAt.toUTCString().substr(0, 16)}\` 🖖`, true)
+                    .addField('Verification Level', `\`${verifLevels[message.guild.verificationLevel]}\` <:captcha:773217509850873886>`, true)
+                    .addField('Total Members', `\`${message.guild.memberCount}\` <a:blobKnight1:773218186694098994><a:blobKnight2:773218752405307392>`, true)
+                    .addField(
+                        'Status List',
+                        `${message.guild.members.cache.filter((o) => o.presence.status === 'online')
+                            .size} <:online:773212850733711360> Online` +
+                        `\n${message.guild.members.cache.filter((o) => o.presence.status === 'streaming')
+                            .size} <:streaming:773212851174506565> Streaming` +
+                        `\n${message.guild.members.cache.filter((o) => o.presence.status === 'dnd')
+                            .size} <:dnd:773212850364743742> DND` +
+                        `\n${message.guild.members.cache.filter((o) => o.presence.status === 'idle')
+                            .size} <:idle:773212850533171211> Idle` +
+                        `\n${message.guild.members.cache.filter((o) => o.presence.status === 'offline')
+                            .size} <:offline:773212850755862538> Offline`,
+                        true
+                    )
+                    .addField('Highest Role', `\`${message.guild.roles.highest.name}\` <a:dancingSquidward:773219104479379467>`, true)
+                    .addField('Voice AFK Timeout', `\`${message.guild.afkTimeout / 60} min\` <a:sleepyCat:773219103933464616>`, true)
+                    .setThumbnail(sicon)
+                    .setColor(crimson)
+                    .setTimestamp(),
 
                 rolesEmbed
             ],

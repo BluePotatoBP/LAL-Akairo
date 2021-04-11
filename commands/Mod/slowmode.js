@@ -11,42 +11,43 @@ class Slowmode extends Command {
             clientPermissions: ['MANAGE_CHANNELS'],
             userPermissions: ['MANAGE_CHANNELS'],
             ownerOnly: false,
-            cooldown: 10000,
+            cooldown: 5000,
+            ratelimit: 2,
             description: {
                 content: '',
                 usage: '<time> [rest|off] [-channel(:)|-ch(:)]',
                 syntax: '<> - necessary, [] - optional, () - optional symbol'
             },
             args: [{
-                    id: 'nr',
-                    match: 'text',
-                    unordered: true,
-                    prompt: {
-                        start: (message) => lang(message, 'command.slowmode.prompt.start'),
-                        retry: (message) => lang(message, 'command.slowmode.prompt.retry'),
-                        optional: true
-                    }
-                },
-                {
-                    id: 'reset',
-                    match: 'flag',
-                    unordered: true,
-                    flag: ['reset', 'off']
-                },
-                {
-                    id: 'channelOpt',
-                    type: 'textChannel',
-                    match: 'option',
-                    unordered: true,
-                    flag: ['-channel', '-channel:', '-ch', '-ch:'],
-                    default: (message) => message.channel
+                id: 'nr',
+                match: 'text',
+                unordered: true,
+                prompt: {
+                    start: (message) => lang(message, 'command.slowmode.prompt.start'),
+                    retry: (message) => lang(message, 'command.slowmode.prompt.retry'),
+                    optional: true
                 }
+            },
+            {
+                id: 'reset',
+                match: 'flag',
+                unordered: true,
+                flag: ['reset', 'off']
+            },
+            {
+                id: 'channelOpt',
+                type: 'textChannel',
+                match: 'option',
+                unordered: true,
+                flag: ['-channel', '-channel:', '-ch', '-ch:'],
+                default: (message) => message.channel
+            }
             ]
         });
     }
 
     async exec(message, { nr, reset, channelOpt }) {
-        message.delete({ timeout: 30000 }).catch((e) => {});
+        message.delete({ timeout: 30000 }).catch((e) => { });
 
         let cachedGuild = staffRole.find(c => c.guild == message.guild.id)
         if (!cachedGuild) return message.channel.send(`${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\``);
@@ -121,7 +122,7 @@ class Slowmode extends Command {
                 .setDescription(`${lang(message, "staffroleEmbed.desc1")} ${role} ${lang(message, "staffroleEmbed.desc2")}`)
                 .setColor(darkRed)
                 .setTimestamp()
-            message.channel.send(staffroleEmbed).then(m => m.delete({ timeout: 5000 })).catch(e => {});
+            message.channel.send(staffroleEmbed).then(m => m.delete({ timeout: 5000 })).catch(e => { });
         }
     }
 }

@@ -5,10 +5,11 @@ const { orange } = require('../../assets/colors.json');
 class Warm extends Command {
 	constructor() {
 		super('warm', {
-			aliases: [ 'warm' ],
+			aliases: ['warm'],
 			category: 'Fun',
 			ownerOnly: false,
-			cooldown: 10000,
+			cooldown: 5000,
+			ratelimit: 2,
 			description: {
 				content: 'Warm any user in need of hugs',
 				usage: '[user]',
@@ -34,7 +35,7 @@ class Warm extends Command {
 	}
 
 	async exec(message, { u, r }) {
-		message.delete().catch((e) => {});
+		message.delete().catch((e) => { });
 
 		if (!u) {
 			const embed = new Discord.MessageEmbed()

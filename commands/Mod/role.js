@@ -10,7 +10,8 @@ class Role extends Command {
             clientPermissions: ['ADD_REACTIONS', 'MANAGE_ROLES'],
             userPermissions: ['MANAGE_ROLES'],
             ownerOnly: false,
-            cooldown: 10000,
+            cooldown: 5000,
+            ratelimit: 2,
             description: {
                 content: 'later',
                 usage: '<add>|<remove> <user> <role>',
@@ -40,7 +41,7 @@ class Role extends Command {
     }
 
     async exec(message) {
-        message.delete().catch((e) => {});
+        message.delete().catch((e) => { });
     }
 }
 module.exports = Role;

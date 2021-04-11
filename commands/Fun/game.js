@@ -9,7 +9,8 @@ class Game extends Command {
             category: 'Fun',
             ownerOnly: false,
             clientPermissions: ['ADD_REACTIONS', 'MANAGE_MESSAGES'],
-            cooldown: 10000,
+            cooldown: 5000,
+            ratelimit: 2,
             description: {
                 content: 'later',
                 usage: '<connect4>|<hangman>|<snake>',
@@ -45,8 +46,8 @@ class Game extends Command {
         });
     }
 
-    async exec(message /*, { action }*/ ) {
-        message.delete({ timeout: 60000 }).catch((e) => {});
+    async exec(message /*, { action }*/) {
+        message.delete({ timeout: 60000 }).catch((e) => { });
     }
 }
 module.exports = Game;
