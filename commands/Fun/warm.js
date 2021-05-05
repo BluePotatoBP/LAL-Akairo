@@ -57,7 +57,7 @@ class Warm extends Command {
 							let res = r.length - 20;
 							text = text.slice(-res);
 
-							return text;
+							return text + '...';
 						} else {
 							text = r;
 							return text;
@@ -65,7 +65,7 @@ class Warm extends Command {
 					}
 
 					embed2.setFooter(
-						`${lang(message, 'command.warm.embed.footer.reason')} "${cut(r) + '...'}" - ${lang(
+						`${lang(message, 'command.warm.embed.footer.reason')} "${cut(r)}" - ${lang(
 							message,
 							'command.warm.embed.footer.funny'
 						)}`

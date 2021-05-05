@@ -17,8 +17,10 @@ class ForceLeave extends Command {
 			args: [
 				{
 					id: 'id',
-					match: 'text',
-					type: 'int'
+					type: 'text',
+					default: (message) => {
+						message.guild.id
+					}
 				}
 			]
 		});
@@ -26,20 +28,10 @@ class ForceLeave extends Command {
 
 	async exec(message, { id }) {
 		message.delete().catch((e) => {});
-		let guild = client.guilds.cache.get(id);
+		let guild = this.client.guilds.cache.get(id);
 
-		if (!id) {
-			id = message.guild.id;
-		}
-		guild
-			.leave()
-			.then((g) =>
-				console.log(
-					`${debug('[DEBUG]')} ${chalk.magenta(this.client.user.username)} left the guild "${chalk.yellow(
-						g
-					)}"`
-				)
-			);
+		guild.leave()
+		.then(console.log(`${debug('[DEBUG]')} ${chalk.magenta(this.client.user.username)} left the guild "${chalk.greenBright(guild.name)}" [${chalk.yellow(guild.id)}] (Forced)`));
 	}
 }
 module.exports = ForceLeave;
