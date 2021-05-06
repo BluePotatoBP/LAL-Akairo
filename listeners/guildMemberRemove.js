@@ -1,6 +1,5 @@
 const { Listener } = require('discord-akairo');
 const chalk = require('chalk');
-const { accessSync } = require('fs');
 
 module.exports = class guildMemberRemove extends Listener {
     constructor() {

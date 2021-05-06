@@ -34,7 +34,7 @@ class Help extends Command {
         });
     }
     async exec(message, { command, list }) {
-        message.delete().catch((e) => { });
+        message.delete({ timeout: 60000 }).catch((e) => { });
 
         let SearchCollector;
         let prefix;
@@ -66,7 +66,7 @@ class Help extends Command {
             }
 
             //List commands
-            if (!command && ["commands", "list"].some(w => command.toLowerCase() === w)) {
+            if (!command && ["commands", "list"].some(w => command ? command.toLowerCase : command === w)) {
 
                 let msg = await message.util.send(commandsEmbed)
 
@@ -163,18 +163,32 @@ class Help extends Command {
             }
 
             if (command) {
-                const embed = new Discord.MessageEmbed()
-                    .setDescription(stripIndents`${lang(message, 'command.help.embedtwo.desc.one')} \`${prefix}\`\n 
+
+                try {
+                    const embed = new Discord.MessageEmbed()
+                        .setDescription(stripIndents`${lang(message, 'command.help.embedtwo.desc.one')} \`${prefix}\`\n 
                  **${lang(message, 'command.help.embedtwo.desc.two')} **${command.categoryID.toLowerCase() === 'nsfw' ? `|| \`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\` ||` : `\`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\``}
                  **${lang(message, 'command.help.embedtwo.desc.three')}** ${lang(message, `command.${command.id}.desc.content`)}
                  **${lang(message, 'command.help.embedtwo.desc.four')}** ${command.description.usage ? `\`${prefix}${command.id} ${command.description.usage}\`` : lang(message, 'command.help.embedtwo.desc.five')}
                  **${lang(message, "command.help.embedtwo.desc.ten")}** ${command.cooldown ? `\`${ms(command.cooldown)}\`` : '\`2s\`'}
                  **${lang(message, 'command.help.embedtwo.desc.six')}** ${command.aliases ? command.aliases.join(', ') : lang(message, 'command.help.embedtwo.desc.seven')}`)
-                    .setColor(pastelGreen)
-                    .setFooter(`${lang(message, 'command.help.embedtwo.desc.eight')} ${command.description.syntax ? `${command.description.syntax}` : lang(message, 'command.help.embedtwo.desc.nine')}`)
-                    .setTimestamp()
+                        .setColor(pastelGreen)
+                        .setFooter(`${lang(message, 'command.help.embedtwo.desc.eight')} ${command.description.syntax ? `${command.description.syntax}` : lang(message, 'command.help.embedtwo.desc.nine')}`)
+                        .setTimestamp()
 
-                return message.channel.send(embed);
+                    return message.util.send(embed);
+                } catch (error) {
+                    const noCommandFound = this.client.util.embed()
+                        .setTitle(`${this.client.user.username} Help | Search`)
+                        .setDescription("No command found, try again.")
+                        .setColor(lightRed)
+                        .setFooter(`Requested by ${message.author.username}`, message.author.displayAvatarURL({ dynamic: true }))
+                        .setTimestamp()
+
+                    message.util.send(noCommandFound)
+                }
+
+
 
             } else {
                 //No command given. send main embed
@@ -310,9 +324,9 @@ class Help extends Command {
                 embed.setFooter(`🎉 ${this.client.user.username} 🎉 | ${lang(message, 'command.help.embed.footer.one')} ${total.reduce((a, b) => a + b, 0)}`, this.client.user.displayAvatarURL({ dynamic: true }));
                 embed.addField(`${lang(message, 'command.help.embed.field.one')}`, `\n${lang(message, 'command.help.embed.field.two')} [${lang(message, 'command.help.embed.field.three')}](https://discord.gg/v8zkSc9) ${lang(message, 'command.help.embed.field.four')} [${lang(message, 'command.help.embed.field.three')}](https://discordapp.com/oauth2/authorize?this.client_id=${this.client.user.id}&scope=bot&permissions=8).`);
 
-                await message.channel.send(embed);
+                await message.util.send(embed);
             } else {
-                if (!command) return message.channel.send(embed.setTitle(lang(message, 'command.help.embed.title.one')).setDescription(`${lang(message, 'command.help.embed.title.desc.one')} \`${prefix}help\` ${lang(message, 'command.help.embed.title.desc.two')}`));
+                if (!command) return message.util.send(embed.setTitle(lang(message, 'command.help.embed.title.one')).setDescription(`${lang(message, 'command.help.embed.title.desc.one')} \`${prefix}help\` ${lang(message, 'command.help.embed.title.desc.two')}`));
 
                 console.log(`${debug('[DEBUG]')} '${message.author.tag}'[${message.author.id}] used ${chalk.gray(`"${prefix}help ${command.id.toLowerCase()}"`)} in '${message.guild.name}'[${message.guild.id}]`);
 
@@ -325,7 +339,7 @@ class Help extends Command {
 
                 embed.setFooter(`${lang(message, 'command.help.embedtwo.desc.eight')} ${command.description.syntax ? `${command.description.syntax}` : lang(message, 'command.help.embedtwo.desc.nine')}`);
 
-                return message.channel.send(embed);
+                return message.util.send(embed);
             }
         }
     }
