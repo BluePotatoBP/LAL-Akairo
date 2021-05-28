@@ -36,9 +36,7 @@ module.exports = {
     },
 
     softWrap: function(input, length = 30) {
-        const wrap = input.replace(
-            new RegExp(`(?![^\\n]{1,${length}}$)([^\\n]{1,${length}})\\s`, 'g'), '$1\n'
-        );
+        const wrap = input.replace(new RegExp(`(?![^\\n]{1,${length}}$)([^\\n]{1,${length}})\\s`, 'g'), '$1\n');
 
         return wrap;
     },

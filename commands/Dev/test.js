@@ -1,41 +1,77 @@
 const { Command } = require('discord-akairo');
 const { crimson, lightRed, pastelGreen } = require('../../assets/colors.json')
 const { stripIndents } = require('common-tags');
-const ms = require('ms');
+//const ms = require('ms');
+const FuzzyMatching = require('fuzzy-matching');
+const chalk = require('chalk');
 
 module.exports = class NewHelpCommand extends Command {
     constructor() {
-        super('new-help', {
-            aliases: ['nh'],
+        super('test', {
+            aliases: ['test'],
             category: '',
             userPermissions: [],
             clientPermissions: [],
             ignorePermissions: [],
             cooldown: 10000,
             ownerOnly: true,
-            * args(message) {
-
-                const command = yield {
-                    type: "commandAlias",
-                    default: "modules",
-                    prompt: {
-                        start: `Please give a \`Command\` argument.\n\n**• Info**\nType **ONLY** \`help\` to list all commands.`,
-                        retry: `Please give a  valid \`Command\` argument. **{{}}**\n\n**• Info**\nType **ONLY** \`help\` to list all commands.`,
-                        optional: true
-                    }
+            args: [
+                {
+                    id: 'command',
+                    type: 'text'
                 }
-
-                return { command, }
-            },
+            ],
             description: {
-                content: 'No description provided.',
-                usage: ''
+                content: '',
+                usage: '',
+                syntax: ''
             },
         })
     }
 
     async exec(message, { command }) {
-        let SearchCollector;
+
+        let possible;
+        for (const category of this.handler.categories.values()) {
+            if (category.id === 'default' || category.id === '') {
+                continue;
+            } else if (category) {
+                possible = category.map((cmd) => `${cmd}`);
+            }
+        }
+
+        console.log(possible);
+
+        let number;
+        for (let i = 0; i < possible.length; i++) {
+            number = possible[i];
+        }
+
+        let fm = new FuzzyMatching(possible), answer = number;
+        console.log(`Possible 0 index var: ${number}`)
+
+        let correctedAnswer = fm.get(command, { maxChanges: 2 }).value;
+
+        if (answer === correctedAnswer) {
+            console.log(chalk.greenBright('That\'s right!, it\'s ' + answer + '!'));
+        } else {
+            console.log(chalk.redBright('Sorry buddy, the answer was ' + answer + '.'));
+        }
+
+        console.log(`Args were: ${command}`)
+
+    }
+}
+
+
+
+
+
+
+
+
+
+/*         let SearchCollector;
         let prefix = process.env.PREFIX;
 
         //No command given. send main embed
@@ -132,19 +168,7 @@ module.exports = class NewHelpCommand extends Command {
                     })
                     break;
             }
-        })
-    }
-}
-
-
-
-
-
-
-
-
-
-
+        }) */
 
 /*const { Command, Argument } = require('discord-akairo');
 
@@ -492,8 +516,8 @@ const hyjson = await hypixelData.json();
 //let whatever hyjson.profiles // u left off here cunt
 /*let hypixelResult = '';
 for (let i = 0; i < hyjson.items.length; i++) {
-	hypixelResult = hyjson.items[i].title + ' - ' + hyjson.items[i].text;
-	console.log(hypixelResult);
+    hypixelResult = hyjson.items[i].title + ' - ' + hyjson.items[i].text;
+    console.log(hypixelResult);
 }*/
 
 

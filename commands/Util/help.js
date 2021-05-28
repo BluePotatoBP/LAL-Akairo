@@ -77,7 +77,7 @@ class Help extends Command {
 
                 const emojiCollector = msg.createReactionCollector((reaction, user) => {
                     return ["817848932209393725", "817848932364845067", "817848932566695986", "817890713190662146"].includes(reaction.emoji.id) && !user.bot && user.id === message.author.id;
-                }, { time: 120000 });
+                }, { time: 300000 });
 
                 const homeEmbed = this.client.util.embed()
                     .addField("<:home:817848932209393725> | Home", "Returns to this page")

@@ -4,4 +4,12 @@ scraps
 run.bat
 .vscode
 .jsbeautifyrc
+commands/Skyblock
+commands/Fun/Games
+assets/tools/connect4game.js
+assets/tools/hangmangame.js
+assets/tools/ludogame.js
+assets/tools/snakegame.js
+assets/images
+assets/fonts
 commands/Dev/test.js
