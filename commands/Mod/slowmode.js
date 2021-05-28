@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
-const { crimson } = require('../../assets/colors.json');
+const { crimson, lightRed } = require('../../assets/colors.json');
 const ms = require('ms');
 
 class Slowmode extends Command {
@@ -69,6 +69,14 @@ class Slowmode extends Command {
                     .setTimestamp();
                 message.channel.send(embed2);
 
+            } else if (nr < 0) {
+                const embed = new Discord.MessageEmbed()
+                    .setDescription(`Unfortunately for you funny man, slowmode \`cant\` go below \`0\`.\nPlease \`edit\` your message or retype the command with a positive number.`)
+                    .setColor(lightRed)
+                    .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
+                    .setTimestamp()
+
+                await message.util.send(embed);
             } else {
                 if (nr) {
                     if (nr.match(/^[0-9]*$/gm)) { nr = `${nr}s` }

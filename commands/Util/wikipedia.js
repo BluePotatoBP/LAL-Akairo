@@ -43,7 +43,7 @@ class Wikipedia extends Command {
             })
         } catch (error) {
             const embed = new Discord.MessageEmbed()
-                .setAuthor(message.author.username, message.author.displayAvatarURL())
+                .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
                 .setDescription(stripIndents`Sorry I couldn\'t find anything related to *${cutTo(input, 0, 200, true)}*.`)
                 .setColor(lightRed)
                 .setFooter('If you made a typo you can edit the message or resend the command')
