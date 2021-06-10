@@ -77,7 +77,7 @@ class Serverinfo extends Command {
             if (totalLength > 1024 || i == rolesSize) {
                 let rolesMap = rolesFilterSort.map((c) => c).slice(firstSliceNumber, secondSliceNumber - 1).join(' ');
 
-                rolesEmbed.addField(`᲼`, rolesMap);
+                rolesEmbed.addField(`‌ `, rolesMap);
                 firstSliceNumber = secondSliceNumber - 1;
             }
         }
