@@ -85,6 +85,6 @@ class Eightball extends Command {
             console.log(e);
         });
     }
-}
+} 
 
 module.exports = Eightball;
