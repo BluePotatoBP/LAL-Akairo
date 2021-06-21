@@ -50,6 +50,6 @@ class Dice extends Command {
         function getRandomInt(max) {
             return Math.floor(Math.floor(Math.random() * max));
         }
-    }
+    } 
 }
 module.exports = Dice;
