@@ -40,7 +40,7 @@ class Google extends Command {
 			.setDescription(`[${lang(message, 'command.google.embed.desc')}](http://lmgtfy.com/?iie=1&q=${query})`)
 			.setColor('RANDOM');
 
-		message.channel.send(embed);
+		message.channel.send(embed); 
 	}
 }
 module.exports = Google;
