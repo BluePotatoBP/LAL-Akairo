@@ -47,6 +47,6 @@ class Bean extends Command {
 				console.log(e);
 			});
 		}
-	}
+	} 
 }
 module.exports = Bean;
