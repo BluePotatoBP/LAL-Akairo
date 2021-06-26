@@ -8,7 +8,7 @@ const hexRgb = require('hex-rgb');
 class Color extends Command {
     constructor() {
         super('color', {
-            aliases: ['color', 'hex', 'whatcolor', 'c'],
+            aliases: ['color', 'hex', 'whatcolor'],
             category: 'Util',
             ownerOnly: false,
             cooldown: 5000,
