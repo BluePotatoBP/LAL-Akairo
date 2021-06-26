@@ -32,8 +32,8 @@ module.exports = class ErrorListener extends Listener {
             const userEmbed = this.client.util.embed()
                 .setColor(lightRed)
                 .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
-                .setDescription(stripIndents`The \`${command.id}\` command could not be executed, if you'd
-                                            like to report this, heres the error ID: \`${errorID}\`\n
+                .setDescription(stripIndents`The \`${command.id}\` command could not be executed, 
+                                            if you'd like to report this, heres the error ID: \`${errorID}\`\n
                                             Click [here](https://discord.gg/v8zkSc9 'Like a Light Support') to join the support server.`)
 
             await message.util.send(userEmbed)
