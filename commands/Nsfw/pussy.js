@@ -31,30 +31,29 @@ class Pussy extends Command {
 		message.delete().catch((e) => { });
 
 		try {
-			if (!message.channel.nsfw) {
-				message.channel.send(lang(message, 'command.nsfw.warning'));
-			} else {
-				const embed = new Discord.MessageEmbed();
-				let image = await nsfw.real.pussy();
+			if (!message.channel.nsfw) return;
 
-				try {
-					embed.setImage(image.url);
-				} catch (e) {
-					embed.setDescription('Something went wrong, please try again later.');
-				}
+			const embed = new Discord.MessageEmbed();
+			let image = await nsfw.real.pussy();
 
-				if (m) {
-					embed.setColor(crimson);
-					embed.setFooter(`💦 ${message.author.tag} ${lang(message, 'command.pussy.embed.footer.one')} 💦`);
-
-					await m.send(embed);
-				} else {
-					embed.setColor(crimson);
-					embed.setFooter(`💦 ${message.author.tag} ${lang(message, 'command.pussy.embed.footer.two')} 💦`);
-
-					await message.channel.send(embed);
-				}
+			try {
+				embed.setImage(image.url);
+			} catch (e) {
+				embed.setDescription('Something went wrong, please try again later.');
 			}
+
+			if (m) {
+				embed.setColor(crimson);
+				embed.setFooter(`💦 ${message.author.tag} ${lang(message, 'command.pussy.embed.footer.one')} 💦`);
+
+				await m.send(embed);
+			} else {
+				embed.setColor(crimson);
+				embed.setFooter(`💦 ${message.author.tag} ${lang(message, 'command.pussy.embed.footer.two')} 💦`);
+
+				await message.channel.send(embed);
+			}
+
 		} catch (error) {
 			message.channel.send('Something went wrong, please `re-try` the command.');
 		}
