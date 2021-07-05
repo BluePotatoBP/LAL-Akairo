@@ -11,8 +11,7 @@ class Help extends Command {
             aliases: ['help'],
             category: 'Util',
             ownerOnly: false,
-            cooldown: 5000,
-            ratelimit: 2,
+            cooldown: 10000,
             description: {
                 content: 'Shows you this message',
                 usage: '[command}',
