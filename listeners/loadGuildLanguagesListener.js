@@ -11,7 +11,7 @@ class loadGuildLanguagesListener extends Listener {
     async exec(client) {
         let i = 0;
         for (const guild of this.client.guilds.cache) {
-            let [languagesDB] = await DB.query(`SELECT * FROM languages WHERE guildID = ?`, [guild[i]])
+            let [languagesDB] = await DB.query(`SELECT * FROM languages WHERE guild = ?`, [guild[i]])
 
             let lans = languagesDB.length == 0 ? "english" : languagesDB[0].language;
 

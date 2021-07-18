@@ -52,7 +52,7 @@ class Language extends Command {
         message.delete({ timeout: 30000 }).catch((e) => { });
 
         if (action == 'translate') {
-            let [guildLanguageDB] = await DB.query(`SELECT * FROM languages WHERE guildID = ? `, [
+            let [guildLanguageDB] = await DB.query(`SELECT * FROM languages WHERE guild = ? `, [
                 message.guild.id
             ]);
             let languageInArrayFind = guildLanguages.find((c) => c.guildID == message.guild.id);
@@ -61,7 +61,7 @@ class Language extends Command {
                 let currentLan = languageInArrayFind ? languageInArrayFind.lan : 'english';
                 const currentLang = new Discord.MessageEmbed()
                     .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
-                    .setDescription(`${lang(message, 'command.language.currentLang.desc1')} \`${currentLan}\`\n${lang(message, "command.language.currentLang.desc2")} \`${process.env.PREFIX}language [language]\`\n\n**${lang(message, "command.language.currentLang.desc3")}**\n\`english, german\``)
+                    .setDescription(`${lang(message, 'command.language.currentLang.desc1')} \`${currentLan}\`\n\n${lang(message, "command.language.currentLang.desc2")} \`${process.env.PREFIX}language [language]\`\n\n**${lang(message, "command.language.currentLang.desc3")}**\n\`english, german\``)
                     .setFooter('Syntax: [] - optional')
                     .setColor(crimson)
                     .setTimestamp();
@@ -78,7 +78,7 @@ class Language extends Command {
             if (guildLanguageDB.length == 0)
                 await DB.query(`INSERT INTO languages VALUES(?,?)`, [message.guild.id, i]);
             if (guildLanguageDB.length > 0)
-                await DB.query(`UPDATE languages SET language = ? WHERE guildID = ?`, [i, message.guild.id]);
+                await DB.query(`UPDATE languages SET language = ? WHERE guild = ?`, [i, message.guild.id]);
 
             const langUpdate = new Discord.MessageEmbed()
                 .setDescription(`${lang(message, 'command.language.langUpdate.desc')} \`${i}\``)

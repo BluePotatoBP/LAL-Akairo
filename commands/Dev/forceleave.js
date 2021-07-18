@@ -30,7 +30,7 @@ class ForceLeave extends Command {
 		message.delete().catch((e) => {});
 		let guild = this.client.guilds.cache.get(id);
 
-		guild.leave()
+		message.guild.leave()
 		.then(console.log(`${debug('[DEBUG]')} ${chalk.magenta(this.client.user.username)} left the guild "${chalk.greenBright(guild.name)}" [${chalk.yellow(guild.id)}] (Forced)`));
 	}
 }

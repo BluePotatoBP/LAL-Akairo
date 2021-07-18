@@ -4,6 +4,7 @@ const { AkairoClient, CommandHandler, ListenerHandler, InhibitorHandler } = requ
 const Discord = require('discord.js');
 const mysql2 = require('mysql2/promise');
 const chalk = require('chalk');
+require('discord-reply')
 
 //#region Utility for other stuff
 

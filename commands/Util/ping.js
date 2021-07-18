@@ -21,24 +21,19 @@ class Ping extends Command {
         message.delete().catch(e => { });
 
         let dbPing;
-        let dot = '.';
         let [data] = await DB.query(`SELECT * FROM keepAlive`)
+
         if (data.length === 0) {
             let dbPingOne;
             let dbPingTwo;
-            await DB.query(`INSERT INTO keepAlive VALUES(?)`, [dot]).then(dbPingOne = Date.now())
 
+            await DB.query(`INSERT INTO keepAlive VALUES(?)`, ['.']).then(dbPingOne = Date.now())
             await DB.query("DELETE FROM keepAlive").then(dbPingTwo = Date.now())
 
             dbPing = dbPingTwo - dbPingOne + "ms"
+            dbPing <= 0 ? dbPing : 'Error'
 
-            if (dbPing <= 0) {
-                dbPing = 'Error';
-            }
-
-        } else {
-            await DB.query("DELETE FROM keepAlive")
-        }
+        } else await DB.query("DELETE FROM keepAlive")
 
         try {
             message.channel.send("Doing the funny stuff...").then(m => {
