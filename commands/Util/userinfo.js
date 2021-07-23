@@ -1,6 +1,5 @@
 const { Command } = require('discord-akairo');
 const { MessageEmbed } = require('discord.js');
-const Discord = require('discord.js');
 const { crimson } = require('../../assets/colors.json');
 
 class Userinfo extends Command {
