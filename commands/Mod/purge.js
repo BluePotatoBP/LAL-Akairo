@@ -14,8 +14,8 @@ class Purge extends Command {
             cooldown: 5000,
             ratelimit: 2,
             description: {
-                content: '',
-                usage: '<amount>\n\n[-bot(s)]\n[-embed(s)]\n[-attachment(s)|-atch]\n\n[-user(:)] *\n[-include(s)(:)] *\n[-starts(:)|-startswith(:)] *\n[-ends(:)|-endswith(:)] *\n\n*These options can check for multiple entries within quotes\n(ex. -user: "ID1, ID2" or -includes: "blue is funny")\n',
+                content: '', //[bots] then \n[-embed(s)] \/
+                usage: '<amount>\n\n[-bot(s)]\n[-attachment(s)|-atch]\n[-human(s)]\n[-link(s)]\n[-invite(s)]\n\n[-user(:)] *\n[-include(s)(:)] *\n[-starts(:)|-startswith(:)] *\n[-ends(:)|-endswith(:)] *\n\n*These options can check for multiple entries within quotes\n(ex. -user: "ID1, ID2" or -includes: "blue is funny")\n',
                 syntax: '<> - necessary, [] - optional, () - optional symbol'
             },
             args: [{
@@ -42,6 +42,21 @@ class Purge extends Command {
                 flag: ['-attachment', '-attachments', '-atch']
             },
             {
+                id: 'humans',
+                match: 'flag',
+                flag: ['-human', '-humans']
+            },
+            {
+                id: 'links',
+                match: 'flag',
+                flag: ['-link', '-links']
+            },
+            {
+                id: 'invites',
+                match: 'flag',
+                flag: ['-invite', '-invites']
+            },
+            {
                 id: 'userOpt',
                 match: 'option',
                 type: 'member',
@@ -66,7 +81,7 @@ class Purge extends Command {
         });
     }
 
-    async exec(message, { messagesAmount, bots, embeds, attachments, userOpt, includesOpt, startsWithOpt, endsWithOpt }) {
+    async exec(message, { messagesAmount, bots, embeds, attachments, humans, links, invites, userOpt, includesOpt, startsWithOpt, endsWithOpt }) {
         message.delete().catch(e => { });
 
         // Staffrole Check
@@ -99,13 +114,16 @@ class Purge extends Command {
 
                     ////////////////// Variations: //////////////////
                     if (bots) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.author.bot) }
-                    if (embeds) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.embeds.size > 0) }
+                    //if (embeds) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.embeds.size > 0) }
                     if (userOpt) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.author.id === userOpt.id) }
                     if (includesOpt) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.content.match(includesOpt)) }
                     if (startsWithOpt) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.content.startsWith(startsWithOpt)) }
                     if (endsWithOpt) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.content.endsWith(endsWithOpt)) }
                     if (attachments) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.attachments.size > 0) }
-
+                    if (humans) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && !c.author.bot) }
+                    if (links) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.content.match(/(https?\:|www\.|discord\.gg(\/invite)?|(\.com))/gmi)) }
+                    if (invites) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.content.match(/(discord\.gg(\/invite)?)/gmi)) }
+                    
                     let deletedAmount = await message.channel.bulkDelete(fetch)
                     allDeletedAmount.push(deletedAmount.size)
 
@@ -118,12 +136,15 @@ class Purge extends Command {
 
                 ////////////////// Variations: //////////////////
                 if (bots) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.author.bot) }
-                if (embeds) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.embeds.size > 0) }
+                //if (embeds) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.embeds.size > 0) }
                 if (userOpt) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.author.id === userOpt.id) }
                 if (includesOpt) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.content.match(includesOpt)) }
                 if (startsWithOpt) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.content.startsWith(startsWithOpt)) }
                 if (endsWithOpt) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.content.endsWith(endsWithOpt)) }
                 if (attachments) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.attachments.size > 0) }
+                if (humans) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && !c.author.bot) }
+                if (links) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.content.includes(/(https?\:|www\.|discord\.gg(\/invite)?|(\.com))/gmi)) }
+                if (invites) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.content.includes(/(discord\.gg(\/invite)?)/gmi)) }
 
                 let deletedAmount = await message.channel.bulkDelete(fetch)
                 allDeletedAmount.push(deletedAmount.size)

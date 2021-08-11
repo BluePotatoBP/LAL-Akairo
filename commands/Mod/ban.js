@@ -1,5 +1,4 @@
 const { Command } = require('discord-akairo');
-const Discord = require('discord.js');
 const { promptMessage } = require('../../assets/tools/util');
 const { pastelGreen, darkRed, salmon } = require('../../assets/colors.json');
 const { MessageEmbed } = require('discord.js');
@@ -51,7 +50,7 @@ class Ban extends Command {
                 r = lang(message, 'command.ban.reason.noReason');
             }
 
-            const sbembed = new Discord.MessageEmbed()
+            const sbembed = new MessageEmbed()
                 .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
                 .setDescription(lang(message, 'command.ban.sbembed.desc'))
                 .setColor(darkRed)
@@ -63,7 +62,7 @@ class Ban extends Command {
                 return message.channel.send(sbembed);
             }
 
-            const ambed = new Discord.MessageEmbed()
+            const ambed = new MessageEmbed()
                 .setTitle(lang(message, 'command.ban.ambed.title'))
                 .setColor(darkRed)
                 .setFooter(lang(message, 'command.ban.mistake'))
@@ -72,7 +71,7 @@ class Ban extends Command {
             // Check if the user being banned has ban perms
             if (m.hasPermission('BAN_MEMBERS')) return message.channel.send(ambed);
 
-            const promptEmbed = new Discord.MessageEmbed()
+            const promptEmbed = new MessageEmbed()
                 .setColor(pastelGreen)
                 .setTitle(lang(message, 'command.ban.promptEmbed.title'))
                 .setDescription(
@@ -94,7 +93,7 @@ class Ban extends Command {
 
                 message.channel.send(`**${message.author.tag}** ${lang(message, 'command.ban.messageAfterBan.one')} **${m.user.tag}**. \n${lang(message, 'command.ban.messageAfterBan.two')} ${r}`);
 
-                /*const banEmbed = new Discord.MessageEmbed() // When i figure out how to use a database, nice embed
+                /*const banEmbed = new MessageEmbed() // When i figure out how to use a database, nice embed
                     .setAuthor("Action: Ban", "https://i.imgur.com/CQjspzn.png")
                     .setThumbnail(m.user.displayAvatarURL({ dynamic: true }))
                     .setColor(salmon)
@@ -105,7 +104,7 @@ class Ban extends Command {
 
                 // If the moderator reacted with an x cancel the action
             } else if (emoji === '❌') {
-                const banCanceled = new Discord.MessageEmbed()
+                const banCanceled = new MessageEmbed()
                     .setDescription(`\`${m.displayName}\` ${lang(message, 'command.ban.banCanceled.desc')}`)
                     .setColor(darkRed)
                     .setFooter(`${lang(message, 'command.ban.banCanceled.footer')} ${message.author.username}`)
@@ -113,7 +112,7 @@ class Ban extends Command {
                 editEmbed.edit(banCanceled);
             }
         } else {
-            const staffroleEmbed = new Discord.MessageEmbed()
+            const staffroleEmbed = new MessageEmbed()
                 .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
                 .setDescription(`${lang(message, "staffroleEmbed.desc1")} ${role} ${lang(message, "staffroleEmbed.desc2")}`)
                 .setColor(darkRed)

@@ -18,8 +18,8 @@ module.exports = class MissingPermissionsListener extends Listener {
 				const clientMP = client.util
 					.embed()
 					.setColor(darkRed)
-					.setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
-					.setDescription(`:x: Im missing the ${str} permissions.`);
+					.setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
+					.setDescription(`<a:cancel:773201205056503849> Im missing the ${str} permissions.`);
 				return clientMP;
 			},
 
@@ -29,13 +29,11 @@ module.exports = class MissingPermissionsListener extends Listener {
 				const userMP = client.util
 					.embed()
 					.setColor(darkRed)
-					.setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
-					.setDescription(`:x: You are missing the ${str} permissions.`);
+					.setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
+					.setDescription(`<a:cancel:773201205056503849> You are missing the ${str} permissions.`);
 				return userMP;
 			}
 		}[type];
-
-		const tag = message.guild ? message.guild.name : `${message.author.tag}/PM`;
 
 		if (!text) return;
 		if (message.guild ? message.channel.permissionsFor(this.client.user).has('SEND_MESSAGES') : true) {

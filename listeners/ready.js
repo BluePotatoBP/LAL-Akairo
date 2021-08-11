@@ -39,7 +39,7 @@ class ReadyListener extends Listener {
                 console.log(`${debug('[DEBUG]')} Guild [${guildID}] kicked the bot 7d ago. Deleting data.`);
 
                 // Deleting data from all tables where the guild id matches
-                await DB.query('DELETE FROM languages WHERE guildID = ?', [guildID]);
+                await DB.query('DELETE FROM languages WHERE guild = ?', [guildID]);
                 await DB.query('DELETE FROM logs WHERE guild = ?', [guildID]);
                 await DB.query('DELETE FROM mute WHERE guild = ?', [guildID]);
                 await DB.query('DELETE FROM prefixes WHERE guild = ?', [guildID]);
