@@ -9,7 +9,7 @@ module.exports = class BlacklistInhibitor extends Inhibitor {
     }
 
     async exec(message) {
-        if (message.channel.type === "dm") return;
+        if (message.channel.type === "DM") return;
 
     }
 }

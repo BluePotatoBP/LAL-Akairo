@@ -1,6 +1,7 @@
 const { Command } = require('discord-akairo');
 const { MessageEmbed } = require('discord.js');
 const { crimson, pastelGreen } = require('../../../assets/colors.json');
+const { delMsg } = require('../../../assets/tools/util');
 
 class Staffrole extends Command {
     constructor() {
@@ -29,7 +30,8 @@ class Staffrole extends Command {
     }
 
     async exec(message, { ch }) {
-        message.delete({ timeout: 30000 }).catch((e) => { });
+        await delMsg(message, 30000);
+
         let [getData] = await DB.query(`SELECT * FROM staffrole WHERE guild = ?`, [message.guild.id]);
         let [getData2] = await DB.query(`SELECT * FROM logs WHERE guild = ?`, [message.guild.id]);
         let rolee;
@@ -57,7 +59,7 @@ class Staffrole extends Command {
                     .setFooter(`${lang(message, "command.staffrole.updatedRoleEmbed.footer")} ${process.env.PREFIX}config staffrole <@role/id/name>`)
                     .setTimestamp();
 
-                message.util.send(updatedRole);
+                message.util.send({ embeds: [updatedRole] });
 
             } else {
                 if (ch.id === getData[0].role) {
@@ -68,7 +70,8 @@ class Staffrole extends Command {
                         .setColor(pastelGreen)
                         .setFooter(`${lang(message, "command.staffrole.updatedRoleExistsEmbed.footer")} ${process.env.PREFIX}config staffrole <@role/id/name>`)
                         .setTimestamp();
-                    message.util.send(updatedRoleExists);
+
+                    message.util.send({ embeds: [updatedRoleExists] });
 
                 } else {
                     //Update staff role 
@@ -83,7 +86,8 @@ class Staffrole extends Command {
                         .setColor(pastelGreen)
                         .setFooter(`${lang(message, "command.staffrole.updatedRole2Embed.footer")} ${process.env.PREFIX}config staffrole <@role/id/name>`)
                         .setTimestamp();
-                    message.util.send(updatedRole);
+
+                    message.util.send({ embeds: [updatedRole] });
                 }
             }
 
@@ -98,7 +102,7 @@ class Staffrole extends Command {
                     .setFooter('Syntax: [] - optional')
                     .setTimestamp()
 
-                message.channel.send(noRoleData);
+                message.channel.send({ embeds: [noRoleData] });
 
             } else {
                 rolee = await message.guild.roles.cache.get(getData[0].role);
@@ -115,7 +119,7 @@ class Staffrole extends Command {
                 if (getData2.length === 0) {
                     defaultEmbed.addField('Logs Channel:', `\n${lang(message, "command.staffrole.defaultEmbed.field3")} \n\`${process.env.PREFIX}config logs\``, true);
                 }
-                message.util.send(defaultEmbed);
+                message.util.send({ embeds: [defaultEmbed] });
             }
         }
     }

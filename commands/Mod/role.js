@@ -1,6 +1,4 @@
 const { Command, Flag } = require('discord-akairo');
-const Discord = require('discord.js');
-const { crimson } = require('../../assets/colors.json');
 
 class Role extends Command {
     constructor() {
@@ -38,10 +36,6 @@ class Role extends Command {
                 if (action == 'remove') return Flag.continue('removerole');
             }
         });
-    }
-
-    async exec(message) {
-        message.delete().catch((e) => { });
     }
 }
 module.exports = Role;

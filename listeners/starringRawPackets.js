@@ -75,7 +75,6 @@ module.exports = class clientReadyListener extends Listener {
 					await DB.query(`UPDATE starred SET lockedStars = ? WHERE userMessageID = ?`, [starCount, packet.d.message_id])
 					const [lockedDB] = await DB.query(`SELECT * FROM starred WHERE userMessageID = ?`, [packet.d.message_id])
 
-
 					const locked = this.client.util.embed()
 						.setAuthor(userMessage.author.username, userMessage.author.displayAvatarURL({ dynamic: true }))
 						.setDescription(userMessage.content)
@@ -83,8 +82,9 @@ module.exports = class clientReadyListener extends Listener {
 						.setColor(crimson)
 						.setFooter(`⭐${starCount} | Original star by ${originalStar}`)
 						.setTimestamp()
+
 					if (userMessage.attachments.size > 0) locked.setImage(userMessage.attachments.array()[0].url)
-					const sentBotMsg = await botChannel.send(locked)
+					const sentBotMsg = await botChannel.send({ embeds: [locked] })
 
 					if (starCount < minStars) {
 						return starredMessages.length == 0 ? await DB.query(`INSERT INTO starred VALUES (?,?,?,?,?,?,?)`, [guild.id, userMessage.id, "NONE", userMessage.reactions.cache.get('⭐').users.cache.map(c => c.username).slice(0, 1).join(""), "false", Date.now(), starCount]) : await DB.query(`UPDATE starred SET botMessageID = ? WHERE userMessageID = ?`, [sentBotMsg.id, packet.d.message_id])
@@ -103,7 +103,7 @@ module.exports = class clientReadyListener extends Listener {
 					.setFooter(`⭐${starCount} | Original star by ${originalStar}`)
 					.setTimestamp()
 				if (userMessage.attachments.size > 0) starEmbed.setImage(userMessage.attachments.array()[0].url)
-				const sentBotMsg = await botChannel.send(starEmbed)
+				const sentBotMsg = await botChannel.send({ embeds: [starEmbed] })
 
 				starredMessages.length == 0 ? await DB.query(`INSERT INTO starred VALUES (?,?,?,?,?,?,?)`, [guild.id, userMessage.id, sentBotMsg.id, user.user.username, "false", Date.now(), starCount]) : await DB.query(`UPDATE starred SET botMessageID = ?, lockedStars = ? WHERE userMessageID = ?`, [sentBotMsg.id, starCount, packet.d.message_id])
 
@@ -125,7 +125,8 @@ module.exports = class clientReadyListener extends Listener {
 						.setFooter(`⭐${lockedDB[0].lockedStars} | Original star by ${originalStar} `)
 						.setTimestamp()
 					if (userMessage.attachments.size > 0) locked.setImage(userMessage.attachments.array()[0].url)
-					botMessage.edit(locked)
+
+					botMessage.edit({ embeds: [locked] })
 
 					return
 				}
@@ -138,7 +139,9 @@ module.exports = class clientReadyListener extends Listener {
 					.setFooter(`⭐${starCount} | Original star by ${originalStar} `)
 					.setTimestamp()
 				if (userMessage.attachments.size > 0) starEmbed.setImage(userMessage.attachments.array()[0].url)
-				botMessage.edit(starEmbed)
+
+				botMessage.edit({ embeds: [starEmbed] })
+
 				await DB.query(`UPDATE starred SET lockedStars = ? WHERE userMessageID = ?`, [starCount, packet.d.message_id])
 
 			}
@@ -234,7 +237,7 @@ module.exports = class clientReadyListener extends Listener {
 					.setFooter(`⭐${starCount} | Original star by ${originalStar} `)
 					.setTimestamp()
 				if (userMessage.attachments.size > 0) starEmbed.setImage(userMessage.attachments.array()[0].url)
-				const sentBotMsg = await botChannel.send(starEmbed)
+				const sentBotMsg = await botChannel.send({ embeds: [starEmbed] })
 
 				starredMessages.length == 0 ? await DB.query(`INSERT INTO starred VALUES (?,?,?,?)`, [guild.id, userMessage.id, sentBotMsg.id, user.user.username]) : await DB.query(`UPDATE starred SET botMessageID = ? WHERE userMessageID = ?`, [sentBotMsg.id, packet.d.message_id])
 
@@ -255,7 +258,8 @@ module.exports = class clientReadyListener extends Listener {
 					.setFooter(`⭐${starCount} | Original star by  ${originalStar} `)
 					.setTimestamp()
 				if (userMessage.attachments.size > 0) starEmbed.setImage(userMessage.attachments.array()[0].url)
-				botMessage.edit(starEmbed)
+
+				botMessage.edit({ embeds: [starEmbed] })
 
 			}
 
@@ -333,7 +337,7 @@ module.exports = class clientReadyListener extends Listener {
 					.setFooter(`⭐${starCount} | ${originalStar} `)
 					.setTimestamp()
 				if (userMessage.attachments.size > 0) starEmbed.setImage(userMessage.attachments.array()[0].url)
-				const sentBotMsg = await botChannel.send(starEmbed)
+				const sentBotMsg = await botChannel.send({ embeds: [starEmbed] })
 
 				await DB.query(`INSERT INTO starred VALUES (?,?,?,?)`, [guild.id, userMessage.id, sentBotMsg.id, user.user.username])
 
@@ -352,7 +356,8 @@ module.exports = class clientReadyListener extends Listener {
 					.setFooter(`⭐${starCount} | Original star by  ${originalStar} `)
 					.setTimestamp()
 				if (userMessage.attachments.size > 0) starEmbed.setImage(userMessage.attachments.array()[0].url)
-				botMessage.edit(starEmbed)
+
+				botMessage.edit({ embeds: [starEmbed] })
 
 			}
 

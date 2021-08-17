@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 const { createCanvas, loadImage, } = require('canvas');
 const { contrast } = require('../../../assets/tools/canvas');
 const path = require('path');
+const { delMsg } = require('../../../assets/tools/util');
 
 class Bobross extends Command {
     constructor() {
@@ -26,7 +27,7 @@ class Bobross extends Command {
     }
 
     async exec(message, { u }) {
-        message.delete().catch(e => { });
+        await delMsg(message);
 
         let base = await loadImage(path.join(__dirname, '../../../assets/images/bobrossBase.png'));
         let avatar = await loadImage(u.displayAvatarURL({ format: 'png' }))
@@ -40,7 +41,7 @@ class Bobross extends Command {
 
         const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'BobRoss.png');
 
-        await message.channel.send(attachment);
+        await message.channel.send({ files: [attachment] });
 
     }
 }

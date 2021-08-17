@@ -1,6 +1,7 @@
 const { Command, Util } = require('discord-akairo');
 const Discord = require('discord.js');
 const { crimson } = require('../../../assets/colors.json');
+const { delMsg } = require('../../../assets/tools/util');
 
 class Addrole extends Command {
     constructor() {
@@ -41,26 +42,21 @@ class Addrole extends Command {
     }
 
     async exec(message, { m, r }) {
-        message.delete({ timeout: 30000 }).catch((e) => { });
+        await delMsg(message);
 
         const embed = new Discord.MessageEmbed()
             .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
-            .setDescription(
-                `${m.user.username} ${lang(message, 'command.addrole.embed.desc.one')} ${r} ${lang(
-                    message,
-                    'command.addrole.embed.desc.two'
-                )}`
-            )
+            .setDescription(`${m.user.username} ${lang(message, 'command.addrole.embed.desc.one')} ${r} ${lang(message,'command.addrole.embed.desc.two')}`)
             .setColor(crimson);
 
-        if (m.roles.cache.has(r.id)) return message.channel.send(embed);
+        if (m.roles.cache.has(r.id)) return message.channel.send({ embeds: [embed] });
 
         try {
             await m.roles.add(r.id);
             await message.react('<a:check:773208316624240710>');
         } catch (error) {
             console.log(error);
-            message.channel.send(lang(message, "command.addrole.noPermsError"));
+            message.channel.send({ content: lang(message, "command.addrole.noPermsError") });
         }
     }
 }

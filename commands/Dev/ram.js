@@ -28,7 +28,7 @@ class Ram extends Command {
                 .setDescription(`Im currently chewing on \`${usage}mb\` of RAM <:sadpepe:774640053020000266>`)
                 .setColor(crimson)
                 .setTimestamp();
-            message.channel.send(rembed);
+            message.channel.send({embeds: [rembed]});
         } catch (error) {
             console.log(error);
         }

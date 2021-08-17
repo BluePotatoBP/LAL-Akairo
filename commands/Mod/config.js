@@ -1,6 +1,7 @@
 const { Command, Flag } = require('discord-akairo');
 const { MessageEmbed } = require('discord.js');
 const { crimson } = require('../../assets/colors.json');
+const { delMsg } = require('../../assets/tools/util');
 
 class Config extends Command {
     constructor() {
@@ -53,7 +54,8 @@ class Config extends Command {
     }
 
     async exec(message, { action }) {
-        message.delete({ timeout: 60000 }).catch((e) => { });
+        await delMsg(message, 60000);
+        
         let [logsData] = await DB.query(`SELECT * FROM logs WHERE guild = ?`, [message.guild.id]);
         let [staffroleData] = await DB.query(`SELECT * FROM staffrole WHERE guild = ?`, [message.guild.id]);
         let [prefixData] = await DB.query(`SELECT * FROM prefixes WHERE guild = ?`, [message.guild.id]);
@@ -146,7 +148,7 @@ class Config extends Command {
                 )
                 .setColor(crimson);
 
-            await message.channel.send(embed);
+            await message.channel.send({ embeds: [embed] });
         }
     }
 }

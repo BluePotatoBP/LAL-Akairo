@@ -2,6 +2,7 @@ const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const { crimson } = require('../../assets/colors.json');
 const { MessageEmbed } = require('discord.js');
+const { delMsg } = require('../../assets/tools/util');
 
 class Changelog extends Command {
     constructor() {
@@ -21,7 +22,7 @@ class Changelog extends Command {
     }
 
     async exec(message) {
-        message.delete().catch((e) => { });
+        await delMsg(message);
 
         const embed = new Discord.MessageEmbed()
             .setAuthor('📰 LAL Changelog 📰')
@@ -30,7 +31,7 @@ class Changelog extends Command {
             .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
 
-        await message.util.send(embed);
+        await message.util.send({ embeds: [embed] });
     }
 }
 module.exports = Changelog;

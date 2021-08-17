@@ -2,6 +2,7 @@ const { MessageEmbed } = require('discord.js');
 const { Command } = require('discord-akairo');
 const { dice } = require('random-js')
 const { crimson } = require('../../assets/colors.json');
+const { delMsg } = require('../../assets/tools/util');
 
 class Dice extends Command {
     constructor() {
@@ -25,7 +26,7 @@ class Dice extends Command {
     }
 
     async exec(message, args) {
-        message.delete().catch(e => { });
+        await delMsg(message);
 
         let sides = {
             1: "https://i.imgur.com/epZt2e0.png",
@@ -45,11 +46,11 @@ class Dice extends Command {
             .setFooter(`You rolled a [${number}]`, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
 
-        await message.channel.send(embed);
+        await message.channel.send({ embeds: [embed] });
 
         function getRandomInt(max) {
             return Math.floor(Math.floor(Math.random() * max));
         }
-    } 
+    }
 }
 module.exports = Dice;

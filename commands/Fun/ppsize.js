@@ -1,5 +1,6 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
+const { delMsg } = require('../../assets/tools/util');
 
 class PPSize extends Command {
     constructor() {
@@ -23,7 +24,7 @@ class PPSize extends Command {
     }
 
     async exec(message, { u }) {
-        message.delete().catch((e) => { });
+        await delMsg(message);
 
         let sizes = [
             'An error occurred: Not visible by the human eye',
@@ -61,10 +62,10 @@ class PPSize extends Command {
                 .setFooter(`${lang(message, 'command.ppsize.embed.footer')} ${message.author.username}`)
                 .setTimestamp();
 
-            message.channel.send(ppembed2);
+            message.channel.send({ embeds: [ppembed2] });
         } catch (error) {
             console.log(error);
-            message.channel.send('Something went wrong 🤷‍♀️');
+            message.channel.send({ content: 'Something went wrong 🤷‍♀️' });
         }
     }
 }

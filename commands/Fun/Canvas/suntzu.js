@@ -1,7 +1,7 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const { createCanvas, loadImage, registerFont } = require('canvas');
-const { softWrap, cutTo } = require('../../../assets/tools/util');
+const { softWrap, cutTo, delMsg } = require('../../../assets/tools/util');
 const path = require('path');
 
 class Suntzu extends Command {
@@ -26,7 +26,7 @@ class Suntzu extends Command {
     }
 
     async exec(message, { input }) {
-        message.delete().catch(e => { });
+        await delMsg(message);
 
         registerFont(path.join(__dirname, '../../../assets/fonts/whitney-medium.otf'), { family: 'Whitney' });
 
@@ -42,7 +42,7 @@ class Suntzu extends Command {
 
         const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'sunTzu.png');
 
-        await message.channel.send(attachment);
+        await message.channel.send({ files: [attachment] });
 
     }
 }

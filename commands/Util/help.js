@@ -1,9 +1,10 @@
 const { Command, Argument } = require('discord-akairo');
-const Discord = require('discord.js');
-const ms = require('ms');
+const { Permissions, MessageEmbed } = require('discord.js');
 const { stripIndents } = require('common-tags');
 const { crimson, lightRed, pastelGreen } = require('../../assets/colors.json')
 const chalk = require('chalk');
+const ms = require('ms');
+const { delMsg } = require('../../assets/tools/util');
 
 class Help extends Command {
     constructor() {
@@ -33,7 +34,7 @@ class Help extends Command {
         });
     }
     async exec(message, { command, list }) {
-        message.delete({ timeout: 60000 }).catch((e) => { });
+        delMsg(message, 60000)
 
         let SearchCollector;
         let prefix;
@@ -42,12 +43,12 @@ class Help extends Command {
 
         data.length === 0 ? prefix = process.env.PREFIX : prefix = data[0].prefix
 
-        const embed = new Discord.MessageEmbed()
+        const embed = new MessageEmbed()
             .setColor(crimson)
             .setAuthor(`${this.client.user.username} Help`, this.client.user.displayAvatarURL({ dynamic: true }))
             .setThumbnail(message.guild.iconURL({ dynamic: true }));
 
-        if (message.guild.members.cache.get(this.client.user.id).permissions.has('ADD_REACTIONS')) {
+        if (message.guild.members.cache.get(this.client.user.id).permissions.has(Permissions.FLAGS.ADD_REACTIONS)) {
 
             const commandsEmbed = this.client.util.embed()
                 .setTitle(`${this.client.user.username} Help | Commands`)
@@ -67,16 +68,15 @@ class Help extends Command {
             //List commands
             if (!command && ["commands", "list"].some(w => command ? command.toLowerCase : command === w)) {
 
-                let msg = await message.util.send(commandsEmbed)
+                let msg = await message.util.send({ embeds: [commandsEmbed] })
 
                 await msg.react('<:home:817848932209393725>');
                 await msg.react('<:library:817848932364845067>');
                 await msg.react('<:search:817848932566695986>');
                 await msg.react('<:exit:817890713190662146>');
 
-                const emojiCollector = msg.createReactionCollector((reaction, user) => {
-                    return ["817848932209393725", "817848932364845067", "817848932566695986", "817890713190662146"].includes(reaction.emoji.id) && !user.bot && user.id === message.author.id;
-                }, { time: 300000 });
+                const filter = (reaction, user) => !user.bot && user.id === message.author.id && ["817848932209393725", "817848932364845067", "817848932566695986", "817890713190662146"].includes(reaction.emoji.id);
+                const emojiCollector = msg.createReactionCollector({ filter, time: 300000 });
 
                 const homeEmbed = this.client.util.embed()
                     .addField("<:home:817848932209393725> | Home", "Returns to this page")
@@ -92,13 +92,13 @@ class Help extends Command {
 
                     switch (reaction.emoji.id) {
                         case "817848932209393725":
-                            message.util.send(homeEmbed)
+                            message.util.send({ embeds: [homeEmbed] })
                             break;
                         case "817848932364845067":
-                            message.util.send(commandsEmbed)
+                            message.util.send({ embeds: [commandsEmbed] })
                             break;
                         case "817890713190662146":
-                            if (message.guild.members.cache.get(this.client.user.id).permissions.has('MANAGE_MESSAGES')) {
+                            if (message.guild.members.cache.get(this.client.user.id).permissions.has(Permissions.FLAGS.MANAGE_MESSAGES)) {
                                 msg.reactions.removeAll().catch(e => console.log(e))
                             } else {
                                 await msg.react('<a:cancel:773201205056503849>')
@@ -114,14 +114,14 @@ class Help extends Command {
                                 .setFooter(`Requested by ${message.author.username}`, message.author.displayAvatarURL({ dynamic: true }))
                                 .setTimestamp()
 
-                            message.util.send(searchEmbed)
+                            message.util.send({ embeds: [searchEmbed] })
 
 
                             const filter = m => !m.author.bot && m.author.id == message.author.id
-                            SearchCollector = msg.channel.createMessageCollector(filter, { time: 3e5 });
+                            SearchCollector = msg.channel.createMessageCollector({ filter, time: 300000 });
                             SearchCollector.on("collect", async (commandInput) => {
 
-                                if (commandInput.content.toLowerCase() === "cancel") return message.util.send(homeEmbed)
+                                if (commandInput.content.toLowerCase() === "cancel") return message.util.send({ embeds: [homeEmbed] })
 
                                 let resolveType = await this.client.commandHandler.resolver.type("commandAlias")
                                 let command = await resolveType(message, commandInput.content)
@@ -135,7 +135,7 @@ class Help extends Command {
                                         .setFooter(`Requested by ${message.author.username}`, message.author.displayAvatarURL({ dynamic: true }))
                                         .setTimestamp()
 
-                                    message.util.send(noCommandFound)
+                                    message.util.send({ embeds: [noCommandFound] })
 
                                 } else {
 
@@ -150,7 +150,7 @@ class Help extends Command {
                                         .setColor(pastelGreen)
                                         .setFooter(`${lang(message, 'command.help.embedtwo.desc.eight')} ${command.description.syntax ? `${command.description.syntax}` : lang(message, 'command.help.embedtwo.desc.nine')}`)
 
-                                    message.util.send(commandHelp)
+                                    message.util.send({ embeds: [commandHelp] })
                                     SearchCollector.stop()
                                 }
                             })
@@ -164,7 +164,7 @@ class Help extends Command {
             if (command) {
 
                 try {
-                    const embed = new Discord.MessageEmbed()
+                    const embed = new MessageEmbed()
                         .setDescription(stripIndents`${lang(message, 'command.help.embedtwo.desc.one')} \`${prefix}\`\n 
                  **${lang(message, 'command.help.embedtwo.desc.two')} **${command.categoryID.toLowerCase() === 'nsfw' ? `|| \`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\` ||` : `\`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\``}
                  **${lang(message, 'command.help.embedtwo.desc.three')}** ${lang(message, `command.${command.id}.desc.content`)}
@@ -175,7 +175,7 @@ class Help extends Command {
                         .setFooter(`${lang(message, 'command.help.embedtwo.desc.eight')} ${command.description.syntax ? `${command.description.syntax}` : lang(message, 'command.help.embedtwo.desc.nine')}`)
                         .setTimestamp()
 
-                    return message.util.send(embed);
+                    return message.util.send({ embeds: [embed] });
                 } catch (error) {
                     const noCommandFound = this.client.util.embed()
                         .setTitle(`${this.client.user.username} Help | Search`)
@@ -184,7 +184,7 @@ class Help extends Command {
                         .setFooter(`Requested by ${message.author.username}`, message.author.displayAvatarURL({ dynamic: true }))
                         .setTimestamp()
 
-                    message.util.send(noCommandFound)
+                    message.util.send({ embeds: [noCommandFound] })
                 }
 
 
@@ -215,29 +215,29 @@ class Help extends Command {
                     }
                 }
 
-                const msg = await message.util.send(homeEmbed)
+                const msg = await message.util.send({ embeds: [homeEmbed] })
 
                 await msg.react('<:home:817848932209393725>');
                 await msg.react('<:library:817848932364845067>');
                 await msg.react('<:search:817848932566695986>');
                 await msg.react('<:exit:817890713190662146>');
 
-                const emojiCollector = msg.createReactionCollector((reaction, user) => {
-                    return ["817848932209393725", "817848932364845067", "817848932566695986", "817890713190662146"].includes(reaction.emoji.id) && !user.bot && user.id === message.author.id;
-                }, { time: 120000 });
+                const filter = (reaction, user) => !user.bot && user.id === message.author.id && ["817848932209393725", "817848932364845067", "817848932566695986", "817890713190662146"].includes(reaction.emoji.id);
+                const emojiCollector = msg.createReactionCollector({ filter, time: 120000 });
 
                 emojiCollector.on("collect", async (reaction, user) => {
+                    console.log(reaction);
                     reaction.users.remove(user.id);
 
                     switch (reaction.emoji.id) {
                         case "817848932209393725":
-                            message.util.send(homeEmbed)
+                            message.util.send({ embeds: [homeEmbed] })
                             break;
                         case "817848932364845067":
-                            message.util.send(commandsEmbed)
+                            message.util.send({ embeds: [commandsEmbed] })
                             break;
                         case "817890713190662146":
-                            if (message.guild.members.cache.get(this.client.user.id).permissions.has('MANAGE_MESSAGES')) {
+                            if (message.guild.members.cache.get(this.client.user.id).permissions.has(Permissions.FLAGS.MANAGE_MESSAGES)) {
                                 msg.reactions.removeAll().catch(e => console.log(e))
                             } else {
                                 await msg.react('<a:cancel:773201205056503849>')
@@ -253,14 +253,14 @@ class Help extends Command {
                                 .setFooter(`Requested by ${message.author.username}`, message.author.displayAvatarURL({ dynamic: true }))
                                 .setTimestamp()
 
-                            message.util.send(searchEmbed)
+                            message.util.send({ embeds: [searchEmbed] })
 
 
                             const filter = m => !m.author.bot && m.author.id == message.author.id
-                            SearchCollector = msg.channel.createMessageCollector(filter, { time: 3e5 });
+                            SearchCollector = msg.channel.createMessageCollector({ filter, time: 300000 });
                             SearchCollector.on("collect", async (commandInput) => {
 
-                                if (commandInput.content.toLowerCase() === "cancel") return message.util.send(homeEmbed)
+                                if (commandInput.content.toLowerCase() === "cancel") return message.util.send({ embeds: [homeEmbed] })
 
                                 let resolveType = await this.client.commandHandler.resolver.type("commandAlias")
                                 let command = await resolveType(message, commandInput.content)
@@ -274,7 +274,7 @@ class Help extends Command {
                                         .setFooter(`Requested by ${message.author.username}`, message.author.displayAvatarURL({ dynamic: true }))
                                         .setTimestamp()
 
-                                    message.util.send(noCommandFound)
+                                    message.util.send({ embeds: [noCommandFound] })
 
                                 } else {
 
@@ -289,7 +289,7 @@ class Help extends Command {
                                         .setColor(pastelGreen)
                                         .setFooter(`${lang(message, 'command.help.embedtwo.desc.eight')} ${command.description.syntax ? `${command.description.syntax}` : lang(message, 'command.help.embedtwo.desc.nine')}`)
 
-                                    message.util.send(commandHelp)
+                                    message.util.send({ embeds: [commandHelp] })
                                     SearchCollector.stop()
                                 }
                             })
@@ -323,9 +323,9 @@ class Help extends Command {
                 embed.setFooter(`🎉 ${this.client.user.username} 🎉 | ${lang(message, 'command.help.embed.footer.one')} ${total.reduce((a, b) => a + b, 0)}`, this.client.user.displayAvatarURL({ dynamic: true }));
                 embed.addField(`${lang(message, 'command.help.embed.field.one')}`, `\n${lang(message, 'command.help.embed.field.two')} [${lang(message, 'command.help.embed.field.three')}](https://discord.gg/v8zkSc9) ${lang(message, 'command.help.embed.field.four')} [${lang(message, 'command.help.embed.field.three')}](https://discordapp.com/oauth2/authorize?this.client_id=${this.client.user.id}&scope=bot&permissions=8).`);
 
-                await message.util.send(embed);
+                await message.util.send({ embeds: [embed] });
             } else {
-                if (!command) return message.util.send(embed.setTitle(lang(message, 'command.help.embed.title.one')).setDescription(`${lang(message, 'command.help.embed.title.desc.one')} \`${prefix}help\` ${lang(message, 'command.help.embed.title.desc.two')}`));
+                if (!command) return message.util.send({ embeds: [embed.setTitle(lang(message, 'command.help.embed.title.one')).setDescription(`${lang(message, 'command.help.embed.title.desc.one')} \`${prefix}help\` ${lang(message, 'command.help.embed.title.desc.two')}`)] });
 
                 console.log(`${debug('[DEBUG]')} '${message.author.tag}'[${message.author.id}] used ${chalk.gray(`"${prefix}help ${command.id.toLowerCase()}"`)} in '${message.guild.name}'[${message.guild.id}]`);
 
@@ -338,7 +338,7 @@ class Help extends Command {
 
                 embed.setFooter(`${lang(message, 'command.help.embedtwo.desc.eight')} ${command.description.syntax ? `${command.description.syntax}` : lang(message, 'command.help.embedtwo.desc.nine')}`);
 
-                return message.util.send(embed);
+                return message.util.send({ embds: [embed] });
             }
         }
     }

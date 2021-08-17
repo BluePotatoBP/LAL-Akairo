@@ -1,7 +1,7 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const { crimson } = require('../../assets/colors.json');
-const { cutTo } = require('../../assets/tools/util');
+const { cutTo, delMsg } = require('../../assets/tools/util');
 
 class Google extends Command {
 	constructor() {
@@ -31,7 +31,7 @@ class Google extends Command {
 	}
 
 	async exec(message, { s }) {
-		message.delete().catch((e) => { });
+		await delMsg(message);
 		let query = s.split(' ').join('+');
 
 		let embed = new Discord.MessageEmbed()
@@ -40,7 +40,7 @@ class Google extends Command {
 			.setDescription(`[${lang(message, 'command.google.embed.desc')}](http://lmgtfy.com/?iie=1&q=${query})`)
 			.setColor('RANDOM');
 
-		message.channel.send(embed); 
+		message.channel.send({ embeds: [embed] });
 	}
 }
 module.exports = Google;

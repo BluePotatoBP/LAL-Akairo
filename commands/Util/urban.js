@@ -1,7 +1,7 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const urban = require('urban');
-const { cutTo, softWrap } = require('../../assets/tools/util')
+const { cutTo, softWrap, delMsg } = require('../../assets/tools/util')
 const { crimson, darkRed } = require('../../assets/colors.json');
 
 class Urban extends Command {
@@ -31,7 +31,7 @@ class Urban extends Command {
     }
 
     async exec(message, { args }) {
-        message.delete().catch((e) => { });
+        await delMsg(message);
         // Call the urban dictionary API
         let search = await urban(args)
 
@@ -44,7 +44,7 @@ class Urban extends Command {
                     .setTimestamp();
 
                 // If theres no data, return an embed 
-                if (!res) return message.channel.send(nrembed);
+                if (!res) return message.channel.send({ embeds: [nrembed] });
 
                 let { word, thumbs_up, thumbs_down, permalink, author } = res;
                 let example = await res.example.replace(/\[/g, '').replace(/\]/g, ''); // Replace all [] with '' because theres no way to get those hyperlinks
@@ -66,7 +66,7 @@ class Urban extends Command {
                     .setTimestamp()
                     .setFooter(`${lang(message, 'command.urban.nembed.desc.author')} ${author || 'unknown'}`);
 
-                await message.channel.send(nembed);
+                await message.channel.send({ embeds: [nembed] });
             });
 
         } catch (error) {
@@ -77,7 +77,7 @@ class Urban extends Command {
                 .setDescription("Whoops, something wen't wrong... Please try again!")
                 .setColor(darkRed)
                 .setTimestamp();
-            await message.channel.send(swrembed);
+            await message.channel.send({ embeds: [swrembed] });
         }
     }
 }

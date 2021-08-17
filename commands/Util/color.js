@@ -4,6 +4,7 @@ const { crimson } = require('../../assets/colors.json');
 const { createCanvas, loadImage } = require('canvas');
 const path = require('path');
 const hexRgb = require('hex-rgb');
+const { delMsg } = require('../../assets/tools/util');
 
 class Color extends Command {
     constructor() {
@@ -32,7 +33,7 @@ class Color extends Command {
     }
 
     async exec(message, { c }) {
-        message.delete({ timeout: 60000 }).catch((e) => { });
+        delMsg(message, 10000)
 
         // Using a trycatch just because user input can be invalid sometimes (wrong hex code)
         try {
@@ -67,14 +68,14 @@ class Color extends Command {
                 .setTimestamp();
 
             // Ship it
-            await message.util.send(embed);
+            await message.util.send({ embeds: [embed] });
         } catch (error) {
             // Make an "error" embed (only used when a wrong hex is given) and send it
             const errorEmbed = new Discord.MessageEmbed()
                 .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
                 .setDescription(`<a:cancel:773201205056503849> ${lang(message, 'command.color.bigError')}`)
                 .setColor(crimson);
-            await message.util.send(errorEmbed);
+            await message.util.send({ embeds: [errorEmbed] });
         }
     }
 }

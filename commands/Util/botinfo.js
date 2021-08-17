@@ -2,6 +2,7 @@ const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const { crimson } = require('../../assets/colors.json');
 const Akairo = require('discord-akairo');
+const { delMsg } = require('../../assets/tools/util');
 
 class Botinfo extends Command {
     constructor() {
@@ -20,7 +21,7 @@ class Botinfo extends Command {
     }
 
     async exec(message) {
-        message.delete().catch((e) => { });
+        await delMsg(message);
 
         let bicon = client.user.displayAvatarURL({
             dynamic: true
@@ -56,7 +57,7 @@ class Botinfo extends Command {
             )
             .addField(
                 `**${lang(message, 'command.botinfo.embed.field.four')}**`,
-                `\`${client.user.createdAt.toUTCString().substr(0, 16)}\` <a:blobdj:605180387584507917>`,
+                `\`${client.user.createdAt.toUTCString().substr(0, 16)}\` <a:blobDJ:773206358991962132>`,
                 true
             )
             .addField(
@@ -83,7 +84,7 @@ class Botinfo extends Command {
             .setTimestamp()
             .setColor(crimson);
 
-        message.channel.send(embed);
+        message.channel.send({ embeds: [embed] });
     }
 }
 module.exports = Botinfo;

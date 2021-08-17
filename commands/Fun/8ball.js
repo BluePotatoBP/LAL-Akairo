@@ -1,7 +1,7 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const { lightYellow } = require('../../assets/colors.json');
-const { cutTo, softWrap, capitalize } = require('../../assets/tools/util')
+const { cutTo, softWrap, capitalize, delMsg } = require('../../assets/tools/util')
 
 class Eightball extends Command {
     constructor() {
@@ -29,7 +29,7 @@ class Eightball extends Command {
     }
 
     async exec(message, { input }) {
-        message.delete().catch((e) => { });
+        await delMsg(message);
 
         // Roll the response
         function roll() {
@@ -69,7 +69,7 @@ class Eightball extends Command {
             .setColor(lightYellow)
             .setTimestamp();
 
-        if (input.length < 3) message.channel.send(qembed).then((msg) => msg.delete(10000));
+        if (input.length < 3) message.channel.send({ embeds: [qembed] }).then((msg) => msg.delete(10000));
 
         // Embed for eightball
         let ballembed = new Discord.MessageEmbed()
@@ -81,10 +81,8 @@ class Eightball extends Command {
             .setTimestamp();
 
         // Send the eightball embed
-        message.channel.send(ballembed).catch((e) => {
-            console.log(e);
-        });
+        message.channel.send({ embeds: [ballembed] }).catch((e) => console.log(e));
     }
-} 
+}
 
 module.exports = Eightball;

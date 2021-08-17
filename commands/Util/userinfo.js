@@ -1,6 +1,7 @@
 const { Command } = require('discord-akairo');
 const { MessageEmbed } = require('discord.js');
 const { crimson } = require('../../assets/colors.json');
+const { delMsg } = require('../../assets/tools/util');
 
 class Userinfo extends Command {
     constructor() {
@@ -24,7 +25,7 @@ class Userinfo extends Command {
     }
 
     async exec(message, { u }) {
-        await message.delete().catch((e) => { });
+        await delMsg(message);
 
         let question = u.presence.status;
         let capitalize = question.charAt(0).toUpperCase() + question.slice(1);
@@ -46,7 +47,7 @@ class Userinfo extends Command {
                 .setColor(crimson)
                 .setFooter(`ID: ${u.id}`)
                 .setTimestamp()
-            return message.channel.send(alternateEmbed)
+            return message.channel.send({ embeds: [alternateEmbed] })
         }
         let highestRole = m.roles.highest.name;
 
@@ -113,7 +114,7 @@ class Userinfo extends Command {
             .addField(`Status:`, `\`${capitalize}\` <a:extremeShy:830640970642227211>`, true)
             .addField(`Nickname:`, `${u.nickname ? u.nickname : '`-` <a:superRotating:773222147148742657>'}`, true)
             .addField(`Last message`, `${m.lastMessage ? `[${lastmsg}](${m.lastMessage.url})` : '`-`'}`, true)
-            .addField(`Last channel:`, u.lastMessage ? `<#${u.lastMessageChannelID}>` : `\`-\``, true)
+            .addField(`Last channel:`, u.lastMessage ? `<#${u.lastMessageChannelId}>` : `\`-\``, true)
             .addField(`Bot:`, `\`${u.bot ? 'True' : 'False'}\` <a:dancingSquidward:773219104479379467>`, true)
             .addField(`Highest role:`, `\`${highestRole}\` <a:handsClap:773222150676807716>`, true)
             .addField(statusState ? statusState : 'Activity:', usergame ? usergame : `\`-\``, true)
@@ -121,7 +122,7 @@ class Userinfo extends Command {
             .setFooter(`ID: ${u.id}`)
             .setTimestamp();
 
-        await message.channel.send(userInfoEmbed).catch((err) => console.log(err));
+        await message.channel.send({ embeds: [userInfoEmbed] }).catch((err) => console.log(err));
     }
 }
 module.exports = Userinfo;

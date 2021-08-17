@@ -1,6 +1,7 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const { orange } = require('../../assets/colors.json');
+const { cutTo, delMsg } = require('../../assets/tools/util')
 
 class Warm extends Command {
 	constructor() {
@@ -35,48 +36,29 @@ class Warm extends Command {
 	}
 
 	async exec(message, { u, r }) {
-		message.delete().catch((e) => { });
+		await delMsg(message);
 
 		if (!u) {
 			const embed = new Discord.MessageEmbed()
 				.setDescription(`**${message.author} ${lang(message, 'command.warm.embed.desc')} ❤**`)
 				.setImage('https://i.imgur.com/z0cy78Y.jpg')
 				.setColor(orange);
-			message.channel.send(embed).catch((e) => {
-				console.log(e);
-			});
+
+			message.channel.send({ embeds: [embed] }).catch((e) => console.log(e));
 		} else {
 			try {
 				const embed2 = new Discord.MessageEmbed()
 					.setDescription(`**${u} ${lang(message, 'command.warm.embed.desc')} ❤**`)
 					.setImage('https://i.imgur.com/z0cy78Y.jpg')
 					.setColor(orange);
+
 				if (r) {
-					function cut(text) {
-						if (r.length > 20) {
-							let res = r.length - 20;
-							text = text.slice(-res);
-
-							return text + '...';
-						} else {
-							text = r;
-							return text;
-						}
-					}
-
-					embed2.setFooter(
-						`${lang(message, 'command.warm.embed.footer.reason')} "${cut(r)}" - ${lang(
-							message,
-							'command.warm.embed.footer.funny'
-						)}`
-					);
+					embed2.setFooter(`${lang(message, 'command.warm.embed.footer.reason')} "${cutTo(r, 0, 20, true)}" - ${lang(message, 'command.warm.embed.footer.funny')}`);
 				}
-				message.channel.send(embed2).catch((e) => {
-					console.log(e);
-				});
+				message.channel.send({ embeds: [embed2] }).catch((e) => console.log(e));
 			} catch (error) {
 				console.log(error);
-				message.channel.send(`I couldn't warm that user for some reason 😢`);
+				message.channel.send({ content: `I couldn't warm that user for some reason 😢` });
 			}
 		}
 	}

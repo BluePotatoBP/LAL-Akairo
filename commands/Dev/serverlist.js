@@ -43,14 +43,14 @@ class Serverlist extends Command {
             }, async function(success, data) {
                 if (success) {
                     try {
-                        message.author.send(`Here ya go: ${data}`)
-                        message.react("❤")
+                        await message.author.send({content: `Here ya go: ${data}`})
+                        await message.react("❤")
                     } catch (error) {
-                        message.channel.send("Dude open DMs rn \nhttps://imgur.com/RLUojAU")
+                        await message.channel.send({content: "Dude open DMs rn \nhttps://imgur.com/RLUojAU"})
                     }
                 } else {
                     console.log(data);
-                    message.channel.send('Couldn\'t send the output to pastebin.com')
+                    await message.channel.send({content: 'Couldn\'t send the output to pastebin.com'})
                 }
             });
         });

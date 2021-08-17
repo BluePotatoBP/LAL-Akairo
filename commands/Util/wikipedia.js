@@ -2,7 +2,7 @@ const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const wiki = require('wikipedia-tldr');
 const { white, lightRed } = require('../../assets/colors.json')
-const { cutTo, softWrap } = require('../../assets/tools/util');
+const { cutTo, softWrap, delMsg } = require('../../assets/tools/util');
 const { stripIndents } = require('common-tags');
 
 class Wikipedia extends Command {
@@ -29,7 +29,7 @@ class Wikipedia extends Command {
     }
 
     async exec(message, { input }) {
-        message.delete({ timeout: 60000 }).catch(e => { });
+        delMsg(message, 10000)
 
         try {
             await wiki(input).then(async result => {
@@ -39,7 +39,7 @@ class Wikipedia extends Command {
                     .setColor(white)
                     .setThumbnail(result.thumbnail.source)
 
-                await message.util.send(embed);
+                await message.util.send({ embeds: [embed] });
             })
         } catch (error) {
             const embed = new Discord.MessageEmbed()
@@ -49,7 +49,7 @@ class Wikipedia extends Command {
                 .setFooter('If you made a typo you can edit the message or resend the command')
                 .setTimestamp()
 
-            await message.util.send(embed);
+            await message.util.send({ embeds: [embed] });
 
         }
     }

@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
-const { promptMessage } = require('../../assets/tools/util');
+const { promptMessage, delMsg } = require('../../assets/tools/util');
 const { pastelGreen, darkRed } = require('../../assets/colors.json');
 
 class Kick extends Command {
@@ -36,19 +36,17 @@ class Kick extends Command {
     }
 
     async exec(message, { m, r }) {
-        message.delete({ timeout: 30000 });
+        await delMsg(message, 30000);
 
         let cachedGuild = staffRole.find(c => c.guild == message.guild.id)
-        if (!cachedGuild) return message.channel.send(`${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\``);
+        if (!cachedGuild) return message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
         let role = message.guild.roles.cache.get(cachedGuild.role)
-        if (!role) return message.channel.send(`${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\``);
+        if (!role) return message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
         let memberRoles = message.member._roles;
 
         if (memberRoles.some(r => role.id === r) || message.member.hasPermission('KICK_MEMBERS')) {
             // If theres no reason change 'r' args to "No Reason"
-            if (!r) {
-                r = lang(message, 'command.kick.reason.noReason');
-            }
+            !r ? r = lang(message, 'command.kick.reason.noReason') : ''
 
             const sbembed = new Discord.MessageEmbed()
                 .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
@@ -59,7 +57,7 @@ class Kick extends Command {
 
             // Check if the user being kicked isnt the moderator themselves
             if (m.id === message.author.id) {
-                return message.channel.send(sbembed);
+                return message.channel.send({ embeds: [sbembed] });
             }
 
             const ambed = new Discord.MessageEmbed()
@@ -69,32 +67,22 @@ class Kick extends Command {
                 .setTimestamp();
 
             // Check if the user being kicked has kick perms
-            if (m.hasPermission('KICK_MEMBERS')) return message.channel.send(ambed);
+            if (m.hasPermission('KICK_MEMBERS')) return message.channel.send({ embeds: [ambed] });
 
             const promptEmbed = new Discord.MessageEmbed()
                 .setColor(pastelGreen)
                 .setTitle(lang(message, 'command.kick.promptEmbed.title'))
-                .setDescription(
-                    `${lang(message, 'command.kick.promptEmbed.desc.one')} \`${m.displayName}\` ${lang(
-                        message,
-                        'command.kick.promptEmbed.desc.two'
-                    )} **${r}**?`
-                );
+                .setDescription(`${lang(message, 'command.kick.promptEmbed.desc.one')} \`${m.displayName}\` ${lang(message, 'command.kick.promptEmbed.desc.two')} **${r}**?`);
 
             // Kick prompt initiation
-            let editEmbed = await message.channel.send(promptEmbed);
+            let editEmbed = await message.channel.send({ embeds: [promptEmbed] });
 
             const emoji = await promptMessage(editEmbed, message.author, 30, ['✅', '❌']);
             // If the moderator reacted with a check mark kick the user
             if (emoji === '✅') {
-                u.kick(r).catch((err) => {
-                    if (err) return message.channel.send(`Well this is awkward... *${err}*`);
-                });
+                u.kick(r);
 
-                message.channel.send(
-                    `**${message.author.tag}** ${lang(message, 'command.kick.messageAfterBan.one')} **${m.user
-                        .tag}**. \n${lang(message, 'command.kick.messageAfterBan.two')} ${r}`
-                );
+                message.channel.send({ content: `**${message.author.tag}** ${lang(message, 'command.kick.messageAfterBan.one')} **${m.user.tag}**. \n${lang(message, 'command.kick.messageAfterBan.two')} ${r}` });
                 /*const kickEmbed = new Discord.MessageEmbed() // When i figure out how to use a database, nice embed
                     .setAuthor("Action: Kick", "https://i.imgur.com/CQjspzn.png")
                     .setThumbnail(u.user.displayAvatarURL({ dynamic: true }))
@@ -109,7 +97,8 @@ class Kick extends Command {
                     .setColor(darkRed)
                     .setFooter(`${lang(message, 'command.kick.banCanceled.desc')} ${message.author.username}`)
                     .setTimestamp();
-                editEmbed.edit(kickCanceled);
+
+                editEmbed.edit({ embeds: [kickCanceled] });
             }
         } else {
             const staffroleEmbed = new Discord.MessageEmbed()
@@ -117,8 +106,8 @@ class Kick extends Command {
                 .setDescription(`${lang(message, "staffroleEmbed.desc1")} ${role} ${lang(message, "staffroleEmbed.desc2")}`)
                 .setColor(darkRed)
                 .setTimestamp()
-            message.channel.send(staffroleEmbed).then(m => m.delete({ timeout: 5000 }));
 
+            message.channel.send({ embeds: [staffroleEmbed] }).then(m => delMsg(m, 5000));
         }
     }
 }

@@ -2,6 +2,7 @@ const { Command } = require('discord-akairo');
 const { MessageEmbed } = require('discord.js');
 const { crimson } = require('../../assets/colors.json');
 const { ReactionCollector } = require('discord.js-collector');
+const { delMsg } = require('../../assets/tools/util');
 
 class Serverinfo extends Command {
     constructor() {
@@ -21,7 +22,7 @@ class Serverinfo extends Command {
     }
 
     async exec(message) {
-        message.delete().catch((e) => { });
+        await delMsg(message);
 
         let sicon = message.guild.iconURL({ dynamic: true });
         let region = {
@@ -59,7 +60,7 @@ class Serverinfo extends Command {
             .setColor(crimson)
             .setTimestamp()
 
-        const botMessage = await message.channel.send(loadingEmbed);
+        const botMessage = await message.channel.send({ embeds: [loadingEmbed] });
 
         const rolesSize = message.guild.roles.cache.filter((c) => c.managed == false).size;
         const rolesFilterSort = message.guild.roles.cache.filter((c) => c.managed == false).sort((a, b) => b.rawPosition - a.rawPosition);
@@ -91,7 +92,7 @@ class Serverinfo extends Command {
                 new MessageEmbed()
                     .setAuthor(`${message.guild.name} • Page [1/2]`, sicon)
                     .addField('ID', `\`${message.guild.id}\`  👌`, true)
-                    .addField('Owner', `<@${message.guild.ownerID}> <a:animatedCool:773205297782325259>`, true)
+                    .addField('Owner', `<@${message.guild.ownerId}> <a:animatedCool:773205297782325259>`, true)
                     .addField('Region', `${region[message.guild.region]}`, true)
                     .addField('Custom Emoji', `\`${message.guild.emojis.cache.size}\` <a:blobWobble:773208612776181800>`, true)
                     .addField('Roles', `\`${message.guild.roles.cache.size}\` <a:blobEat:773207674015055912>`, true)

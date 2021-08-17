@@ -2,6 +2,7 @@ const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const approx = require('approximate-number');
 const { darkRed } = require('../../assets/colors.json')
+const { delMsg } = require('../../assets/tools/util');
 
 class Purge extends Command {
     constructor() {
@@ -82,21 +83,18 @@ class Purge extends Command {
     }
 
     async exec(message, { messagesAmount, bots, embeds, attachments, humans, links, invites, userOpt, includesOpt, startsWithOpt, endsWithOpt }) {
-        message.delete().catch(e => { });
+        await delMsg(message);
 
         // Staffrole Check
-        let cachedGuild = staffRole.find(c => c.guild == message.guild.id)
-        if (!cachedGuild) return message.channel.send(`${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\``);
+        let cachedGuild = staffRole.find(c => c.guild == message.guild.id) // make this into a function in util
+        if (!cachedGuild) return message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
         let role = message.guild.roles.cache.get(cachedGuild.role)
-        if (!role) return message.channel.send(`${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\``);
+        if (!role) return message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
         let memberRoles = message.member._roles;
 
         if (memberRoles.some(r => role.id === r)) {
             // End of staffrole check/Start of purge
-
-            if (messagesAmount > 1000) {
-                return message.channel.send(`You cannot purge over a thousand messages at once. (\`${approx(messagesAmount, { decimal: '.' })}/1000\`)`).then(message => message.delete({ timeout: 10000 }))
-            }
+            if (messagesAmount > 1000) return message.channel.send({ content: `You cannot purge over a thousand messages at once. (\`${approx(messagesAmount, { decimal: '.' })}/1000\`)` }).then(message => delMsg(message, 10000))
 
             let wait = msg => new Promise(res => setTimeout(res, msg));
             const allDeletedAmount = []
@@ -123,7 +121,7 @@ class Purge extends Command {
                     if (humans) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && !c.author.bot) }
                     if (links) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.content.match(/(https?\:|www\.|discord\.gg(\/invite)?|(\.com))/gmi)) }
                     if (invites) { fetch = fetch.filter(c => (Date.now() - c.createdTimestamp) < 1123200000 && c.pinned == false && c.content.match(/(discord\.gg(\/invite)?)/gmi)) }
-                    
+
                     let deletedAmount = await message.channel.bulkDelete(fetch)
                     allDeletedAmount.push(deletedAmount.size)
 
@@ -151,7 +149,7 @@ class Purge extends Command {
             } // End of loop
 
             let actuallyPurged = allDeletedAmount.length == 0 ? 0 : allDeletedAmount.reduce((a, b) => a + b);
-            await wait(1000).then(message.channel.send(`Purged \`${actuallyPurged}\` messages.`).then(msg => msg.delete({ timeout: 10000 })).catch(e => { }))
+            await wait(1000).then(message.channel.send({ content: `Purged \`${actuallyPurged}\` messages.` }).then(msg => delMsg(msg, 10000)));
             // End of purge/Start of staffrole check 2nd part
 
         } else {
@@ -160,7 +158,7 @@ class Purge extends Command {
                 .setDescription(`${lang(message, "staffroleEmbed.desc1")} ${role} ${lang(message, "staffroleEmbed.desc2")}`)
                 .setColor(darkRed)
                 .setTimestamp()
-            message.channel.send(staffroleEmbed).then(m => m.delete({ timeout: 5000 })).catch(e => { });
+            message.channel.send({ embeds: [staffroleEmbed] }).then(m => delMsg(m, 5000));
         }
         // End of staffrole check 2nd part
     }

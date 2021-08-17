@@ -2,6 +2,7 @@ const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const { createCanvas, loadImage, } = require('canvas');
 const path = require('path');
+const { delMsg } = require('../../../assets/tools/util');
 
 class Respect extends Command {
     constructor() {
@@ -25,7 +26,7 @@ class Respect extends Command {
     }
 
     async exec(message, { u }) {
-        message.delete().catch(e => { });
+        await delMsg(message);
 
         async function greyscale(ctx, x, y, width, height) {
             const data = ctx.getImageData(x, y, width, height);
@@ -53,7 +54,7 @@ class Respect extends Command {
 
         const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'Respect.png');
 
-        await message.channel.send(attachment);
+        await message.channel.send({ files: [attachment] });
 
     }
 }

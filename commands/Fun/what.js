@@ -1,5 +1,6 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
+const { delMsg } = require('../../assets/tools/util');
 
 class What extends Command {
 	constructor() {
@@ -21,7 +22,7 @@ class What extends Command {
 					match: 'text',
 					type: 'message',
 					default: (message) => {
-						message.channel.send('https://i.imgur.com/mgRPF1H.jpg').then(async (message) => {
+						message.channel.send({ content: 'https://i.imgur.com/mgRPF1H.jpg' }).then(async (message) => {
 							await message.react('605180742288408625'); // 1
 							await message.react('750539957659238452'); // 2
 							await message.react('750539957772222544'); // 3
@@ -38,7 +39,7 @@ class What extends Command {
 	}
 
 	async exec(message, { id }) {
-		message.delete().catch((e) => { });
+		await delMsg(message);
 
 		if (id) {
 			try {
@@ -52,6 +53,7 @@ class What extends Command {
 				await id.react('773222808057675826'); // 8
 			} catch (error) {
 				console.log(error);
+				message.channel.send({ content: 'Not a valid ID, please try again.' })
 			}
 		}
 	}

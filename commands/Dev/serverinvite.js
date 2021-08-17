@@ -31,7 +31,7 @@ class ServerInvite extends Command {
 			e
 				.createInvite({ maxAge: 300, maxUses: 1, reason: 'Dev Inspection' })
 				.then((invite) =>
-					message.channel.send(`Invite Link for **${g.name}**\nhttps://discord.gg/${invite.code}`)
+					message.channel.send({content: `Invite Link for **${g.name}**\nhttps://discord.gg/${invite.code}`})
 				);
 
 			message.delete().catch((e) => {});

@@ -62,22 +62,22 @@ class Eval extends Command {
             );
 
             if (evaluated.length >= 1900) {
-                let wmessage = await message.channel.send('Output is too long, creating a pastebin link... <a:gears:773203929507823617>');
+                let wmessage = await message.channel.send({ content: 'Output is too long, creating a pastebin link... <a:gears:773203929507823617>' });
                 try {
                     // Log into pastebin and create a paste
-                    paste.login('BluePotatoBP', process.env.PASTEBINPASSWORD, function(success, data) {
+                    paste.login('BluePotatoBP', process.env.PASTEBINPASSWORD, function (success, data) {
                         if (!success) {
                             console.log('Failed (' + data + ')');
                             return false;
                         }
                         paste.create({
-                                contents: `${evaluated}`,
-                                name: 'Eval; private',
-                                privacy: '2',
-                                expires: '1D',
-                                format: 'javascript'
-                            },
-                            async function(success, data) {
+                            contents: `${evaluated}`,
+                            name: 'Eval; private',
+                            privacy: '2',
+                            expires: '1D',
+                            format: 'javascript'
+                        },
+                            async function (success, data) {
                                 if (success) {
                                     if (code) {
                                         let evalembed = new Discord.MessageEmbed()
@@ -85,17 +85,17 @@ class Eval extends Command {
                                             .addField('Input Code', `\`\`\`\n${code}\n\`\`\``)
                                             .addField('Output Code', `\n[Click here](${data}) for full output`, { maxLength: 1900 })
                                             .setColor(veryBrightGreen);
-                                        wmessage.edit(evalembed);
+                                        wmessage.edit({embeds: [evalembed]});
                                     } else {
                                         let embedo = new Discord.MessageEmbed()
                                             .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
                                             .setDescription(`<:redxmark:627905972731510784> Too few arguments given. \n \nUsage: \`${module.exports.help.name} ${module.exports.help.usage}\` \nAliases: \`none\``)
                                             .setColor(crimson);
-                                        await message.channel.send(embedo);
+                                        await message.channel.send({ embeds: [embedo] });
                                     }
                                 } else {
                                     console.log(data);
-                                    await message.channel.send("Couldn't send the output to pastebin.com");
+                                    await message.channel.send({ content: "Couldn't send the output to pastebin.com" });
                                 }
                             }
                         );
@@ -106,7 +106,7 @@ class Eval extends Command {
                         .addField('Input Code', `\`\`\`\n${code}\n\`\`\``)
                         .addField('Error', `\`\`\`\n${e.message}\n\`\`\``)
                         .setColor(darkRed);
-                    await message.channel.send(badevalembed);
+                    await message.channel.send({ embeds: [badevalembed] });
                 }
             } else {
                 if (code) {
@@ -117,13 +117,13 @@ class Eval extends Command {
                         .setColor(veryBrightGreen);
 
                     console.log(debug('[DEBUG]') + " Eval Output:" + chalk.gray(`\n${evaluated}`))
-                    return ((await message.channel.send(evalembed)) + (await message.channel.send(`\`\`\`javascript\n${evaluated}\n\`\`\``)));
+                    return ((await message.channel.send({ embeds: [evalembed] })) + (await message.channel.send({ content: `\`\`\`javascript\n${evaluated}\n\`\`\`` })));
                 } else {
                     let embedo = new Discord.MessageEmbed()
                         .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
                         .setDescription(`<:redxmark:627905972731510784> Too few arguments given. \n \nUsage: \`${module.exports.help.name} ${module.exports.help.usage}\` \nAliases: \`none\``)
                         .setColor(crimson);
-                    await message.channel.send(embedo);
+                    await message.channel.send({ embeds: [embedo] });
                 }
             }
         } catch (error) {
@@ -132,7 +132,7 @@ class Eval extends Command {
                 .addField('Input Code', `\`\`\`\n${code}\n\`\`\``)
                 .addField('Output Code', `\n\`\`\`${error.message}\`\`\`\n`, { maxLength: 1900 })
                 .setColor(darkRed);
-            await message.channel.send(evalembed);
+            await message.channel.send({ embeds: [evalembed] });
         }
     }
 }

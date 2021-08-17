@@ -1,6 +1,7 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const { crimson } = require('../../assets/colors.json');
+const { delMsg } = require('../../assets/tools/util');
 
 class Avatar extends Command {
 	constructor() {
@@ -26,7 +27,7 @@ class Avatar extends Command {
 	}
 
 	async exec(message, { u }) {
-		message.delete().catch((e) => { });
+		await delMsg(message);
 
 		let avatar;
 		let pngicon;
@@ -45,7 +46,7 @@ class Avatar extends Command {
 		gificon = u.displayAvatarURL({ format: 'gif', size: 4096 });
 		avembed.setDescription(`Link as \n[PNG](${pngicon}) | [JPG](${jpgicon}) | [GIF](${gificon})`, true);
 
-		message.channel.send(avembed).catch((err) => console.log(err));
+		message.channel.send({ embeds: [avembed] }).catch((err) => console.log(err));
 	}
 }
 module.exports = Avatar;

@@ -9,7 +9,7 @@ module.exports = class antiAdvertEdit extends Listener {
     }
 
     async exec(oldMessage, message) {
-        if (message.channel.type === "dm") return;
+        if (message.channel.type === "DM") return;
         let cachedGuild = antiAdvertise.find(c => c.guild == message.guild.id)
         let regex;
 
@@ -35,7 +35,7 @@ module.exports = class antiAdvertEdit extends Listener {
             if (match) {
                 await message.delete()
                 if (cachedGuild.warn === 'true') {
-                    await message.channel.send(`${message.author}, links are not allowed.`).then(e => e.delete({ timeout: 5000 }));
+                    await message.channel.send({ content: `${message.author}, links are not allowed.` }).then(e => e.delete({ timeout: 5000 }));
                 }
             }
         }

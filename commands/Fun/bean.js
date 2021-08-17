@@ -1,6 +1,7 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const { crimson } = require('../../assets/colors.json');
+const { delMsg } = require('../../assets/tools/util');
 
 class Bean extends Command {
 	constructor() {
@@ -30,23 +31,23 @@ class Bean extends Command {
 	}
 
 	async exec(message, { u }) {
-		message.delete().catch((e) => { });
+		await delMsg(message);
 
 		if (!u) {
 			let embed = new Discord.MessageEmbed()
 				.setImage('https://i.ytimg.com/vi/GW704pnVBjY/maxresdefault.jpg?size=128')
 				.setColor('#32C84A');
-			message.channel.send(`**Idot ${message.author} was beaned, RIP 😢**`, embed).catch((e) => {
+			message.channel.send({ embeds: [embed], content: `**Idot ${message.author} was beaned, RIP 😢**` }).catch((e) => {
 				console.log(e);
 			});
 		} else {
 			let embed = new Discord.MessageEmbed()
 				.setImage('https://i.ytimg.com/vi/GW704pnVBjY/maxresdefault.jpg?size=128')
 				.setColor('#32C84A');
-			message.channel.send(`**Idot ${u} was beaned, RIP 😢**`, embed).catch((e) => {
+			message.channel.send({ embeds: [embed], content: `**Idot ${u} was beaned, RIP 😢**` }).catch((e) => {
 				console.log(e);
 			});
 		}
-	} 
+	}
 }
 module.exports = Bean;

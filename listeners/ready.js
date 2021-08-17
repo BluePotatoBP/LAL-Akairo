@@ -1,6 +1,7 @@
 const { Listener } = require('discord-akairo');
 const chalk = require('chalk');
-const prefix = process.env.PREFIX;
+const mysql2 = require('mysql2/promise');
+const moment = require('moment')
 
 class ReadyListener extends Listener {
     constructor() {
@@ -12,21 +13,35 @@ class ReadyListener extends Listener {
 
     async exec() {
 
+        // Define global client
         global.client = this.client;
 
+        // Connect to database
+        (async () => {
+            global.dbConnection = await mysql2.createConnection({
+                host: process.env.DB_HOST,
+                user: process.env.DB_USER,
+                password: process.env.DB_PASS,
+                database: process.env.DB_NAME,
+                enableKeepAlive: true
+            }).then(console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${chalk.yellow('[INFO]')} Connected to Database ${chalk.yellow(`${process.env.DB_NAME} (Ricardo)`)}!`));
+        })();
+
         // Automatic status changer
-        let statuses = [`you type ${prefix}help`, 'the support server!'];
+        /* let statuses = [`you type ${prefix}help`, 'the support server!'];
         setInterval(() => {
             let status = statuses[Math.floor(Math.random() * statuses.length)];
             this.client.user.setActivity(`${status}`, { type: 'WATCHING' });
-        }, 10000);
+        }, 10000); */
 
-        // Log basic bot info on startup
-        console.log(`${chalk.yellow('[INFO]')} ${chalk.magenta(this.client.user.username)} is online in ${chalk.red(this.client.guilds.cache.size)} guilds and ready!`);
-        console.log(`${chalk.yellow('[INFO]')} You can kill the bot instance by pressing ${chalk.red.bold('Ctrl+C')} at any time.`);
-
+        // New static status
+        await client.user.setActivity('.help', { type: 'PLAYING' })
         // Set client status to do not disturb
         this.client.user.setStatus('dnd');
+
+        // Log basic bot info on startup
+        console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${chalk.yellow('[INFO]')} ${chalk.magenta(this.client.user.username)} is online in ${chalk.red(this.client.guilds.cache.size)} guilds and ready!`);
+        console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${chalk.yellow('[INFO]')} You can kill the bot instance by pressing ${chalk.red.bold('Ctrl+C')} at any time.`);
 
         // Checking the database every 5m for guild leaves
         setInterval(async () => {
@@ -36,7 +51,7 @@ class ReadyListener extends Listener {
             // Iterating through data to get the guild id
             for (let i = 0; i < data2.length; i++) {
                 let guildID = data2[i].guild;
-                console.log(`${debug('[DEBUG]')} Guild [${guildID}] kicked the bot 7d ago. Deleting data.`);
+                console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${debug('[DEBUG]')} Guild [${guildID}] kicked the bot 7d ago. Deleting data...`);
 
                 // Deleting data from all tables where the guild id matches
                 await DB.query('DELETE FROM languages WHERE guild = ?', [guildID]);
@@ -47,20 +62,37 @@ class ReadyListener extends Listener {
 
                 // Finally deleting the 'awaitingDelete' entry so we dont delete empty data indefinitely
                 await DB.query(`DELETE FROM awaitingDelete WHERE guild = ?`, [guildID]);
+
+                console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${debug('[DEBUG]')} Deleted data for guild [${guildID}] successfully!`);
             }
         }, 300000);
 
+        // Languages
+        try {
+            for (const guild of this.client.guilds.cache) {
+                let [languagesDB] = await DB.query(`SELECT * FROM languages WHERE guild = ?`, [guild[0]]);
+                let lans = languagesDB.length == 0 ? "english" : languagesDB[0].language;
+                guildLanguages.push({
+                    guildID: guild[0],
+                    lan: lans
+                })
+            }
+            console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${debug('[DEBUG]')} 'languages' cache initialized.`)
+        } catch (error) {
+            console.log(error)
+        }
+
         // Anti advertisement
-        let [data3] = await DB.query(`SELECT * FROM antiAdvert`);
-        antiAdvertise = data3
+        let [data3] = await DB.query(`SELECT * FROM antiAdvert`).then(console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${debug('[DEBUG]')} 'antiAdvert' cache initialized.`));
+        antiAdvertise = data3;
 
-        //StaffRole 
-        let [data4] = await DB.query(`SELECT * FROM staffrole`);
-        staffRole = data4
+        //S taffRole 
+        let [data4] = await DB.query(`SELECT * FROM staffrole`).then(console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${debug('[DEBUG]')} 'staffrole' cache initialized.`));
+        staffRole = data4;
 
-        //Blacklist
-        const [blackListData] = await DB.query(`SELECT * FROM starBlacklist`)
-        starBlacklistCache = blackListData
+        // Blacklist
+        const [blackListData] = await DB.query(`SELECT * FROM starBlacklist`).then(console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${debug('[DEBUG]')} 'starBlacklist' cache initialized.`));
+        starBlacklistCache = blackListData;
 
     }
 }

@@ -2,6 +2,7 @@ const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const { crimson } = require('../../assets/colors.json');
 const nekoClient = require('nekos.life');
+const { delMsg } = require('../../assets/tools/util');
 const { sfw } = new nekoClient();
 
 class Hug extends Command {
@@ -27,7 +28,7 @@ class Hug extends Command {
 	}
 
 	async exec(message, { m }) {
-		message.delete().catch((e) => { });
+		await delMsg(message);
 
 		let image = await sfw.hug();
 
@@ -36,16 +37,14 @@ class Hug extends Command {
 
 		if (m) {
 			embed.setColor(crimson);
-			embed.setFooter(
-				`❤️ ${message.author.username} ${lang(message, 'command.hug.embed.first')} ${m.user.username} ❤️`
-			);
+			embed.setFooter(`❤️ ${message.author.username} ${lang(message, 'command.hug.embed.first')} ${m.user.username} ❤️`);
 
-			message.channel.send(embed);
+			message.channel.send({ embeds: [embed] });
 		} else {
 			embed.setColor(crimson);
 			embed.setFooter(`❤️ ${message.author.username} ${lang(message, 'command.hug.embed.second')} ❤️`);
 
-			message.channel.send(embed);
+			message.channel.send({ embeds: [embed] });
 		}
 	}
 }

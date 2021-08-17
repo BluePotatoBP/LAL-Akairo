@@ -1,7 +1,7 @@
 const { Command } = require('discord-akairo');
 const Discord = require("discord.js");
-const { crimson } = require("../../assets/colors.json")
-const mysql2 = require('mysql2/promise');
+const { crimson } = require("../../assets/colors.json");
+const { delMsg } = require('../../assets/tools/util');
 
 class Ping extends Command {
     constructor() {
@@ -18,7 +18,7 @@ class Ping extends Command {
     }
 
     async exec(message) {
-        message.delete().catch(e => { });
+        delMsg(message);
 
         let dbPing;
         let [data] = await DB.query(`SELECT * FROM keepAlive`)
@@ -35,26 +35,28 @@ class Ping extends Command {
 
         } else await DB.query("DELETE FROM keepAlive")
 
-        try {
-            message.channel.send("Doing the funny stuff...").then(m => {
-                let ping = m.createdTimestamp - message.createdTimestamp
-                let choices = ["Please don't be like 500...", `Eh... ${ping}???`, "Funny stuff: Done", `I wish it was under ${ping}...`]
-                let response = choices[Math.floor(Math.random() * choices.length)]
+        /* try { */
+        await message.channel.send({ content: "Doing the funny stuff..." }).then(m => {
+            let ping = m.createdTimestamp - message.createdTimestamp
+            let choices = ["Please don't be like 500...", `Eh... ${ping}???`, "Funny stuff: Done", `I wish it was under ${ping}...`]
+            let response = choices[Math.floor(Math.random() * choices.length)]
 
-                const pembed = new Discord.MessageEmbed()
-                    .setDescription(`🏓 Pong! \n \n**Bot Latency:** \`${ping}ms\` \n**API Latency:** \`${Math.round(this.client.ws.ping).toString()}ms\`\n**Database Latency:** \`${dbPing}\`\n \n[Discord Status Page](https://status.discord.com/)`)
-                    .setThumbnail(this.client.user.displayAvatarURL({ dynamic: true }))
-                    .setColor(crimson)
-                m.edit(`${response}`, pembed)
-            })
+            const pembed = new Discord.MessageEmbed()
+                .setDescription(`🏓 Pong! \n \n**Bot Latency:** \`${ping}ms\` \n**API Latency:** \`${Math.round(this.client.ws.ping).toString()}ms\`\n**Database Latency:** \`${dbPing ? dbPing : 'ERROR'}\`\n \n[Discord Status Page](https://status.discord.com/)`)
+                .setThumbnail(this.client.user.displayAvatarURL({ dynamic: true }))
+                .setColor(crimson)
 
-        } catch (error) {
+            m.edit({ content: response, embeds: [pembed] })
+        })
+
+        /* } catch (error) {
             console.log(error)
             const lembed = new Discord.MessageEmbed()
                 .setDescription(`**You:** 🏓 Ping!\n **Me:** 🏓 Pong! \n \n*Discord:* **(╯°□°）╯        ┻━┻        NO PING FOR YOU 😡**`)
                 .setColor(crimson)
-            message.channel.send(lembed)
-        }
+
+            message.channel.send({ embeds: [lembed] })
+        } */
     } // End of exec(message)
 }
 

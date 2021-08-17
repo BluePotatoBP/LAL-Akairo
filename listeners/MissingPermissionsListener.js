@@ -15,19 +15,18 @@ module.exports = class MissingPermissionsListener extends Listener {
 			client: () => {
 				const str = this.missingPermissions(message.channel, this.client.user, missing);
 
-				const clientMP = client.util
-					.embed()
+				const clientMP = client.util.embed()
 					.setColor(darkRed)
 					.setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
 					.setDescription(`<a:cancel:773201205056503849> Im missing the ${str} permissions.`);
+					
 				return clientMP;
 			},
 
 			user: () => {
 				const str = this.missingPermissions(message.channel, message.author, missing);
 
-				const userMP = client.util
-					.embed()
+				const userMP = client.util.embed()
 					.setColor(darkRed)
 					.setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
 					.setDescription(`<a:cancel:773201205056503849> You are missing the ${str} permissions.`);
@@ -37,7 +36,7 @@ module.exports = class MissingPermissionsListener extends Listener {
 
 		if (!text) return;
 		if (message.guild ? message.channel.permissionsFor(this.client.user).has('SEND_MESSAGES') : true) {
-			message.channel.send(text());
+			message.channel.send({embeds: [text()]});
 		}
 	}
 

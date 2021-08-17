@@ -4,6 +4,7 @@ const owoify = require('owoify-js').default;
 const mapping = '¡"#$%⅋,)(*+\'-˙/0ƖᘔƐᔭϛ9Ɫ86:;<=>?@∀qƆpƎℲפHIſʞ˥WNOԀQɹS┴∩ΛMX⅄Z[/]^_`ɐqɔpǝɟƃɥᴉɾʞlɯuodbɹsʇnʌʍxʎz{|}~';
 const OFFSET = '!'.charCodeAt(0);
 const { red, lightRed, darkRed, pink, darkPink, yellow, lightYellow, orange, darkOrange, darkGreen, lightGreen, veryBrightGreen, blue, darkBlue, lightBlue, purple, lightPurple, black, gray, white, dcBlack, banana, clear, gold, ultraBlue, checkGreen, crimson } = require('../../assets/colors.json');
+const { delMsg } = require('../../assets/tools/util');
 
 class Say extends Command {
     constructor() {
@@ -87,7 +88,7 @@ class Say extends Command {
         });
     }
     async exec(message, args) {
-        message.delete().catch((e) => { });
+        await delMsg(message);
 
         try {
             if (!args.text) {
@@ -96,7 +97,7 @@ class Say extends Command {
                     .setDescription(lang(message, 'command.say.noArgs'))
                     .setColor(crimson);
 
-                message.channel.send(noArgs);
+                message.channel.send({ content: noArgs });
             } else {
                 let flipText = args.text
                     .split('')
@@ -131,9 +132,7 @@ class Say extends Command {
                     }
                     // Checks if both avatar and guildicon flags are in the message
                     if (args.avatar && args.guildicon) {
-                        return message.channel.send(
-                            'Pick avatar or guild icon, smh my head my head... <:thonkingong:568878623910526997>'
-                        );
+                        return message.channel.send({ content: 'Pick avatar or guild icon, smh my head my head... <:thonkingong:568878623910526997>' });
                     }
                     // Checks if there should be a timestamp in the embed
                     if (args.timestamp) {
@@ -148,30 +147,30 @@ class Say extends Command {
                     }
                     //#endregion EmbedTextTypes
 
-                    await message.channel.send(eembed);
+                    await message.channel.send({ embeds: [eembed] });
 
                     //#region NormalSay
                     // Check what type of text the user wants to be sent
                 } else {
                     if (args.uvu) {
-                        return message.channel.send(owoify(args.text), 'uvu');
+                        return message.channel.send({ content: owoify(args.text, 'uvu') });
                     } else if (args.uwu) {
-                        return message.channel.send(owoify(args.text), 'uwu');
+                        return message.channel.send({ content: owoify(args.text, 'uwu') });
                     } else if (args.owo) {
-                        return message.channel.send(owoify(args.text), 'owo');
+                        return message.channel.send({ content: owoify(args.text, 'owo') });
                     } else if (args.tts) {
-                        return message.channel.send(args.text, { tts: true });
+                        return message.channel.send({ content: args.text, tts: true });
                     } else if (args.flip) {
-                        return message.channel.send(flipText);
+                        return message.channel.send({ content: flipText });
                     } else {
-                        return message.channel.send(args.text);
+                        return message.channel.send({ content: args.text });
                     }
                     //#endregion NormalSay
                 }
             }
         } catch (error) {
             console.log(error);
-            message.channel.send("<:sadpepe:774640053020000266> u bwoke me... idfk how don't ask");
+            message.channel.send({ content: "<:sadpepe:774640053020000266> u bwoke me... idfk how don't ask" });
         }
     }
 }

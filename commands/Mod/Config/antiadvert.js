@@ -1,6 +1,7 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
-const { crimson } = require('../../../assets/colors.json')
+const { crimson } = require('../../../assets/colors.json');
+const { delMsg } = require('../../../assets/tools/util');
 
 class AntiAdvert extends Command {
     constructor() {
@@ -122,7 +123,8 @@ class AntiAdvert extends Command {
     }
 
     async exec(message, { enable, disable, includestaff, excludestaff, includebots, excludebots, warn, presetLight, presetModerate, presetHeavy }) {
-        message.delete({ timeout: 30000 }).catch(e => { });
+        await delMsg(message, 30000);
+        
         let [getData] = await DB.query(`SELECT * FROM antiAdvert WHERE guild = ?`, [message.guild.id]);
 
         let arrayData = antiAdvertise.find(c => c.guild === message.guild.id)
@@ -390,7 +392,7 @@ class AntiAdvert extends Command {
                 }
             }
             //#endregion Presets
-            await message.channel.send(updateEmbed);
+            await message.channel.send({ embeds: [updateEmbed] });
         } else {
             //#region Embed
             let advertEnabled;
@@ -464,7 +466,7 @@ class AntiAdvert extends Command {
 								 └────────┄┄┄┄
                                 `)
 
-            message.channel.send(listEmbed)
+            message.channel.send({ embeds: [listEmbed] })
         }
     }
 }

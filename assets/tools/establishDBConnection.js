@@ -1,7 +1,7 @@
 const mysql = require("mysql2/promise")
 module.exports = {
     //Query
-    query: async function(mysqlQuery, data) {
+    query: async function (mysqlQuery, data) {
 
         try {
 
@@ -25,17 +25,18 @@ module.exports = {
     },
 
     //Execute
-    execute: async function(mysqlQuery, data) {
+    execute: async function (mysqlQuery, data) {
         try {
             const [rows, fields] = await dbConnection.execute(mysqlQuery, data);
             return [rows, fields]
         } catch (e) {
             //Overwrite old connection with new one
             dbConnection = await mysql.createConnection({
-                host: "remotemysql.com",
-                user: "Ek22wktlmS",
-                password: "LIioBtABEy",
-                database: "Ek22wktlmS",
+                host: process.env.DB_HOST,
+                user: process.env.DB_USER,
+                password: process.env.DB_PASS,
+                database: process.env.DB_NAME,
+                enableKeepAlive: true
             })
 
             //Exec the mysql query and return data

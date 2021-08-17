@@ -3,13 +3,13 @@ const { Listener } = require('discord-akairo');
 module.exports = class antiAdvertisement extends Listener {
     constructor() {
         super('antiAdvertisement', {
-            event: 'message',
+            event: 'messageCreate',
             emitter: 'client'
         });
     }
 
     async exec(message) {
-        if (message.channel.type === "dm") return;
+        if (message.channel.type === "DM") return;
         let cachedGuild = antiAdvertise.find(c => c.guild == message.guild.id)
         let regex;
 
@@ -35,7 +35,7 @@ module.exports = class antiAdvertisement extends Listener {
             if (match) {
                 await message.delete()
                 if (cachedGuild.warn === 'true') {
-                    await message.channel.send(`${message.author}, links are not allowed.`).then(e => e.delete({ timeout: 5000 }));
+                    await message.channel.send({ content: `${message.author}, links are not allowed.` }).then(e => e.delete({ timeout: 5000 }));
                 }
             }
         }

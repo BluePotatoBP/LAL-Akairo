@@ -1,6 +1,7 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const { crimson } = require('../../assets/colors.json');
+const { delMsg } = require('../../assets/tools/util');
 
 class Invite extends Command {
     constructor() {
@@ -19,15 +20,15 @@ class Invite extends Command {
     }
 
     async exec(message) {
-        message.delete().catch((e) => { });
+        await delMsg(message);
 
         let iembed = new Discord.MessageEmbed()
             .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
-            .setDescription(`[${lang(message, 'command.invite.iembed.desc.one')}](https://discordapp.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=2081291519) ${lang(message, 'command.invite.iembed.desc.two')}`)
+            .setDescription(`[${lang(message, 'command.invite.iembed.desc.one')}](https://discordapp.com/oauth2/authorize?client_id=${client.user.id}&scope=bot%20applications.commands&permissions=3691510879) ${lang(message, 'command.invite.iembed.desc.two')}`)
             .setColor(crimson)
             .setTimestamp();
 
-        await message.channel.send(iembed);
+        await message.channel.send({ embeds: [iembed] });
     }
 }
 module.exports = Invite;

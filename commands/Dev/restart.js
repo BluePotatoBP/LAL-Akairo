@@ -28,7 +28,7 @@ class Restart extends Command {
 			process.exit();
 		} catch (error) {
 			console.log(error);
-			message.channel.send('No stonks this time... how did you manage this? <:sadpepe:774640053020000266>');
+			message.channel.send({content: 'No stonks this time... how did you manage this? <:sadpepe:774640053020000266>'});
 		}
 	}
 }

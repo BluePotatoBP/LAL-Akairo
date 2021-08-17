@@ -2,6 +2,7 @@ const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const { crimson } = require('../../assets/colors.json');
 const DabiImages = require('../../assets/tools/dabi-images/index');
+const { delMsg } = require('../../assets/tools/util');
 const { nsfw } = new DabiImages.Client();
 
 class Pussy extends Command {
@@ -28,34 +29,17 @@ class Pussy extends Command {
 	}
 
 	async exec(message, { m }) {
-		message.delete().catch((e) => { });
+		await delMsg(message);
 
 		try {
 			if (!message.channel.nsfw) return;
 
-			const embed = new Discord.MessageEmbed();
 			let image = await nsfw.real.pussy();
 
-			try {
-				embed.setImage(image.url);
-			} catch (e) {
-				embed.setDescription('Something went wrong, please try again later.');
-			}
-
-			if (m) {
-				embed.setColor(crimson);
-				embed.setFooter(`💦 ${message.author.tag} ${lang(message, 'command.pussy.embed.footer.one')} 💦`);
-
-				await m.send(embed);
-			} else {
-				embed.setColor(crimson);
-				embed.setFooter(`💦 ${message.author.tag} ${lang(message, 'command.pussy.embed.footer.two')} 💦`);
-
-				await message.channel.send(embed);
-			}
+			await message.channel.send({ attachment: image });
 
 		} catch (error) {
-			message.channel.send('Something went wrong, please `re-try` the command.');
+			await message.channel.send('Something went wrong, please `re-try` the command.');
 		}
 	}
 }

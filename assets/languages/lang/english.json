@@ -173,38 +173,6 @@
     "command.setprefix.prefixEmbed.updatePrefix": "The prefix for this guild has been updated to:",
     "command.setprefix.prefixEmbed.newPrefix": "The new prefix for this guild is:",
 
-    "command.boobs.desc.content": "Get a random boobies image",
-    "command.boobs.embed.footer.one": "sent you some boobies!",
-    "command.boobs.embed.footer.two": "have some boobies",
-
-    "command.feet.desc.content": "Get random feet images",
-    "command.feet.embed.footer.one": "sent you some feet!",
-    "command.feet.embed.footer.two": "have some feet",
-
-    "command.hentai.desc.content": "Get a random hentai image",
-    "command.hentai.embed.footer.one": "sent you some hentai!",
-    "command.hentai.embed.footer.two": "have some hentai",
-
-    "command.neko.desc.content": "Get a random neko gif",
-    "command.neko.embed.footer.one": "sent you a neko gif!",
-    "command.neko.embed.footer.two": "have a neko gif",
-
-    "command.panties.desc.content": "Get random panties images",
-    "command.panties.embed.footer.one": "sent you some panties!",
-    "command.panties.embed.footer.two": "have some panties",
-
-    "command.randomporn.desc.content": "Get a random nsfw image",
-    "command.randomporn.embed.footer.one": "sent you something",
-    "command.randomporn.embed.footer.two": "enjoy whatever you got",
-
-    "command.pussy.desc.content": "Get a random pussy image",
-    "command.pussy.embed.footer.one": "sent you some pussy!",
-    "command.pussy.embed.footer.two": "have some pussy",
-
-    "command.thighs.desc.content": "Get a random thigh image",
-    "command.thighs.embed.footer.one": "sent you some thicc thighs",
-    "command.thighs.embed.footer.two": "have some thicc thighs",
-
     "command.avatar.desc.content": "Someone has a dank pfp? Yoink, mine now",
     "command.avatar.avembed.content": "Requested by:",
 

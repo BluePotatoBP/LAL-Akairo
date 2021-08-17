@@ -12,7 +12,7 @@ module.exports = (message, textCode) => {
         try {
             lang = require(`./lang/${selectedLanguageFind.lan}.json`)
         } catch (error) {
-            message.channel.send('Something went wrong... I reported it back to the developer!')
+            message.channel.send({content: 'Something went wrong... I reported it back to the developer!'})
         }
 
         if (!lang[textCode]) return `I couldn't translate this message. [Report Here](https://discord.gg/v8zkSc9)`

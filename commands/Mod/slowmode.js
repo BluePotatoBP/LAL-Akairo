@@ -2,6 +2,7 @@ const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const { crimson, lightRed } = require('../../assets/colors.json');
 const ms = require('ms');
+const { delMsg } = require('../../assets/tools/util');
 
 class Slowmode extends Command {
     constructor() {
@@ -47,12 +48,12 @@ class Slowmode extends Command {
     }
 
     async exec(message, { nr, reset, channelOpt }) {
-        message.delete({ timeout: 30000 }).catch((e) => { });
+        delMsg(message, 30000)
 
         let cachedGuild = staffRole.find(c => c.guild == message.guild.id)
-        if (!cachedGuild) return message.channel.send(`${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\``);
+        if (!cachedGuild) return message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
         let role = message.guild.roles.cache.get(cachedGuild.role)
-        if (!role) return message.channel.send(`${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\``);
+        if (!role) return message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
         let memberRoles = message.member._roles;
 
         if (memberRoles.some(r => role.id === r)) {
@@ -67,8 +68,8 @@ class Slowmode extends Command {
                     .setColor(crimson)
                     .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
                     .setTimestamp();
-                message.channel.send(embed2);
 
+                message.channel.send({ embeds: [embed2] });
             } else if (nr < 0) {
                 const embed = new Discord.MessageEmbed()
                     .setDescription(`Unfortunately for you funny man, slowmode \`cant\` go below \`0\`.\nPlease \`edit\` your message or retype the command with a positive number.`)
@@ -76,7 +77,7 @@ class Slowmode extends Command {
                     .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
                     .setTimestamp()
 
-                await message.util.send(embed);
+                await message.util.send({ embeds: [embed] });
             } else {
                 if (nr) {
                     if (nr.match(/^[0-9]*$/gm)) { nr = `${nr}s` }
@@ -102,7 +103,8 @@ class Slowmode extends Command {
                     embed.setColor(crimson);
                     embed.setFooter(`${message.author.username} | #${channelOpt.messages.channel.name}`, message.author.displayAvatarURL({ dynamic: true }));
                     embed.setTimestamp();
-                    message.channel.send(embed);
+
+                    message.channel.send({ embeds: [embed] });
                 } else if (reset) {
 
                     channelOpt.messages.channel.setRateLimitPerUser(0);
@@ -113,7 +115,7 @@ class Slowmode extends Command {
                     embed.setFooter(`${message.author.username} | #${channelOpt.messages.channel.name}`, message.author.displayAvatarURL({ dynamic: true }));
                     embed.setTimestamp();
 
-                    message.channel.send(embed);
+                    message.channel.send({ embeds: [embed] });
                 } else {
                     const embed3 = new Discord.MessageEmbed()
                         .setDescription(`Current slowmode in ${channelOpt.messages.channel} channel:\n\`\`\`${rateLimit ? ms(rateLimit * 1000) : `0s`}\`\`\``)
@@ -121,7 +123,7 @@ class Slowmode extends Command {
                         .setFooter(`${message.author.username} | #${channelOpt.messages.channel.name}`, message.author.displayAvatarURL({ dynamic: true }))
                         .setTimestamp()
 
-                    message.channel.send(embed3)
+                    message.channel.send({ embeds: [embed3] })
                 }
             }
         } else {
@@ -130,7 +132,8 @@ class Slowmode extends Command {
                 .setDescription(`${lang(message, "staffroleEmbed.desc1")} ${role} ${lang(message, "staffroleEmbed.desc2")}`)
                 .setColor(darkRed)
                 .setTimestamp()
-            message.channel.send(staffroleEmbed).then(m => m.delete({ timeout: 5000 })).catch(e => { });
+
+            message.channel.send({ embeds: [staffroleEmbed] }).then(m => delMsg(m, 5000)).catch(e => { });
         }
     }
 }

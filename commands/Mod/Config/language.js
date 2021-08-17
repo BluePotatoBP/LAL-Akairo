@@ -1,6 +1,7 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const { crimson } = require('../../../assets/colors.json');
+const { delMsg } = require('../../../assets/tools/util');
 
 class Language extends Command {
     constructor() {
@@ -49,7 +50,7 @@ class Language extends Command {
     }
 
     async exec(message, { action, i }) {
-        message.delete({ timeout: 30000 }).catch((e) => { });
+        await delMsg(message, 30000);
 
         if (action == 'translate') {
             let [guildLanguageDB] = await DB.query(`SELECT * FROM languages WHERE guild = ? `, [
@@ -65,7 +66,8 @@ class Language extends Command {
                     .setFooter('Syntax: [] - optional')
                     .setColor(crimson)
                     .setTimestamp();
-                return message.channel.send(currentLang);
+
+                return message.channel.send({ embeds: [currentLang] });
             }
 
             if (languageInArrayFind) languageInArrayFind.lan = i;
@@ -86,13 +88,13 @@ class Language extends Command {
                 .setColor(crimson)
                 .setTimestamp();
 
-            await message.channel.send(langUpdate);
+            await message.channel.send({ embeds: [langUpdate] });
         } else {
             let sentContr;
             const contEmbed = new Discord.MessageEmbed()
                 .setDescription(lang(message, 'command.language.contEmbed.desc'))
                 .setColor(crimson);
-            sentContr = await message.util.send(contEmbed);
+            sentContr = await message.util.send({ embeds: [contEmbed] });
             sentContr = await message.util.send({ files: ['./assets/languages/lang/english.json'] });
         }
     }

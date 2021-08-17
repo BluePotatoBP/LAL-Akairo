@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const { promptMessage } = require('../../assets/tools/util');
+const { promptMessage, delMsg } = require('../../assets/tools/util');
 const { pastelGreen, darkRed, salmon } = require('../../assets/colors.json');
 const { MessageEmbed } = require('discord.js');
 
@@ -36,19 +36,17 @@ class Ban extends Command {
     }
 
     async exec(message, { m, r }) {
-        message.delete({ timeout: 30000 });
+        await delMsg(message, 30000);
 
         let cachedGuild = staffRole.find(c => c.guild == message.guild.id)
-        if (!cachedGuild) return message.channel.send(`${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\``);
+        if (!cachedGuild) return message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
         let role = message.guild.roles.cache.get(cachedGuild.role)
-        if (!role) return message.channel.send(`${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\``);
+        if (!role) return message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
         let memberRoles = message.member._roles;
 
         if (memberRoles.some(r => role.id === r) || message.member.hasPermission('BAN_MEMBERS')) {
             // If theres no reason change 'r' args to "No Reason"
-            if (!r) {
-                r = lang(message, 'command.ban.reason.noReason');
-            }
+            !r ? r = lang(message, 'command.ban.reason.noReason') : ''
 
             const sbembed = new MessageEmbed()
                 .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
@@ -59,7 +57,7 @@ class Ban extends Command {
 
             // Check if the user being banned isnt the moderator themselves
             if (m.id === message.author.id) {
-                return message.channel.send(sbembed);
+                return message.channel.send({ embeds: [sbembed] });
             }
 
             const ambed = new MessageEmbed()
@@ -69,27 +67,20 @@ class Ban extends Command {
                 .setTimestamp();
 
             // Check if the user being banned has ban perms
-            if (m.hasPermission('BAN_MEMBERS')) return message.channel.send(ambed);
+            if (m.hasPermission('BAN_MEMBERS')) return message.channel.send({ embeds: [ambed] });
 
             const promptEmbed = new MessageEmbed()
                 .setColor(pastelGreen)
                 .setTitle(lang(message, 'command.ban.promptEmbed.title'))
-                .setDescription(
-                    `${lang(message, 'command.ban.promptEmbed.desc.one')} \`${m.displayName}\` ${lang(
-                        message,
-                        'command.ban.promptEmbed.desc.two'
-                    )} **${r}**?`
-                );
+                .setDescription(`${lang(message, 'command.ban.promptEmbed.desc.one')} \`${m.displayName}\` ${lang(message, 'command.ban.promptEmbed.desc.two')} **${r}**?`);
 
             // Ban prompt initiation
-            let editEmbed = await message.channel.send(promptEmbed);
+            let editEmbed = await message.channel.send({ embeds: [promptEmbed] });
 
             const emoji = await promptMessage(editEmbed, message.author, 30, ['✅', '❌']);
             // If the moderator reacted with a check mark ban the user
             if (emoji === '✅') {
-                m.ban().catch((err) => {
-                    if (err) return message.channel.send(`Well this is awkward... *${err}*`);
-                });
+                await m.ban(r);
 
                 message.channel.send(`**${message.author.tag}** ${lang(message, 'command.ban.messageAfterBan.one')} **${m.user.tag}**. \n${lang(message, 'command.ban.messageAfterBan.two')} ${r}`);
 
@@ -109,7 +100,8 @@ class Ban extends Command {
                     .setColor(darkRed)
                     .setFooter(`${lang(message, 'command.ban.banCanceled.footer')} ${message.author.username}`)
                     .setTimestamp();
-                editEmbed.edit(banCanceled);
+
+                editEmbed.edit({ embeds: [banCanceled] });
             }
         } else {
             const staffroleEmbed = new MessageEmbed()
@@ -117,8 +109,8 @@ class Ban extends Command {
                 .setDescription(`${lang(message, "staffroleEmbed.desc1")} ${role} ${lang(message, "staffroleEmbed.desc2")}`)
                 .setColor(darkRed)
                 .setTimestamp()
-            message.channel.send(staffroleEmbed).then(m => m.delete({ timeout: 5000 }));
 
+            message.channel.send({ embeds: [staffroleEmbed] }).then(delMsg(message, 5000));
         }
     }
 }

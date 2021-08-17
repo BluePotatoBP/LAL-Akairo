@@ -1,6 +1,7 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const { darkRed } = require('../../../assets/colors.json');
+const { delMsg } = require('../../../assets/tools/util');
 
 class Addrole extends Command {
     constructor() {
@@ -41,22 +42,17 @@ class Addrole extends Command {
     }
 
     async exec(message, { m, r }) {
-        message.delete({ timeout: 30000 }).catch((e) => { });
+        await delMsg(message, 30000);
 
         if (!m.roles.cache.has(r.id))
-            return message.channel.send(
-                `${m.user.username} ${lang(message, 'command.removerole.embed.desc.one')} \`${r.name}\` ${lang(
-                    message,
-                    'command.removerole.embed.desc.two'
-                )}`
-            );
+            return message.channel.send({ content: `${m.user.username} ${lang(message, 'command.removerole.embed.desc.one')} \`${r.name}\` ${lang(message, 'command.removerole.embed.desc.two')}` });
 
         try {
             await m.roles.remove(r.id);
             await message.react('<a:check:773208316624240710>');
         } catch (error) {
             console.log(error);
-            message.channel.send(lang(message, "command.removerole.noPermsError"));
+            message.channel.send({ content: lang(message, "command.removerole.noPermsError") });
         }
     }
 }

@@ -2,6 +2,7 @@ const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const { createCanvas, loadImage, } = require('canvas');
 const path = require('path');
+const { delMsg } = require('../../../assets/tools/util');
 
 class GigaChad extends Command {
     constructor() {
@@ -25,7 +26,7 @@ class GigaChad extends Command {
     }
 
     async exec(message, { u }) {
-        message.delete().catch(e => { });
+        await delMsg(message);
 
         let base = await loadImage(path.join(__dirname, '../../../assets/images/gigaChadBase.png'));
         let avatar = await loadImage(u.displayAvatarURL({ format: 'png' }))
@@ -51,7 +52,7 @@ class GigaChad extends Command {
             return ctx;
         };
 
-        await message.channel.send(attachment);
+        await message.channel.send({ files: [attachment] });
 
     }
 }

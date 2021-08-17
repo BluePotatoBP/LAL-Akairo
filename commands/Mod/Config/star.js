@@ -2,7 +2,8 @@ const { Command, Argument } = require('discord-akairo');
 const Discord = require('discord.js');
 const { stripIndents } = require('common-tags');
 const { crimson, darkRed } = require('../../../assets/colors.json')
-const { PasteGG } = require("paste.gg")
+const { PasteGG } = require("paste.gg");
+const { delMsg } = require('../../../assets/tools/util');
 const pasteGG = new PasteGG();
 
 class Star extends Command {
@@ -73,13 +74,13 @@ class Star extends Command {
     }
 
     async exec(message, { enableOpt, disableOpt, minOpt, maxOpt, channelOpt, selfStarsOpt, nsfwOpt }) {
-        message.delete({ timeout: 1000 }).catch(e => { });
+        await delMsg(message);
 
         /////////////////////////////// STAFFROLE CHECK
         let cachedGuild = staffRole.find(c => c.guild == message.guild.id)
-        if (!cachedGuild) return message.channel.send(`${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\``);
+        if (!cachedGuild) return message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
         let role = message.guild.roles.cache.get(cachedGuild.role)
-        if (!role) return message.channel.send(`${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\``);
+        if (!role) return message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
         let memberRoles = message.member._roles;
 
         if (memberRoles.some(r => role.id === r)) {
@@ -154,7 +155,7 @@ class Star extends Command {
                         **├** <:nonsfw:823990821794873385> **Allow NSFW Msgs:** \`${nsfwAllowed}\`${blacklisted}
                         └────────┄┄┄┄`)
 
-                return await message.util.send(listEmbed)
+                return await message.util.send({ embeds: [listEmbed] })
             }
 
             // If there is data saved
@@ -179,7 +180,7 @@ class Star extends Command {
                         **├** <:nonsfw:823990821794873385> **Allow NSFW Msgs:** \`${nsfwAllowed}\`${blacklisted}
                         └────────┄┄┄┄`)
 
-            await message.channel.send(listEmbed)
+            await message.channel.send({ embeds: [listEmbed] })
 
             /////////////////////////////// END OF WORK CODE
         } else {
@@ -188,7 +189,7 @@ class Star extends Command {
                 .setDescription(`${lang(message, "staffroleEmbed.desc1")} ${role} ${lang(message, "staffroleEmbed.desc2")}`)
                 .setColor(darkRed)
                 .setTimestamp()
-            await message.util.send(staffroleEmbed).then(m => m.delete({ timeout: 5000 }));
+            await message.util.send({ embeds: [staffroleEmbed] }).then(m => delMsg(m, 5000));
         }
         /////////////////////////////// END OF STAFFROLE CHECK
     }

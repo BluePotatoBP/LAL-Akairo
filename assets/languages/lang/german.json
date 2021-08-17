@@ -256,38 +256,6 @@
     "command.setprefix.prefixEmbed.updatePrefix": "Das prefix für diesen Server ist jetzt:",
     "command.setprefix.prefixEmbed.newPrefix": "Das neue Prefix ist:",
 
-    "command.boobs.desc.content": "Schicke zufällige Titten Bilder.",
-    "command.boobs.embed.footer.one": "hab dir ein paar Titten geschickt!",
-    "command.boobs.embed.footer.two": "hab ein paar Titten.",
-
-    "command.feet.desc.content": "Schicke zufällige Fuß Bilder.",
-    "command.feet.embed.footer.one": "hab dir ein paar Füße geschickt!",
-    "command.feet.embed.footer.two": "hab ein paar Füße.",
-
-    "command.hentai.desc.content": "Schicke zufällige Hentai Bilder.",
-    "command.hentai.embed.footer.one": "hab dir Hentai geschickt!",
-    "command.hentai.embed.footer.two": "hab ein bisschen Hentai,",
-
-    "command.neko.desc.content": "Schicke zufällige Neko GIFs",
-    "command.neko.embed.footer.one": "hab dir ein Neko GIF geschickt!",
-    "command.neko.embed.footer.two": "hab ein Neko GIF.",
-
-    "command.panties.desc.content": "Schicke zufällige Slip Bilder.",
-    "command.panties.embed.footer.one": "sent you some panties!",
-    "command.panties.embed.footer.two": "have some panties",
-
-    "command.randomporn.desc.content": "Get a random nsfw image",
-    "command.randomporn.embed.footer.one": "hab dir Slips geschickt.",
-    "command.randomporn.embed.footer.two": "Genieße was du bekommen hast.",
-
-    "command.pussy.desc.content": "Schicke ein zufälliges Pussy Bild",
-    "command.pussy.embed.footer.one": "hab dir Pussy geschickt.!",
-    "command.pussy.embed.footer.two": "hab ein bisschen Pussy.",
-
-    "command.thighs.desc.content": "Schicke ein zufälliges Schenkel Bild.",
-    "command.thighs.embed.footer.one": "hab dir ein paar Schenkel geschickt.",
-    "command.thighs.embed.footer.two": "hab ein paar Schenkel.",
-
     "command.avatar.desc.content": "Jemand hat ein geiles Profilbild? Und schon gehört es mir.",
     "command.avatar.avembed.content": "Angefordert von:",
 
