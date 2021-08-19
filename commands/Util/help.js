@@ -88,56 +88,51 @@ class Help extends Command {
                         commandsEmbed.addField(`${category.id} [${category.size}]`, `${category.map((cmd) => `${cmd.categoryID.toLowerCase() == 'nsfw' ? `|| ${cmd} ||` : cmd}`).join(', ')}`);
                     }
                 }
+                // Define buttons
+                let homeBtn = new MessageButton()
+                    .setCustomId('home')
+                    .setEmoji('817848932209393725')
+                    .setStyle('SUCCESS');
+                let listBtn = new MessageButton()
+                    .setCustomId('list')
+                    .setEmoji('817848932364845067')
+                    .setStyle('SECONDARY');
+                let searchBtn = new MessageButton()
+                    .setCustomId('search')
+                    .setEmoji('817848932566695986')
+                    .setStyle('SECONDARY');
+                let exitBtn = new MessageButton()
+                    .setCustomId('exit')
+                    .setEmoji('817890713190662146')
+                    .setStyle('DANGER');
 
-                const buttonRow = new MessageActionRow()
-                    .addComponents(
-                        new MessageButton()
-                            .setCustomId('home')
-                            .setEmoji('817848932209393725')
-                            .setStyle('SUCCESS'),
-                        new MessageButton()
-                            .setCustomId('list')
-                            .setEmoji('817848932364845067')
-                            .setStyle('SECONDARY'),
-                        new MessageButton()
-                            .setCustomId('search')
-                            .setEmoji('817848932566695986')
-                            .setStyle('SECONDARY'),
-                        new MessageButton()
-                            .setCustomId('exit')
-                            .setEmoji('817890713190662146')
-                            .setStyle('DANGER'),
-                    );
-
+                // Define action row and add buttons components
+                const buttonRow = new MessageActionRow().addComponents([homeBtn, listBtn, searchBtn, exitBtn]);
+                // Send initial message
                 const msg = await message.util.reply({ embeds: [homeEmbed], components: [buttonRow] })
 
                 // Filter for a button with id 'primary' and for specific user clicking it
                 const filter = i => i.user.id === message.author.id;
                 // Create a message component collector (long ass name \/)
-                const collector = msg.channel.createMessageComponentCollector({ filter, time: 60000 });
+                const buttonCollector = msg.channel.createMessageComponentCollector({ filter, time: 60000 });
 
                 const exitEmbed = new MessageEmbed()
                     .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
                     .setDescription(`<a:cancel:773201205056503849> Help command canceled.\n\n**Reason:** manually closed`)
                     .setTimestamp()
 
-                collector.on("collect", async i => {
+                let searchCollector;
+
+                buttonCollector.on("collect", async i => {
                     switch (i.customId) {
                         case "home":
-                            await i.deferUpdate()
-                            await message.util.send({ embeds: [homeEmbed] })
+                            await i.update({ embeds: [homeEmbed] });
                             break;
                         case "list":
-                            await i.deferUpdate()
-                            await message.util.send({ embeds: [commandsEmbed] })
-                            break;
-                        case "exit":
-                            await i.update({ embeds: [exitEmbed], components: [] })
-                            await collector.stop()
-
+                            await i.update({ embeds: [commandsEmbed] });
                             break;
                         case "search":
-                            await i.deferUpdate()
+                            await i.deferUpdate();
 
                             const searchEmbed = new MessageEmbed()
                                 .setTitle(`${this.client.user.username} Help | Search`)
@@ -151,7 +146,7 @@ class Help extends Command {
                             // Search message collector filter
                             const filter = m => !m.author.bot && m.author.id == message.author.id;
                             // Search message collector
-                            let searchCollector = await msg.channel.createMessageCollector({ filter, time: 300000 });
+                            searchCollector = await msg.channel.createMessageCollector({ filter, time: 30000 });
                             // On collect do funny
                             searchCollector.on("collect", async c => {
 
@@ -184,10 +179,15 @@ class Help extends Command {
                                         .setFooter(`${lang(message, 'command.help.embedtwo.desc.eight')} ${command.description.syntax ? `${command.description.syntax}` : lang(message, 'command.help.embedtwo.desc.nine')}`)
 
                                     await message.util.send({ embeds: [commandHelp] })
-
-                                    await searchCollector.stop()
                                 }
+                                await searchCollector.stop()
                             })
+                            break;
+                        case "exit":
+                            await i.update({ embeds: [exitEmbed], components: [] });
+                            await buttonCollector.stop();
+                            await searchCollector.stop()
+
                             break;
                     }
                 })
