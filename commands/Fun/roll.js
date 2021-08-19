@@ -12,8 +12,8 @@ class Roll extends Command {
                 cooldown: 10000,
                 description: {
                     content: '',
-                    usage: '',
-                    syntax: ''
+                    usage: '<number>-<number>',
+                    syntax: '<> - necessary'
                 },
                 args: [
                     {
