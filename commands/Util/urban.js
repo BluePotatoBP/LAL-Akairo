@@ -1,8 +1,8 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
-const urban = require('urban');
+const urban = require('relevant-urban');
 const { cutTo, softWrap, delMsg } = require('../../assets/tools/util')
-const { crimson, darkRed } = require('../../assets/colors.json');
+const { crimson } = require('../../assets/colors.json');
 
 class Urban extends Command {
     constructor() {
@@ -31,51 +31,47 @@ class Urban extends Command {
     }
 
     async exec(message, { args }) {
-        await delMsg(message);
-        // Call the urban dictionary API
-        let search = await urban(args)
-
+        await delMsg(message, 30000);
         try {
-            search.first(async (res) => { // Search for input data
-                const nrembed = new Discord.MessageEmbed()
-                    .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
-                    .setDescription(lang(message, 'command.urban.nrembed.desc'))
-                    .setColor(darkRed)
-                    .setTimestamp();
+            // Call the urban dictionary API
+            let res = await urban(args)
 
-                // If theres no data, return an embed 
-                if (!res) return message.channel.send({ embeds: [nrembed] });
+            const nrembed = new Discord.MessageEmbed()
+                .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
+                .setDescription(lang(message, 'command.urban.nrembed.desc'))
+                .setColor(darkRed)
+                .setTimestamp();
 
-                let { word, thumbs_up, thumbs_down, permalink, author } = res;
-                let example = await res.example.replace(/\[/g, '').replace(/\]/g, ''); // Replace all [] with '' because theres no way to get those hyperlinks
-                let definition = await res.definition.replace(/\[/g, '').replace(/\]/g, ''); // ^
+            // If theres no data, return an embed 
+            if (!res) return message.channel.send({ embeds: [nrembed] });
 
-                definition = softWrap(cutTo(definition, 0, 800, true), 50) // Cut the text if its over 800 characters
-                example = softWrap(cutTo(example, 0, 800, true), 50) //        ^
+            let { word, thumbsUp, thumbsDown, permalink, author } = res;
+            let example = await res.example.replace(/\[/g, '').replace(/\]/g, ''); // Replace all [] with '' because theres no way to get those hyperlinks
+            let definition = await res.definition.replace(/\[/g, '').replace(/\]/g, ''); // ^
 
-                let nembed = new Discord.MessageEmbed()
-                    .setColor(crimson)
-                    .setAuthor(`${lang(message, 'command.urban.nembed.author')} '${word}'`, client.user.displayAvatarURL({ dynamic: true }))
-                    .setThumbnail('https://i.imgur.com/KeDXCWj.png')
-                    .setDescription(`
+            definition = await softWrap(await cutTo(definition, 0, 800, true), 50) // Cut the text if its over 800 characters
+            example = await softWrap(await cutTo(example, 0, 800, true), 50) //        ^
+
+            let nembed = new Discord.MessageEmbed()
+                .setColor(crimson)
+                .setAuthor(`${lang(message, 'command.urban.nembed.author')} '${word}'`, client.user.displayAvatarURL({ dynamic: true }))
+                .setThumbnail('https://i.imgur.com/KeDXCWj.png')
+                .setDescription(`
                         \`${lang(message, 'command.urban.nembed.desc.definition')}\` \n${definition || lang(message, 'command.urban.nembed.desc.noDefinition')}
                         \`${lang(message, 'command.urban.nembed.desc.example')}\` \n${example || lang(message, 'command.urban.nembed.desc.noExample')}
-                        \`${lang(message, 'command.urban.nembed.desc.upvotes')}\` ${thumbs_up || 0}
-                        \`${lang(message, 'command.urban.nembed.desc.downvotes')}\` ${thumbs_down || 0}
+                        \`${lang(message, 'command.urban.nembed.desc.upvotes')}\` ${thumbsUp || 0}
+                        \`${lang(message, 'command.urban.nembed.desc.downvotes')}\` ${thumbsDown || 0}
                         \`${lang(message, 'command.urban.nembed.desc.link')}\` [${lang(message, 'command.urban.nembed.desc.linkTo')} '${word}'](${permalink || 'https://www.urbandictionary.com/'})`)
-                    .setTimestamp()
-                    .setFooter(`${lang(message, 'command.urban.nembed.desc.author')} ${author || 'unknown'}`);
+                .setTimestamp()
+                .setFooter(`${lang(message, 'command.urban.nembed.desc.author')} ${author || 'unknown'}`);
 
-                await message.channel.send({ embeds: [nembed] });
-            });
-
+            await message.channel.send({ embeds: [nembed] });
         } catch (error) {
-            console.log(error);
-
             const swrembed = new Discord.MessageEmbed()
                 .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
-                .setDescription("Whoops, something wen't wrong... Please try again!")
-                .setColor(darkRed)
+                .setDescription(`Sorry I couldnt find anything about0 '\`${await cutTo(args, 0, 100, true)}\`'`)
+                .setColor(crimson)
+                .setFooter(`If you made a mistake, edit the command or re-send it`)
                 .setTimestamp();
             await message.channel.send({ embeds: [swrembed] });
         }
