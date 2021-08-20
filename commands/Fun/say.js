@@ -54,7 +54,7 @@ class Say extends Command {
                 {
                     id: 'color',
                     match: 'option',
-                    flag: ['-color:'],
+                    flag: ['-color:', '-c:'],
                     default: crimson
                 },
                 {
