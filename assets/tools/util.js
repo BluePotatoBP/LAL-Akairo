@@ -85,7 +85,7 @@ module.exports = {
     },
 
     delMsg: async function (message, time = 0) {
-        setTimeout(async () => { await message.delete() }, time);
+        setTimeout(async () => { await message.delete().catch(e => {}) }, time);
     },
 
     promptMessage: async function (message, author, time, validReactions) {
