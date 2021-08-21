@@ -39,8 +39,8 @@
     "prng": "^0.0.1",
     "random-js": "^2.1.0",
     "random-word": "^2.0.0",
+    "relevant-urban": "^2.0.0",
     "spacy": "0.0.4",
-    "urban": "^0.3.2",
     "utf-8-validate": "^5.0.3",
     "util": "^0.12.3",
     "wikipedia-tldr": "^2.0.1"
