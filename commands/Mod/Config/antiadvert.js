@@ -370,7 +370,6 @@ class AntiAdvert extends Command {
                 if (getData.length === 0) {
                     await DB.query(`INSERT INTO antiAdvert (guild, enabled, excludeStaff, excludeBots, warn, preset) VALUES(?,?,?,?,?,?)`, [message.guild.id, 'false', 'false', 'false', 'false', 'heavy']);
                     await antiAdvertise.push({
-                        guild: message.guild.id,
                         enabled: 'false',
                         excludeStaff: 'false',
                         excludeBots: 'false',
