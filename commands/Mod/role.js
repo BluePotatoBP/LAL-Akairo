@@ -17,11 +17,7 @@ class Role extends Command {
             },
             * args(message) {
                 let action = yield {
-                    type: [
-                        ['add'],
-                        ['remove']
-                    ],
-                    default: 'list',
+                    type: [['add'], ['remove']],
                     prompt: {
                         start: (message) => lang(message, 'command.role.prompt.start'),
                         retry: (message) => lang(message, 'command.role.prompt.retry'),
@@ -29,10 +25,8 @@ class Role extends Command {
                     }
                 };
 
-                // Reroll ongoing giveaway
                 if (action == 'add') return Flag.continue('addrole');
 
-                // Default msg
                 if (action == 'remove') return Flag.continue('removerole');
             }
         });
