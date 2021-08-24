@@ -1,6 +1,6 @@
 const chalk = require('chalk');
 const { stripIndents } = require('common-tags');
-const { Command } = require('discord-akairo');
+const { Command, Argument } = require('discord-akairo');
 const { Permissions, MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
 const ms = require('ms');
 const { crimson, lightRed, pastelGreen } = require('../../assets/colors.json')
@@ -20,6 +20,7 @@ class Help extends Command {
             },
             * args(message) {
                 const command = yield {
+                    type: Argument.union("commandAlias", "command"),
                     prompt: {
                         start: `What command would you like to check?`,
                         retry: `I didn't quite get that, what command would you like to check?`,
