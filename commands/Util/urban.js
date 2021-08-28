@@ -69,7 +69,7 @@ class Urban extends Command {
         } catch (error) {
             const swrembed = new Discord.MessageEmbed()
                 .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
-                .setDescription(`Sorry I couldnt find anything about0 '\`${await cutTo(args, 0, 100, true)}\`'`)
+                .setDescription(`Sorry I couldnt find anything about '\`${await cutTo(args, 0, 100, true)}\`'`)
                 .setColor(crimson)
                 .setFooter(`If you made a mistake, edit the command or re-send it`)
                 .setTimestamp();
