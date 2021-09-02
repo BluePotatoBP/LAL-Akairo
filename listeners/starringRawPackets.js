@@ -322,10 +322,8 @@ module.exports = class clientReadyListener extends Listener {
 
 			//Resend logger embed
 			if (!botMessage) {
-
 				if (starCount < 1) {
 					await DB.query(`DELETE FROM starred WHERE userMessageID = ?`, [userMessage.id])
-					await botMessage.delete().catch(e => { })
 					return;
 				}
 
