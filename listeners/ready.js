@@ -55,10 +55,15 @@ class ReadyListener extends Listener {
 
                 // Deleting data from all tables where the guild id matches
                 await DB.query('DELETE FROM languages WHERE guild = ?', [guildID]);
+                await DB.query('DELETE FROM antiAdvert WHERE guild = ?', [guildID]);
                 await DB.query('DELETE FROM logs WHERE guild = ?', [guildID]);
                 await DB.query('DELETE FROM mute WHERE guild = ?', [guildID]);
                 await DB.query('DELETE FROM prefixes WHERE guild = ?', [guildID]);
                 await DB.query('DELETE FROM staffrole WHERE guild = ?', [guildID]);
+                await DB.query('DELETE FROM reactionRoles WHERE guild = ?', [guildID]);
+                await DB.query('DELETE FROM starBlacklist WHERE guild = ?', [guildID]);
+                await DB.query('DELETE FROM starred WHERE guild = ?', [guildID]);
+                await DB.query('DELETE FROM starSettings WHERE guild = ?', [guildID]);
 
                 // Finally deleting the 'awaitingDelete' entry so we dont delete empty data indefinitely
                 await DB.query(`DELETE FROM awaitingDelete WHERE guild = ?`, [guildID]);
@@ -93,6 +98,10 @@ class ReadyListener extends Listener {
         // Blacklist
         const [blackListData] = await DB.query(`SELECT * FROM starBlacklist`).then(console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${debug('[DEBUG]')} 'starBlacklist' cache initialized.`));
         starBlacklistCache = blackListData;
+
+        // ReactionRoles
+        const [reactionRoleData] = await DB.query(`SELECT * FROM reactionRoles`).then(console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${debug('[DEBUG]')} 'reactionRoles' cache initialized.`));
+        reactionRoles = reactionRoleData;
 
     }
 }
