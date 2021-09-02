@@ -14,6 +14,7 @@ global.guildLanguages = [];
 global.staffRole = [];
 global.starBlacklistCache = [];
 global.antiAdvertise = [];
+global.reactionRoles = [];
 global.DB = require('./assets/tools/establishDBConnection');
 global.lang = require('./assets/languages/languageTranslate');
 
@@ -22,7 +23,16 @@ class Client extends AkairoClient {
     constructor() {
         super({
             ownerID: process.env.OWNER,
-            intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
+            intents: [
+                Intents.FLAGS.GUILDS,
+                Intents.FLAGS.GUILD_MESSAGES,
+                Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+                Intents.FLAGS.GUILD_PRESENCES,
+                Intents.FLAGS.GUILD_INVITES,
+                Intents.FLAGS.GUILD_BANS,
+                Intents.FLAGS.GUILD_MEMBERS,
+                Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS
+            ],
             allowedMentions: { parse: ['users'], repliedUser: true },
             disableMentions: 'everyone'
         });
