@@ -7,7 +7,7 @@ class Hack extends Command {
         super('hack', {
             aliases: ['hack'],
             category: 'Fun',
-            cooldown: 5000,
+            cooldown: 60000,
             ratelimit: 2,
             ownerOnly: false,
             description: {
@@ -27,7 +27,7 @@ class Hack extends Command {
     }
 
     async exec(message, { u }) {
-        await delMsg(message);
+        await delMsg(message, 65000);
 
         // Voice region list
         let region = {
@@ -52,13 +52,13 @@ class Hack extends Command {
         };
 
         // Random email domain list
-        const emails = ['gmail.com', 'yahoo.com', 'hotmail.com', 'aol.com', 'msn.com', 'comcast.net', 'live.com', 'outlook.com', 'protonmail.com']
+        let emails = ['gmail.com', 'yahoo.com', 'hotmail.com', 'aol.com', 'msn.com', 'comcast.net', 'live.com', 'outlook.com', 'protonmail.com']
 
         // Random password list
-        const passwords = ['123456789', 'qwerty', 'password', '12345', `${cutTo(u.username.search('\d'), 0, 15, false)}`]
+        let passwords = ['123456789', 'qwerty', 'password', '12345', `${u.username.toLowerCase() + '123'}`]
 
         // Random last DM list
-        const dms = [
+        let dms = [
             'sry it wont happen again UwU',
             'yikes bro thats the tiniest one ive seen so far',
             '🤏',
@@ -74,9 +74,10 @@ class Hack extends Command {
             'Rawr X3 *nuzzles* How are you? *pounces on you* you\'re so warm o3o *notices you have a bulge*',
             'free onlybans, join now! https://www.thisworldthesedays.com/banhome.html',
             'I THINK I JUST GOT HACKED IDK WHAT TO DO PLS HELP!!!!!',
-            'yikes']
+            'yikes'
+        ]
 
-        const twofa = ['2fa bypassed', 'no 2fa'];
+        let twofa = ['2fa bypassed', 'no 2fa'];
 
         // Getting consistent results by seeding 
         let PRNG = require('prng'),
@@ -93,17 +94,17 @@ class Hack extends Command {
             setTimeout(async () => { await firstMsg.edit({ content: '`[10%]` Fetching the IP address... <a:gears:773203929507823617>' }).catch(e => { }) }, 5000);
             setTimeout(async () => { await firstMsg.edit({ content: '`[17%]` IP found: `192.168.***.***` <a:gears:773203929507823617>' }).catch(e => { }) }, 10000);
             setTimeout(async () => { await firstMsg.edit({ content: '`[23%]` Starting GeoIP lookup... <a:gears:773203929507823617>' }).catch(e => { }) }, 15000);
-            setTimeout(async () => { await firstMsg.edit({ content: `\`[26%]\` Location: Somewhere in **${region[message.guild.region]}** <a:gears:773203929507823617>` }).catch(e => { }) }, 20000);
+            setTimeout(async () => { await firstMsg.edit({ content: `\`[26%]\` Location: Somewhere in **${region[message.guild.region] || 'unknown... must be using a VPN'}** <a:gears:773203929507823617>` }).catch(e => { }) }, 20000);
             setTimeout(async () => { await firstMsg.edit({ content: `\`[32%]\` Decrypting last DM... <a:gears:773203929507823617>` }).catch(e => { }) }, 24000);
-            setTimeout(async () => { await firstMsg.edit({ content: `\`[35%]\` Last DM: \`${dms[dms.length]}\` <a:gears:773203929507823617>` }).catch(e => { }) }, 25000);
+            setTimeout(async () => { await firstMsg.edit({ content: `\`[35%]\` Last DM: **${dms[Math.floor(Math.random(dms.length))]}** <a:gears:773203929507823617>` }).catch(e => { }) }, 27000);
             setTimeout(async () => { await firstMsg.edit({ content: `\`[49%]\` Searching for Discord credentials... <a:gears:773203929507823617>` }).catch(e => { }) }, 30000);
-            setTimeout(async () => { await firstMsg.edit({ content: `\`[55%]\` Credentials found (${twofa[prng.rand(twofa.length)]}): \`Email:${u.username.split(' ').join('')}@${emails[prng.rand(emails.length)]} Password: ${passwords[prng.rand(passwords.length)]} <a:gears:773203929507823617>` }).catch(e => { }) }, 35000);
+            setTimeout(async () => { await firstMsg.edit({ content: `\`[55%]\` Credentials found (${twofa[prng.rand(twofa.length)]}): \`Email: ${u.username.split(' ').join('').toLowerCase()}@${emails[prng.rand(emails.length)]} Password: ${passwords[prng.rand(passwords.length)]} <a:gears:773203929507823617>` }).catch(e => { }) }, 35000);
             setTimeout(async () => { await firstMsg.edit({ content: `\`[69% (Nice)]\` Searching for the user token <a:gears:773203929507823617>` }).catch(e => { }) }, 40000);
-            setTimeout(async () => { await firstMsg.edit({ content: `\`[81%]\` User token found: \`${generateId(12)}.******.**-*******************${generateId(5)}\` <a:gears:773203929507823617>` }).catch(e => { }) }, 45000);
+            setTimeout(async () => { await firstMsg.edit({ content: `\`[81%]\` User token found: \`${await generateId(12)}.******.**-*******************${await generateId(5)}\` <a:gears:773203929507823617>` }).catch(e => { }) }, 45000);
             setTimeout(async () => { await firstMsg.edit({ content: `\`[99%]\` Cleaning up the mess... <a:gears:773203929507823617>` }).catch(e => { }) }, 50000);
             setTimeout(async () => { await firstMsg.edit({ content: `\`[COMPLETE]\` I will be sending you the user info in your DMs shortly. <a:gears:773203929507823617>` }).catch(e => { }) }, 55000);
-            setTimeout(async () => { await firstMsg.edit({ content: `\`[COMPLETE]\` User info has been sent to your DMs (Unless they're locked.)` }).catch(e => { }) }, 55100);
-            setTimeout(async () => { await message.author.send({ content: 'For all your doxxing needs: \n\n🤡🤡🤡' }).catch((e) => { }) }, 55000);
+            setTimeout(async () => { await firstMsg.edit({ content: `\`[COMPLETE]\` User info has been sent to your DMs (Unless they're locked.)` }).catch(e => { }) }, 57000);
+            setTimeout(async () => { await message.author.send({ content: 'For all your doxxing needs: \n\n🤡🤡🤡' }).catch((e) => { }) }, 56000);
 
 
         } catch (error) {
