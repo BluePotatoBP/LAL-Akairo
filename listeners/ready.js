@@ -24,7 +24,8 @@ class ReadyListener extends Listener {
                 password: process.env.DB_PASS,
                 database: process.env.DB_NAME,
                 enableKeepAlive: true
-            }).then(console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${chalk.yellow('[INFO]')} Connected to Database ${chalk.yellow(`${process.env.DB_NAME} (Ricardo)`)}!`));
+            })
+            console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${chalk.yellow('[INFO]')} Connected to Database ${chalk.yellow(`${process.env.DB_NAME}`)}!`);
         })();
 
         // Automatic status changer
@@ -35,7 +36,13 @@ class ReadyListener extends Listener {
         }, 10000); */
 
         // New static status
-        await client.user.setActivity('.help', { type: 'PLAYING' })
+        setInterval(async () => {
+            if(!dbConnection.connection.authorized) {
+                await client.user.setActivity('.help | DB DOWN, CHANGES WONT SAVE', { type: 'PLAYING' })
+            } else {
+                await client.user.setActivity('.help', { type: 'PLAYING' })
+            }
+        }, 10000)
         // Set client status to do not disturb
         this.client.user.setStatus('dnd');
 
@@ -88,12 +95,12 @@ class ReadyListener extends Listener {
         }
 
         // Anti advertisement
-        let [data3] = await DB.query(`SELECT * FROM antiAdvert`).then(console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${debug('[DEBUG]')} 'antiAdvert' cache initialized.`));
-        antiAdvertise = data3;
+        let [antiAdvertData] = await DB.query(`SELECT * FROM antiAdvert`).then(console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${debug('[DEBUG]')} 'antiAdvert' cache initialized.`));
+        antiAdvertise = antiAdvertData;
 
-        //S taffRole 
-        let [data4] = await DB.query(`SELECT * FROM staffrole`).then(console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${debug('[DEBUG]')} 'staffrole' cache initialized.`));
-        staffRole = data4;
+        // StaffRole 
+        let [staffRoleData] = await DB.query(`SELECT * FROM staffrole`).then(console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${debug('[DEBUG]')} 'staffrole' cache initialized.`));
+        staffRole = staffRoleData;
 
         // Blacklist
         const [blackListData] = await DB.query(`SELECT * FROM starBlacklist`).then(console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${debug('[DEBUG]')} 'starBlacklist' cache initialized.`));
@@ -102,7 +109,10 @@ class ReadyListener extends Listener {
         // ReactionRoles
         const [reactionRoleData] = await DB.query(`SELECT * FROM reactionRoles`).then(console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${debug('[DEBUG]')} 'reactionRoles' cache initialized.`));
         reactionRoles = reactionRoleData;
-
+        
+        // Custom prefixes
+        const [prefixesData] = await DB.query(`SELECT * FROM prefixes`).then(console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${debug('[DEBUG]')} 'prefixes' cache initialized.`));
+        customPrefixes = prefixesData;
     }
 }
 

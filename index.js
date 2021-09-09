@@ -15,6 +15,7 @@ global.staffRole = [];
 global.starBlacklistCache = [];
 global.antiAdvertise = [];
 global.reactionRoles = [];
+global.customPrefixes = [];
 global.DB = require('./assets/tools/establishDBConnection');
 global.lang = require('./assets/languages/languageTranslate');
 
@@ -40,8 +41,8 @@ class Client extends AkairoClient {
         this.commandHandler = new CommandHandler(this, {
             prefix: async (message) => {
                 if (message.channel.type === 'DM') return process.env.PREFIX;
-                let [data] = await DB.query(`SELECT * FROM prefixes WHERE guild = ?`, [message.guild.id]);
-                return data.length == 0 ? process.env.PREFIX : data[0].prefix;;
+                const customPrefix = customPrefixes.find(c => c.guild === message.guild.id);
+                return !customPrefix.prefix ? process.env.PREFIX : customPrefix.prefix;
             },
             blockBots: true,
             blockClient: true,
