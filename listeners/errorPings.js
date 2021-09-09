@@ -24,7 +24,7 @@ module.exports = class ErrorListener extends Listener {
                                     Guild: \`${message.guild.name}\`
                                     Channel: ${message.channel} \`[${message.channel.id}]\`
                                     User: ${message.author} \`[${message.author.id}]\`
-                                    Command: \`${command.id ? command.id : 'Not a command.'}\`
+                                    Command: \`${command ? command.id : 'Not a command.'}\`
                                     Error: \`${err.toString()}\``)
             .setFooter(`ID: ${errorID}`, message.author.avatarURL({ dynamic: true }))
             .setTimestamp()
@@ -33,7 +33,7 @@ module.exports = class ErrorListener extends Listener {
             const userEmbed = new MessageEmbed()
                 .setColor(lightRed)
                 .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
-                .setDescription(stripIndents`The \`${command.id ? command.id : 'Internal-Module'}\` command could not be executed, 
+                .setDescription(stripIndents`The \`${command ? command.id : 'Internal-Module'}\` command could not be executed, 
                                             if you'd like to report this, heres the error ID: \`${errorID}\`\n
                                             Click [here](https://discord.gg/v8zkSc9 'Like a Light Support') to join the support server.`)
 
