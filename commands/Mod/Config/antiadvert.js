@@ -396,12 +396,12 @@ class AntiAdvert extends Command {
             //#region Embed
             let advertEnabled;
             if (getData.length === 0) {
-                advertEnabled = `[FALSE](${message.author.lastMessage.url} 'Anti-Advertising is not enabled.')`;
+                advertEnabled = `[FALSE](https://www.google.com 'Anti-Advertising is not enabled.')`;
             } else {
                 if (getData[0].enabled === 'true') {
-                    advertEnabled = `[TRUE](${message.author.lastMessage.url} 'Anti-Advertising is enabled.')`;
+                    advertEnabled = `[TRUE](https://www.google.com 'Anti-Advertising is enabled.')`;
                 } else {
-                    advertEnabled = `[FALSE](${message.author.lastMessage.url} 'Anti-Advertising is not enabled.')`;
+                    advertEnabled = `[FALSE](https://www.google.com 'Anti-Advertising is not enabled.')`;
                 }
             }
 

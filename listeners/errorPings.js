@@ -1,7 +1,8 @@
 const { Listener } = require('discord-akairo');
 const { Permissions, MessageEmbed } = require('discord.js')
 const { stripIndents } = require('common-tags');
-const { lightRed } = require('../assets/colors.json')
+const { lightRed, crimson } = require('../assets/colors.json');
+const { cutTo } = require('../assets/tools/util');
 
 module.exports = class ErrorListener extends Listener {
     constructor() {
@@ -14,19 +15,22 @@ module.exports = class ErrorListener extends Listener {
     async exec(err, message, command) {
         console.log(err)
 
-        let errorID = Math.random().toString(36).substring(7);
-        let logChannel = client.channels.cache.get("818871147156340777")
-        const devLog = new MessageEmbed()
-            .setColor('RANDOM')
+        const errorID = Math.random().toString(36).substring(7);
+        const logChannel = await client.channels.cache.get("818871147156340777");
+        const devLogEmbed = new MessageEmbed()
+            .setAuthor(`Error Catcher`, client.user.displayAvatarURL({ dynamic: true }))
             .setThumbnail(this.client.user.avatarURL({ dynamic: true }))
-            .setTitle(`${this.client.user.username} ERROR HANDLER - INFO\n`)
-            .setDescription(stripIndents`
-                                    Guild: \`${message.guild.name}\`
-                                    Channel: ${message.channel} \`[${message.channel.id}]\`
-                                    User: ${message.author} \`[${message.author.id}]\`
-                                    Command: \`${command ? command.id : 'Not a command.'}\`
-                                    Error: \`${err.toString()}\``)
-            .setFooter(`ID: ${errorID}`, message.author.avatarURL({ dynamic: true }))
+            .setColor(crimson)
+            .addField('Source', stripIndents`
+                    Guild: ${message.guild.name} \`${message.guild.id}\`
+                    Channel: ${message.channel} \`${message.channel.id}\`
+                    User: ${message.author} \`${message.author.id}\``)
+            .addField('Warning', stripIndents`
+                    Command: \`${command ? command.id : 'Not a command.'}\`
+                    Content: \`${message.content ? cutTo(message.content, 0, 300, true) : 'No content?'}\`
+                    Error: \`${cutTo(err.message, 0, 1000, true)}\`
+                    ID: \`${errorID}\``)
+            .setFooter(message.author.tag, message.author.avatarURL({ dynamic: true }))
             .setTimestamp()
 
         if (message.guild ? message.channel.permissionsFor(this.client.user).has([Permissions.FLAGS.SEND_MESSAGES, Permissions.FLAGS.EMBED_LINKS]) : true) {
@@ -38,7 +42,7 @@ module.exports = class ErrorListener extends Listener {
                                             Click [here](https://discord.gg/v8zkSc9 'Like a Light Support') to join the support server.`)
 
             await message.util.send({ embeds: [userEmbed] })
-            await logChannel.send({ embeds: [devLog] })
+            await logChannel.send({ embeds: [devLogEmbed] })
 
         } else if (message.guild ? message.channel.permissionsFor(this.client.user).has(Permissions.FLAGS.SEND_MESSAGES) : true) {
             await message.util.send({
@@ -46,7 +50,7 @@ module.exports = class ErrorListener extends Listener {
                                                  If you decide to report this, heres the error ID: \`${errorID}\`
                                                  And heres the invite to the support server: 
                                                  https://discord.gg/v8zkSc9`})
-            await logChannel.send({ embeds: [devLog] })
-        }
+            await logChannel.send({ embeds: [devLogEmbed] })
+        } else await logChannel.send({ embeds: [devLogEmbed] })
     }
 }

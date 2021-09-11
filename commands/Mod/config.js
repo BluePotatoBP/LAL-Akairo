@@ -63,7 +63,7 @@ class Config extends Command {
 
         let staffRole;
         if (staffroleData.length === 0) {
-            staffRole = `[-](${message.author.lastMessage.url} '${lang(message, "command.config.tooltip.noStaffrole")}')`;
+            staffRole = `[-](https://www.google.com '${lang(message, "command.config.tooltip.noStaffrole")}')`;
         } else {
             staffRole = await message.guild.roles.cache.get(staffroleData[0].role);
         }
@@ -72,24 +72,24 @@ class Config extends Command {
         if (prefixData.length === 0) {
             prefixx = '.';
         } else {
-            prefixx = `**[${prefixData[0].prefix}](${message.author.lastMessage.url} '${lang(message, "command.config.tooltip.customPrefix")} ${prefixData[0].prefix}')**`;
+            prefixx = `**[${prefixData[0].prefix}](https://www.google.com '${lang(message, "command.config.tooltip.customPrefix")} ${prefixData[0].prefix}')**`;
         }
 
         let logsChannel;
         if (logsData.length === 0) {
-            logsChannel = `[-](${message.author.lastMessage.url} '${lang(message, "command.config.tooltip.noLogs")}')`;
+            logsChannel = `[-](https://www.google.com '${lang(message, "command.config.tooltip.noLogs")}')`;
         } else {
             logsChannel = await message.guild.channels.cache.get(logsData[0].channel);;
         }
 
         let advertEnabled;
         if (advertData.length === 0) {
-            advertEnabled = `[FALSE](${message.author.lastMessage.url} '${lang(message, "command.config.tooltip.antiad.disabled")}')`;
+            advertEnabled = `[FALSE](https://www.google.com '${lang(message, "command.config.tooltip.antiad.disabled")}')`;
         } else {
             if (advertData[0].enabled === 'true') {
-                advertEnabled = `[TRUE](${message.author.lastMessage.url} '${lang(message, "command.config.tooltip.antiad.enabled")}')`;
+                advertEnabled = `[TRUE](https://www.google.com '${lang(message, "command.config.tooltip.antiad.enabled")}')`;
             } else {
-                advertEnabled = `[FALSE](${message.author.lastMessage.url} '${lang(message, "command.config.tooltip.antiad.disabled")}')`;
+                advertEnabled = `[FALSE](https://www.google.com '${lang(message, "command.config.tooltip.antiad.disabled")}')`;
             }
         }
 

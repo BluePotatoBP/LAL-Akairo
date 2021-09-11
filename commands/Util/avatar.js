@@ -27,7 +27,7 @@ class Avatar extends Command {
 	}
 
 	async exec(message, { u }) {
-		await delMsg(message);
+		await delMsg(message, 10000);
 
 		let avatar;
 		let pngicon;

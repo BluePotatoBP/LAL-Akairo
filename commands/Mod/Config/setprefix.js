@@ -27,42 +27,50 @@ class SetPrefix extends Command {
     }
 
     async exec(message, { p }) {
-        await delMsg(message);
-        
+        await delMsg(message, 30000);
+
         const prefixEmbed = new Discord.MessageEmbed()
             .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp();
 
-        let [data] = await DB.query(`SELECT * FROM prefixes WHERE guild = ?`, [message.guild.id]);
+        /* let [data] = await DB.query(`SELECT * FROM prefixes WHERE guild = ?`, [message.guild.id]); */
+        const customPrefix = await customPrefixes.find(c => c.guild === message.guild.id);
 
         if (!p) {
-            if (data.length === 0) {
+            if (!customPrefix) {
                 prefixEmbed.setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }));
                 prefixEmbed.setDescription(`${lang(message, 'command.setprefix.prefixEmbed.desc.one')} \`${process.env.PREFIX}\` \n${lang(message, 'command.setprefix.prefixEmbed.desc.two')} \`${process.env.PREFIX}setprefix [prefix]\``);
                 prefixEmbed.setFooter('Syntax: [] - optional')
                 prefixEmbed.setColor(pastelGreen);
 
-                message.channel.send({ embeds: [prefixEmbed] });
+                await message.channel.send({ embeds: [prefixEmbed] });
             } else {
-                prefixEmbed.setDescription(`${lang(message, 'command.setprefix.prefixEmbed.desc.one')} \`${data[0].prefix}\``);
+                prefixEmbed.setDescription(`${lang(message, 'command.setprefix.prefixEmbed.desc.one')} \`${customPrefix.prefix}\``);
                 prefixEmbed.setColor(pastelGreen);
-                message.channel.send({ embeds: [prefixEmbed] });
+
+                await message.channel.send({ embeds: [prefixEmbed] });
             }
         } else if (p.length > 5) {
             prefixEmbed.setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }));
             prefixEmbed.setDescription(lang(message, 'command.setprefix.prefixEmbed.longPrefix'));
             prefixEmbed.setColor(darkRed);
 
-            message.channel.send({ embeds: [prefixEmbed] });
+            await message.channel.send({ embeds: [prefixEmbed] });
         } else {
-            if (data.length !== 0) {
-                if (data[0].prefix === p) {
+            if (customPrefix) {
+                if (customPrefix.prefix === p) {
                     prefixEmbed.setDescription(`The prefix was already set to: \`${p}\``);
                     prefixEmbed.setColor(darkRed);
 
-                    message.channel.send({ embeds: [prefixEmbed] });
+                    await message.channel.send({ embeds: [prefixEmbed] });
                 } else {
                     await DB.query('UPDATE prefixes SET prefix = ? WHERE guild = ?', [p, message.guild.id]);
+                    let deletePrefix = await customPrefixes.findIndex(c => c.prefix === customPrefix.prefix)
+                    await customPrefixes.splice(deletePrefix, deletePrefix + 1)
+                    await customPrefixes.push({
+                        guild: message.guild.id,
+                        prefix: p
+                    })
 
                     prefixEmbed.setDescription(`${lang(message, 'command.setprefix.prefixEmbed.updatePrefix')} \`${p}\``);
                     prefixEmbed.setColor(pastelGreen);
@@ -71,11 +79,15 @@ class SetPrefix extends Command {
                 }
             } else {
                 await DB.query(`INSERT INTO prefixes (guild, prefix) VALUES(?, ?)`, [message.guild.id, p]);
+                await customPrefixes.push({
+                    guild: message.guild.id,
+                    prefix: p
+                })
 
                 prefixEmbed.setDescription(`${lang(message, 'command.setprefix.prefixEmbed.newPrefix')} \`${p}\``);
                 prefixEmbed.setColor(pastelGreen);
 
-                message.channel.send({ embeds: [prefixEmbed] });
+                await message.channel.send({ embeds: [prefixEmbed] });
             }
         }
     }
