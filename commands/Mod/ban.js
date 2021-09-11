@@ -1,7 +1,7 @@
 const { Command } = require('discord-akairo');
 const { promptMessage, delMsg } = require('../../assets/tools/util');
-const { pastelGreen, darkRed, salmon } = require('../../assets/colors.json');
-const { MessageEmbed } = require('discord.js');
+const { pastelGreen, darkRed } = require('../../assets/colors.json');
+const { MessageEmbed, Permissions } = require('discord.js');
 
 class Ban extends Command {
     constructor() {
@@ -44,7 +44,7 @@ class Ban extends Command {
         if (!role) return message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
         let memberRoles = message.member._roles;
 
-        if (memberRoles.some(r => role.id === r) || message.member.hasPermission('BAN_MEMBERS')) {
+        if (memberRoles.some(r => role.id === r) || message.member.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
             // If theres no reason change 'r' args to "No Reason"
             !r ? r = lang(message, 'command.ban.reason.noReason') : ''
 
@@ -67,7 +67,7 @@ class Ban extends Command {
                 .setTimestamp();
 
             // Check if the user being banned has ban perms
-            if (m.hasPermission('BAN_MEMBERS')) return message.channel.send({ embeds: [ambed] });
+            if (m.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) return message.channel.send({ embeds: [ambed] });
 
             const promptEmbed = new MessageEmbed()
                 .setColor(pastelGreen)
