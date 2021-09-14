@@ -105,7 +105,8 @@ class Staffrole extends Command {
                 message.channel.send({ embeds: [noRoleData] });
 
             } else {
-                rolee = await message.guild.roles.cache.get(getData[0].role);
+                rolee = '\`-\`'
+
 
                 const defaultEmbed = new MessageEmbed()
                     .setAuthor(`${message.author.username} • Staff Role Config`, message.author.displayAvatarURL({ dynamic: true }))
