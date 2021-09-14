@@ -25,7 +25,7 @@ class Userinfo extends Command {
     }
 
     async exec(message, { u }) {
-        await delMsg(message);
+        await delMsg(message, 30000);
 
         // Predefine some vars for later use
         let m = message.guild.members.cache.get(u.id);
