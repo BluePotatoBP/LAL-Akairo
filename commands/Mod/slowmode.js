@@ -72,7 +72,7 @@ class Slowmode extends Command {
                 message.channel.send({ embeds: [embed2] });
             } else if (nr < 0) {
                 const embed = new Discord.MessageEmbed()
-                    .setDescription(`Unfortunately for you funny man, slowmode \`cant\` go below \`0\`.\nPlease \`edit\` your message or retype the command with a positive number.`)
+                    .setDescription(`Unfortunately for you, funny man, slowmode \`cant\` go below \`0\`.\nPlease \`edit\` or resend your message with a positive number.`)
                     .setColor(lightRed)
                     .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
                     .setTimestamp()

@@ -3,6 +3,7 @@ const { Permissions, MessageEmbed } = require('discord.js')
 const { stripIndents } = require('common-tags');
 const { lightRed, crimson } = require('../assets/colors.json');
 const { cutTo } = require('../assets/tools/util');
+const addCooldown = new Set()
 
 module.exports = class ErrorListener extends Listener {
     constructor() {
@@ -14,7 +15,8 @@ module.exports = class ErrorListener extends Listener {
 
     async exec(err, message, command) {
         console.log(err)
-
+        // return if user is on cooldown and define some vars for later
+        if (addCooldown.has(message.author.id)) return;
         const errorID = Math.random().toString(36).substring(7);
         const logChannel = await client.channels.cache.get("818871147156340777");
         const devLogEmbed = new MessageEmbed()
@@ -32,7 +34,7 @@ module.exports = class ErrorListener extends Listener {
                     ID: \`${errorID}\``)
             .setFooter(message.author.tag, message.author.avatarURL({ dynamic: true }))
             .setTimestamp()
-
+        // Check if the bot has permissions to send msgs and embeds
         if (message.guild ? message.channel.permissionsFor(this.client.user).has([Permissions.FLAGS.SEND_MESSAGES, Permissions.FLAGS.EMBED_LINKS]) : true) {
             const userEmbed = new MessageEmbed()
                 .setColor(lightRed)
@@ -43,7 +45,9 @@ module.exports = class ErrorListener extends Listener {
 
             await message.util.send({ embeds: [userEmbed] })
             await logChannel.send({ embeds: [devLogEmbed] })
-
+            // Add user to cooldown so they cant spam the pings
+            addCooldown.add(message.author.id);
+            setTimeout(() => addCooldown.delete(message.author.id), 10000);
         } else if (message.guild ? message.channel.permissionsFor(this.client.user).has(Permissions.FLAGS.SEND_MESSAGES) : true) {
             await message.util.send({
                 content: stripIndents`The \`${command.id}\` command could not be executed.
@@ -51,6 +55,14 @@ module.exports = class ErrorListener extends Listener {
                                                  And heres the invite to the support server: 
                                                  https://discord.gg/v8zkSc9`})
             await logChannel.send({ embeds: [devLogEmbed] })
-        } else await logChannel.send({ embeds: [devLogEmbed] })
+            // Add user to cooldown so they cant spam the pings
+            addCooldown.add(message.author.id);
+            setTimeout(() => addCooldown.delete(message.author.id), 10000);
+        } else {
+            // Add user to cooldown so they cant spam the pings
+            addCooldown.add(message.author.id);
+            setTimeout(() => addCooldown.delete(message.author.id), 10000);
+            await logChannel.send({ embeds: [devLogEmbed] })
+        }
     }
 }
