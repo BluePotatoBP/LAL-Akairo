@@ -26,13 +26,15 @@ class Client extends AkairoClient {
             ownerID: process.env.OWNER,
             intents: [
                 Intents.FLAGS.GUILDS,
+                Intents.FLAGS.GUILD_MEMBERS,
+                Intents.FLAGS.GUILD_BANS,
+                Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
+                Intents.FLAGS.GUILD_INTEGRATIONS,
+                Intents.FLAGS.GUILD_INVITES,
+                Intents.FLAGS.GUILD_PRESENCES,
                 Intents.FLAGS.GUILD_MESSAGES,
                 Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-                Intents.FLAGS.GUILD_PRESENCES,
-                Intents.FLAGS.GUILD_INVITES,
-                Intents.FLAGS.GUILD_BANS,
-                Intents.FLAGS.GUILD_MEMBERS,
-                Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS
+                Intents.FLAGS.GUILD_MESSAGE_TYPING
             ],
             allowedMentions: { parse: ['users'], repliedUser: true },
             disableMentions: 'everyone'
@@ -42,7 +44,7 @@ class Client extends AkairoClient {
             prefix: async (message) => {
                 if (message.channel.type === 'DM') return process.env.PREFIX;
                 const customPrefix = customPrefixes.find(c => c.guild === message.guild.id);
-                return !customPrefix.prefix ? process.env.PREFIX : customPrefix.prefix;
+                return !customPrefix ? process.env.PREFIX : customPrefix.prefix;
             },
             blockBots: true,
             blockClient: true,
