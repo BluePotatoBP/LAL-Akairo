@@ -1,7 +1,8 @@
 {
     "index.prompt.modifyStart.footer": "Schreib cancel um den Command abzubrechen.",
     "index.prompt.modifyRetry.footer": "Schreib cancel um den Command abzubrechen.",
-    "index.prompt.cancel.footer": "Der Command wurde abgebrochen.",
+    "index.prompt.cancel.desc": "Der Command wurde abgebrochen.",
+    "index.prompt.failed.desc": "Sie konnten keine Befehlsargumente angeben.",
 
     "staffroleEmbed.noneFound": "Ich konnte keine Moderator-Rolle finden, bitte lege eine fest mit ",
     "staffroleEmbed.desc1": "❌ Nur Nutzer mit der Rolle",
@@ -198,10 +199,10 @@
     "command.ban.promptEmbed.title": "Die Verifikation wird in 30 Sekunden ungültig.",
     "command.ban.promptEmbed.desc.one": "Bist du sicher, dass du",
     "command.ban.promptEmbed.desc.two": "für den folgenden Grund bannen möchtest: ",
-    "command.ban.messageAfterBan.one": "bannte",
+    "command.ban.messageAfterBan.one": "%AUTHOR_TAG% bannte",
     "command.ban.messageAfterBan.two": "Grund:",
     "command.ban.banCanceled.desc": "wurde nicht gebannt.",
-    "command.ban.banCanceled.footer": "Grund: Abgebrochen von",
+    "command.ban.banCanceled.footer": "Grund: Abgebrochen von %AUTHOR_USERNAME%",
 
     "command.kick.desc.content": "Kicke einen Nutzer mit einem Grund.",
     "command.kick.prompt.start": "Bit gib einen Benutzer an. `(@Erwähnung/Benutzername/Diskriminator/ID)`.\nDu kannst es jetzt senden oder einfach den Command noch einmal schreiben.",
@@ -213,10 +214,10 @@
     "command.kick.promptEmbed.title": "Die Verifikation wird in 30 Sekunden ungültig.",
     "command.kick.promptEmbed.desc.one": "Bist du sicher, dass du",
     "command.kick.promptEmbed.desc.two": "für den folgenden Grund kicken möchtest: ",
-    "command.kick.messageAfterBan.one": "kickte",
-    "command.kick.messageAfterBan.two": "Grund:",
-    "command.kick.banCanceled.desc": "wurde nicht gekickt.",
-    "command.kick.banCanceled.footer": "Grund: Abgebrochen von",
+    "command.kick.messageAfterKick.one": "**%AUTHOR_TAG%** kickte",
+    "command.kick.messageAfterKick.two": "Grund:",
+    "command.kick.kickCanceled.desc": "wurde nicht gekickt.",
+    "command.kick.kickCanceled.footer": "Grund: Abgebrochen von %AUTHOR_USERNAME%",
 
     "command.language.desc.content": "Ändere die Sprache für diesen Server\n**Momentan unterstützte Sprachen:** `english`, `german` \n",
     "command.language.prompt.start": "Bitte gib eine gültige Sprache an.\nVerfügbare Sprachen:\n`english`\n`german`\n\nFalls du helfen möchtest LAL zu übersetzen:\n`contribute`\n\nDu kannst die Argumente entweder gleich senden oder den Command wiederholen.",

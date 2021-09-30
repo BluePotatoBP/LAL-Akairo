@@ -45,9 +45,9 @@ class Poll extends Command {
         delMsg(message, 30000)
 
         let cachedGuild = staffRole.find(c => c.guild == message.guild.id)
-        if (!cachedGuild) return message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
+        if (!cachedGuild) return await message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
         let role = message.guild.roles.cache.get(cachedGuild.role)
-        if (!role) return message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
+        if (!role) return await message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
         let memberRoles = message.member._roles;
 
         if (memberRoles.some(r => role.id === r)) {
@@ -61,13 +61,13 @@ class Poll extends Command {
 
             if (c) {
                 // Sends embed and reacts
-                c.send({ embeds: [embed] }).then(async (message) => {
+                await c.send({ embeds: [embed] }).then(async (message) => {
                     await message.react('🔺');
                     await message.react('🔻');
                 });
             } else {
                 // Sends embed and reacts
-                message.channel.send({ embeds: [embed] }).then(async (message) => {
+                await message.channel.send({ embeds: [embed] }).then(async (message) => {
                     await message.react('🔺');
                     await message.react('🔻');
                 });
@@ -79,7 +79,7 @@ class Poll extends Command {
                 .setColor(darkRed)
                 .setTimestamp()
 
-            message.channel.send({ embeds: [staffroleEmbed] }).then(m => delMsg(m, 5000));
+            await message.channel.send({ embeds: [staffroleEmbed] }).then(m => delMsg(m, 5000));
         }
     }
 }

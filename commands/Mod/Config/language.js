@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
-const Discord = require('discord.js');
-const { crimson } = require('../../../assets/colors.json');
+const { MessageEmbed, Permissions } = require('discord.js');
+const { crimson, darkRed } = require('../../../assets/colors.json');
 const { delMsg } = require('../../../assets/tools/util');
 
 class Language extends Command {
@@ -11,7 +11,6 @@ class Language extends Command {
             ownerOnly: false,
             cooldown: 5000,
             ratelimit: 2,
-            userPermissions: ['MANAGE_GUILD'],
             description: {
                 content: '',
                 usage: '[language]',
@@ -56,23 +55,30 @@ class Language extends Command {
             let [guildLanguageDB] = await DB.query(`SELECT * FROM languages WHERE guild = ? `, [
                 message.guild.id
             ]);
-            let languageInArrayFind = guildLanguages.find((c) => c.guildID == message.guild.id);
+            let languageInArrayFind = await guildLanguages.find((c) => c.guildID == message.guild.id);
 
             if (i == 'showLan') {
                 let currentLan = languageInArrayFind ? languageInArrayFind.lan : 'english';
-                const currentLang = new Discord.MessageEmbed()
+                const currentLang = new MessageEmbed()
                     .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
                     .setDescription(`${lang(message, 'command.language.currentLang.desc1')} \`${currentLan}\`\n\n${lang(message, "command.language.currentLang.desc2")} \`${process.env.PREFIX}language [language]\`\n\n**${lang(message, "command.language.currentLang.desc3")}**\n\`english, german\``)
                     .setFooter('Syntax: [] - optional')
                     .setColor(crimson)
                     .setTimestamp();
 
-                return message.channel.send({ embeds: [currentLang] });
+                return await message.channel.send({ embeds: [currentLang] });
             }
 
+            const noPermsEmbed = new MessageEmbed()
+                .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
+                .setDescription(`<a:cancel:773201205056503849> You are missing the \`MANAGE_GUILD\` permissions.`)
+                .setColor(darkRed)
+                .setTimestamp()
+
+            if (!message.author.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) return await message.channel.send({ embeds: [noPermsEmbed] });
+
             if (languageInArrayFind) languageInArrayFind.lan = i;
-            if (!languageInArrayFind)
-                guildLanguages.push({
+            if (!languageInArrayFind) guildLanguages.push({
                     guildID: message.guild.id,
                     lan: i
                 });
@@ -82,20 +88,19 @@ class Language extends Command {
             if (guildLanguageDB.length > 0)
                 await DB.query(`UPDATE languages SET language = ? WHERE guild = ?`, [i, message.guild.id]);
 
-            const langUpdate = new Discord.MessageEmbed()
+            const langUpdate = new MessageEmbed()
                 .setDescription(`${lang(message, 'command.language.langUpdate.desc')} \`${i}\``)
                 .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
                 .setColor(crimson)
                 .setTimestamp();
 
-            await message.channel.send({ embeds: [langUpdate] });
+            await await message.channel.send({ embeds: [langUpdate] });
         } else {
-            let sentContr;
-            const contEmbed = new Discord.MessageEmbed()
+            const contEmbed = new MessageEmbed()
                 .setDescription(lang(message, 'command.language.contEmbed.desc'))
                 .setColor(crimson);
-            sentContr = await message.util.send({ embeds: [contEmbed] });
-            sentContr = await message.util.send({ files: ['./assets/languages/lang/english.json'] });
+            await message.util.send({ embeds: [contEmbed] });
+            await message.util.send({ files: ['./assets/languages/lang/english.json'] });
         }
     }
 }

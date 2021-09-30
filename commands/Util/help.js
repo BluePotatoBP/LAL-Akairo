@@ -18,12 +18,12 @@ class Help extends Command {
                 usage: '[command}',
                 syntax: '[] - optional'
             },
-            * args(message) {
+            * args() {
                 const command = yield {
                     type: Argument.union("commandAlias", "command"),
                     prompt: {
-                        start: `What command would you like to check?`,
-                        retry: `I didn't quite get that, what command would you like to check?`,
+                        start: (message) => lang(message, "command.help.args.start"),
+                        retry: (message) => lang(message, "command.help.args.retry"),
                         optional: true
                     }
                 }
@@ -35,16 +35,22 @@ class Help extends Command {
     async exec(message, { command }) {
         await delMsg(message, 60000)
 
-        let [data] = await DB.query(`SELECT * FROM prefixes WHERE guild = ?`, [message.guild.id]);
-        let prefix;
+        // Get the guild prefix from cache
+        let customPrefix = customPrefixes.find(c => c.guild === message.guild.id);
+        const prefix = !customPrefix ? process.env.PREFIX : customPrefix.prefix;
+        const noCommandFound = this.client.util.embed()
+        .setTitle(lang(message, "command.help.noCommandEmbed.title.content"))
+        .setDescription(lang(message, "command.help.noCommandEmbed.desc.content"))
+        .setColor(lightRed)
+        .setFooter(lang(message, "command.help.noCommandEmbed.footer.content"), message.author.displayAvatarURL({ dynamic: true }))
+        .setTimestamp()
 
-        data.length === 0 ? prefix = process.env.PREFIX : prefix = await data[0].prefix;
-
-        if (message.guild.members.cache.get(this.client.user.id).permissions.has(Permissions.FLAGS.ADD_REACTIONS)) { // If the bot has perms to add reactions use new help
+        // If the bot has perms to add reactions use new help
+        if (message.guild.members.cache.get(this.client.user.id).permissions.has(Permissions.FLAGS.ADD_REACTIONS)) { 
             if (command) { // If user gave cmd args, show cmd info
                 try {
                     const embed = new MessageEmbed()
-                        .setDescription(stripIndents`${lang(message, 'command.help.embedtwo.desc.one')} \`${prefix}\`\n 
+                        .setDescription(stripIndents`${lang(message, 'command.help.embedtwo.desc.one')}\n 
                         **${lang(message, 'command.help.embedtwo.desc.two')} **${command.categoryID.toLowerCase() === 'nsfw' ? `|| \`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\` ||` : `\`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\``}
                         **${lang(message, 'command.help.embedtwo.desc.three')}** ${lang(message, `command.${command.id}.desc.content`)}
                         **${lang(message, 'command.help.embedtwo.desc.four')}** ${command.description.usage ? `\`${prefix}${command.id} ${command.description.usage}\`` : lang(message, 'command.help.embedtwo.desc.five')}
@@ -54,34 +60,27 @@ class Help extends Command {
                         .setFooter(`${lang(message, 'command.help.embedtwo.desc.eight')} ${command.description.syntax ? `${command.description.syntax}` : lang(message, 'command.help.embedtwo.desc.nine')}`)
                         .setTimestamp()
 
-                    return message.util.send({ embeds: [embed] });
+                    return await message.util.send({ embeds: [embed] });
                 } catch (error) {
-                    const noCommandFound = this.client.util.embed()
-                        .setTitle(`${this.client.user.username} Help | Search`)
-                        .setDescription("No command found, try again.")
-                        .setColor(lightRed)
-                        .setFooter(`Requested by ${message.author.username}`, message.author.displayAvatarURL({ dynamic: true }))
-                        .setTimestamp()
-
-                    message.util.send({ embeds: [noCommandFound] })
+                    await message.util.send({ embeds: [noCommandFound] })
                 }
             } else { //No command given. send main embed
 
                 const homeEmbed = new MessageEmbed()
-                    .addField("<:home:817848932209393725> | Home", "Returns to this page")
-                    .addField("<:library:817848932364845067> | Commands", "Shows all categories along with their commands")
-                    .addField("<:search:817848932566695986> | Search", "Search for any command or alias")
-                    .addField("<:exit:817890713190662146> | Exit", "Cancel this command")
+                    .addField(lang(message, "command.help.homeEmbed.field.one.title.content"), lang(message, "command.help.homeEmbed.field.one.value.content"))
+                    .addField(lang(message, "command.help.homeEmbed.field.two.title.content"), lang(message, "command.help.homeEmbed.field.two.value.content"))
+                    .addField(lang(message, "command.help.homeEmbed.field.three.title.content"), lang(message, "command.help.homeEmbed.field.three.value.content"))
+                    .addField(lang(message, "command.help.homeEmbed.field.four.title.content"), lang(message, "command.help.homeEmbed.field.four.value.content"))
                     .setThumbnail(this.client.user.displayAvatarURL({ dynamic: true }))
-                    .setFooter(`Requested by ${message.author.username}`, message.author.displayAvatarURL({ dynamic: true }))
+                    .setFooter(lang(message, "command.help.noCommandEmbed.footer.content"), message.author.displayAvatarURL({ dynamic: true }))
                     .setColor(crimson)
                     .setTimestamp()
 
                 const commandsEmbed = new MessageEmbed()
-                    .setTitle(`${this.client.user.username} Help | Commands`)
-                    .setDescription(`View all commands and their categories below\nFor further info about a specific command, use \`${prefix}help <Command>\``)
+                    .setTitle(lang(message, "command.help.commandsEmbed.title.content"))
+                    .setDescription(lang(message, "command.help.commandsEmbed.desc.content"))
                     .setColor(crimson)
-                    .setFooter(`Requested by ${message.author.username}`, message.author.displayAvatarURL({ dynamic: true }))
+                    .setFooter(lang(message, "command.help.noCommandEmbed.footer.content"), message.author.displayAvatarURL({ dynamic: true }))
                     .setTimestamp()
 
                 for (const category of this.handler.categories.values()) {
@@ -110,17 +109,10 @@ class Help extends Command {
                 // Define action row and add buttons components
                 const buttonRow = new MessageActionRow().addComponents([homeBtn, listBtn, searchBtn, exitBtn]);
                 // Send initial message
-                const msg = await message.util.reply({ embeds: [homeEmbed], components: [buttonRow] })
-
-                // Filter for a button with id 'primary' and for specific user clicking it
+                const msg = await message.reply({ embeds: [homeEmbed], components: [buttonRow] })
                 const filter = i => i.user.id === message.author.id;
                 // Create a message component collector (long ass name \/)
-                const buttonCollector = msg.channel.createMessageComponentCollector({ filter, time: 60000 });
-
-                const exitEmbed = new MessageEmbed()
-                    .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
-                    .setDescription(`<a:cancel:773201205056503849> Help command canceled.\n\n**Reason:** manually closed`)
-                    .setTimestamp()
+                const buttonCollector = await msg.channel.createMessageComponentCollector({ filter, time: 60000 });
 
                 let searchCollector;
 
@@ -136,10 +128,10 @@ class Help extends Command {
                             await i.deferUpdate();
 
                             const searchEmbed = new MessageEmbed()
-                                .setTitle(`${this.client.user.username} Help | Search`)
-                                .setDescription("Find commands or aliases by typing a query")
+                                .setTitle(lang(message, "command.help.noCommandEmbed.title.content"))
+                                .setDescription(lang(message, "command.help.searchEmbed.desc.content"))
                                 .setColor(crimson)
-                                .setFooter(`Requested by ${message.author.username}`, message.author.displayAvatarURL({ dynamic: true }))
+                                .setFooter(lang(message, "command.help.noCommandEmbed.footer.content"), message.author.displayAvatarURL({ dynamic: true }))
                                 .setTimestamp()
 
                             await message.util.send({ embeds: [searchEmbed] });
@@ -150,27 +142,18 @@ class Help extends Command {
                             searchCollector = await msg.channel.createMessageCollector({ filter, time: 30000 });
                             // On collect do funny
                             searchCollector.on("collect", async c => {
-
                                 if (c.content.toLowerCase() === "cancel") return await message.util.send({ embeds: [homeEmbed] })
 
                                 let resolveType = await this.client.commandHandler.resolver.type("commandAlias");
                                 let command = await resolveType(message, c.content);
 
                                 if (!command) {
-
-                                    const noCommandFound = new MessageEmbed()
-                                        .setTitle(`${this.client.user.username} Help | Search`)
-                                        .setDescription("No command found, try again.")
-                                        .setColor(lightRed)
-                                        .setFooter(`Requested by ${message.author.username}`, message.author.displayAvatarURL({ dynamic: true }))
-                                        .setTimestamp()
-
                                     await message.util.send({ embeds: [noCommandFound] })
                                 } else {
 
                                     const commandHelp = new MessageEmbed()
-                                        .setTitle(`${this.client.user.username} Help | Search Result`)
-                                        .setDescription(stripIndents`${lang(message, 'command.help.embedtwo.desc.one')} \`${prefix}\`\n
+                                        .setTitle(lang(message, "command.help.embedtwo.title.content"))
+                                        .setDescription(stripIndents`${lang(message, 'command.help.embedtwo.desc.one')}\n
                                                                       **Command:** ${command.categoryID.toLowerCase() === 'nsfw' ? `|| \`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\` ||` : `\`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\``}
                                                                       **Description:** ${lang(message, `command.${command.id}.desc.content`)}
                                                                       **Usage:** ${command.description.usage ? `\`${prefix}${command.id} ${command.description.usage}\`` : lang(message, 'command.help.embedtwo.desc.five')}
@@ -185,9 +168,8 @@ class Help extends Command {
                             })
                             break;
                         case "exit":
-                            await i.update({ embeds: [exitEmbed], components: [] });
+                            await i.update({ components: [] });
                             await buttonCollector.stop();
-                            await searchCollector.stop()
 
                             break;
                     }
@@ -205,7 +187,7 @@ class Help extends Command {
 
                     if (title == 'default') { continue } else if (title) {
                         const dir = category.map((cmd) => `${cmd.categoryID.toLowerCase() == 'nsfw' ? `|| ${cmd} ||` : cmd}`).join(', ');
-                        embed.setDescription(`${lang(message, 'command.help.embed.desc.one')} \`${prefix}\` \n${lang(message, 'command.help.embed.desc.two')} \`${this.client.user.username}\`:`);
+                        embed.setDescription(lang(message, 'command.help.embed.desc.one'));
                         embed.addField(`> ${category} (${category.size}):`, dir);
                     }
                 }
@@ -215,11 +197,11 @@ class Help extends Command {
 
                 await message.util.send({ embeds: [embed] });
             } else { // If theres a command input show cmd info
-                if (!command) return message.util.send({ embeds: [embed.setTitle(lang(message, 'command.help.embed.title.one')).setDescription(`${lang(message, 'command.help.embed.title.desc.one')} \`${prefix}help\` ${lang(message, 'command.help.embed.title.desc.two')}`)] });
+                if (!command) return await message.util.send({ embeds: [embed.setTitle(lang(message, 'command.help.embed.title.one')).setDescription(`${lang(message, 'command.help.embed.title.desc.one')} \`${prefix}help\` ${lang(message, 'command.help.embed.title.desc.two')}`)] });
 
                 console.log(`${debug('[DEBUG]')} '${message.author.tag}'[${message.author.id}] used ${chalk.gray(`"${prefix}help ${command.id.toLowerCase()}"`)} in '${message.guild.name}'[${message.guild.id}]`);
 
-                embed.setDescription(stripIndents`${lang(message, 'command.help.embedtwo.desc.one')} \`${prefix}\`\n 
+                embed.setDescription(stripIndents`${lang(message, 'command.help.embedtwo.desc.one')}\n 
                 **${lang(message, 'command.help.embedtwo.desc.two')} **${command.categoryID.toLowerCase() === 'nsfw' ? `|| \`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\` ||` : `\`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\``}
                 **${lang(message, 'command.help.embedtwo.desc.three')}** ${lang(message, `command.${command.id}.desc.content`)}
                 **${lang(message, 'command.help.embedtwo.desc.four')}** ${command.description.usage ? `\`${prefix}${command.id} ${command.description.usage}\`` : lang(message, 'command.help.embedtwo.desc.five')}
@@ -228,7 +210,7 @@ class Help extends Command {
 
                 embed.setFooter(`${lang(message, 'command.help.embedtwo.desc.eight')} ${command.description.syntax ? `${command.description.syntax}` : lang(message, 'command.help.embedtwo.desc.nine')}`);
 
-                return message.util.send({ embds: [embed] });
+                return await message.util.send({ embds: [embed] });
             }
         }
     }

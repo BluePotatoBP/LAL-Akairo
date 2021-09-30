@@ -10,7 +10,7 @@ class Config extends Command {
             userPermissions: ['MANAGE_GUILD'],
             category: 'Mod',
             ownerOnly: false,
-            cooldown: 5000,
+            cooldown: 10000,
             ratelimit: 2,
             description: {
                 content: '',
@@ -55,68 +55,75 @@ class Config extends Command {
 
     async exec(message, { action }) {
         await delMsg(message, 60000);
-        
+
         let [logsData] = await DB.query(`SELECT * FROM logs WHERE guild = ?`, [message.guild.id]);
         let [staffroleData] = await DB.query(`SELECT * FROM staffrole WHERE guild = ?`, [message.guild.id]);
         let [prefixData] = await DB.query(`SELECT * FROM prefixes WHERE guild = ?`, [message.guild.id]);
         let [advertData] = await DB.query(`SELECT * FROM antiAdvert WHERE guild = ?`, [message.guild.id]);
 
         let staffRole;
-        if (staffroleData.length === 0) {
-            staffRole = `[-](https://www.google.com '${lang(message, "command.config.tooltip.noStaffrole")}')`;
-        } else {
-            staffRole = await message.guild.roles.cache.get(staffroleData[0].role);
-        }
+        staffroleData.length === 0 ? staffRole = `[-](https://www.google.com '${lang(message, "command.config.tooltip.noStaffrole")}')` : staffRole = await message.guild.roles.cache.get(staffroleData[0].role);
+        /*         if (staffroleData.length === 0) {
+                    staffRole = `[-](https://www.google.com '${lang(message, "command.config.tooltip.noStaffrole")}')`;
+                } else {
+                    staffRole = await message.guild.roles.cache.get(staffroleData[0].role);
+                } */
 
         let prefixx;
-        if (prefixData.length === 0) {
-            prefixx = '.';
-        } else {
-            prefixx = `**[${prefixData[0].prefix}](https://www.google.com '${lang(message, "command.config.tooltip.customPrefix")} ${prefixData[0].prefix}')**`;
-        }
+        prefixData.length === 0 ? prefix = '.' : prefixx = `**[${prefixData[0].prefix}](https://www.google.com '${lang(message, "command.config.tooltip.customPrefix")} ${prefixData[0].prefix}')**`;
+        /*         if (prefixData.length === 0) {
+                    prefixx = '.';
+                } else {
+                    prefixx = `**[${prefixData[0].prefix}](https://www.google.com '${lang(message, "command.config.tooltip.customPrefix")} ${prefixData[0].prefix}')**`;
+                } */
 
         let logsChannel;
-        if (logsData.length === 0) {
-            logsChannel = `[-](https://www.google.com '${lang(message, "command.config.tooltip.noLogs")}')`;
-        } else {
-            logsChannel = await message.guild.channels.cache.get(logsData[0].channel);;
-        }
+        logsData.length === 0 ? logsChannel = `[-](https://www.google.com '${lang(message, "command.config.tooltip.noLogs")}')` : logsChannel = await message.guild.channels.cache.get(logsData[0].channel);
+        /*         if (logsData.length === 0) {
+                    logsChannel = `[-](https://www.google.com '${lang(message, "command.config.tooltip.noLogs")}')`;
+                } else {
+                    logsChannel = await message.guild.channels.cache.get(logsData[0].channel);
+                } */
 
         let advertEnabled;
-        if (advertData.length === 0) {
-            advertEnabled = `[FALSE](https://www.google.com '${lang(message, "command.config.tooltip.antiad.disabled")}')`;
-        } else {
-            if (advertData[0].enabled === 'true') {
-                advertEnabled = `[TRUE](https://www.google.com '${lang(message, "command.config.tooltip.antiad.enabled")}')`;
-            } else {
-                advertEnabled = `[FALSE](https://www.google.com '${lang(message, "command.config.tooltip.antiad.disabled")}')`;
-            }
-        }
+        advertData.length === 0 ? advertEnabled = `[FALSE](https://www.google.com '${lang(message, "command.config.tooltip.antiad.disabled")}')` : advertData[0].enabled === 'true' ? advertEnabled = `[TRUE](https://www.google.com '${lang(message, "command.config.tooltip.antiad.enabled")}')` : advertEnabled = `[FALSE](https://www.google.com '${lang(message, "command.config.tooltip.antiad.disabled")}')`;
+        /*         if (advertData.length === 0) {
+                    advertEnabled = `[FALSE](https://www.google.com '${lang(message, "command.config.tooltip.antiad.disabled")}')`;
+                } else {
+                    if (advertData[0].enabled === 'true') {
+                        advertEnabled = `[TRUE](https://www.google.com '${lang(message, "command.config.tooltip.antiad.enabled")}')`;
+                    } else {
+                        advertEnabled = `[FALSE](https://www.google.com '${lang(message, "command.config.tooltip.antiad.disabled")}')`;
+                    }
+                } */
 
         let advertExcludeStaff;
-        if (advertData.length === 0) {
-            advertExcludeStaff = `<:xCircle:801085848829034566>`;
-        } else {
-            if (advertData[0].excludeStaff === 'true') {
-                advertExcludeStaff = `<:checkCircle:801085028938285088>`;
-            } else {
-                advertExcludeStaff = `<:xCircle:801085848829034566>`;
-            }
-        }
+        advertData.length === 0 ? advertExcludeStaff = `<:xCircle:801085848829034566>` : advertData[0].excludeStaff === 'true' ? advertExcludeStaff = `<:checkCircle:801085028938285088>` : advertExcludeStaff = `<:xCircle:801085848829034566>`;
+        /*         if (advertData.length === 0) {
+                    advertExcludeStaff = `<:xCircle:801085848829034566>`;
+                } else {
+                    if (advertData[0].excludeStaff === 'true') {
+                        advertExcludeStaff = `<:checkCircle:801085028938285088>`;
+                    } else {
+                        advertExcludeStaff = `<:xCircle:801085848829034566>`;
+                    }
+                } */
 
         let advertExcludeBots;
-        if (advertData.length === 0) {
-            advertExcludeBots = `<:xCircle:801085848829034566>`;
-        } else {
-            if (advertData[0].excludeBots === 'true') {
-                advertExcludeBots = `<:checkCircle:801085028938285088>`;
-            } else {
-                advertExcludeBots = `<:xCircle:801085848829034566>`;
-            }
-        }
+        advertData.length === 0 ? advertExcludeBots = `<:xCircle:801085848829034566>` : advertData[0].excludeBots === 'true' ? advertExcludeBots = `<:checkCircle:801085028938285088>` : advertExcludeBots = `<:xCircle:801085848829034566>`;
+        /*         if (advertData.length === 0) {
+                    advertExcludeBots = `<:xCircle:801085848829034566>`;
+                } else {
+                    if (advertData[0].excludeBots === 'true') {
+                        advertExcludeBots = `<:checkCircle:801085028938285088>`;
+                    } else {
+                        advertExcludeBots = `<:xCircle:801085848829034566>`;
+                    }
+                } */
 
         let advertWarn;
-        if (advertData.length === 0) {
+        advertData.length === 0 ? advertWarn = `<:xCircle:801085848829034566>` : advertData[0].warn === 'true' ? advertWarn = `<:checkCircle:801085028938285088>` : advertWarn = `<:xCircle:801085848829034566>`;
+        /* if (advertData.length === 0) {
             advertWarn = `<:xCircle:801085848829034566>`;
         } else {
             if (advertData[0].warn === 'true') {
@@ -124,7 +131,7 @@ class Config extends Command {
             } else {
                 advertWarn = `<:xCircle:801085848829034566>`;
             }
-        }
+        } */
 
         if (action === 'list') {
             const embed = new MessageEmbed()
@@ -139,7 +146,7 @@ class Config extends Command {
                                  **├ <:prefix:801057237547221013> Guild Prefix:**
                                  **├** *⤷* ${prefixx}
                                  **├ <:antiad:801073624584159232> Anti Advert:**
-                                 **├** *⤷* Active: ${advertEnabled}
+                                 **├** *⤷* Enabled: ${advertEnabled}
                                  **├** *⤷* Exclude Staff: ${advertExcludeStaff}
                                  **├** *⤷* Exclude Bots: ${advertExcludeBots}
                                  **├** *⤷* Warn: ${advertWarn}

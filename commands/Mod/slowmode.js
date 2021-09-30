@@ -51,9 +51,9 @@ class Slowmode extends Command {
         delMsg(message, 30000)
 
         let cachedGuild = staffRole.find(c => c.guild == message.guild.id)
-        if (!cachedGuild) return message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
+        if (!cachedGuild) return await message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
         let role = message.guild.roles.cache.get(cachedGuild.role)
-        if (!role) return message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
+        if (!role) return await message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
         let memberRoles = message.member._roles;
 
         if (memberRoles.some(r => role.id === r)) {
@@ -69,7 +69,7 @@ class Slowmode extends Command {
                     .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
                     .setTimestamp();
 
-                message.channel.send({ embeds: [embed2] });
+                await message.channel.send({ embeds: [embed2] });
             } else if (nr < 0) {
                 const embed = new Discord.MessageEmbed()
                     .setDescription(`Unfortunately for you, funny man, slowmode \`cant\` go below \`0\`.\nPlease \`edit\` or resend your message with a positive number.`)
@@ -97,14 +97,14 @@ class Slowmode extends Command {
                         embed.setDescription(`${lang(message, 'command.slowmode.embed.slowMessage.previous')}\n\`\`\`• ${ms(rateLimit * 1000)}\n\`\`\``);
                     }
 
-                    channelOpt.messages.channel.setRateLimitPerUser(msToSeconds);
+                    await channelOpt.messages.channel.setRateLimitPerUser(msToSeconds);
 
                     embed.setTitle(`${slowMessage} \`${msToSeconds}\` ${lang(message, 'command.slowmode.embed.slowMessage.seconds')}`);
                     embed.setColor(crimson);
                     embed.setFooter(`${message.author.username} | #${channelOpt.messages.channel.name}`, message.author.displayAvatarURL({ dynamic: true }));
                     embed.setTimestamp();
 
-                    message.channel.send({ embeds: [embed] });
+                    await message.channel.send({ embeds: [embed] });
                 } else if (reset) {
 
                     channelOpt.messages.channel.setRateLimitPerUser(0);
@@ -115,7 +115,7 @@ class Slowmode extends Command {
                     embed.setFooter(`${message.author.username} | #${channelOpt.messages.channel.name}`, message.author.displayAvatarURL({ dynamic: true }));
                     embed.setTimestamp();
 
-                    message.channel.send({ embeds: [embed] });
+                    await message.channel.send({ embeds: [embed] });
                 } else {
                     const embed3 = new Discord.MessageEmbed()
                         .setDescription(`Current slowmode in ${channelOpt.messages.channel} channel:\n\`\`\`${rateLimit ? ms(rateLimit * 1000) : `0s`}\`\`\``)
@@ -123,7 +123,7 @@ class Slowmode extends Command {
                         .setFooter(`${message.author.username} | #${channelOpt.messages.channel.name}`, message.author.displayAvatarURL({ dynamic: true }))
                         .setTimestamp()
 
-                    message.channel.send({ embeds: [embed3] })
+                    await message.channel.send({ embeds: [embed3] })
                 }
             }
         } else {
@@ -133,7 +133,7 @@ class Slowmode extends Command {
                 .setColor(darkRed)
                 .setTimestamp()
 
-            message.channel.send({ embeds: [staffroleEmbed] }).then(m => delMsg(m, 5000)).catch(e => { });
+            await message.channel.send({ embeds: [staffroleEmbed] }).then(m => delMsg(m, 5000)).catch(e => { });
         }
     }
 }

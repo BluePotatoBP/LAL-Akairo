@@ -37,20 +37,24 @@ class Eval extends Command {
         const token = this.client.token.split('').join('[^]{0,2}');
         const rev = this.client.token.split('').reverse().join('[^]{0,2}');
         const tokenRegex = new RegExp(`${token}|${rev}`, 'g');
+        let evaluated;
 
-        let evaluated = inspect(eval(aw ? `(async() => { ${code} })()` : code, { depth: 1 }).catch(async (error) => {
-            const evalembed = new Discord.MessageEmbed()
-                .setAuthor('I did it boss, bwut thewes an oopsie fow suwe...', client.user.displayAvatarURL({ dynamic: true }))
-                .addField('Input Code', `\`\`\`\n${code}\n\`\`\``)
-                .addField('Output Code', `\n\`\`\`${error.message}\`\`\`\n`, { maxLength: 1900 })
-                .setColor(darkRed);
+        if (JSON.stringify(code).match(/(process.env.DISCORD_TOKEN|this.client.token|client.token)/gmi)) return await message.channel.send({ content: "ha ha eat my ass"});
 
-            return await message.channel.send({ embeds: [evalembed] });
-        }));
+        try {
+            evaluated = inspect(await eval(aw ? `(async() => { ${code} })()` : code, { depth: 1 })); 
+            evaluated.replace(tokenRegex, '[FUCK YOU]')
+        } catch (error) {
+                const evalembed = new Discord.MessageEmbed()
+                    .setAuthor('I did it boss, bwut thewes an oopsie fow suwe...', client.user.displayAvatarURL({ dynamic: true }))
+                    .addField('Input Code', `\`\`\`\n${code}\n\`\`\``)
+                    .addField('Output Code', `\n\`\`\`${error.message}\`\`\`\n`, { maxLength: 1900 })
+                    .setColor(darkRed);
+    
+                return await message.channel.send({ embeds: [evalembed] });
+        }
 
-        evaluated = evaluated.replace(tokenRegex, '[TOKEN]');
-
-        if (evaluated.length > 1900) {
+        if (evaluated && evaluated.length > 1900) {
             let wmessage = await message.channel.send({ content: 'Output is too long, creating a pastebin link... <a:gears:773203929507823617>' });
             // Log into pastebin and create a paste
             paste.login('BluePotatoBP', process.env.PASTEBINPASSWORD, function (success, data) {

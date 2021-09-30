@@ -14,11 +14,12 @@ module.exports = class cooldownReact extends Listener {
 
         if (cooldown.has(message.author.id)) return;
 
-        await message.react("⏰").then(setTimeout(async () => { await message.reactions.cache.get("⏰").remove().catch(e => console.error(e)) }, remaining)).catch(e => { });
+        await message.react("⏰")
+        setTimeout(async () => {
+            await message.reactions.cache?.get("⏰").remove().catch(e => { })
+        }, remaining);
 
         cooldown.add(message.author.id);
-        setTimeout(() => {
-            cooldown.delete(message.author.id)
-        }, 5000)
+        setTimeout(() => { cooldown.delete(message.author.id) }, 5000)
     }
 };

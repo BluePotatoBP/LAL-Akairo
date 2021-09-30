@@ -9,13 +9,8 @@ module.exports = class commandCancelledListener extends Listener {
 	}
 
 	async exec(message) {
-		let promptMsgFind = await promptFilter.find(
-			(c) => c.userID == message.author.id && c.channelID == message.channel.id
-		);
-
-		if (!promptMsgFind) {
-			return;
-		}
+		let promptMsgFind = await promptFilter.find(c => c.userID == message.author.id && c.channelID == message.channel.id);
+		if (!promptMsgFind) return;
 
 		for (let i = 0; i < promptFilter.length; i++) {
 			if (promptFilter[i].userID === message.author.id && promptFilter[i].channelID === message.channel.id) {
@@ -27,12 +22,7 @@ module.exports = class commandCancelledListener extends Listener {
 		try {
 			let channel = message.guild.channels.cache.get(promptMsgFind.channelID);
 			let fetchMsg = await channel.messages.fetch(promptMsgFind.msgID);
-			if (fetchMsg)
-				await fetchMsg.delete({
-					timeout: 5000
-				});
-		} catch (e) {
-			console.log(e.toString());
-		}
+			if (fetchMsg) setTimeout(async () => { await fetchMsg.delete().catch(() => { }) }, 5000);
+		} catch (e) { console.log(e) }
 	}
 };

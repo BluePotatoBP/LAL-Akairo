@@ -39,9 +39,9 @@ class Kick extends Command {
         await delMsg(message, 30000);
 
         let cachedGuild = staffRole.find(c => c.guild == message.guild.id)
-        if (!cachedGuild) return message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
+        if (!cachedGuild) return await message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
         let role = message.guild.roles.cache.get(cachedGuild.role)
-        if (!role) return message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
+        if (!role) return await message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
         let memberRoles = message.member._roles;
 
         if (memberRoles.some(r => role.id === r) || message.member.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) {
@@ -56,9 +56,7 @@ class Kick extends Command {
                 .setTimestamp();
 
             // Check if the user being kicked isnt the moderator themselves
-            if (m.id === message.author.id) {
-                return message.channel.send({ embeds: [sbembed] });
-            }
+            if (m.id === message.author.id) return await message.channel.send({ embeds: [sbembed] });
 
             const ambed = new MessageEmbed()
                 .setTitle(lang(message, 'command.kick.ambed.title'))
@@ -67,7 +65,7 @@ class Kick extends Command {
                 .setTimestamp();
 
             // Check if the user being kicked has kick perms
-            if (m.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) return message.channel.send({ embeds: [ambed] });
+            if (m.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) return await message.channel.send({ embeds: [ambed] });
 
             const promptEmbed = new MessageEmbed()
                 .setColor(pastelGreen)
@@ -80,9 +78,9 @@ class Kick extends Command {
             const emoji = await promptMessage(editEmbed, message.author, 30, ['✅', '❌']);
             // If the moderator reacted with a check mark kick the user
             if (emoji === '✅') {
-                u.kick(r);
+                await u.kick(r);
 
-                message.channel.send({ content: `**${message.author.tag}** ${lang(message, 'command.kick.messageAfterBan.one')} **${m.user.tag}**. \n${lang(message, 'command.kick.messageAfterBan.two')} ${r}` });
+                await message.channel.send({ content: `${lang(message, 'command.kick.messageAfterKick.one')} **${m.user.tag}**. \n${lang(message, 'command.kick.messageAfterKick.two')} ${r}` });
                 /*const kickEmbed = new MessageEmbed() // When i figure out how to use a database, nice embed
                     .setAuthor("Action: Kick", "https://i.imgur.com/CQjspzn.png")
                     .setThumbnail(u.user.displayAvatarURL({ dynamic: true }))
@@ -93,12 +91,12 @@ class Kick extends Command {
                 // If the moderator reacted with an x cancel the action
             } else if (emoji === '❌') {
                 const kickCanceled = new MessageEmbed()
-                    .setDescription(`\`${m.displayName}\` ${lang(message, 'command.kick.banCanceled.desc')}`)
+                    .setDescription(`\`${m.displayName}\` ${lang(message, 'command.kick.kickCanceled.desc')}`)
                     .setColor(darkRed)
-                    .setFooter(`${lang(message, 'command.kick.banCanceled.desc')} ${message.author.username}`)
+                    .setFooter(lang(message, 'command.kick.kickCanceled.footer'))
                     .setTimestamp();
 
-                editEmbed.edit({ embeds: [kickCanceled] });
+                await editEmbed.edit({ embeds: [kickCanceled] });
             }
         } else {
             const staffroleEmbed = new MessageEmbed()
@@ -107,7 +105,7 @@ class Kick extends Command {
                 .setColor(darkRed)
                 .setTimestamp()
 
-            message.channel.send({ embeds: [staffroleEmbed] }).then(m => delMsg(m, 5000));
+            await message.channel.send({ embeds: [staffroleEmbed] }).then(m => delMsg(m, 5000));
         }
     }
 }

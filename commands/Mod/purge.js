@@ -87,9 +87,9 @@ class Purge extends Command {
 
         // Staffrole Check
         let cachedGuild = staffRole.find(c => c.guild == message.guild.id) // make this into a function in util
-        if (!cachedGuild) return message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
+        if (!cachedGuild) return await message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
         let role = message.guild.roles.cache.get(cachedGuild.role)
-        if (!role) return message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
+        if (!role) return await message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
         let memberRoles = message.member._roles;
 
         if (memberRoles.some(r => role.id === r)) {
@@ -149,7 +149,7 @@ class Purge extends Command {
             } // End of loop
 
             let actuallyPurged = allDeletedAmount.length == 0 ? 0 : allDeletedAmount.reduce((a, b) => a + b);
-            await wait(1000).then(message.channel.send({ content: `Purged \`${actuallyPurged}\` messages.` }).then(msg => delMsg(msg, 10000)));
+            await wait(1000).then(await message.channel.send({ content: `Purged \`${actuallyPurged}\` messages.` }).then(msg => delMsg(msg, 10000)));
             // End of purge/Start of staffrole check 2nd part
 
         } else {
@@ -158,7 +158,7 @@ class Purge extends Command {
                 .setDescription(`${lang(message, "staffroleEmbed.desc1")} ${role} ${lang(message, "staffroleEmbed.desc2")}`)
                 .setColor(darkRed)
                 .setTimestamp()
-            message.channel.send({ embeds: [staffroleEmbed] }).then(m => delMsg(m, 5000));
+            await message.channel.send({ embeds: [staffroleEmbed] }).then(m => delMsg(m, 5000));
         }
         // End of staffrole check 2nd part
     }

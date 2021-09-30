@@ -39,9 +39,9 @@ class Ban extends Command {
         await delMsg(message, 30000);
 
         let cachedGuild = staffRole.find(c => c.guild == message.guild.id)
-        if (!cachedGuild) return message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
+        if (!cachedGuild) return await message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
         let role = message.guild.roles.cache.get(cachedGuild.role)
-        if (!role) return message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
+        if (!role) return await message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
         let memberRoles = message.member._roles;
 
         if (memberRoles.some(r => role.id === r) || message.member.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
@@ -56,9 +56,7 @@ class Ban extends Command {
                 .setTimestamp();
 
             // Check if the user being banned isnt the moderator themselves
-            if (m.id === message.author.id) {
-                return message.channel.send({ embeds: [sbembed] });
-            }
+            if (m.id === message.author.id) return await message.channel.send({ embeds: [sbembed] });
 
             const ambed = new MessageEmbed()
                 .setTitle(lang(message, 'command.ban.ambed.title'))
@@ -67,7 +65,7 @@ class Ban extends Command {
                 .setTimestamp();
 
             // Check if the user being banned has ban perms
-            if (m.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) return message.channel.send({ embeds: [ambed] });
+            if (m.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) return await message.channel.send({ embeds: [ambed] });
 
             const promptEmbed = new MessageEmbed()
                 .setColor(pastelGreen)
@@ -82,7 +80,7 @@ class Ban extends Command {
             if (emoji === '✅') {
                 await m.ban(r);
 
-                message.channel.send(`**${message.author.tag}** ${lang(message, 'command.ban.messageAfterBan.one')} **${m.user.tag}**. \n${lang(message, 'command.ban.messageAfterBan.two')} ${r}`);
+                await message.channel.send(`**${message.author.tag}** ${lang(message, 'command.ban.messageAfterBan.one')} **${m.user.tag}**. \n${lang(message, 'command.ban.messageAfterBan.two')} ${r}`);
 
                 /*const banEmbed = new MessageEmbed() // When i figure out how to use a database, nice embed
                     .setAuthor("Action: Ban", "https://i.imgur.com/CQjspzn.png")
@@ -98,10 +96,10 @@ class Ban extends Command {
                 const banCanceled = new MessageEmbed()
                     .setDescription(`\`${m.displayName}\` ${lang(message, 'command.ban.banCanceled.desc')}`)
                     .setColor(darkRed)
-                    .setFooter(`${lang(message, 'command.ban.banCanceled.footer')} ${message.author.username}`)
+                    .setFooter(lang(message, 'command.ban.banCanceled.footer'))
                     .setTimestamp();
 
-                editEmbed.edit({ embeds: [banCanceled] });
+                await editEmbed.edit({ embeds: [banCanceled] });
             }
         } else {
             const staffroleEmbed = new MessageEmbed()
@@ -110,8 +108,9 @@ class Ban extends Command {
                 .setColor(darkRed)
                 .setTimestamp()
 
-            message.channel.send({ embeds: [staffroleEmbed] }).then(delMsg(message, 5000));
+            await message.channel.send({ embeds: [staffroleEmbed] }).then(delMsg(message, 5000));
         }
     }
 }
+
 module.exports = Ban;

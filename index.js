@@ -33,8 +33,7 @@ class Client extends AkairoClient {
                 Intents.FLAGS.GUILD_INVITES,
                 Intents.FLAGS.GUILD_PRESENCES,
                 Intents.FLAGS.GUILD_MESSAGES,
-                Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-                Intents.FLAGS.GUILD_MESSAGE_TYPING
+                Intents.FLAGS.GUILD_MESSAGE_REACTIONS
             ],
             allowedMentions: { parse: ['users'], repliedUser: true },
             disableMentions: 'everyone'
@@ -61,31 +60,38 @@ class Client extends AkairoClient {
                     modifyStart: async (message, text) => {
                         let embed = new MessageEmbed()
                             .setColor(crimson)
-                            .setDescription('<a:loading:773199688631058442> ' + text)
+                            .setDescription('<a:gears:773203929507823617> ' + text)
                             .setFooter(lang(message, 'index.prompt.modifyStart.footer'))
                             .setTimestamp();
 
-                        editPrompt(message, embed);
+                        await editPrompt(message, embed);
                     },
-                    modifyRetry: async (message, text) => {
+                    modifyRetry: async (message, text, { retries: promptRetries }) => {
+                        let retries = promptRetries - 1;
                         let embed = new MessageEmbed()
                             .setColor(crimson)
-                            .setDescription('<a:loading:773199688631058442> ' + text)
-                            .setFooter(lang(message, 'index.prompt.modifyRetry.footer'))
+                            .setDescription('<a:gears:773203929507823617> ' + text)
+                            .setFooter(lang(message, 'index.prompt.modifyRetry.footer') + ` - [${retries}/3]`)
                             .setTimestamp();
 
-                        editPrompt(message, embed);
+                        await editPrompt(message, embed);
                     },
-                    ended: () => { },
+                    ended: async (message) => {
+                        let embed = new MessageEmbed()
+                            .setColor(darkRed)
+                            .setDescription(`<a:cancel:773201205056503849> ${lang(message, 'index.prompt.failed.desc')}`);
+
+                        await editPrompt(message, embed);
+                    },
                     cancel: async (message) => {
                         let embed = new MessageEmbed()
                             .setColor(darkRed)
-                            .setDescription(`<a:cancel:773201205056503849> ${lang(message, 'index.prompt.cancel.footer')}`);
+                            .setDescription(`<a:cancel:773201205056503849> ${lang(message, 'index.prompt.cancel.desc')}`);
 
-                        editPrompt(message, embed);
+                        await editPrompt(message, embed);
                     },
 
-                    retries: 4,
+                    retries: 3,
                     time: 60000,
                     timeout: () => { }
                 }

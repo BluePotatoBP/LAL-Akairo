@@ -1,4 +1,5 @@
 const { Listener } = require('discord-akairo');
+const { Permissions } = require('discord.js')
 const { darkRed } = require('../assets/colors.json');
 
 module.exports = class MissingPermissionsListener extends Listener {
@@ -10,7 +11,7 @@ module.exports = class MissingPermissionsListener extends Listener {
 		});
 	}
 
-	exec(message, command, type, missing) {
+	async exec(message, command, type, missing) {
 		const text = {
 			client: () => {
 				const str = this.missingPermissions(message.channel, this.client.user, missing);
@@ -19,7 +20,7 @@ module.exports = class MissingPermissionsListener extends Listener {
 					.setColor(darkRed)
 					.setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
 					.setDescription(`<a:cancel:773201205056503849> Im missing the ${str} permissions.`);
-					
+
 				return clientMP;
 			},
 
@@ -32,11 +33,12 @@ module.exports = class MissingPermissionsListener extends Listener {
 					.setDescription(`<a:cancel:773201205056503849> You are missing the ${str} permissions.`);
 				return userMP;
 			}
+			
 		}[type];
 
 		if (!text) return;
-		if (message.guild ? message.channel.permissionsFor(this.client.user).has('SEND_MESSAGES') : true) {
-			message.channel.send({embeds: [text()]});
+		if (message.guild ? message.channel.permissionsFor(this.client.user).has(Permissions.FLAGS.SEND_MESSAGES) : true) {
+			await message.channel.send({ embeds: [text()] });
 		}
 	}
 
@@ -48,8 +50,6 @@ module.exports = class MissingPermissionsListener extends Listener {
 			return `\`${str.replace(/_/g, ' ').toLowerCase().replace(/\b(\w)/g, (char) => char.toUpperCase())}\``;
 		});
 
-		return missingPerms.length > 1
-			? `${missingPerms.slice(0, -1).join(', ')} and ${missingPerms.slice(-1)[0]}`
-			: missingPerms[0];
+		return missingPerms.length > 1 ? `${missingPerms.slice(0, -1).join(', ')} and ${missingPerms.slice(-1)[0]}` : missingPerms[0];
 	}
 };

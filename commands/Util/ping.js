@@ -31,7 +31,7 @@ class Ping extends Command {
             await DB.query("DELETE FROM keepAlive").then(dbPingTwo = Date.now())
 
             dbPing = dbPingTwo - dbPingOne + "ms"
-            dbPing <= 0 ? dbPing : 'Error'
+            dbPing < 0 ? dbPing : 'Error'
 
         } else await DB.query("DELETE FROM keepAlive")
 
@@ -48,16 +48,7 @@ class Ping extends Command {
 
             m.edit({ content: response, embeds: [pembed] })
         })
-
-        /* } catch (error) {
-            console.log(error)
-            const lembed = new Discord.MessageEmbed()
-                .setDescription(`**You:** 🏓 Ping!\n **Me:** 🏓 Pong! \n \n*Discord:* **(╯°□°）╯        ┻━┻        NO PING FOR YOU 😡**`)
-                .setColor(crimson)
-
-            message.channel.send({ embeds: [lembed] })
-        } */
-    } // End of exec(message)
+    } 
 }
 
 module.exports = Ping;
