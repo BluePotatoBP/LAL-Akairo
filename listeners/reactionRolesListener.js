@@ -23,6 +23,7 @@ module.exports = class rrListener extends Listener {
             const user = guild.members.cache.get(packet.d.user_id);
             if (!user) return;
             if(user.bot) return;
+            if(user.id === guild.me.id) return;
             // Get emoji data from cache
             const cacheEmoji = await reactionRoles.find(c => c.emoji === packet.d.emoji.id);
             // Check if the reaction comes from the same guild as the cached emoji id
@@ -68,6 +69,7 @@ module.exports = class rrListener extends Listener {
             const user = guild.members.cache.get(packet.d.user_id);
             if (!user) return;
             if (user.bot) return;
+            if(user.id === guild.me.id) return;
             // Get emoji data from cache
             const cacheEmoji = await reactionRoles.find(c => c.emoji === packet.d.emoji.id);
             // Check if the reaction comes from the same guild as the cached emoji id
