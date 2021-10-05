@@ -75,7 +75,7 @@ class Language extends Command {
                 .setColor(darkRed)
                 .setTimestamp()
 
-            if (!message.author.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) return await message.channel.send({ embeds: [noPermsEmbed] });
+            if (!message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) return await message.channel.send({ embeds: [noPermsEmbed] });
 
             if (languageInArrayFind) languageInArrayFind.lan = i;
             if (!languageInArrayFind) guildLanguages.push({

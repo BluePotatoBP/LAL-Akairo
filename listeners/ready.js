@@ -12,10 +12,8 @@ class ReadyListener extends Listener {
     }
 
     async exec() {
-
         // Define global client
         global.client = this.client;
-
         // Connect to database
         (async () => {
             global.dbConnection = await mysql2.createConnection({
@@ -23,33 +21,17 @@ class ReadyListener extends Listener {
                 user: process.env.DB_USER,
                 password: process.env.DB_PASS,
                 database: process.env.DB_NAME,
+                port: 3306,
                 enableKeepAlive: true
             })
             console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${chalk.yellow('[INFO]')} Connected to Database ${chalk.yellow(`${process.env.DB_NAME}`)}!`);
         })();
-
-        // Automatic status changer
-        /* let statuses = [`you type ${prefix}help`, 'the support server!'];
-        setInterval(() => {
-            let status = statuses[Math.floor(Math.random() * statuses.length)];
-            this.client.user.setActivity(`${status}`, { type: 'WATCHING' });
-        }, 10000); */
-
-        // New static status
-        setInterval(async () => {
-            if(!dbConnection.connection.authorized) {
-                await client.user.setActivity('.help | DB DOWN, CHANGES WONT SAVE', { type: 'PLAYING' })
-            } else {
-                await client.user.setActivity('.help', { type: 'PLAYING' })
-            }
-        }, 10000)
-        // Set client status to do not disturb
+        // Set client status to do not disturb and the activity to .help
         this.client.user.setStatus('dnd');
-
+        await client.user.setActivity('.help', { type: 'PLAYING' })
         // Log basic bot info on startup
         console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${chalk.yellow('[INFO]')} ${chalk.magenta(this.client.user.username)} is online in ${chalk.red(this.client.guilds.cache.size)} guilds and ready!`);
         console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${chalk.yellow('[INFO]')} You can kill the bot instance by pressing ${chalk.red.bold('Ctrl+C')} at any time.`);
-
         // Checking the database every 5m for guild leaves
         setInterval(async () => {
             // Getting data from 'awaitingDelete'
@@ -59,7 +41,6 @@ class ReadyListener extends Listener {
             for (let i = 0; i < data2.length; i++) {
                 let guildID = data2[i].guild;
                 console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${debug('[DEBUG]')} Guild [${guildID}] kicked the bot 7d ago. Deleting data...`);
-
                 // Deleting data from all tables where the guild id matches
                 await DB.query('DELETE FROM languages WHERE guild = ?', [guildID]);
                 await DB.query('DELETE FROM antiAdvert WHERE guild = ?', [guildID]);
@@ -71,7 +52,6 @@ class ReadyListener extends Listener {
                 await DB.query('DELETE FROM starBlacklist WHERE guild = ?', [guildID]);
                 await DB.query('DELETE FROM starred WHERE guild = ?', [guildID]);
                 await DB.query('DELETE FROM starSettings WHERE guild = ?', [guildID]);
-
                 // Finally deleting the 'awaitingDelete' entry so we dont delete empty data indefinitely
                 await DB.query(`DELETE FROM awaitingDelete WHERE guild = ?`, [guildID]);
 
@@ -97,19 +77,15 @@ class ReadyListener extends Listener {
         // Anti advertisement
         let [antiAdvertData] = await DB.query(`SELECT * FROM antiAdvert`).then(console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${debug('[DEBUG]')} 'antiAdvert' cache initialized.`));
         antiAdvertise = antiAdvertData;
-
         // StaffRole 
         let [staffRoleData] = await DB.query(`SELECT * FROM staffrole`).then(console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${debug('[DEBUG]')} 'staffrole' cache initialized.`));
         staffRole = staffRoleData;
-
         // Blacklist
         const [blackListData] = await DB.query(`SELECT * FROM starBlacklist`).then(console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${debug('[DEBUG]')} 'starBlacklist' cache initialized.`));
         starBlacklistCache = blackListData;
-
         // ReactionRoles
         const [reactionRoleData] = await DB.query(`SELECT * FROM reactionRoles`).then(console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${debug('[DEBUG]')} 'reactionRoles' cache initialized.`));
         reactionRoles = reactionRoleData;
-        
         // Custom prefixes
         const [prefixesData] = await DB.query(`SELECT * FROM prefixes`).then(console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${debug('[DEBUG]')} 'prefixes' cache initialized.`));
         customPrefixes = prefixesData;
