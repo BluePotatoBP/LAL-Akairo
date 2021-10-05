@@ -42,19 +42,28 @@ module.exports = class ErrorListener extends Listener {
                 .setDescription(stripIndents`The \`${command ? command.id : 'Internal-Module'}\` command could not be executed, 
                                             if you'd like to report this, heres the error ID: \`${errorID}\`\n
                                             Click [here](https://discord.gg/v8zkSc9 'Like a Light Support') to join the support server.`)
+            try {
+                await message.util.send({ embeds: [userEmbed] })
+                await logChannel.send({ embeds: [devLogEmbed] })
+            } catch (error) {
+                console.log(error)
+            }
 
-            await message.util.send({ embeds: [userEmbed] })
-            await logChannel.send({ embeds: [devLogEmbed] })
             // Add user to cooldown so they cant spam the pings
             addCooldown.add(message.author.id);
             setTimeout(() => addCooldown.delete(message.author.id), 10000);
         } else if (message.guild ? message.channel.permissionsFor(this.client.user).has(Permissions.FLAGS.SEND_MESSAGES) : true) {
-            await message.util.send({
-                content: stripIndents`The \`${command.id}\` command could not be executed.
-                                                 If you decide to report this, heres the error ID: \`${errorID}\`
-                                                 And heres the invite to the support server: 
-                                                 https://discord.gg/v8zkSc9`})
-            await logChannel.send({ embeds: [devLogEmbed] })
+            try {
+                await message.util.send({
+                    content: stripIndents`The \`${command.id}\` command could not be executed.
+                                                     If you decide to report this, heres the error ID: \`${errorID}\`
+                                                     And heres the invite to the support server: 
+                                                     https://discord.gg/v8zkSc9`})
+                await logChannel.send({ embeds: [devLogEmbed] })
+            } catch (error) {
+                console.log(error)
+            }
+
             // Add user to cooldown so they cant spam the pings
             addCooldown.add(message.author.id);
             setTimeout(() => addCooldown.delete(message.author.id), 10000);
@@ -62,7 +71,12 @@ module.exports = class ErrorListener extends Listener {
             // Add user to cooldown so they cant spam the pings
             addCooldown.add(message.author.id);
             setTimeout(() => addCooldown.delete(message.author.id), 10000);
-            await logChannel.send({ embeds: [devLogEmbed] })
+            try {
+                await logChannel.send({ embeds: [devLogEmbed] })
+            } catch (error) {
+                console.log(error)
+            }
+
         }
     }
 }

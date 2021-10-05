@@ -21,8 +21,6 @@ class Serverinfo extends Command {
     }
 
     async exec(message) {
-        await delMsg(message, 30000);
-
         let sicon = message.guild.iconURL({ dynamic: true });
         /* let region = {
             brazil: '`Brazil` :flag_br:',
@@ -76,13 +74,13 @@ class Serverinfo extends Command {
         const infoEmbed = new MessageEmbed()
             .setAuthor(`${message.guild.name} • Page [1/2]`, sicon)
             .addField('ID', `\`${message.guild.id}\`  👌`, true)
-            .addField('Owner', `<@${message.guild.ownerId}> <a:animatedCool:773205297782325259>`, true)
+            .addField('Owner', `<@${message.guild.ownerId}>`, true)
             /* .addField('Region', `${region[message.channel.region]}`, true) */
-            .addField('Custom Emoji', `\`${message.guild.emojis.cache.size}\` <a:blobWobble:773208612776181800>`, true)
-            .addField('Roles', `\`${message.guild.roles.cache.size}\` <a:blobEat:773207674015055912>`, true)
-            .addField('Channels', `\`${message.guild.channels.cache.size}\` <a:blobGimmeLeft:773217828052402186>`, true)
-            .addField('Verification Level', `\`${verifLevels[message.guild.verificationLevel]}\` <:captcha:773217509850873886>`, true)
-            .addField('Total Members', `\`${message.guild.memberCount}\` <a:blobKnight1:773218186694098994><a:blobKnight2:773218752405307392>`, true)
+            .addField('Custom Emoji', `\`${message.guild.emojis.cache.size}\``, true)
+            .addField('Roles', `\`${message.guild.roles.cache.size}\``, true)
+            .addField('Channels', `\`${message.guild.channels.cache.size}\``, true)
+            .addField('Verification Level', `\`${verifLevels[message.guild.verificationLevel]}\``, true)
+            .addField('Total Members', `\`${message.guild.memberCount}\``, true)
             /* .addField(
                 'Status List',
                 `${message.guild.members.cache.get(filter((o) => o.presence.status === 'online').size)} <:online:773212850733711360> Online` +
@@ -92,8 +90,8 @@ class Serverinfo extends Command {
                 `\n${message.guild.members.cache.get(filter((o) => o.presence.status === 'offline')).size} <:offline:773212850755862538> Offline`,
                 true
             ) */
-            .addField('Highest Role', `${message.guild.roles.highest} <a:dancingSquidward:773219104479379467>`, true)
-            .addField('Voice AFK Timeout', `\`${message.guild.afkTimeout / 60} min\` <a:sleepyCat:773219103933464616>`, true)
+            .addField('Highest Role', `${message.guild.roles.highest}`, true)
+            .addField('Voice AFK Timeout', `\`${message.guild.afkTimeout / 60} min\``, true)
             .setThumbnail(sicon)
             .setColor(crimson)
             .setTimestamp()
@@ -119,34 +117,38 @@ class Serverinfo extends Command {
         const buttonCollector = msg.channel.createMessageComponentCollector({ filter, time: 60000 });
         // On collect do logic
         buttonCollector.on("collect", async i => {
-            let currentPage = 1;
-            // Check what button was pressed
-            switch (i.customId) {
-                case "back":
-                    if (currentPage !== 1) {
-                        await i.update({ embeds: [infoEmbed] });
-                        currentPage = 1;
-                    } else {
-                        await i.update({ embeds: [rolesEmbed] });
-                        currentPage = 2;
-                    }
+            try {
+                let currentPage = 1;
+                // Check what button was pressed
+                switch (i.customId) {
+                    case "back":
+                        if (currentPage !== 1) {
+                            await i.update({ embeds: [infoEmbed] });
+                            currentPage = 1;
+                        } else {
+                            await i.update({ embeds: [rolesEmbed] });
+                            currentPage = 2;
+                        }
 
-                    break;
+                        break;
 
-                case "next":
-                    if (currentPage !== 2) {
-                        await i.update({ embeds: [rolesEmbed] });
-                        currentPage = 2;
-                    } else {
-                        await i.update({ embeds: [infoEmbed] });
-                        currentPage = 1;
-                    }
+                    case "next":
+                        if (currentPage !== 2) {
+                            await i.update({ embeds: [rolesEmbed] });
+                            currentPage = 2;
+                        } else {
+                            await i.update({ embeds: [infoEmbed] });
+                            currentPage = 1;
+                        }
 
-                    break;
+                        break;
 
-                case "exit":
-                    await i.update({ components: [] });
-                    break;
+                    case "exit":
+                        await i.update({ components: [] });
+                        break;
+                }
+            } catch (error) {
+                return await message.channel.send({content: "Sorry, something went wrong. Please re-send the command."})
             }
         });
     }
