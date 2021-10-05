@@ -94,7 +94,7 @@ class Config extends Command {
                                  **├ <:antiad:801073624584159232> Language:**
                                  **├** *⤷* ${language}
 								 └─────────────────┄┄┄┄
-								 \n${lang(message, "command.config.embed.desc2")}\n${prefixx}config \`<logs/staffrole/prefix/language>\``
+								 \n${lang(message, "command.config.embed.desc2")}\n${prefixx}config \`<logs/staffrole/prefix/antiadvert/language>\``
                 )
                 .setColor(crimson);
 

@@ -50,7 +50,7 @@ class checkLangFile extends Command {
         let baseStringified = baseKeys.sort().toString();
         let checkStringified = checkKeys.sort().toString();
 
-        if (baseStringified === checkStringified) return await message.channel.send({ content: "Both file keys match 100% 1" })
+        if (baseStringified === checkStringified) return await message.channel.send({ content: "Both file keys match 100%" })
         // If above returns false loop through all keys and check if they match, if not push to array
         let missingKeys = [];
         for (let i = 0; i < baseKeys.length; i++) {
@@ -60,7 +60,7 @@ class checkLangFile extends Command {
         }
 
         let map = missingKeys.map(c => `\`${c}\`,`).join('\n');
-        await message.channel.send({ content: missingKeys.length ? `${(checkKeys.length/baseKeys.length*100).toFixed(1)}% of the keys from \'${lang}.json\' match. \`${checkKeys.length}/${baseKeys.length}\` (${baseKeys.length - checkKeys.length} are missing)\n${cutTo(map, 0, 1500, true)}\nPlease check the console for a full list.` : `Both file keys match 100% 2` })
+        await message.channel.send({ content: missingKeys.length ? `${(checkKeys.length/baseKeys.length*100).toFixed(1)}% of the keys from \'${lang}.json\' match. \`${checkKeys.length}/${baseKeys.length}\` (${baseKeys.length - checkKeys.length} are missing)\n${cutTo(map, 0, 1500, true)}\nPlease check the console for a full list.` : `Both file keys match 100%` })
 
         missingKeys.length ? console.log(missingKeys) : '';
     }
