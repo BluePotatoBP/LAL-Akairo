@@ -39,14 +39,14 @@ class Help extends Command {
         let customPrefix = customPrefixes.find(c => c.guild === message.guild.id);
         const prefix = !customPrefix ? process.env.PREFIX : customPrefix.prefix;
         const noCommandFound = this.client.util.embed()
-        .setTitle(lang(message, "command.help.noCommandEmbed.title.content"))
-        .setDescription(lang(message, "command.help.noCommandEmbed.desc.content"))
-        .setColor(lightRed)
-        .setFooter(lang(message, "command.help.noCommandEmbed.footer.content"), message.author.displayAvatarURL({ dynamic: true }))
-        .setTimestamp()
+            .setTitle(lang(message, "command.help.noCommandEmbed.title.content"))
+            .setDescription(lang(message, "command.help.noCommandEmbed.desc.content"))
+            .setColor(lightRed)
+            .setFooter(lang(message, "command.help.noCommandEmbed.footer.content"), message.author.displayAvatarURL({ dynamic: true }))
+            .setTimestamp()
 
         // If the bot has perms to add reactions use new help
-        if (message.guild.members.cache.get(this.client.user.id).permissions.has(Permissions.FLAGS.ADD_REACTIONS)) { 
+        if (message.guild.me.permissions.has(Permissions.FLAGS.MANAGE_MESSAGES)) {
             if (command) { // If user gave cmd args, show cmd info
                 try {
                     const embed = new MessageEmbed()
@@ -177,6 +177,9 @@ class Help extends Command {
             }
 
         } else { // If the bot doesnt have reaction add permissions, show old help
+            const embed = new MessageEmbed()
+                .setColor(crimson)
+
             if (!command) { // If theres no cmd input show list of cmds
                 let categories = this.handler.categories.values();
                 let total = [];
@@ -198,9 +201,6 @@ class Help extends Command {
                 await message.util.send({ embeds: [embed] });
             } else { // If theres a command input show cmd info
                 if (!command) return await message.util.send({ embeds: [embed.setTitle(lang(message, 'command.help.embed.title.one')).setDescription(`${lang(message, 'command.help.embed.title.desc.one')} \`${prefix}help\` ${lang(message, 'command.help.embed.title.desc.two')}`)] });
-
-                console.log(`${debug('[DEBUG]')} '${message.author.tag}'[${message.author.id}] used ${chalk.gray(`"${prefix}help ${command.id.toLowerCase()}"`)} in '${message.guild.name}'[${message.guild.id}]`);
-
                 embed.setDescription(stripIndents`${lang(message, 'command.help.embedtwo.desc.one')}\n 
                 **${lang(message, 'command.help.embedtwo.desc.two')} **${command.categoryID.toLowerCase() === 'nsfw' ? `|| \`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\` ||` : `\`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\``}
                 **${lang(message, 'command.help.embedtwo.desc.three')}** ${lang(message, `command.${command.id}.desc.content`)}
@@ -210,7 +210,7 @@ class Help extends Command {
 
                 embed.setFooter(`${lang(message, 'command.help.embedtwo.desc.eight')} ${command.description.syntax ? `${command.description.syntax}` : lang(message, 'command.help.embedtwo.desc.nine')}`);
 
-                return await message.util.send({ embds: [embed] });
+                return await message.util.send({ embeds: [embed] });
             }
         }
     }

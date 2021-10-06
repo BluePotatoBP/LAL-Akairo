@@ -7,7 +7,7 @@ class Serverinfo extends Command {
     constructor() {
         super('serverinfo', {
             aliases: ['serverinfo', 'sinfo', 'guildinfo', 'ginfo'],
-            clientPermissions: ['ADD_REACTIONS', 'MANAGE_MESSAGES'],
+            clientPermissions: ['MANAGE_MESSAGES'],
             category: 'Util',
             cooldown: 10000,
             ratelimit: 2,
@@ -149,9 +149,14 @@ class Serverinfo extends Command {
                         break;
                 }
             } catch (error) {
-                return await message.channel.send({content: "Sorry, something went wrong. Please re-send the command."})
+                return await message.channel.send({ content: "Sorry, something went wrong. Please re-send the command." })
             }
         });
+
+        buttonCollector.on("end", async () => {
+            await msg.edit({ components: [] }).catch(() => { })
+        });
+
     }
 }
 
