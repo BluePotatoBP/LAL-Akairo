@@ -73,7 +73,7 @@ class Serverinfo extends Command {
 
         const infoEmbed = new MessageEmbed()
             .setAuthor(`${message.guild.name} • Page [1/2]`, sicon)
-            .addField('ID', `\`${message.guild.id}\`  👌`, true)
+            .addField('ID', `\`${message.guild.id}\``, true)
             .addField('Owner', `<@${message.guild.ownerId}>`, true)
             /* .addField('Region', `${region[message.channel.region]}`, true) */
             .addField('Custom Emoji', `\`${message.guild.emojis.cache.size}\``, true)
@@ -116,9 +116,10 @@ class Serverinfo extends Command {
         // Create a message component collector (long ass name \/)
         const buttonCollector = msg.channel.createMessageComponentCollector({ filter, time: 60000 });
         // On collect do logic
+        let currentPage = 1;
+
         buttonCollector.on("collect", async i => {
             try {
-                let currentPage = 1;
                 // Check what button was pressed
                 switch (i.customId) {
                     case "back":
