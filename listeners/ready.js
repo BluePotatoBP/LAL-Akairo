@@ -58,6 +58,7 @@ class ReadyListener extends Listener {
                 console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${debug('[DEBUG]')} Deleted data for guild [${guildID}] successfully!`);
             }
         }, 300000);
+
         // Languages
         try {
             for (const guild of this.client.guilds.cache) {
@@ -72,6 +73,7 @@ class ReadyListener extends Listener {
         } catch (error) {
             console.log(error)
         }
+
         // Anti advertisement
         let [antiAdvertData] = await DB.query(`SELECT * FROM antiAdvert`).then(console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${debug('[DEBUG]')} 'antiAdvert' cache initialized.`));
         antiAdvertise = antiAdvertData;
