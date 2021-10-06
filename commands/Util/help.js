@@ -60,7 +60,7 @@ class Help extends Command {
                         .setFooter(`${lang(message, 'command.help.embedtwo.desc.eight')} ${command.description.syntax ? `${command.description.syntax}` : lang(message, 'command.help.embedtwo.desc.nine')}`)
                         .setTimestamp()
 
-                    return await message.util.send({ embeds: [embed] });
+                    await message.util.send({ embeds: [embed] });
                 } catch (error) {
                     await message.util.send({ embeds: [noCommandFound] })
                 }
@@ -134,7 +134,7 @@ class Help extends Command {
                                 .setFooter(lang(message, "command.help.noCommandEmbed.footer.content"), message.author.displayAvatarURL({ dynamic: true }))
                                 .setTimestamp()
 
-                            await message.util.send({ embeds: [searchEmbed] });
+                            await msg.edit({ embeds: [searchEmbed] });
 
                             // Search message collector filter
                             const filter = m => !m.author.bot && m.author.id == message.author.id;
@@ -142,13 +142,13 @@ class Help extends Command {
                             searchCollector = await msg.channel.createMessageCollector({ filter, time: 30000 });
                             // On collect do funny
                             searchCollector.on("collect", async c => {
-                                if (c.content.toLowerCase() === "cancel") return await message.util.send({ embeds: [homeEmbed] })
+                                if (c.content.toLowerCase() === "cancel") return await msg.edit({ embeds: [homeEmbed] })
 
                                 let resolveType = await this.client.commandHandler.resolver.type("commandAlias");
                                 let command = await resolveType(message, c.content);
 
                                 if (!command) {
-                                    await message.util.send({ embeds: [noCommandFound] })
+                                    await msg.edit({ embeds: [noCommandFound] })
                                 } else {
 
                                     const commandHelp = new MessageEmbed()
@@ -162,7 +162,7 @@ class Help extends Command {
                                         .setColor(pastelGreen)
                                         .setFooter(`${lang(message, 'command.help.embedtwo.desc.eight')} ${command.description.syntax ? `${command.description.syntax}` : lang(message, 'command.help.embedtwo.desc.nine')}`)
 
-                                    await message.util.send({ embeds: [commandHelp] })
+                                    await msg.edit({ embeds: [commandHelp] })
                                 }
                                 await searchCollector.stop()
                             })
