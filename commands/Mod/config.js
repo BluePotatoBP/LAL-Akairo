@@ -58,7 +58,7 @@ class Config extends Command {
         staffroleData.length === 0 ? staffRole = `[-](https://www.google.com '${lang(message, "command.config.tooltip.noStaffrole")}')` : staffRole = await message.guild.roles.cache.get(staffroleData[0].role);
         // Custom prefix info
         let prefixx;
-        prefixData.length === 0 ? prefix = '.' : prefixx = `**[${prefixData[0].prefix}](https://www.google.com '${lang(message, "command.config.tooltip.customPrefix")} ${prefixData[0].prefix}')**`;
+        prefixData.length === 0 ? prefixx = '.' : prefixx = `**[${prefixData[0].prefix}](https://www.google.com '${lang(message, "command.config.tooltip.customPrefix")} ${prefixData[0].prefix}')**`;
         // Logs channel info
         let logsChannel;
         logsData.length === 0 ? logsChannel = `[-](https://www.google.com '${lang(message, "command.config.tooltip.noLogs")}')` : logsChannel = await message.guild.channels.cache.get(logsData[0].channel);
@@ -91,7 +91,7 @@ class Config extends Command {
                                  **├** *⤷* Exclude Staff: ${advertExcludeStaff}
                                  **├** *⤷* Exclude Bots: ${advertExcludeBots}
                                  **├** *⤷* Warn: ${advertWarn}
-                                 **├ <:antiad:801073624584159232> Language:**
+                                 **├ <:language:895659493491372042> Language:**
                                  **├** *⤷* ${language}
 								 └─────────────────┄┄┄┄
 								 \n${lang(message, "command.config.embed.desc2")}\n${prefixx}config \`<logs/staffrole/prefix/antiadvert/language>\``
