@@ -49,10 +49,6 @@
     "command.hack.prompt.start": "Wonach soll gesucht werden? `(@Erwähnung/Benutzername/Diskriminator/ID)`.\nDu kannst es jetzt senden oder einfach den Command noch einmal schreiben.",
     "command.hack.prompt.retry": "Wonach soll gesucht werden? `(@Erwähnung/Benutzername/Diskriminator/ID)`.\nDu kannst es jetzt senden oder einfach den Command noch einmal schreiben.",
 
-    "command.hug.desc.content": "Gib jemanden eine Umarmung.",
-    "command.hug.embed.first": "umarmt",
-    "command.hug.embed.second": "mag es sich selbst zu umarmen.",
-
     "command.ppsize.desc.content": "Messe deine exakte Penisgröße.",
     "command.ppsize.embed.field.one": "Deine Größe:",
     "command.ppsize.embed.field.two": "Chance, flachgelegt zu werden:",
@@ -156,10 +152,6 @@
 
     "command.say.desc.content": "Lass mich etwas sagen!",
     "command.say.noArgs": "Gib mir einen Text den ich sagen soll. \nDu kannst deine Nachricht `bearbeiten` oder du `wiederholst` den Command.",
-
-    "command.slap.desc.content": "Schlage jemanden der es verdient.",
-    "command.slap.embed.slapped": "schlug",
-    "command.slap.embed.slappedThemselves": "schlug sich selbst.",
 
     "command.urban.desc.content": "Du bist dir unsicher was ein Wort bedeuted? Das Urban Dictionary hat sicher eine Antwort.",
     "command.urban.nrembed.desc": "Keine Ergebnisse gefunden.",
@@ -431,6 +423,16 @@
     "command.reactionroleslist.listEmbed.desc.content.two": "reaction role(s)\nassigned to this message.",
     "command.reactionroleslist.listEmbed.desc.content.three": "**Tip:** Use `%CUSTOM_PREFIX%rr list <ID>` to check reaction\nroles for a specific message.",
     "command.reactionroleslist.norrsaved.content": "There are no Reaction Roles saved for this guild.",
+
+    "command.boobs.desc.content": "Get random ||boobies||",
+
+    "command.feet.desc.content": "Get random feet images",
+
+    "command.randomporn.desc.content": "Get random nsfw images",
+
+    "command.pussy.desc.content": "Get random ||pussy|| images",
+
+    "nsfw.couldntFetch.content": "Sorry I couldnt fetch new images, please try again later.",
 
     "temp.unused": "This line isnt ever used and you dont have to translate it, its just here so i can easily copy paste lines without having to think about commas"
 }

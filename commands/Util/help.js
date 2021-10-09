@@ -51,11 +51,11 @@ class Help extends Command {
                 try {
                     const embed = new MessageEmbed()
                         .setDescription(stripIndents`${lang(message, 'command.help.embedtwo.desc.one')}\n 
-                        **${lang(message, 'command.help.embedtwo.desc.two')} **${command.categoryID.toLowerCase() === 'nsfw' ? `|| \`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\` ||` : `\`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\``}
+                        **${lang(message, 'command.help.embedtwo.desc.two')}** ${command.categoryID.toLowerCase() === 'nsfw' ? `|| \`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\` ||` : `\`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\``}
                         **${lang(message, 'command.help.embedtwo.desc.three')}** ${lang(message, `command.${command.id}.desc.content`)}
                         **${lang(message, 'command.help.embedtwo.desc.four')}** ${command.description.usage ? `\`${prefix}${command.id} ${command.description.usage}\`` : lang(message, 'command.help.embedtwo.desc.five')}
                         **${lang(message, "command.help.embedtwo.desc.ten")}** ${command.cooldown ? `\`${ms(command.cooldown)}\`` : '\`2s\`'}
-                        **${lang(message, 'command.help.embedtwo.desc.six')}** ${command.aliases ? command.aliases.join(', ') : lang(message, 'command.help.embedtwo.desc.seven')}`)
+                        **${lang(message, 'command.help.embedtwo.desc.six')}** ${command.aliases ? command.categoryID.toLowerCase() === 'nsfw' ? `||${command.aliases.join(', ')}||` : command.aliases.join(', ') : lang(message, 'command.help.embedtwo.desc.seven')}`)
                         .setColor(pastelGreen)
                         .setFooter(`${lang(message, 'command.help.embedtwo.desc.eight')} ${command.description.syntax ? `${command.description.syntax}` : lang(message, 'command.help.embedtwo.desc.nine')}`)
                         .setTimestamp()
@@ -154,11 +154,11 @@ class Help extends Command {
                                     const commandHelp = new MessageEmbed()
                                         .setTitle(lang(message, "command.help.embedtwo.title.content"))
                                         .setDescription(stripIndents`${lang(message, 'command.help.embedtwo.desc.one')}\n
-                                                                      **Command:** ${command.categoryID.toLowerCase() === 'nsfw' ? `|| \`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\` ||` : `\`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\``}
-                                                                      **Description:** ${lang(message, `command.${command.id}.desc.content`)}
-                                                                      **Usage:** ${command.description.usage ? `\`${prefix}${command.id} ${command.description.usage}\`` : lang(message, 'command.help.embedtwo.desc.five')}
-                                                                      **Cooldown:** ${command.cooldown ? `\`${ms(command.cooldown)}\`` : '\`2s\`'}
-                                                                      **Aliases:** ${command.aliases ? command.aliases.join(', ') : lang(message, 'command.help.embedtwo.desc.seven')}`)
+                                                                      **${lang(message, 'command.help.embedtwo.desc.two')}** ${command.categoryID.toLowerCase() === 'nsfw' ? `|| \`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\` ||` : `\`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\``}
+                                                                      **${lang(message, 'command.help.embedtwo.desc.three')}** ${lang(message, `command.${command.id}.desc.content`)}
+                                                                      **${lang(message, 'command.help.embedtwo.desc.four')}** ${command.description.usage ? `\`${prefix}${command.id} ${command.description.usage}\`` : lang(message, 'command.help.embedtwo.desc.five')}
+                                                                      **${lang(message, "command.help.embedtwo.desc.ten")}** ${command.cooldown ? `\`${ms(command.cooldown)}\`` : '\`2s\`'}
+                                                                      **${lang(message, 'command.help.embedtwo.desc.six')}** ${command.aliases ? command.categoryID.toLowerCase() === 'nsfw' ? `||${command.aliases.join(', ')}||` : command.aliases.join(', ') : lang(message, 'command.help.embedtwo.desc.seven')}`)
                                         .setColor(pastelGreen)
                                         .setFooter(`${lang(message, 'command.help.embedtwo.desc.eight')} ${command.description.syntax ? `${command.description.syntax}` : lang(message, 'command.help.embedtwo.desc.nine')}`)
 
@@ -202,11 +202,11 @@ class Help extends Command {
             } else { // If theres a command input show cmd info
                 if (!command) return await message.util.send({ embeds: [embed.setTitle(lang(message, 'command.help.embed.title.one')).setDescription(`${lang(message, 'command.help.embed.title.desc.one')} \`${prefix}help\` ${lang(message, 'command.help.embed.title.desc.two')}`)] });
                 embed.setDescription(stripIndents`${lang(message, 'command.help.embedtwo.desc.one')}\n 
-                **${lang(message, 'command.help.embedtwo.desc.two')} **${command.categoryID.toLowerCase() === 'nsfw' ? `|| \`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\` ||` : `\`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\``}
+                **${lang(message, 'command.help.embedtwo.desc.two')}** ${command.categoryID.toLowerCase() === 'nsfw' ? `|| \`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\` ||` : `\`${command.id.slice(0, 1).toUpperCase() + command.id.slice(1)}\``}
                 **${lang(message, 'command.help.embedtwo.desc.three')}** ${lang(message, `command.${command.id}.desc.content`)}
                 **${lang(message, 'command.help.embedtwo.desc.four')}** ${command.description.usage ? `\`${prefix}${command.id} ${command.description.usage}\`` : lang(message, 'command.help.embedtwo.desc.five')}
                 **${lang(message, "command.help.embedtwo.desc.ten")}** ${command.cooldown ? `\`${ms(command.cooldown)}\`` : '\`2s\`'}
-                **${lang(message, 'command.help.embedtwo.desc.six')}** ${command.aliases ? command.aliases.join(', ') : lang(message, 'command.help.embedtwo.desc.seven')}`);
+                **${lang(message, 'command.help.embedtwo.desc.six')}** ${command.aliases ? command.categoryID.toLowerCase() === 'nsfw' ? `||${command.aliases.join(', ')}||` : command.aliases.join(', ') : lang(message, 'command.help.embedtwo.desc.seven')}`)
 
                 embed.setFooter(`${lang(message, 'command.help.embedtwo.desc.eight')} ${command.description.syntax ? `${command.description.syntax}` : lang(message, 'command.help.embedtwo.desc.nine')}`);
 

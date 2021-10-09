@@ -45,10 +45,6 @@
     "command.hack.prompt.start": "Please give me a user to hack `(Mention/Username/Discrim/ID)`. \nYou can either send it now or you can `re-type` the command.",
     "command.hack.prompt.retry": "Please give me a user to hack `(Mention/Username/Discrim/ID)`. \nYou can either send it now or you can `re-type` the command.",
 
-    "command.hug.desc.content": "Hug someone who needs it",
-    "command.hug.embed.first": "hugged",
-    "command.hug.embed.second": "likes hugging themselves",
-
     "command.ppsize.desc.content": "Accurately measures your pp size",
     "command.ppsize.embed.field.one": "Your pp size:",
     "command.ppsize.embed.field.two": "Chance of getting laid:",
@@ -65,10 +61,6 @@
 
     "command.say.desc.content": "Make me say anything!",
     "command.say.noArgs": "Please give me some text to say. \nYou can `edit` the last message or `re-type` the command.",
-
-    "command.slap.desc.content": "Slap someone who deserves it",
-    "command.slap.embed.slapped": "slapped",
-    "command.slap.embed.slappedThemselves": "slapped themselves",
 
     "command.urban.desc.content": "You're not sure what it means? The Urban Dictionary most likely has an answer.",
     "command.urban.nrembed.desc": "No results found for that topic.",
@@ -428,6 +420,16 @@
     "command.reactionroleslist.listEmbed.desc.content.two": "reaction role(s)\nassigned to this message.",
     "command.reactionroleslist.listEmbed.desc.content.three": "**Tip:** Use `%CUSTOM_PREFIX%rr list <ID>` to check reaction\nroles for a specific message.",
     "command.reactionroleslist.norrsaved.content": "There are no Reaction Roles saved for this guild.",
+
+    "command.boobs.desc.content": "Get random ||boobies||",
+
+    "command.feet.desc.content": "Get random feet images",
+
+    "command.randomporn.desc.content": "Get random nsfw images",
+
+    "command.pussy.desc.content": "Get random ||pussy|| images",
+
+    "nsfw.couldntFetch.content": "Sorry I couldnt fetch new images, please try again later.",
 
     "temp.unused": "This line isnt ever used and you dont have to translate it, its just here so i can easily copy paste lines without having to think about commas"
 }
