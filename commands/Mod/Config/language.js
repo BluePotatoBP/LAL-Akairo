@@ -96,11 +96,15 @@ class Language extends Command {
 
             await await message.channel.send({ embeds: [langUpdate] });
         } else {
-            const contEmbed = new MessageEmbed()
+            try {
+                const contEmbed = new MessageEmbed()
                 .setDescription(lang(message, 'command.language.contEmbed.desc'))
                 .setColor(crimson);
             await message.util.send({ embeds: [contEmbed] });
             await message.util.send({ files: ['./assets/languages/lang/english.json'] });
+            } catch (error) {
+                await message.channel.send({ content: "I dont have permissions to send files, therefore I cant give you the base file." })
+            }
         }
     }
 }
