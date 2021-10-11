@@ -86,13 +86,13 @@ class Purge extends Command {
         await delMsg(message);
 
         // Staffrole Check
-        let cachedGuild = staffRole.find(c => c.guild == message.guild.id) // make this into a function in util
+        let cachedGuild = staffRole.find(c => c.guild == message.guild.id)
         if (!cachedGuild) return await message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
         let role = message.guild.roles.cache.get(cachedGuild.role)
         if (!role) return await message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
         let memberRoles = message.member._roles;
 
-        if (memberRoles.some(r => role.id === r)) {
+        if (memberRoles.some(r => cachedGuild.role === r)) {
             // End of staffrole check/Start of purge
             if (messagesAmount > 1000) return message.channel.send({ content: `You cannot purge over a thousand messages at once. (\`${approx(messagesAmount, { decimal: '.' })}/1000\`)` }).then(message => delMsg(message, 10000))
 
@@ -152,12 +152,13 @@ class Purge extends Command {
             await wait(1000).then(await message.channel.send({ content: `Purged \`${actuallyPurged}\` messages.` }).then(msg => delMsg(msg, 10000)));
             // End of purge/Start of staffrole check 2nd part
 
-        } else {
+        } else {// If the user doesnt have the staffrole, return this embed
             const staffroleEmbed = new Discord.MessageEmbed()
                 .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
                 .setDescription(`${lang(message, "staffroleEmbed.desc1")} ${role} ${lang(message, "staffroleEmbed.desc2")}`)
                 .setColor(darkRed)
                 .setTimestamp()
+
             await message.channel.send({ embeds: [staffroleEmbed] }).then(m => delMsg(m, 5000));
         }
         // End of staffrole check 2nd part

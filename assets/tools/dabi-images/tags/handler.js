@@ -18,7 +18,7 @@ function request(source, site, regex) {
                         // grabs a random post
                         let post = body[Math.floor(Math.random() *body.length)].data;
                         // checks if the post url ends with an image extension
-                        switch ((/(\.jpg|\.png|\.gif|\.jpeg)$/ig).test(post.url)) {
+                        switch ((/(\.jpg|\.png|\.gif|\.jpeg|\.mp4|\.webm)$/ig).test(post.url)) {
                             case true:
                                 // resolves the payload with all the juicy data
                                 let payload = {
@@ -49,7 +49,7 @@ function request(source, site, regex) {
                                                     case false:
                                                         // resolve payload
                                                         let payload = {
-                                                            url: post.media.oembed.thumbnail_url,
+                                                            url: post.preview.reddit_video_preview.fallback_url,
                                                             source: post.permalink,
                                                             nsfw: true,
                                                             tries: tries,
@@ -68,7 +68,7 @@ function request(source, site, regex) {
                         }
                     }
                     // just some randomness
-                    let sortBy = ["best", "new", "top", "hot"], filter = sortBy[Math.floor(Math.random() *sortBy.length)];
+                    let sortBy = ["best", "top", "hot", "rising"], filter = sortBy[Math.floor(Math.random() *sortBy.length)];
                     let url = `https://reddit.com/r/${site}/${filter}.json?limit=15`;
                     fetch(url).then(async response => {
                         try {
@@ -102,7 +102,7 @@ function request(source, site, regex) {
                             // cleans the url of the extra stuff
                             let url = posts[index].replace(/data-file-url=|"/g, "");
                             // checks if the url ends with image extensions (if it do it pushes it to an array)
-                            if ((/(\.jpg|\.png|\.gif|\.jpeg)$/ig).test(url)) cleaned.push(url);
+                            if ((/(\.jpg|\.png|\.gif|\.jpeg|\.mp4|\.webm)$/ig).test(url)) cleaned.push(url);
                         }
                         // checks if there's any post after the cleanage (if not it reject)
                         if (cleaned.length < 1) reject({reason: "no posts", message: "Failed to find a suitable post"});
