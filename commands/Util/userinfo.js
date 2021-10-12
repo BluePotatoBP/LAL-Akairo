@@ -19,7 +19,7 @@ class Userinfo extends Command {
             args: [{
                 id: 'u',
                 type: 'user',
-                default: (msg) => msg.author
+                default: (message) => message.author
             }]
         });
     }
@@ -28,10 +28,18 @@ class Userinfo extends Command {
         await delMsg(message, 30000);
 
         // Predefine some vars for later use
-        let m = message.guild.members.cache.get(u.id);
-        let highestRole = m.roles.highest.name;
+        let m;
+        let highestRole;
         let statusState;
         let usergame;
+
+        try { 
+            m = message.guild.members.cache.get(u.id) 
+            highestRole = m.roles.highest.name;
+        } catch (error) { 
+            m = false 
+        }
+        
         let statusEmojis = {
             dnd: '<:dnd:773212850364743742>',
             online: '<:online:773212850733711360>',
@@ -49,17 +57,23 @@ class Userinfo extends Command {
 
         // If the given user isnt a member in that guild, send alternate embed
         if (!m) {
-            const alternateEmbed = new MessageEmbed()
-                .setAuthor(u.tag, u.displayAvatarURL({ dynamic: true }))
-                .setDescription(`${u}\n \n**Info:** This user is not in your current guild.`)
-                .addField(`Registered On:`, `\`${this.client.users.cache.get(u.id).createdAt.toUTCString().substr(0, 16)}\``, true)
-                .addField(`Avatar:`, `[PNG](${u.displayAvatarURL({ format: 'png', size: 4096 })} 'Link to the PNG Avatar')|[JPG](${u.displayAvatarURL({ format: 'jpg', size: 4096 })} 'Link to the PNG Avatar')|[GIF](${u.displayAvatarURL({ format: 'gif', size: 4096 })} 'Link to the GIF Avatar')`, true)
-                .setColor(crimson)
-                .setFooter(`ID: ${u.id}`)
-                .setTimestamp()
-            return message.channel.send({ embeds: [alternateEmbed] })
+            try {
+                const alternateEmbed = new MessageEmbed()
+                    .setAuthor(u.tag, u.displayAvatarURL({ dynamic: true }))
+                    .setDescription(`${u}\n \n**Info:** This user is not in your current guild.`)
+                    .addField(`Registered On:`, `\`${this.client.users.cache.get(u.id).createdAt.toUTCString().substr(0, 16)}\``, true)
+                    .addField(`Avatar:`, `[PNG](${u.displayAvatarURL({ format: 'png', size: 4096 })} 'Link to the PNG Avatar')|[JPG](${u.displayAvatarURL({ format: 'jpg', size: 4096 })} 'Link to the PNG Avatar')|[GIF](${u.displayAvatarURL({ format: 'gif', size: 4096 })} 'Link to the GIF Avatar')`, true)
+                    .setColor(crimson)
+                    .setFooter(`ID: ${u.id}`)
+                    .setTimestamp()
+
+                return await message.channel.send({ embeds: [alternateEmbed] })
+            } catch (error) {
+                await message.channel.send({ content: "Sorry, I couldn't find that user." })
+            }
+
         } else {
-            if (m.presence !== [] || null || undefined) { // Since v13 it can be any of this bs
+            try {
                 // Custom status logic, checks if they have a custom status, playing a game or listening to something on spotify
                 for (let i = m.presence.activities.length - 1; i >= 0; i--) {
                     if (m.presence.activities[i].type === 'CUSTOM') { // If status type is custom, set userstate to that
@@ -92,6 +106,9 @@ class Userinfo extends Command {
                         usergame = `\`${songName}\` by\n\`${artist}\` on\n\`${album}\``;
                     }
                 }
+            } catch (error) {
+                statusState = "Status:"
+                usergame = "\`-\`";
             }
 
             let createdAt = Math.floor(this.client.users.cache.get(m.id).createdAt.getTime() / 1000)
@@ -105,7 +122,7 @@ class Userinfo extends Command {
                 .addField(`Nickname:`, `${m.nickname ? m.nickname : '`-`'}`, true)
                 .addField(`Bot:`, `\`${m.bot ? 'true' : 'false'}\``, true)
                 .addField(`Highest role:`, `\`${highestRole}\``, true)
-                .addField(statusState ? statusState : 'Status:', usergame ? usergame : '\`-\`', true)
+                .addField(statusState, usergame, true)
                 .setThumbnail(u.displayAvatarURL({ dynamic: true }))
                 .setFooter(`ID: ${m.id}`)
                 .setTimestamp();

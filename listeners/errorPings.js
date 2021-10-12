@@ -39,9 +39,8 @@ module.exports = class ErrorListener extends Listener {
             const userEmbed = new MessageEmbed()
                 .setColor(lightRed)
                 .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
-                .setDescription(stripIndents`The \`${command ? command.id : 'Internal-Module'}\` command could not be executed, 
-                                            if you'd like to report this, heres the error ID: \`${errorID}\`\n
-                                            Click [here](https://discord.gg/v8zkSc9 'Like a Light Support') to join the support server.`)
+                .setDescription(stripIndents`Sorry, \`${command ? command.id : 'Internal-Module'}\` has some issues, you can
+                                            report it [here](https://discord.gg/v8zkSc9 'Like a Light Support') with this ID: \`${errorID}\``)
             try {
                 await message.util.send({ embeds: [userEmbed] })
                 await logChannel.send({ embeds: [devLogEmbed] })
@@ -55,8 +54,8 @@ module.exports = class ErrorListener extends Listener {
         } else if (message.guild ? message.channel.permissionsFor(this.client.user).has(Permissions.FLAGS.SEND_MESSAGES) : true) {
             try {
                 await message.util.send({
-                    content: stripIndents`The \`${command.id}\` command could not be executed.
-                                                     If you decide to report this, heres the error ID: \`${errorID}\`
+                    content: stripIndents`Sorry, \`${command ? command.id : 'Internal-Module'}\` has some issues,
+                                                    you can report it with this ID: \`${errorID}\`
                                                      And heres the invite to the support server: 
                                                      https://discord.gg/v8zkSc9`})
                 await logChannel.send({ embeds: [devLogEmbed] })
