@@ -49,7 +49,7 @@ module.exports = class clientReadyListener extends Listener {
 
 			const starCount = userMessage.reactions.cache.get('⭐') ? userMessage.reactions.cache.get('⭐').count : 0
 			const minStars = guildSettings.length == 0 ? 1 : guildSettings[0].minStars
-			const maxStars = guildSettings.length == 0 ? 200 : guildSettings[0].maxStars
+			const maxStars = guildSettings.length == 0 ? 100 : guildSettings[0].maxStars
 
 			const [starredMessages] = await DB.query(`SELECT * FROM starred WHERE userMessageID = ?`, [packet.d.message_id])
 			const originalStar = starredMessages.length == 0 ? user.user.username : starredMessages[0].originalStar
@@ -210,7 +210,7 @@ module.exports = class clientReadyListener extends Listener {
 
 			const starCount = userMessage.reactions.cache.get('⭐') ? userMessage.reactions.cache.get('⭐').count : 0
 			const minStars = guildSettings.length == 0 ? 1 : guildSettings[0].minStars
-			const maxStars = guildSettings.length == 0 ? 200 : guildSettings[0].maxStars
+			const maxStars = guildSettings.length == 0 ? 100 : guildSettings[0].maxStars
 
 			const [starredMessages] = await DB.query(`SELECT * FROM starred WHERE userMessageID = ?`, [packet.d.message_id])
 			const originalStar = starredMessages.length == 0 ? user.user.username : starredMessages[0].originalStar

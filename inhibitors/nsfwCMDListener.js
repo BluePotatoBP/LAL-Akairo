@@ -21,7 +21,7 @@ module.exports = class nsfwCMD extends Inhibitor {
 
                 const embed = new MessageEmbed()
                     .setTitle(randomTitles[Math.floor(Math.random() * randomTitles.length)])
-                    .setDescription(`To use NSFW commands the channel has to be marked\nas NSFW, check channel settings for this toggle.${message.member.permissions.has(Permissions.FLAGS.MANAGE_CHANNELS) ? '\n\nYou have \`MANAGE_CHANNELS\` permissions, so you should be able\nto change this setting!' : ''}`)
+                    .setDescription(`To use NSFW commands the channel has to be marked\nas NSFW, ask an admin to check channel settings for this toggle.${message.member.permissions.has(Permissions.FLAGS.MANAGE_CHANNELS) ? '\n\nYou have \`MANAGE_CHANNELS\` permissions, so you should be able\nto change this setting!' : ''}`)
                     .setColor(crimson)
                     .setImage('https://i.imgur.com/oe4iK5i.gif')
 

@@ -9,8 +9,8 @@ const pasteGG = new PasteGG();
 class Star extends Command {
     constructor() {
         super('star', {
-            aliases: ['star'],
-            category: '',
+            aliases: ['star', 'starboard', 'sb'],
+            category: 'Mod',
             ownerOnly: false,
             cooldown: 5000,
             ratelimit: 2,
@@ -74,7 +74,7 @@ class Star extends Command {
     }
 
     async exec(message, { enableOpt, disableOpt, minOpt, maxOpt, channelOpt, selfStarsOpt, nsfwOpt }) {
-        await delMsg(message);
+        await delMsg(message, 30000);
 
         /////////////////////////////// STAFFROLE CHECK
         let cachedGuild = staffRole.find(c => c.guild == message.guild.id)
@@ -180,7 +180,7 @@ class Star extends Command {
                         **├** <:nonsfw:823990821794873385> **Allow NSFW Msgs:** \`${nsfwAllowed}\`${blacklisted}
                         └────────┄┄┄┄`)
 
-            await message.channel.send({ embeds: [listEmbed] })
+            await message.util.send({ embeds: [listEmbed] })
 
             /////////////////////////////// END OF WORK CODE
         } else {

@@ -24,6 +24,7 @@ class Config extends Command {
                         ['staffrole'],
                         ['prefix', 'setprefix'],
                         ['antiadvert', 'antiad'],
+                        ['star', 'starboard', 'sb'],
                         ['lang', 'language']
                     ],
                     default: 'list',
@@ -39,6 +40,7 @@ class Config extends Command {
                 if (action == 'prefix') return Flag.continue('setprefix');
                 if (action == 'lang') return Flag.continue('language');
                 if (action == 'antiadvert') return Flag.continue('antiadvert');
+                if (action == 'star') return Flag.continue('star');
                 // Default msg
                 if (action == 'list') return { action };
             }
