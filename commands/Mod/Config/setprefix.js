@@ -92,12 +92,17 @@ class SetPrefix extends Command {
         } else {
             let normiePrefix = customPrefixes.find(c => c.guild === message.guild.id);
             normiePrefix ? normiePrefix = normiePrefix.prefix : process.env.PREFIX;
+
             const normieEmbed = new MessageEmbed()
                 .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
-                .setDescription(`${lang(message, 'command.setprefix.prefixEmbed.desc.one')} \`${normiePrefix}\``)
-                .setColor(pastelGreen);
-
-            await message.channel.send({ embeds: [normieEmbed] });
+                .setDescription(`${lang(message, "command.setprefix.prefixEmbed.desc.one")} \`${normiePrefix}\``)
+                .setColor(pastelGreen)
+                .setTimestamp()
+            try {
+                await message.channel.send({ embeds: [normieEmbed] });
+            } catch (error) {
+                await message.channel.send({ content: `${lang(message, "command.setprefix.prefixEmbed.desc.one")} \`${normiePrefix}\`` })
+            }
         }
     }
 }
