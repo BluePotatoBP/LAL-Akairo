@@ -56,7 +56,7 @@ class Slowmode extends Command {
         if (!role) return await message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
         let memberRoles = message.member._roles;
 
-        if (memberRoles.some(r => role.id === r)) {
+        if (memberRoles.some(r => cachedGuild.role === r)) {
             let rateLimit = channelOpt.messages.channel.rateLimitPerUser;
             const embed = new Discord.MessageEmbed();
             let slowMessage;

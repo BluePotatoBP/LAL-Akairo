@@ -10,7 +10,7 @@ class Logs extends Command {
         super('logs', {
             aliases: ['logs'],
             userPermissions: ['MANAGE_GUILD'],
-            category: '',
+            category: 'Mod',
             ownerOnly: false,
             cooldown: 5000,
             ratelimit: 2,

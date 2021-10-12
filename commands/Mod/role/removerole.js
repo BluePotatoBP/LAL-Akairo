@@ -8,7 +8,7 @@ class Addrole extends Command {
         super('removerole', {
             aliases: ['removerole', 'rrole', 'remover'],
             category: '',
-            clientPermissions: ['ADD_REACTIONS', 'MANAGE_ROLES'],
+            clientPermissions: ['MANAGE_ROLES'],
             userPermissions: ['MANAGE_ROLES'],
             ownerOnly: false,
             cooldown: 5000,
@@ -46,10 +46,11 @@ class Addrole extends Command {
 
         if (!m.roles.cache.has(r.id))
             return message.channel.send({ content: `${m.user.username} ${lang(message, 'command.removerole.embed.desc.one')} \`${r.name}\` ${lang(message, 'command.removerole.embed.desc.two')}` });
-
+        try {
+            await message.react('<a:check:773208316624240710>');
+        } catch (error) { }
         try {
             await m.roles.remove(r.id);
-            await message.react('<a:check:773208316624240710>');
         } catch (error) {
             console.log(error);
             message.channel.send({ content: lang(message, "command.removerole.noPermsError") });

@@ -9,7 +9,7 @@ class AntiAdvert extends Command {
             aliases: ['antiadvert', 'antiad'],
             clientPermissions: ['MANAGE_MESSAGES'],
             userPermissions: ['MANAGE_GUILD'],
-            category: '',
+            category: 'Mod',
             ownerOnly: false,
             cooldown: 5000,
             ratelimit: 2,

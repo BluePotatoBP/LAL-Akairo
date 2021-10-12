@@ -8,7 +8,7 @@ class Addrole extends Command {
         super('addrole', {
             aliases: ['addrole', 'addr', 'arole'],
             category: '',
-            clientPermissions: ['ADD_REACTIONS', 'MANAGE_ROLES'],
+            clientPermissions: ['MANAGE_ROLES'],
             userPermissions: ['MANAGE_ROLES'],
             ownerOnly: false,
             cooldown: 5000,
@@ -42,7 +42,7 @@ class Addrole extends Command {
     }
 
     async exec(message, { m, r }) {
-        await delMsg(message);
+        await delMsg(message, 30000);
 
         const embed = new Discord.MessageEmbed()
             .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
@@ -50,10 +50,12 @@ class Addrole extends Command {
             .setColor(crimson);
 
         if (m.roles.cache.has(r.id)) return message.channel.send({ embeds: [embed] });
-
+        try {
+            await message.react('<a:check:773208316624240710>');
+        } catch (error) { }
+        
         try {
             await m.roles.add(r.id);
-            await message.react('<a:check:773208316624240710>');
         } catch (error) {
             console.log(error);
             message.channel.send({ content: lang(message, "command.addrole.noPermsError") });

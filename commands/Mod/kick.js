@@ -44,7 +44,7 @@ class Kick extends Command {
         if (!role) return await message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
         let memberRoles = message.member._roles;
 
-        if (memberRoles.some(r => role.id === r) || message.member.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) {
+        if (memberRoles.some(r => cachedGuild.role === r) || message.member.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) {
             // If theres no reason change 'r' args to "No Reason"
             !r ? r = lang(message, 'command.kick.reason.noReason') : ''
 

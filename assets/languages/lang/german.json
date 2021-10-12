@@ -149,6 +149,7 @@
     "command.purge.desc.content": "Quickly delete lots of messages",
     "command.purge.args.number.start": "How many messages would you like to delete? `(MAX: 1000)`",
     "command.purge.args.number.retry": "I didn't quite get that, how many messages would you like to delete? `(MAX: 1000)`",
+    "command.purge.warning.content": "You can't purge more then a thousand messages at once.",
 
     "command.say.desc.content": "Lass mich etwas sagen!",
     "command.say.noArgs": "Gib mir einen Text den ich sagen soll. \nDu kannst deine Nachricht `bearbeiten` oder du `wiederholst` den Command.",

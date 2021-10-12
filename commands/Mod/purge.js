@@ -83,7 +83,7 @@ class Purge extends Command {
     }
 
     async exec(message, { messagesAmount, bots, embeds, attachments, humans, links, invites, userOpt, includesOpt, startsWithOpt, endsWithOpt }) {
-        await delMsg(message);
+        await delMsg(message, 30000);
 
         // Staffrole Check
         let cachedGuild = staffRole.find(c => c.guild == message.guild.id)
@@ -94,7 +94,7 @@ class Purge extends Command {
 
         if (memberRoles.some(r => cachedGuild.role === r)) {
             // End of staffrole check/Start of purge
-            if (messagesAmount > 1000) return message.channel.send({ content: `You cannot purge over a thousand messages at once. (\`${approx(messagesAmount, { decimal: '.' })}/1000\`)` }).then(message => delMsg(message, 10000))
+            if (messagesAmount > 1000) return message.channel.send({ content: `${lang(message, "command.purge.warning.content")} (\`${approx(messagesAmount, { decimal: '.' })}/1000\`)` }).then(message => delMsg(message, 10000))
 
             let wait = msg => new Promise(res => setTimeout(res, msg));
             const allDeletedAmount = []

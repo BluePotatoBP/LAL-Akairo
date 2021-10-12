@@ -328,6 +328,7 @@
     "command.purge.desc.content": "Quickly delete lots of messages",
     "command.purge.args.number.start": "How many messages would you like to delete? `(MAX: 1000)`",
     "command.purge.args.number.retry": "I didn't quite get that, how many messages would you like to delete? `(MAX: 1000)`",
+    "command.purge.warning.content": "You can't purge more then a thousand messages at once.",
 
     "command.reactionroles.desc.content": "\n\nYou must provide one of these options (`<action>`): `add|create|setup`,`remove`,`list`,`flag`,`move`,`fix`\n*(add, create and setup all do the same)*\n\nAnd if you know the syntax you can provide `[args]` right away,\notherwise follow the prompts.\n\nAll of the commands have prompts and will guide you **EXCEPT**\nthe flag commands, unfortunately the way these are done its\nimpossible to add prompts to them and you'll have to send all\narguments at once *(%CUSTOM_PREFIX%rr flag add flag messageID)*, otherwise it\nwill just tell you to resend the command.\n\n**If you kick/ban %BOT_USERNAME% your data will be\ndeleted after 7d and cannot be recovered.**\n\n**WARNING:** the `%BOT_USERNAME%` role must be above all roles you\nintend to give out, otherwise it wont work.\n",
     "command.reactionroles.args.start": "What action would you like to perform?\n\n`add|create|setup`,`remove`,`list`,`flag`,`move`,`fix`",
