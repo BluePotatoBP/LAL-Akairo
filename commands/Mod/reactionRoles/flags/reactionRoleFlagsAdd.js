@@ -69,6 +69,8 @@ class reactionRoleFlagsAdd extends Command {
         // Get cache and check if it exists
         let messageCache = reactionRoles.find(c => c.message == messageID.id);
         if (!messageCache) return await message.channel.send({ content: lang(message, "command.reactionroleflagsadd.noRR") })
+        console.log(messageCache)
+        if(messageCache.destructAt || messageCache.verifyFlag || messageCache.lockFlag || messageCache.reverseFlag) return await message.channel.send("Currently you can only have 1 flag per message.");
         //console.log(messageCache)
         // If self destruct flag was given, do logic for it
         if (sdFlag) {
@@ -82,7 +84,8 @@ class reactionRoleFlagsAdd extends Command {
                 emoji: messageCache.emoji,
                 destructAt: sdFlag,
                 verifyFlag: null,
-                lockFlag: null
+                lockFlag: null,
+                reverseFlag: null
             })
 
             await message.channel.send({ content: `Added **Self Destruct** flag at **${sdFlag}** reactions to **${messageID.id}** message.` })
@@ -97,7 +100,8 @@ class reactionRoleFlagsAdd extends Command {
                 emoji: messageCache.emoji,
                 destructAt: null,
                 verifyFlag: true,
-                lockFlag: null
+                lockFlag: messageCache.lockFlag ? "true" : null,
+                reverseFlag: messageCache.reverseFlag ? "true" : null
             })
 
             await message.channel.send({ content: `Added **Verify** flag to **${messageID.id}** message.` })
@@ -111,8 +115,9 @@ class reactionRoleFlagsAdd extends Command {
                 role: messageCache.role,
                 emoji: messageCache.emoji,
                 destructAt: null,
-                verifyFlag: null,
-                lockFlag: true
+                verifyFlag: messageCache.verifyFlag ? "true" : null,
+                lockFlag: true,
+                reverseFlag: messageCache.reverseFlag ? "true" : null
             })
 
             await message.channel.send({ content: `Added **Lock** flag to **${messageID.id}** message.` })
@@ -126,8 +131,8 @@ class reactionRoleFlagsAdd extends Command {
                 role: messageCache.role,
                 emoji: messageCache.emoji,
                 destructAt: null,
-                verifyFlag: null,
-                lockFlag: null,
+                verifyFlag: messageCache.verifyFlag ? "true" : null,
+                lockFlag: messageCache.lockFlag ? "true" : null,
                 reverseFlag: true
             })
 

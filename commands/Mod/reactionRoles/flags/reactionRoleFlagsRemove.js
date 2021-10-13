@@ -76,9 +76,9 @@ class reactionRoleFlagsRemove extends Command {
                 role: messageCache.role,
                 emoji: messageCache.emoji,
                 destructAt: null,
-                verifyFlag: null,
-                lockFlag: null,
-                reverseFlag: null
+                verifyFlag: messageCache.verifyFlag,
+                lockFlag: messageCache.lockFlag,
+                reverseFlag: messageCache.reverseFlag
             })
 
             await message.channel.send({ content: `Removed **Self Destruct** flag from **${messageID.id}** message.` })
@@ -91,10 +91,10 @@ class reactionRoleFlagsRemove extends Command {
                 message: messageCache.message,
                 role: messageCache.role,
                 emoji: messageCache.emoji,
-                destructAt: null,
+                destructAt: messageCache.destructAt,
                 verifyFlag: null,
-                lockFlag: null,
-                reverseFlag: null
+                lockFlag: messageCache.lockFlag,
+                reverseFlag: messageCache.reverseFlag
             })
 
             await message.channel.send({ content: `Removed **Verify** flag from **${messageID.id}** message.` })
@@ -107,10 +107,10 @@ class reactionRoleFlagsRemove extends Command {
                 message: messageCache.message,
                 role: messageCache.role,
                 emoji: messageCache.emoji,
-                destructAt: null,
-                verifyFlag: null,
+                destructAt: messageCache.destructAt,
+                verifyFlag: messageCache.verifyFlag,
                 lockFlag: null,
-                reverseFlag: null
+                reverseFlag: messageCache.reverseFlag
             })
 
             await message.channel.send({ content: `Removed **Lock** flag from **${messageID.id}** message.` })
@@ -123,9 +123,9 @@ class reactionRoleFlagsRemove extends Command {
                 message: messageCache.message,
                 role: messageCache.role,
                 emoji: messageCache.emoji,
-                destructAt: null,
-                verifyFlag: null,
-                lockFlag: null,
+                destructAt: messageCache.destructAt,
+                verifyFlag: messageCache.verifyFlag,
+                lockFlag: messageCache.lockFlag,
                 reverseFlag: null
             })
 
