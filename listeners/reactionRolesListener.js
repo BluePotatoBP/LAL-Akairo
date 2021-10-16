@@ -1,7 +1,8 @@
 const { Listener } = require('discord-akairo');
 const { Permissions } = require('discord.js');
-const addReactionCooldown = new Set()
-const removeReactionCooldown = new Set()
+const wait = msg => new Promise(res => setTimeout(res, msg));
+const addCooldown = [];
+const removeCooldown = [];
 
 module.exports = class rrListener extends Listener {
     constructor() {
@@ -30,15 +31,10 @@ module.exports = class rrListener extends Listener {
             // If the lock flag is enabled, do nothing 
             if (cacheEmoji.lockFlag) return;
             // Queue system
-            if (addReactionCooldown.has(packet.d.user_id)) {
-                let queue = [];
-                queue.push(cacheEmoji.role)
-                for (let i = 0; i < queue.length; i++) {
-                    let currentRole = queue.shift();
-                    setTimeout(async () => { await user.roles.add(currentRole) }, 3000)
-                }
-            };
-            if (addReactionCooldown.has(packet.d.user_id)) return;
+            let findRoles = addCooldown.filter(c => c.user === packet.d.user_id)
+            addCooldown.push({ user: packet.d.user_id })
+            await wait(2000 * findRoles.length)
+            findRoles.splice(0, 1)
             // Check if self destruct option is enabled and get reaction details
             const getChannel = await guild.channels.cache?.get(packet.d.channel_id);
             const getMessage = await getChannel.messages.fetch(cacheEmoji.message);
@@ -54,15 +50,11 @@ module.exports = class rrListener extends Listener {
                 await reactionInfo.users.remove(packet.d.user_id).catch(() => { });
             // Check if the reverse flag is enabled, if yes remove role
             if (cacheEmoji.reverseFlag && guild.me.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) {
-                addReactionCooldown.add(packet.d.user_id);
-                setTimeout(() => addReactionCooldown.delete(packet.d.user_id), 60000);
                 return await user.roles.remove(cacheEmoji.role).catch(() => { })
             }
             // Check if the bot has manage roles permissions
             if (guild.me.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) {
                 await user.roles.add(cacheEmoji.role).catch(() => { });
-                addReactionCooldown.add(packet.d.user_id);
-                setTimeout(() => addReactionCooldown.delete(packet.d.user_id), 60000);
             } else return;
 
         }
@@ -86,28 +78,17 @@ module.exports = class rrListener extends Listener {
             // Check if the very flag is enabled, if yes return
             if (cacheEmoji.verifyFlag) return;
             // Queue system
-            if (removeReactionCooldown.has(packet.d.user_id)) {
-                {
-                    let queue = [];
-                    queue.push(cacheEmoji.role)
-                    for (let i = 0; i < queue.length; i++) {
-                        let currentRole = queue.shift();
-                        setTimeout(async () => { await user.roles.remove(currentRole) }, 3000)
-                    }
-                };
-            };
-            if (removeReactionCooldown.has(packet.d.user_id)) return;
+            let findRoles = removeCooldown.filter(c => c.user === packet.d.user_id)
+            removeCooldown.push({ user: packet.d.user_id })
+            await wait(2000 * findRoles.length)
+            findRoles.splice(0, 1)
             // Check if the reverse flag is enabled, if yes add role
             if (cacheEmoji.reverseFlag && guild.me.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) {
-                removeReactionCooldown.add(packet.d.user_id);
-                setTimeout(() => removeReactionCooldown.delete(packet.d.user_id), 60000);
                 return await user.roles.add(cacheEmoji.role).catch(() => { })
             }
             // Check if the bot has manage roles permissions
             if (guild.me.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) {
                 await user.roles.remove(cacheEmoji.role).catch(() => { });
-                removeReactionCooldown.add(packet.d.user_id);
-                setTimeout(() => removeReactionCooldown.delete(packet.d.user_id), 60000);
             } else return;
         }
     }
