@@ -16,6 +16,7 @@ global.starBlacklistCache = [];
 global.antiAdvertise = [];
 global.reactionRoles = [];
 global.customPrefixes = [];
+global.rrCooldown = [];
 global.DB = require('./assets/tools/establishDBConnection');
 global.lang = require('./assets/languages/languageTranslate');
 
