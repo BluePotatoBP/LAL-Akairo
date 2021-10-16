@@ -79,7 +79,7 @@ class reactionRolesList extends Command {
                 let map = group[i].map(c => `${message.guild.emojis.cache?.get(c.emoji)} ${message.guild.roles.cache?.get(c.role)}`);
                 let msg = await resolveType(message, group[i][0].message)
 
-                listEmbed.addField(' ⁡‍⁡‍⁢', `${i + 1}. **[${group[i][0].message}](${await msg.url} '${lang(message, "command.reactionroleslist.listEmbed.addField.tooltip")}')** ${group[i][0].destructAt ? `**🚩 SelfDestruct@${group[i][0].destructAt}**` : group[i][0].lockFlag ? '**🚩 Locked**' : group[i][0].verifyFlag ? '**🚩 Verify**' : group[i][0].reverseFlag ? '**🚩 Reverse**' : ''}\n${map.join('\n')}`);
+                listEmbed.addField(' ⁡‍⁡‍⁢', `${i + 1}. **[${group[i][0].message}](${msg ? await msg.url : ''} '${lang(message, "command.reactionroleslist.listEmbed.addField.tooltip")}')** ${group[i][0].destructAt ? `**🚩 SelfDestruct@${group[i][0].destructAt}**` : group[i][0].lockFlag ? '**🚩 Locked**' : group[i][0].verifyFlag ? '**🚩 Verify**' : group[i][0].reverseFlag ? '**🚩 Reverse**' : ''}\n${map.join('\n')}`);
             }
             await message.channel.send({ embeds: [listEmbed] })
         }
