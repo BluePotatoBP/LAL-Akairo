@@ -69,7 +69,7 @@ class reactionRoleFlagsRemove extends Command {
         if (sdFlag) {
             await DB.query(`DELETE FROM reactionRoles where destructAt = ? WHERE message = ?`, [null, messageID.id]);
             let deleteFlag = await reactionRoles.findIndex(c => c.message === messageID.id)
-            await reactionRoles.splice(deleteFlag)
+            await reactionRoles.splice(deleteFlag, 1)
             await reactionRoles.push({
                 guild: messageCache.guild,
                 message: messageCache.message,
@@ -85,7 +85,7 @@ class reactionRoleFlagsRemove extends Command {
         } else if (vFlag) { // Else if verify flag was given, do logic for it too
             await DB.query(`UPDATE reactionRoles SET verifyFlag = ? WHERE message = ?`, [null, messageID.id]);
             let deleteFlag = await reactionRoles.findIndex(c => c.message === messageID.id)
-            await reactionRoles.splice(deleteFlag)
+            await reactionRoles.splice(deleteFlag, 1)
             await reactionRoles.push({
                 guild: messageCache.guild,
                 message: messageCache.message,
@@ -101,7 +101,7 @@ class reactionRoleFlagsRemove extends Command {
         } else if (lFlag) { // And if the unique flag was used, do logic
             await DB.query(`UPDATE reactionRoles SET lockFlag = ? WHERE message = ?`, [null, messageID.id]);
             let deleteFlag = await reactionRoles.findIndex(c => c.message === messageID.id)
-            await reactionRoles.splice(deleteFlag)
+            await reactionRoles.splice(deleteFlag, 1)
             await reactionRoles.push({
                 guild: messageCache.guild,
                 message: messageCache.message,
@@ -117,7 +117,7 @@ class reactionRoleFlagsRemove extends Command {
         } else if (rFlag) { // And finally if reverse flag was used, do funny
             await DB.query(`UPDATE reactionRoles SET reverseFlag = ? WHERE message = ?`, [null, messageID.id]);
             let deleteFlag = await reactionRoles.findIndex(c => c.message === messageID.id)
-            await reactionRoles.splice(deleteFlag)
+            await reactionRoles.splice(deleteFlag, 1)
             await reactionRoles.push({
                 guild: messageCache.guild,
                 message: messageCache.message,

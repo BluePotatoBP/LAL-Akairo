@@ -69,14 +69,12 @@ class reactionRoleFlagsAdd extends Command {
         // Get cache and check if it exists
         let messageCache = reactionRoles.find(c => c.message == messageID.id);
         if (!messageCache) return await message.channel.send({ content: lang(message, "command.reactionroleflagsadd.noRR") })
-        console.log(messageCache)
         if(messageCache.destructAt || messageCache.verifyFlag || messageCache.lockFlag || messageCache.reverseFlag) return await message.channel.send("Currently you can only have 1 flag per message.");
-        //console.log(messageCache)
         // If self destruct flag was given, do logic for it
         if (sdFlag) {
             await DB.query(`UPDATE reactionRoles SET destructAt = ? WHERE message = ?`, [sdFlag, messageID.id]);
             let deleteFlag = await reactionRoles.findIndex(c => c.message === messageID.id)
-            await reactionRoles.splice(deleteFlag)
+            await reactionRoles.splice(deleteFlag, 1)
             await reactionRoles.push({
                 guild: messageCache.guild,
                 message: messageCache.message,
@@ -92,7 +90,7 @@ class reactionRoleFlagsAdd extends Command {
         } else if (vFlag) { // Else if verify flag was given, do logic for it too
             await DB.query(`UPDATE reactionRoles SET verifyFlag = ? WHERE message = ?`, [true, messageID.id]);
             let deleteFlag = await reactionRoles.findIndex(c => c.message === messageID.id)
-            await reactionRoles.splice(deleteFlag)
+            await reactionRoles.splice(deleteFlag, 1)
             await reactionRoles.push({
                 guild: messageCache.guild,
                 message: messageCache.message,
@@ -108,7 +106,7 @@ class reactionRoleFlagsAdd extends Command {
         } else if (lFlag) { // And if the lock flag was used, do logic
             await DB.query(`UPDATE reactionRoles SET lockFlag = ? WHERE message = ?`, [true, messageID.id]);
             let deleteFlag = await reactionRoles.findIndex(c => c.message === messageID.id)
-            await reactionRoles.splice(deleteFlag)
+            await reactionRoles.splice(deleteFlag, 1)
             await reactionRoles.push({
                 guild: messageCache.guild,
                 message: messageCache.message,
@@ -124,7 +122,7 @@ class reactionRoleFlagsAdd extends Command {
         } else if (rFlag) { // And finally if reverse flag was used, produce funny
             await DB.query(`UPDATE reactionRoles SET reverseFlag = ? WHERE message = ?`, [true, messageID.id]);
             let deleteFlag = await reactionRoles.findIndex(c => c.message === messageID.id)
-            await reactionRoles.splice(deleteFlag)
+            await reactionRoles.splice(deleteFlag, 1)
             await reactionRoles.push({
                 guild: messageCache.guild,
                 message: messageCache.message,
