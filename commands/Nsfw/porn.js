@@ -7,6 +7,7 @@ class Porn extends Command {
     constructor() {
         super('randomporn', {
             aliases: ['porn', 'randomp', 'randomporn'],
+            clientPermissions: ["EMBED_LINKS"],
             category: 'Nsfw',
             ownerOnly: false,
             nsfw: true,

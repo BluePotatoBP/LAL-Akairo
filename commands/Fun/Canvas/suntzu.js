@@ -8,6 +8,7 @@ class Suntzu extends Command {
     constructor() {
         super('suntzu', {
             aliases: ['suntzu'],
+            clientPermissions: ['ATTACH_FILES'],
             category: 'Fun',
             ownerOnly: false,
             cooldown: 5000,
@@ -20,7 +21,7 @@ class Suntzu extends Command {
             args: [{
                 id: 'input',
                 match: 'rest',
-                default: "It is better to cum in the shower then to shower in the cum."
+                default: "It is better to poop in the shower then to shower in the poop."
             },]
         });
     }

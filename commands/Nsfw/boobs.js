@@ -7,6 +7,7 @@ class Boobs extends Command {
 	constructor() {
 		super('boobs', {
 			aliases: ['boobs', 'boobies'],
+			clientPermissions: ["EMBED_LINKS"],
 			category: 'Nsfw',
 			ownerOnly: false,
 			nsfw: true,

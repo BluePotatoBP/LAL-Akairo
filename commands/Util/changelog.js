@@ -9,7 +9,6 @@ class Changelog extends Command {
         super('changelog', {
             aliases: ['changelog'],
             category: 'Util',
-            clientPermissions: ['ADD_REACTIONS', 'MANAGE_MESSAGES'],
             ownerOnly: false,
             ownerOnly: false,
             cooldown: 5000,
@@ -22,7 +21,7 @@ class Changelog extends Command {
     }
 
     async exec(message) {
-        await delMsg(message);
+        await delMsg(message, 30000);
 
         const embed = new Discord.MessageEmbed()
             .setAuthor('📰 LAL Changelog 📰')
@@ -31,7 +30,7 @@ class Changelog extends Command {
             .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
 
-        await message.util.send({ embeds: [embed] });
+        await message.channel.send({ embeds: [embed] });
     }
 }
 module.exports = Changelog;

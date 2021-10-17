@@ -9,6 +9,7 @@ class Bobross extends Command {
     constructor() {
         super('bobross', {
             aliases: ['bobross'],
+            clientPermissions: ['ATTACH_FILES'],
             category: 'Fun',
             ownerOnly: false,
             cooldown: 5000,

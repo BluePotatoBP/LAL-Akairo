@@ -20,6 +20,7 @@ class Bean extends Command {
 				{
 					id: 'u',
 					type: 'user',
+					default: (message) => message.author,
 					prompt: {
 						optional: true,
 						start: (message) => lang(message, 'command.bean.prompt.start'),
@@ -33,21 +34,11 @@ class Bean extends Command {
 	async exec(message, { u }) {
 		await delMsg(message);
 
-		if (!u) {
-			let embed = new Discord.MessageEmbed()
-				.setImage('https://i.ytimg.com/vi/GW704pnVBjY/maxresdefault.jpg?size=128')
-				.setColor('#32C84A');
-			message.channel.send({ embeds: [embed], content: `**Idot ${message.author} was beaned, RIP 😢**` }).catch((e) => {
-				console.log(e);
-			});
-		} else {
-			let embed = new Discord.MessageEmbed()
-				.setImage('https://i.ytimg.com/vi/GW704pnVBjY/maxresdefault.jpg?size=128')
-				.setColor('#32C84A');
-			message.channel.send({ embeds: [embed], content: `**Idot ${u} was beaned, RIP 😢**` }).catch((e) => {
-				console.log(e);
-			});
-		}
+		let embed = new Discord.MessageEmbed()
+			.setImage('https://i.ytimg.com/vi/GW704pnVBjY/maxresdefault.jpg?size=128')
+			.setColor('#32C84A');
+		await message.channel.send({ embeds: [embed], content: `**Idot ${u} was beaned, RIP 😢**` })
+			.catch((e) => { console.log(e) });
 	}
 }
 module.exports = Bean;

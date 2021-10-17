@@ -7,6 +7,7 @@ class Pussy extends Command {
 	constructor() {
 		super('pussy', {
 			aliases: ['pussy'],
+			clientPermissions: ["EMBED_LINKS"],
 			category: 'Nsfw',
 			ownerOnly: false,
 			nsfw: true,

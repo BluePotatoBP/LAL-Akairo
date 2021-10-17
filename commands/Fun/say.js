@@ -13,7 +13,6 @@ class Say extends Command {
             category: 'Fun',
             cooldown: 5000,
             ratelimit: 2,
-            clientPermissions: ['SEND_MESSAGES'],
             ownerOnly: false,
             description: {
                 content: 'Make me say anything!',

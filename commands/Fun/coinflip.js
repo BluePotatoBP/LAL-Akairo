@@ -1,6 +1,4 @@
 const { Command } = require('discord-akairo');
-const Discord = require('discord.js');
-const { crimson } = require('../../assets/colors.json')
 
 class Coinflip extends Command {
     constructor() {
@@ -15,18 +13,11 @@ class Coinflip extends Command {
                     content: '',
                     usage: '',
                     syntax: ''
-                },
-                args: [
-                    {
-                        id: 'text',
-                        match: 'text',
-                        type: 'string',
-                    },
-                ]
+                }
             });
     }
 
-    async exec(message, args) {
+    async exec(message) {
         let flipMsg = await message.channel.send({ content: "<a:coinflip:874872942205468742>" })
 
         setTimeout(async () => {

@@ -8,6 +8,7 @@ class Respect extends Command {
     constructor() {
         super('respect', {
             aliases: ['respect', 'pressf'],
+            clientPermissions: ['ATTACH_FILES'],
             category: 'Fun',
             ownerOnly: false,
             cooldown: 5000,

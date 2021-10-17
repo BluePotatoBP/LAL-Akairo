@@ -9,6 +9,7 @@ class Trash extends Command {
     constructor() {
         super('trash', {
             aliases: ['trash'],
+            clientPermissions: ['ATTACH_FILES'],
             category: 'Fun',
             ownerOnly: false,
             cooldown: 5000,

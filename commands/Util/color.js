@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const Discord = require('discord.js');
+const { MessageAttachment, MessageEmbed, Permissions } = require('discord.js');
 const { crimson } = require('../../assets/colors.json');
 const { createCanvas, loadImage } = require('canvas');
 const path = require('path');
@@ -10,6 +10,7 @@ class Color extends Command {
     constructor() {
         super('color', {
             aliases: ['color', 'hex', 'whatcolor'],
+            clientPermissions: ['ATTACH_FILES'],
             category: 'Util',
             ownerOnly: false,
             cooldown: 5000,
@@ -22,21 +23,28 @@ class Color extends Command {
 
             args: [{
                 id: 'c',
-                match: 'text',
-                type: 'string',
+                type: 'color',
                 prompt: {
                     start: (message) => lang(message, 'command.color.prompt.start'),
-                    retry: (message) => lang(message, 'command.color.prompt.retry')
+                    retry: (message) => lang(message, 'command.color.prompt.retry'),
+                    optional: false
                 }
             }]
         });
     }
 
     async exec(message, { c }) {
-        delMsg(message, 10000)
-
+        delMsg(message, 30000)
         // Using a trycatch just because user input can be invalid sometimes (wrong hex code)
         try {
+            // Converting the input (int) to a hexadecimal string (hex)
+            const intToHex = (int) => {
+                let hex = Number(int).toString(16);
+                if (hex.length < 2) hex = "0" + hex;
+                return hex;
+            };
+
+            c = intToHex(c);
             // Getting the different color values from input
             let CRed = hexRgb(c).red;
             let CGreen = hexRgb(c).green;
@@ -55,26 +63,26 @@ class Color extends Command {
             ctx.fillRect(0, 0, base.width, base.height);
 
             // Buffering the finished image to the built in discord attachment manager (Major pain in the ass to figure out)
-            const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'color.png');
+            const attachment = new MessageAttachment(canvas.toBuffer(), 'color.png');
 
             // Output embed
-            let embed = new Discord.MessageEmbed()
+            let embed = new MessageEmbed()
                 .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
                 .addField(lang(message, 'command.color.embed.field1'), `${c.includes("#") ? c : `#${c}`} [[?]](https://gist.github.com/BluePotatoBP/446f180644b331d9d71cfe24575f5adc 'If the embed and image colors dont match, click here.')`)
                 .addField(lang(message, 'command.color.embed.field2'), `${CRed}, ${CGreen}, ${CBlue}`)
                 .setThumbnail('attachment://color.png')
-                .attachFiles(attachment)
                 .setColor(c.includes("#") ? c : `#${c}`)
                 .setTimestamp();
 
             // Ship it
-            await message.util.send({ embeds: [embed] });
+            await message.util.send({ embeds: [embed], files: [attachment] });
         } catch (error) {
             // Make an "error" embed (only used when a wrong hex is given) and send it
-            const errorEmbed = new Discord.MessageEmbed()
+            const errorEmbed = new MessageEmbed()
                 .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
                 .setDescription(`<a:cancel:773201205056503849> ${lang(message, 'command.color.bigError')}`)
                 .setColor(crimson);
+
             await message.util.send({ embeds: [errorEmbed] });
         }
     }

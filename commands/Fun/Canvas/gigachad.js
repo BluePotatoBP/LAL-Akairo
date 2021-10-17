@@ -8,6 +8,7 @@ class GigaChad extends Command {
     constructor() {
         super('gigachad', {
             aliases: ['gigachad'],
+            clientPermissions: ['ATTACH_FILES'],
             category: 'Fun',
             ownerOnly: false,
             cooldown: 5000,

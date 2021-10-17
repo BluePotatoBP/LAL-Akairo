@@ -29,7 +29,7 @@ class Wikipedia extends Command {
     }
 
     async exec(message, { input }) {
-        delMsg(message, 10000)
+        delMsg(message, 30000)
 
         try {
             await wiki(input).then(async result => {

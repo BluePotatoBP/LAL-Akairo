@@ -7,6 +7,7 @@ class Feet extends Command {
 	constructor() {
 		super('feet', {
 			aliases: ['feet'],
+			clientPermissions: ["EMBED_LINKS"],
 			category: 'Nsfw',
 			ownerOnly: false,
 			nsfw: true,
