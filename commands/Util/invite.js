@@ -24,7 +24,7 @@ class Invite extends Command {
 
         let iembed = new Discord.MessageEmbed()
             .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
-            .setDescription(`[${lang(message, 'command.invite.iembed.desc.one')}](https://discordapp.com/oauth2/authorize?client_id=${client.user.id}&scope=bot%20applications.commands&permissions=3691510879) ${lang(message, 'command.invite.iembed.desc.two')}`)
+            .setDescription(`[${lang(message, 'command.invite.iembed.desc.one')}](https://discordapp.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=1342565446) ${lang(message, 'command.invite.iembed.desc.two')}`)
             .setColor(crimson)
             .setTimestamp();
 

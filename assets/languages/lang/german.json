@@ -152,7 +152,7 @@
     "command.purge.warning.content": "You can't purge more then a thousand messages at once.",
 
     "command.say.desc.content": "Lass mich etwas sagen!",
-    "command.say.noArgs": "Gib mir einen Text den ich sagen soll. \nDu kannst deine Nachricht `bearbeiten` oder du `wiederholst` den Command.",
+    "command.say.noArgs": "Bitte geben Sie mir einen beliebigen Text zum Senden",
 
     "command.urban.desc.content": "Du bist dir unsicher was ein Wort bedeuted? Das Urban Dictionary hat sicher eine Antwort.",
     "command.urban.nrembed.desc": "Keine Ergebnisse gefunden.",

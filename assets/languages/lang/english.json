@@ -60,7 +60,7 @@
     "command.rps.embed.title.botChose": "I chose:",
 
     "command.say.desc.content": "Make me say anything!",
-    "command.say.noArgs": "Please give me some text to say. \nYou can `edit` the last message or `re-type` the command.",
+    "command.say.noArgs": "Please give me some text to send.",
 
     "command.urban.desc.content": "You're not sure what it means? The Urban Dictionary most likely has an answer.",
     "command.urban.nrembed.desc": "No results found for that topic.",
