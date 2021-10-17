@@ -95,7 +95,7 @@ class Say extends Command {
             // If the user has the staffrole, proceed
             if (memberRoles.some(r => cachedGuild.role === r)) {
                 // Define embed
-                const eembed = new Discord.MessageEmbed().setColor(crimson);
+                const eembed = new MessageEmbed().setColor(crimson);
                 // Check for other text flags inside the embed
                 if (args.uvu) {
                     eembed.setDescription(owoify(args.text), 'uvu');
