@@ -23,8 +23,8 @@ module.exports = class antiAdvertisement extends Listener {
         // Delete function, check if msg matches regex
         async function del() {
             if (await message.content.match(regex)) {
-                await message.delete()
-                if (cachedGuild.warn === 'true') await message.channel.send({ content: `${message.author}, links are not allowed.` }).then(e => e.delete({ timeout: 5000 }));
+                await message.delete().catch(e => { })
+                if (cachedGuild.warn === 'true') await message.channel.send({ content: `${message.author}, links are not allowed.` }).then(e => e.delete({ timeout: 5000 }).catch(e => { }));
             }
         }
 

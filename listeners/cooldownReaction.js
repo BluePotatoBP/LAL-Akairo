@@ -1,7 +1,7 @@
 const { Listener } = require('discord-akairo');
 const { Permissions } = require('discord.js');
 const cooldown = new Set();
-const ms = require('ms');
+const moment = require('moment');
 
 module.exports = class cooldownReact extends Listener {
     constructor() {
@@ -22,7 +22,7 @@ module.exports = class cooldownReact extends Listener {
             }, remaining);
         } else { // If not send a message and delete after time runs out
             try {
-                let cooldownMessage = await message.channel.send({ content: `⏰ \`${remaining !== 0 ? ms(remaining) : '0s'}\`` })
+                let cooldownMessage = await message.channel.send({ content: `⏰ \`${remaining !== 0 ? moment(remaining) : '0s'}\`` })
                 setTimeout(async () => {
                     await cooldownMessage.delete()
                 }, remaining < 2000 ? 2000 : remaining)

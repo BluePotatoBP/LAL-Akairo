@@ -33,9 +33,9 @@ module.exports = class antiAdvertEdit extends Listener {
             let match = await message.content.match(regex)
 
             if (match) {
-                await message.delete()
+                await message.delete().catch(e => { })
                 if (cachedGuild.warn === 'true') {
-                    await message.channel.send({ content: `${message.author}, links are not allowed.` }).then(e => e.delete({ timeout: 5000 }));
+                    await message.channel.send({ content: `${message.author}, links are not allowed.` }).then(e => e.delete({ timeout: 5000 }).catch(e => { }));
                 }
             }
         }
