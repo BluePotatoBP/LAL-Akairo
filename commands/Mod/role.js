@@ -5,7 +5,7 @@ class Role extends Command {
         super('role', {
             aliases: ['role'],
             category: 'Mod',
-            clientPermissions: ['ADD_REACTIONS', 'MANAGE_ROLES'],
+            clientPermissions: ['MANAGE_ROLES'],
             userPermissions: ['MANAGE_ROLES'],
             ownerOnly: false,
             cooldown: 5000,

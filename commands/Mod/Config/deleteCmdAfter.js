@@ -9,7 +9,6 @@ class deleteCmdAfter extends Command {
             {
                 aliases: ['deletecmdafter', 'delcmdafter', 'delcmd', 'delcmds', 'deletecommands'],
                 userPermissions: ['MANAGE_MESSAGES'],
-                clientPermissions: ['MANAGE_MESSAGES'],
                 category: 'Mod',
                 ownerOnly: false,
                 cooldown: 10000,

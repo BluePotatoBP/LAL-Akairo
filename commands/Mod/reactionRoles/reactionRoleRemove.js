@@ -8,7 +8,7 @@ class reactionRoleRemove extends Command {
         super('reactionroleremove',
             {
                 aliases: ['reactionroleremove', 'rrremove'],
-                clientPermissions: ['ADD_REACTIONS', 'MANAGE_MESSAGES'],
+                clientPermissions: ['ADD_REACTIONS'],
                 userPermissions: ['MANAGE_ROLES'],
                 category: '',
                 ownerOnly: false,

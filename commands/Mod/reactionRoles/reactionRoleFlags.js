@@ -5,7 +5,7 @@ class reactionRoleFlags extends Command {
         super('reactionroleflags', {
             aliases: ['reactionroleflags', 'rrfl', 'rrflags'],
             category: '',
-            clientPermissions: ['ADD_REACTIONS', 'MANAGE_ROLES'],
+            clientPermissions: ['ADD_REACTIONS'],
             userPermissions: ['MANAGE_ROLES'],
             ownerOnly: false,
             cooldown: 10000,

@@ -7,7 +7,6 @@ class AntiAdvert extends Command {
     constructor() {
         super('antiadvert', {
             aliases: ['antiadvert', 'antiad'],
-            clientPermissions: ['MANAGE_MESSAGES'],
             userPermissions: ['MANAGE_GUILD'],
             category: 'Mod',
             ownerOnly: false,
