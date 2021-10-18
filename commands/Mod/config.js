@@ -80,7 +80,7 @@ class Config extends Command {
         languageData.length === 0 ? language = '**[english](${message.url})**' : language = `**[${languageData[0].language}](${message.url})**`;
         // Delete command info
         let delCommand;
-        deleteCommandData.length === 0 ? delCommand = `**[${lang(message, "command.deletecmdafter.no.content")}](${message.url})**` : delCommand = `**[${lang(message, "command.deletecmdafter.yes.content")}](${message.url})**`;
+        deleteCommandData.length === 0 ? delCommand = `**[${lang(message, "command.deletecmdafter.yes.content")}](${message.url})**` : delCommand = `**[${lang(message, "command.deletecmdafter.no.content")}](${message.url})**`;
 
         if (action === 'list') {
             const embed = new MessageEmbed()
