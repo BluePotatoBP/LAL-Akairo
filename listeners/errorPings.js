@@ -15,6 +15,7 @@ module.exports = class ErrorListener extends Listener {
 
     async exec(err, message, command) {
         console.log(err)
+        if(message.guild.me.user.id === "685922621669244962") return;
         // return if user is on cooldown and define some vars for later
         if (addCooldown.has(message.author.id)) return;
         const errorID = Math.random().toString(36).substring(7);

@@ -17,6 +17,7 @@ global.antiAdvertise = [];
 global.reactionRoles = [];
 global.customPrefixes = [];
 global.rrCooldown = [];
+global.deleteCommand = [];
 global.DB = require('./assets/tools/establishDBConnection');
 global.lang = require('./assets/languages/languageTranslate');
 

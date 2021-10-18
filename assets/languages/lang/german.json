@@ -431,5 +431,11 @@
 
     "nsfw.couldntFetch.content": "Sorry I couldnt fetch new images, please try again later.",
 
+    "command.deletecmdafter.desc.content": "\n\nShould the bot delete commands after theyre sent?\nMost commands have a timer to them that deletes\nthem after some time (usually 30s).\nIf you set this option to `no` the bot wont delete command messages.",
+    "command.deletecmdafter.infoEmbed.desc.content": "Delete commands after they're sent:%NOTE- yes or no%",
+    "command.deletecmdafter.updateEmbed.desc.content": "**UPDATED:** Should commands be deleted after use:%NOTE- yes or no%",
+    "command.deletecmdafter.yes.content": "yes",
+    "command.deletecmdafter.no.content": "no",
+
     "temp.unused": "This line isnt ever used and you dont have to translate it, its just here so i can easily copy paste lines without having to think about commas"
 }

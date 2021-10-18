@@ -25,7 +25,8 @@ class Config extends Command {
                         ['prefix', 'setprefix'],
                         ['antiadvert', 'antiad'],
                         ['star', 'starboard', 'sb'],
-                        ['lang', 'language']
+                        ['lang', 'language'],
+                        ['deletecommand', 'delcmd', 'delcmds', 'deletecommands']
                     ],
                     default: 'list',
                     prompt: {
@@ -41,6 +42,7 @@ class Config extends Command {
                 if (action == 'lang') return Flag.continue('language');
                 if (action == 'antiadvert') return Flag.continue('antiadvert');
                 if (action == 'star') return Flag.continue('star');
+                if (action == 'deletecommand') return Flag.continue('deletecmdafter');
                 // Default msg
                 if (action == 'list') return { action };
             }
@@ -55,18 +57,19 @@ class Config extends Command {
         let [prefixData] = await DB.query(`SELECT * FROM prefixes WHERE guild = ?`, [message.guild.id]);
         let [advertData] = await DB.query(`SELECT * FROM antiAdvert WHERE guild = ?`, [message.guild.id]);
         let [languageData] = await DB.query(`SELECT * FROM languages WHERE guild = ?`, [message.guild.id]);
+        let [deleteCommandData] = await DB.query(`SELECT * FROM deleteCommandAfter WHERE guild = ?`, [message.guild.id]);
         // Staffrole info
         let staffRole;
-        staffroleData.length === 0 ? staffRole = `[-](https://www.google.com '${lang(message, "command.config.tooltip.noStaffrole")}')` : staffRole = await message.guild.roles.cache.get(staffroleData[0].role);
+        staffroleData.length === 0 ? staffRole = `[-](${message.url} '${lang(message, "command.config.tooltip.noStaffrole")}')` : staffRole = await message.guild.roles.cache.get(staffroleData[0].role);
         // Custom prefix info
         let prefixx;
-        prefixData.length === 0 ? prefixx = '.' : prefixx = `**[${prefixData[0].prefix}](https://www.google.com '${lang(message, "command.config.tooltip.customPrefix")} ${prefixData[0].prefix}')**`;
+        prefixData.length === 0 ? prefixx = '.' : prefixx = `**[${prefixData[0].prefix}](${message.url} '${lang(message, "command.config.tooltip.customPrefix")} ${prefixData[0].prefix}')**`;
         // Logs channel info
         let logsChannel;
-        logsData.length === 0 ? logsChannel = `[-](https://www.google.com '${lang(message, "command.config.tooltip.noLogs")}')` : logsChannel = await message.guild.channels.cache.get(logsData[0].channel);
+        logsData.length === 0 ? logsChannel = `[-](${message.url} '${lang(message, "command.config.tooltip.noLogs")}')` : logsChannel = await message.guild.channels.cache.get(logsData[0].channel);
         // AntiAdvert info
         let advertEnabled;
-        advertData.length === 0 ? advertEnabled = `**[FALSE](https://www.google.com '${lang(message, "command.config.tooltip.antiad.disabled")}')**` : advertData[0].enabled === 'true' ? advertEnabled = `**[TRUE](https://www.google.com '${lang(message, "command.config.tooltip.antiad.enabled")}')**` : advertEnabled = `**[FALSE](https://www.google.com '${lang(message, "command.config.tooltip.antiad.disabled")}')**`;
+        advertData.length === 0 ? advertEnabled = `**[FALSE](${message.url} '${lang(message, "command.config.tooltip.antiad.disabled")}')**` : advertData[0].enabled === 'true' ? advertEnabled = `**[TRUE](${message.url} '${lang(message, "command.config.tooltip.antiad.enabled")}')**` : advertEnabled = `**[FALSE](${message.url} '${lang(message, "command.config.tooltip.antiad.disabled")}')**`;
         let advertExcludeStaff;
         advertData.length === 0 ? advertExcludeStaff = `<:xCircle:801085848829034566>` : advertData[0].excludeStaff === 'true' ? advertExcludeStaff = `<:checkCircle:801085028938285088>` : advertExcludeStaff = `<:xCircle:801085848829034566>`;
         let advertExcludeBots;
@@ -74,14 +77,17 @@ class Config extends Command {
         let advertWarn;
         advertData.length === 0 ? advertWarn = `<:xCircle:801085848829034566>` : advertData[0].warn === 'true' ? advertWarn = `<:checkCircle:801085028938285088>` : advertWarn = `<:xCircle:801085848829034566>`;
         let language;
-        languageData.length === 0 ? language = '**[english](https://www.google.com)**' : language = `**[${languageData[0].language}](https://www.google.com)**`;
+        languageData.length === 0 ? language = '**[english](${message.url})**' : language = `**[${languageData[0].language}](${message.url})**`;
+        // Delete command info
+        let delCommand;
+        deleteCommandData.length === 0 ? delCommand = `**[${lang(message, "command.deletecmdafter.no.content")}](${message.url})**` : delCommand = `**[${lang(message, "command.deletecmdafter.yes.content")}](${message.url})**`;
 
         if (action === 'list') {
             const embed = new MessageEmbed()
                 .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
                 .setDescription(
                     `${lang(message, "command.config.embed.desc1")} *${client.user.username}*.\n
-								 ┌─────────────────┄┄┄┄
+								 ┌─────────────────
                                  **├ <:logs:801080508310093834> Logs Channel:**
                                  **├** *⤷* ${logsChannel}
                                  **├ <:staffrole:801054561816805437> Staff Role:**
@@ -95,7 +101,9 @@ class Config extends Command {
                                  **├** *⤷* Warn: ${advertWarn}
                                  **├ <:language:895659493491372042> Language:**
                                  **├** *⤷* ${language}
-								 └─────────────────┄┄┄┄
+                                 **├ <:disable:823340316769779733> Delete Commands:**
+                                 **├** *⤷* ${delCommand}
+								 └─────────────────
 								 \n${lang(message, "command.config.embed.desc2")}\n${prefixx}config \`<logs/staffrole/prefix/antiadvert/language>\``
                 )
                 .setColor(crimson);

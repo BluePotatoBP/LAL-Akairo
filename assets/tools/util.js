@@ -84,7 +84,10 @@ module.exports = {
     },
 
     delMsg: async function (message, time = 0) {
-        setTimeout(async () => { await message.delete().catch(e => { }) }, time);
+        let cacheData = deleteCommand.find(c => c.guild === message.guild.id);
+        if (!cacheData || cacheData === undefined || cacheData.deleteCommand === 'yes') {
+            setTimeout(async () => { await message.delete().catch(e => { }) }, time);
+        };
     },
 
     promptMessage: async function (message, author, time, validReactions) {

@@ -48,6 +48,9 @@ class refreshCache extends Command {
             // Load Custom prefixes
             const [prefixesData] = await DB.query(`SELECT * FROM prefixes`).then(console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${debug('[DEBUG]')} 'prefixes' cache initialized.`));
             customPrefixes = prefixesData;
+            // Delete Commands
+            const [deleteCommandData] = await DB.query(`SELECT * FROM deleteCommandAfter`).then(console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${debug('[DEBUG]')} 'deleteCommandAfter' cache initialized.`));
+            deleteCommand = deleteCommandData;
         } catch (error) { console.log(error) }
 
         setTimeout(async () => { await message.channel.send({ content: "Cache refreshed successfully!" }) }, 5000)
