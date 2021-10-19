@@ -56,7 +56,7 @@ class Say extends Command {
                     flag: ['-color:', '-c:'],
                     default: crimson
                 },
-                {
+                /* {
                     id: 'channel',
                     match: 'option',
                     type: 'textChannel',
@@ -69,7 +69,7 @@ class Say extends Command {
                     type: 'guildMessage',
                     flag: ['-edit:', '-ed:'],
                 },
-                /* {
+                {
                     id: 'reply',
                     match: 'option',
                     type: 'guildMessage',
@@ -135,11 +135,11 @@ class Say extends Command {
                 // Checks if it should flip the message
                 if (args.flip) eembed.setDescription(flipText);
 
-                if (args.edit) {
+                /* if (args.edit) {
                     await args.edit.edit({ embeds: [eembed] });
-                } else {
+                } else { */
                     await args.channel.send({ embeds: [eembed] }).catch(() => { });
-                }
+                /* } */
             } else {
                 const staffroleEmbed = new MessageEmbed()
                     .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
