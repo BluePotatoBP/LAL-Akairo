@@ -30,12 +30,13 @@ module.exports = class antiAdvertEdit extends Listener {
 
         // Delete function, check if msg matches regex
         async function del() {
-            let match = await message.content.match(regex)
-
-            if (match) {
+            if (await message.content.match(regex)) {
+                if (message.guild.me.user.id === message.author.id) return;
                 await message.delete().catch(e => { })
                 if (cachedGuild.warn === 'true') {
-                    await message.channel.send({ content: `${message.author}, links are not allowed.` }).then(e => e.delete({ timeout: 5000 }).catch(e => { }));
+                    await message.channel.send({ content: `${message.author}, links are not allowed.` }).then(e =>
+                        async e => setTimeout(async () => { await e.delete().catch(e => { }) }, 5000)
+                    );
                 }
             }
         }
