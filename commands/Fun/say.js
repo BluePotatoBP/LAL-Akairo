@@ -69,12 +69,12 @@ class Say extends Command {
                     type: 'guildMessage',
                     flag: ['-edit:', '-ed:'],
                 },
-                {
+                /* {
                     id: 'reply',
                     match: 'option',
                     type: 'guildMessage',
                     flag: ['-reply:', '-rp:'],
-                },
+                }, */
                 { // Text type flags
                     id: 'uvu',
                     match: 'flag',
@@ -150,27 +150,15 @@ class Say extends Command {
                 await message.channel.send({ embeds: [staffroleEmbed] }).catch(() => { });
             }
         } else {// Check what type of text the user wants to be sent
-            if(args.edit) {
-                if (args.uvu) {
-                    return await args.edit.edit({ content: owoify(args.text, 'uvu') });
-                } else if (args.uwu) {
-                    return await args.edit.edit({ content: owoify(args.text, 'uwu') });
-                } else if (args.owo) {
-                    return await args.edit.edit({ content: owoify(args.text, 'owo') });
-                } else if (args.flip) {
-                    return await args.edit.edit({ content: flipText });
-                } else return await args.edit.edit({ content: args.text });
-            } else {
-                if (args.uvu) {
-                    return await args.channel.send({ content: owoify(args.text, 'uvu') });
-                } else if (args.uwu) {
-                    return await args.channel.send({ content: owoify(args.text, 'uwu') });
-                } else if (args.owo) {
-                    return await args.channel.send({ content: owoify(args.text, 'owo') });
-                } else if (args.flip) {
-                    return await args.channel.send({ content: flipText });
-                } else return await args.channel.send({ content: args.text });
-            }
+            if (args.uvu) {
+                return await args.channel.send({ content: owoify(args.text, 'uvu') });
+            } else if (args.uwu) {
+                return await args.channel.send({ content: owoify(args.text, 'uwu') });
+            } else if (args.owo) {
+                return await args.channel.send({ content: owoify(args.text, 'owo') });
+            } else if (args.flip) {
+                return await args.channel.send({ content: flipText });
+            } else return await args.channel.send({ content: args.text });
         }
     }
 }
