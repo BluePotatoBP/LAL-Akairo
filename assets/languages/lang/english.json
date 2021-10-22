@@ -59,7 +59,7 @@
     "command.rps.embed.title.userChose": "You chose:",
     "command.rps.embed.title.botChose": "I chose:",
 
-    "command.say.desc.content": "Make me say anything!",
+    "command.say.desc.content": "\n\nMake me say anything! Almost... anything.\n\nRight, if you have `MANAGE_CHANNELS` permissions you can use these flags:\n\n`-edit: message` - *edit an exisiting message that %BOT_USERNAME% sent*,\n`-reply: message` - *reply to messages in the current channel*,\n`-channel: #channel` - *send your message to any channel*\n\nto decide where the message end up, and also create embeds! (`-embed` flag)\nOn top of that you can alter input text with these flags:\n\n`-owo|-uwu|-uvu (intensity)` - *indensifwies teh owowowo effect*,\n`flip` - *flips the text upside down*\n\nAnd on top of all that, you can change embed appearance with these flags:\n\n`-c: #hex` - *hex color*,\n`-avatar` - *adds the authors avatar to the embed thumbnail*,\n`-guildicon` - *adds the guild icon to the embed thumbnail*,\n`-timestamp` - *adds a timestamp to the embed*\n\nBut if you dont have the mentioned permissions, you can still use the\ncommand just a bit more limited, you can use the `-owo|-uwu|-uvu` flags and\nobviously cannot send messages to other channels. (Or reply to them)\n\n*This is what you can do: `%CUSTOM_PREFIX%say -uvu|-uwu|-owo hello friend`*\n",
     "command.say.noArgs": "Please give me some text to send.",
 
     "command.urban.desc.content": "You're not sure what it means? The Urban Dictionary most likely has an answer.",
