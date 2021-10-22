@@ -51,6 +51,7 @@ class ReadyListener extends Listener {
                 await DB.query('DELETE FROM starBlacklist WHERE guild = ?', [guildID]);
                 await DB.query('DELETE FROM starred WHERE guild = ?', [guildID]);
                 await DB.query('DELETE FROM starSettings WHERE guild = ?', [guildID]);
+                await DB.query('DELETE FROM deleteCommandAfter WHERE guild = ?', [guildID]);
                 // Finally deleting the 'awaitingDelete' entry so we dont delete empty data indefinitely
                 await DB.query(`DELETE FROM awaitingDelete WHERE guild = ?`, [guildID]);
                 // Log debug info
