@@ -21,7 +21,7 @@ class Logs extends Command {
             },
             args: [{
                 id: 'ch',
-                type: 'channel',
+                type: 'textChannel',
                 prompt: {
                     start: (message) => lang(message, "command.logs.prompt.start"),
                     retry: (message) => lang(message, "command.logs.prompt.retry"),
