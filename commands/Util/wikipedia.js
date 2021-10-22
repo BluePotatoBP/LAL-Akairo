@@ -11,6 +11,7 @@ class Wikipedia extends Command {
             {
                 aliases: ['wikipedia', 'wiki', 'wikisearch'],
                 category: 'Util',
+                nsfw: true,
                 ownerOnly: false,
                 cooldown: 10000,
                 description: {
@@ -30,6 +31,8 @@ class Wikipedia extends Command {
 
     async exec(message, { input }) {
         delMsg(message, 30000)
+
+        if(!message.channel.nsfw) return await message.channel.send({ content: "You have to set this channel to `NSFW` mode to use this command."})
 
         try {
             await wiki(input).then(async result => {
