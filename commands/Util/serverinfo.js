@@ -7,7 +7,6 @@ class Serverinfo extends Command {
     constructor() {
         super('serverinfo', {
             aliases: ['serverinfo', 'sinfo', 'guildinfo', 'ginfo'],
-            clientPermissions: ['MANAGE_MESSAGES'],
             category: 'Util',
             cooldown: 10000,
             ratelimit: 2,

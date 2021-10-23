@@ -78,7 +78,7 @@ class Kick extends Command {
             const emoji = await promptMessage(editEmbed, message.author, 30, ['✅', '❌']);
             // If the moderator reacted with a check mark kick the user
             if (emoji === '✅') {
-                await u.kick(r);
+                await m.kick(r);
 
                 await message.channel.send({ content: `${lang(message, 'command.kick.messageAfterKick.one')} **${m.user.tag}**. \n${lang(message, 'command.kick.messageAfterKick.two')} ${r}` });
                 /*const kickEmbed = new MessageEmbed() // When i figure out how to use a database, nice embed
