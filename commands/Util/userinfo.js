@@ -122,7 +122,7 @@ class Userinfo extends Command {
                 .addField(`Nickname:`, `${m.nickname ? m.nickname : '`-`'}`, true)
                 .addField(`Bot:`, `\`${m.bot ? 'true' : 'false'}\``, true)
                 .addField(`Highest role:`, `\`${highestRole}\``, true)
-                .addField(statusState, usergame, true)
+                .addField(statusState ? statusState : `Status:`, usergame ? usergame : `\`-\``, true)
                 .setThumbnail(u.displayAvatarURL({ dynamic: true }))
                 .setFooter(`ID: ${m.id}`)
                 .setTimestamp();
