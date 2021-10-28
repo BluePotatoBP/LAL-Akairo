@@ -104,7 +104,7 @@ class Config extends Command {
                                  **├ <:disable:823340316769779733> Delete Commands:**
                                  **├** *⤷* ${delCommand}
 								 └─────────────────
-								 \n${lang(message, "command.config.embed.desc2")}\n${prefixx}config \`<logs/staffrole/prefix/antiadvert/language>\``
+								 \n${lang(message, "command.config.embed.desc2")}\n${prefixx}config \`<logs/staffrole/prefix/antiadvert/language/deletecommand>\``
                 )
                 .setColor(crimson);
 
