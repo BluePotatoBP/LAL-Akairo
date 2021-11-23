@@ -197,8 +197,8 @@ class Help extends Command {
 
                 embed.setFooter(`🎉 ${this.client.user.username} 🎉 | ${lang(message, 'command.help.embed.footer.one')} ${total.reduce((a, b) => a + b, 0)}`, this.client.user.displayAvatarURL({ dynamic: true }));
                 embed.addField(`${lang(message, 'command.help.embed.field.one')}`, `\n${lang(message, 'command.help.embed.field.two')} [${lang(message, 'command.help.embed.field.three')}](https://discord.gg/v8zkSc9) ${lang(message, 'command.help.embed.field.four')} [${lang(message, 'command.help.embed.field.three')}](https://discordapp.com/oauth2/authorize?this.client_id=${this.client.user.id}&scope=bot&permissions=8).`);
-
-                await message.util.send({ embeds: [embed] });
+                
+                await message.util.send({ embeds: [embed] }).catch(async e => { await message.channel.send({content: "Good job pal, you achieved something I have no clue how to recreate.\nPlease join the support server and explain what you did: https://discord.gg/v8zkSc9"}) });
             } else { // If theres a command input show cmd info
                 if (!command) return await message.util.send({ embeds: [embed.setTitle(lang(message, 'command.help.embed.title.one')).setDescription(`${lang(message, 'command.help.embed.title.desc.one')} \`${prefix}help\` ${lang(message, 'command.help.embed.title.desc.two')}`)] });
                 embed.setDescription(stripIndents`${lang(message, 'command.help.embedtwo.desc.one')}\n 
