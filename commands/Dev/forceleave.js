@@ -1,7 +1,6 @@
 const chalk = require('chalk');
 const { Command } = require('discord-akairo');
-const Discord = require('discord.js');
-const { crimson } = require('../../assets/colors.json');
+const { delMsg } = require('../../assets/tools/util');
 
 class ForceLeave extends Command {
 	constructor() {
@@ -16,22 +15,21 @@ class ForceLeave extends Command {
 			},
 			args: [
 				{
-					id: 'id',
+					id: 'argsguild',
 					type: 'text',
 					default: (message) => {
-						message.guild.id
+						message.guild
 					}
 				}
 			]
 		});
 	}
 
-	async exec(message, { id }) {
-		message.delete().catch((e) => {});
-		let guild = this.client.guilds.cache.get(id);
+	async exec(message, { argsguild }) {
+		await delMsg(message, 10000);
 
-		message.guild.leave()
-		.then(console.log(`${debug('[DEBUG]')} ${chalk.magenta(this.client.user.username)} left the guild "${chalk.greenBright(guild.name)}" [${chalk.yellow(guild.id)}] (Forced)`));
+		await argsguild.leave()
+		.then(console.log(`${debug('[DEBUG]')} ${chalk.magenta(this.client.user.username)} left the guild "${chalk.greenBright(argsguild.name)}" [${chalk.yellow(argsguild.id)}] (Forced)`));
 	}
 }
 module.exports = ForceLeave;
