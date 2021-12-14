@@ -1,9 +1,9 @@
 const { Command } = require('discord-akairo');
-const { crimson, lightRed, pastelGreen } = require('../../assets/colors.json')
+/* const { crimson, lightRed, pastelGreen } = require('../../assets/colors.json')
 const { stripIndents } = require('common-tags');
-//const ms = require('ms');
-const FuzzyMatching = require('fuzzy-matching');
+const ms = require('ms'); */
 const chalk = require('chalk');
+const Fuse = require('fuse.js');
 
 module.exports = class NewHelpCommand extends Command {
     constructor() {
@@ -31,35 +31,48 @@ module.exports = class NewHelpCommand extends Command {
 
     async exec(message, { command }) {
 
-        let possible;
+        let resolveType = await this.client.commandHandler.resolver.type("commandAlias");
+        let cmd = await resolveType(message, command);
+        console.log(cmd);
+
+        /* // Get all categories and push all cmds to an array
+        let temp = [];
         for (const category of this.handler.categories.values()) {
-            if (category.id === 'default' || category.id === '') {
+            if (category.id === 'default' || category.id === 'Dev' || category.id === '') {
                 continue;
-            } else if (category) {
-                possible = category.map((cmd) => `${cmd}`);
+            } else {
+                temp.push(category.map((cmd) => `${cmd}`));
             }
         }
+        // Since the above output looks wonk, sort it into a single array
+        let possible = [];
+        temp.forEach(c => {
+            c.forEach(c => { possible.push(c) })
+        });
 
-        console.log(possible);
-
-        let number;
-        for (let i = 0; i < possible.length; i++) {
-            number = possible[i];
+        // Define fuse options
+        const options = {
+            isCaseSensitive: false,
+            includeScore: true,
+            threshold: 0.5,
         }
+        const fuse = new Fuse(possible, options)
+        // Search if input is close to a command
+        let result = fuse.search(command)
+        console.log(result)
+        console.log(result.length)
 
-        let fm = new FuzzyMatching(possible), answer = number;
-        console.log(`Possible 0 index var: ${number}`)
+        if(result.length > 0 && result.length < 2) {
+            result = result[0].item
 
-        let correctedAnswer = fm.get(command, { maxChanges: 2 }).value;
-
-        if (answer === correctedAnswer) {
-            console.log(chalk.greenBright('That\'s right!, it\'s ' + answer + '!'));
-        } else {
-            console.log(chalk.redBright('Sorry buddy, the answer was ' + answer + '.'));
-        }
-
-        console.log(`Args were: ${command}`)
-
+            await message.channel.send({ content: `Command found! (${result})` })
+            console.log(chalk.greenBright(`That command exists! It\'s "${result}"`));
+        } else if (result.length > 1) {
+            await message.channel.send({ content: `Sorry, I couldn\'t find that command, did you mean: \`[1]\` ${result[0].item}, \`[2]\` ${result[1].item}` })
+        }  else {
+            console.log(chalk.redBright(`Sorry buddy, thats not a command.`));
+            await message.channel.send({ content: "That command doesnt exist" })
+        } */
     }
 }
 

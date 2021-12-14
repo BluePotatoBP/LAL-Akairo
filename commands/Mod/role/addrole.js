@@ -29,7 +29,6 @@ class Addrole extends Command {
             },
             {
                 id: 'r',
-                match: 'phrase',
                 type: 'role',
                 unordered: true,
                 prompt: {
@@ -58,7 +57,7 @@ class Addrole extends Command {
             await m.roles.add(r.id);
         } catch (error) {
             console.log(error);
-            message.channel.send({ content: lang(message, "command.addrole.noPermsError") });
+            await message.channel.send({ content: lang(message, "command.addrole.noPermsError") });
         }
     }
 }

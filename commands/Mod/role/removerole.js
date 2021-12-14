@@ -29,7 +29,6 @@ class Addrole extends Command {
             },
             {
                 id: 'r',
-                match: 'phrase',
                 type: 'role',
                 unordered: true,
                 prompt: {
@@ -53,7 +52,7 @@ class Addrole extends Command {
             await m.roles.remove(r.id);
         } catch (error) {
             console.log(error);
-            message.channel.send({ content: lang(message, "command.removerole.noPermsError") });
+            await message.channel.send({ content: lang(message, "command.removerole.noPermsError") });
         }
     }
 }

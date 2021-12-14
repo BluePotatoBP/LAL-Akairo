@@ -1,5 +1,6 @@
 const { Command } = require('discord-akairo');
 const chalk = require('chalk');
+const { delMsg } = require('../../assets/tools/util');
 
 class Restart extends Command {
 	constructor() {
@@ -16,19 +17,16 @@ class Restart extends Command {
 	}
 
 	async exec(message) {
-		message.delete({ timeout: 10000 }).catch((e) => { });
-
+		// Try reacting with a checkmark
+		await message.react('✅').catch(() => {});
+		// Console log some debug info and then exit the process
 		try {
-			await message.react('✅');
-			console.log(
-				`${debug('[DEBUG]')} '${message.author.tag}'[${message.author.id}] in '${message.guild.name}'[${message
-					.guild.id}] used: \n${chalk.gray(`${process.env.PREFIX}restart`)}`
-			);
-
+			console.log(`${debug('[DEBUG]')} '${message.author.tag}'[${message.author.id}] in '${message.guild.name}'[${message.guild.id}] used: \n${chalk.gray(`${process.env.PREFIX}restart`)}`);
 			process.exit();
 		} catch (error) {
+			// If these 2 lines somehow error (knowing my luck they will...) tell the user it shit the bed
 			console.log(error);
-			message.channel.send({content: 'No stonks this time... how did you manage this? <:sadpepe:774640053020000266>'});
+			message.channel.send({content: 'It appears that something went wrong 🤷‍♀️'});
 		}
 	}
 }

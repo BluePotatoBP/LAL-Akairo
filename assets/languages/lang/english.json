@@ -145,8 +145,17 @@
     "command.poll.embed.pollAuthor": "Poll from",
 
     "command.role.desc.content": "Add or remove roles from any user",
-    "command.role.prompt.start": "Would you like to add or remove roles? `(add/remove)` \nYou can either send it now or you can `re-type` the command.",
-    "command.role.prompt.retry": "Would you like to add or remove roles? `(add/remove)` \nYou can either send it now can `re-type` the command.",
+    "command.role.prompt.start": "Would you like to add, remove, check or change role colors? `(add/remove/info/color)` \nYou can either send it now or you can `re-type` the command.",
+    "command.role.prompt.retry": "Would you like to add, remove, check or change role colors? `(add/remove/info/color)` \nYou can either send it now or you can `re-type` the command.",
+
+    "command.rolecolor.desc.content": "Change a role color easily.",
+    "command.rolecolor.color.prompt.start": "Please give me a **#hex** color code.",
+    "command.rolecolor.color.prompt.retry": "Sorry, I didnt quite get that, I need a **#hex** color code.",
+    "command.rolecolor.role.prompt.start": "What roles color would you like to change?. `(role @mention/id/name)`",
+    "command.rolecolor.role.prompt.retry": "Sorry, I didnt quite get that, what roles color would you like to change?. `(role @mention/id/name)`",
+    
+    "command.roleinfo.role.prompt.start": "What role would you like to inspect?. `(role @mention/id/name)`",
+    "command.roleinfo.role.prompt.retry": "Sorry, I didnt quite get that, what role would you like to inspect?. `(role @mention/id/name)`",
     
     "command.removerole.desc.content": "Remove any role from any user",
     "command.removerole.prompt.member.start": "Please give me a `user` to continue `(Mention/Username/Discrim/ID)`. \nYou can either send it now or you can `re-type` the command.",
@@ -198,12 +207,12 @@
     "command.help.embed.field.four": "to join the support server, \nor if you'd like to you can invite me",
     "command.help.embed.title.desc.one": "Type",
     "command.help.embed.title.desc.two": "for the list of commands.",
-    "command.help.embedtwo.title.content": "%BOT_USERNAME% Help | Search Result",
+    "command.help.embedtwo.title.content": "%BOT_USERNAME% | Search Result",
     "command.help.embedtwo.desc.one": "The bot's prefix is: `%CUSTOM_PREFIX%`",
     "command.help.embedtwo.desc.two": "Command:",
     "command.help.embedtwo.desc.three": "Description:",
     "command.help.embedtwo.desc.four": "Example:",
-    "command.help.embedtwo.desc.five": "No example",
+    "command.help.embedtwo.desc.five": "No example%NOTE- not used anymore so you dont have to translate it, im lazy to change the other 5 vars%",
     "command.help.embedtwo.desc.six": "Aliases:",
     "command.help.embedtwo.desc.seven": "none",
     "command.help.embedtwo.desc.eight": "Syntax:",
@@ -223,6 +232,7 @@
     "command.help.commandsEmbed.title.content": "%BOT_USERNAME% Help | Commands",
     "command.help.commandsEmbed.desc.content": "View all commands and their categories below\nFor further info about a specific command, use `%CUSTOM_PREFIX%help <command>`",
     "command.help.searchEmbed.desc.content": "Find commands or aliases by typing them out",
+    "command.help.noEmbedPerms.content": "Hey %AUTHOR_USERNAME%, the bots prefix is `%CUSTOM_PREFIX%`, also if you'd like to see the command list you need to give me `EMBED_LINKS` permissions.",
 
     "command.invite.desc.content": "Invite me to your server!",
     "command.invite.iembed.desc.one": "Click here!",
@@ -428,11 +438,13 @@
 
     "nsfw.couldntFetch.content": "Sorry I couldnt fetch new images, please try again later.",
 
-    "command.deletecmdafter.desc.content": "\n\nShould the bot delete commands after theyre sent?\nMost commands have a timer to them that deletes\nthem after some time (usually 30s).\nIf you set this option to `no` the bot wont delete command messages.",
+    "command.deletecmdafter.desc.content": "\nShould the bot delete commands after theyre sent?\nMost commands have a timer that deletes them after\nsome time (usually 30s). If you set this option to `no`\nthe bot wont delete command messages.\n",
     "command.deletecmdafter.infoEmbed.desc.content": "Delete commands after they're sent:%NOTE- yes or no%",
     "command.deletecmdafter.updateEmbed.desc.content": "**UPDATED:** Should commands be deleted after use:%NOTE- yes or no%",
     "command.deletecmdafter.yes.content": "yes",
     "command.deletecmdafter.no.content": "no",
+
+    "command.coinflip.desc.content": "The classic game of Heads or Tails",
 
     "temp.unused": "This line isnt ever used and you dont have to translate it, its just here so i can easily copy paste lines without having to think about commas"
 }

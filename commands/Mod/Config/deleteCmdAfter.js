@@ -14,7 +14,7 @@ class deleteCmdAfter extends Command {
                 cooldown: 10000,
                 description: {
                     content: '',
-                    usage: '[yes|no]]',
+                    usage: '[yes|no]',
                     syntax: '[] - optional'
                 },
                 args: [

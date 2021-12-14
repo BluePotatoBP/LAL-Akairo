@@ -148,6 +148,7 @@ class Serverinfo extends Command {
                         break;
                 }
             } catch (error) {
+                console.log(error)
                 return await message.channel.send({ content: "Sorry, something went wrong. Please re-send the command." })
             }
         });

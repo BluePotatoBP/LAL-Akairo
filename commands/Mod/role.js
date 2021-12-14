@@ -15,9 +15,9 @@ class Role extends Command {
                 usage: '<add>|<remove> <user> <role>',
                 syntax: '<> - necessary'
             },
-            * args(message) {
+            * args() {
                 let action = yield {
-                    type: [['add'], ['remove']],
+                    type: [['add'], ['remove'], ['color'], ['info']],
                     prompt: {
                         start: (message) => lang(message, 'command.role.prompt.start'),
                         retry: (message) => lang(message, 'command.role.prompt.retry'),
@@ -26,8 +26,9 @@ class Role extends Command {
                 };
 
                 if (action == 'add') return Flag.continue('addrole');
-
                 if (action == 'remove') return Flag.continue('removerole');
+                if (action == 'color') return Flag.continue('rolecolor');
+                if (action == 'info') return Flag.continue('roleinfo');
             }
         });
     }
