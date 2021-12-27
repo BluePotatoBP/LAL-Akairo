@@ -1,4 +1,5 @@
 const { Listener } = require('discord-akairo');
+const { Permissions } = require('discord.js');
 
 module.exports = class antiAdvertEdit extends Listener {
     constructor() {
@@ -52,7 +53,7 @@ module.exports = class antiAdvertEdit extends Listener {
                 if (!role) return del() //No role in guild found, delete msgs from everyone
 
                 let memberRoles = message.member._roles
-                if (!memberRoles.some(r => role.id === r)) return del() // User isnt staff, delete message
+                if (!memberRoles.some(r => role.id === r) || message.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) return del() // User isnt staff, delete message
             } else {
                 return del()
             }

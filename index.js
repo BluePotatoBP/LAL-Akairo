@@ -18,6 +18,8 @@ global.reactionRoles = [];
 global.customPrefixes = [];
 global.rrCooldown = [];
 global.deleteCommand = [];
+global.remindme = [];
+global.remindmeUpcoming = [];
 global.DB = require('./assets/tools/establishDBConnection');
 global.lang = require('./assets/languages/languageTranslate');
 

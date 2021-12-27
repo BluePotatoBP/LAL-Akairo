@@ -19,7 +19,7 @@ module.exports = {
         return target;
     },
 
-    cutTo: function (input, from = 0, to = 250, ending = true) {
+    cutTo: function (input = 'error', from = 0, to = 250, ending = true) {
         /* NOTE: Does not check for ' '(spaces) */
         if (input.length > to) {
             let output = input.substring(from, to);

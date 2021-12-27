@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const Discord = require('discord.js');
+const { MessageEmbed, Permissions } = require('discord.js');
 const approx = require('approximate-number');
 const { darkRed } = require('../../assets/colors.json')
 const { delMsg } = require('../../assets/tools/util');
@@ -92,7 +92,7 @@ class Purge extends Command {
         if (!role) return await message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
         let memberRoles = message.member._roles;
 
-        if (memberRoles.some(r => cachedGuild.role === r)) {
+        if (memberRoles.some(r => cachedGuild.role === r) || message.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
             // End of staffrole check/Start of purge
             if (messagesAmount > 1000) return message.channel.send({ content: `${lang(message, "command.purge.warning.content")} (\`${approx(messagesAmount, { decimal: '.' })}/1000\`)` }).then(message => delMsg(message, 10000))
 
@@ -153,7 +153,7 @@ class Purge extends Command {
             // End of purge/Start of staffrole check 2nd part
 
         } else {// If the user doesnt have the staffrole, return this embed
-            const staffroleEmbed = new Discord.MessageEmbed()
+            const staffroleEmbed = new MessageEmbed()
                 .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
                 .setDescription(`${lang(message, "staffroleEmbed.desc1")} ${role} ${lang(message, "staffroleEmbed.desc2")}`)
                 .setColor(darkRed)

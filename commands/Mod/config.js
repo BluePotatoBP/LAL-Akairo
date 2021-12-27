@@ -85,7 +85,7 @@ class Config extends Command {
             const embed = new MessageEmbed()
                 .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
                 .setDescription(
-                    `${lang(message, "command.config.embed.desc1")} *${client.user.username}*.\n
+                    `${lang(message, "command.config.embed.desc1")}.\n
 								 ┌─────────────────
                                  **├ <:logs:801080508310093834> Logs Channel:**
                                  **├** *⤷* ${logsChannel}

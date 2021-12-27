@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const { MessageAttachment, MessageEmbed, Permissions } = require('discord.js');
+const { MessageAttachment, MessageEmbed } = require('discord.js');
 const { crimson } = require('../../assets/colors.json');
 const { createCanvas, loadImage } = require('canvas');
 const path = require('path');

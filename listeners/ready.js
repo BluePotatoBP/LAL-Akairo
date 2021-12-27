@@ -88,6 +88,9 @@ class ReadyListener extends Listener {
             // Delete Commands
             const [deleteCommandData] = await DB.query(`SELECT * FROM deleteCommandAfter`).then(console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${debug('[DEBUG]')} 'deleteCommandAfter' cache initialized.`));
             deleteCommand = deleteCommandData;
+            // Remind me
+            const [remindmeData] = await DB.query(`SELECT * FROM remindMe`).then(console.log(`${chalk.gray(`(${moment(Date.now()).format('YYYY-MM-DD HH:m:s')})`)} ${debug('[DEBUG]')} 'remindme' cache initialized.`));
+            remindme = remindmeData;
         } catch (error) { console.log(error) }
 
     }

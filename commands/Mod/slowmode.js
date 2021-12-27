@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const Discord = require('discord.js');
+const { MessageEmbed, Permissions } = require('discord.js');
 const { crimson, lightRed } = require('../../assets/colors.json');
 const ms = require('ms');
 const { delMsg } = require('../../assets/tools/util');
@@ -56,13 +56,13 @@ class Slowmode extends Command {
         if (!role) return await message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
         let memberRoles = message.member._roles;
 
-        if (memberRoles.some(r => cachedGuild.role === r)) {
+        if (memberRoles.some(r => cachedGuild.role === r) || message.member.permissions.has(Permissions.FLAGS.MANAGE_CHANNELS)) {
             let rateLimit = channelOpt.messages.channel.rateLimitPerUser;
-            const embed = new Discord.MessageEmbed();
+            const embed = new MessageEmbed();
             let slowMessage;
 
             if (nr >= 21600) {
-                const embed2 = new Discord.MessageEmbed()
+                const embed2 = new MessageEmbed()
                     .setTitle(lang(message, 'command.slowmode.embed.title'))
                     .setDescription(lang(message, 'command.slowmode.embed.desc'))
                     .setColor(crimson)
@@ -71,7 +71,7 @@ class Slowmode extends Command {
 
                 await message.channel.send({ embeds: [embed2] });
             } else if (nr < 0) {
-                const embed = new Discord.MessageEmbed()
+                const embed = new MessageEmbed()
                     .setDescription(`Unfortunately for you, funny man, slowmode \`cant\` go below \`0\`.\nPlease \`edit\` or resend your message with a positive number.`)
                     .setColor(lightRed)
                     .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
@@ -117,7 +117,7 @@ class Slowmode extends Command {
 
                     await message.channel.send({ embeds: [embed] });
                 } else {
-                    const embed3 = new Discord.MessageEmbed()
+                    const embed3 = new MessageEmbed()
                         .setDescription(`Current slowmode in ${channelOpt.messages.channel} channel:\n\`\`\`${rateLimit ? ms(rateLimit * 1000) : `0s`}\`\`\``)
                         .setColor(crimson)
                         .setFooter(`${message.author.username} | #${channelOpt.messages.channel.name}`, message.author.displayAvatarURL({ dynamic: true }))
@@ -127,7 +127,7 @@ class Slowmode extends Command {
                 }
             }
         } else {
-            const staffroleEmbed = new Discord.MessageEmbed()
+            const staffroleEmbed = new MessageEmbed()
                 .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
                 .setDescription(`${lang(message, "staffroleEmbed.desc1")} ${role} ${lang(message, "staffroleEmbed.desc2")}`)
                 .setColor(darkRed)

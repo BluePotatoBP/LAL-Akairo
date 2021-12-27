@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const Discord = require('discord.js');
+const { MessageEmbed, Permissions } = require('discord.js');
 const { crimson, darkRed } = require('../../assets/colors.json');
 const { delMsg } = require('../../assets/tools/util');
 
@@ -50,13 +50,13 @@ class Poll extends Command {
         if (!role) return await message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
         let memberRoles = message.member._roles;
 
-        if (memberRoles.some(r => cachedGuild.role === r)) {
+        if (memberRoles.some(r => cachedGuild.role === r) || message.member.permissions.has(Permissions.FLAGS.MANAGE_CHANNELS)) {
 
-            const embed = new Discord.MessageEmbed()
+            const embed = new MessageEmbed()
                 .setDescription(t)
                 .setColor(crimson)
                 .setThumbnail(message.guild.iconURL({ dynamic: true }))
-                .setFooter(`🎉 ${lang(message, 'command.poll.embed.pollAuthor')} ${message.author.username}! 🎉`, message.guild.iconURL({ dynamic: true }))
+                .setFooter(`🎉 ${lang(message, 'command.poll.embed.pollAuthor')} 🎉`, message.guild.iconURL({ dynamic: true }))
                 .setTimestamp();
 
             if (c) {
@@ -73,7 +73,7 @@ class Poll extends Command {
                 });
             }
         } else {
-            const staffroleEmbed = new Discord.MessageEmbed()
+            const staffroleEmbed = new MessageEmbed()
                 .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
                 .setDescription(`${lang(message, "staffroleEmbed.desc1")} ${role} ${lang(message, "staffroleEmbed.desc2")}`)
                 .setColor(darkRed)

@@ -40,10 +40,10 @@ class Botinfo extends Command {
             .addField(`**${lang(message, 'command.botinfo.embed.field.four')}**`, `\`${client.user.createdAt.toUTCString().substr(0, 16)}\``, true)
             .addField(`**${lang(message, 'command.botinfo.embed.field.five')}**`, `\`${hours}\`h \`${minutes}\`m \`${seconds}\`s`, true)
             .addField(`**${lang(message, "command.botinfo.embed.field.ten")}**`, `Akairo: \`v${Akairo.version}\`\nDiscordJS: \`v${Discord.version}\`\nNodeJS: \`${process.version}\``, true)
-            .addField(`**${lang(message, "command.botinfo.embed.field.eleven")}**`, `${lang(message, "command.botinfo.embed.field.thirteen")} [Invite](https://discord.gg/v8zkSc9 'Support Server')`, true)
+            .addField(`**${lang(message, "command.botinfo.embed.field.eleven")}**`, `${lang(message, "command.botinfo.embed.field.thirteen")}`, true)
             .addField(
                 `**${lang(message, "command.botinfo.embed.field.twelve")}**`,
-                `${lang(message, "command.botinfo.embed.field.fourteen")} [Invite](https://discordapp.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=1342504007 'Invite the bot')`, true)
+                `${lang(message, "command.botinfo.embed.field.fourteen")}`, true)
             .setThumbnail(bicon)
             .setTimestamp()
             .setColor(crimson);

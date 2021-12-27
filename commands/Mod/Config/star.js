@@ -1,5 +1,5 @@
 const { Command, Argument } = require('discord-akairo');
-const Discord = require('discord.js');
+const { MessageEmbed, Permissions } = require('discord.js');
 const { stripIndents } = require('common-tags');
 const { crimson, darkRed } = require('../../../assets/colors.json')
 const { PasteGG } = require("paste.gg");
@@ -83,7 +83,7 @@ class Star extends Command {
         if (!role) return message.channel.send({ content: `${lang(message, "staffroleEmbed.noneFound")} \`${process.env.PREFIX}config staffrole\`` });
         let memberRoles = message.member._roles;
 
-        if (memberRoles.some(r => role.id === r)) {
+        if (memberRoles.some(r => role.id === r) || message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)) {
 
             /////////////////////////////// START OF WORK CODE
             // Get settings from db
@@ -126,7 +126,7 @@ class Star extends Command {
             // Blacklisted string for embed
             let blacklisted = await pasteContent ? `\n**├** <:disable:823340316769779733> **Blacklist:** [[List]](https://paste.gg/p/anonymous/${paste.result.id} 'paste.gg') \n**├** *⤷* Roles: \`${rolesCount.length}\`\n**├** *⤷* Users: \`${usersCount.length}\`\n**├** *⤷* Channels: \`${channelCount.length}\`` : '';
 
-            const listEmbed = new Discord.MessageEmbed()
+            const listEmbed = new MessageEmbed()
                 .setTitle('⭐ Starboard ⭐')
                 .setColor(crimson)
                 .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
@@ -184,7 +184,7 @@ class Star extends Command {
 
             /////////////////////////////// END OF WORK CODE
         } else {
-            const staffroleEmbed = new Discord.MessageEmbed()
+            const staffroleEmbed = new MessageEmbed()
                 .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
                 .setDescription(`${lang(message, "staffroleEmbed.desc1")} ${role} ${lang(message, "staffroleEmbed.desc2")}`)
                 .setColor(darkRed)

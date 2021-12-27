@@ -19,7 +19,7 @@ class Language extends Command {
 
             * args(message) {
                 let action = yield {
-                    type: ['contribute', 'german', 'english'],
+                    type: ['contribute', 'german', 'english', 'croatian'],
                     default: 'showLan',
                     prompt: {
                         start: lang(message, 'command.language.prompt.start'),
@@ -61,7 +61,7 @@ class Language extends Command {
                 let currentLan = languageInArrayFind ? languageInArrayFind.lan : 'english';
                 const currentLang = new MessageEmbed()
                     .setAuthor(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
-                    .setDescription(`${lang(message, 'command.language.currentLang.desc1')} \`${currentLan}\`\n\n${lang(message, "command.language.currentLang.desc2")} \`${process.env.PREFIX}language [language]\`\n\n**${lang(message, "command.language.currentLang.desc3")}**\n\`english, german\``)
+                    .setDescription(`${lang(message, 'command.language.currentLang.desc1')} \`${currentLan}\`\n\n${lang(message, "command.language.currentLang.desc2")} \`${process.env.PREFIX}language [language]\`\n\n**${lang(message, "command.language.currentLang.desc3")}**\n\`english, german, croatian\``)
                     .setFooter('Syntax: [] - optional')
                     .setColor(crimson)
                     .setTimestamp();
