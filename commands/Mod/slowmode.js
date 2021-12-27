@@ -17,7 +17,7 @@ class Slowmode extends Command {
             description: {
                 content: '',
                 usage: '<time> [rest|off] [-channel(:)|-ch(:)]',
-                syntax: '<> - necessary, [] - optional, () - optional symbol'
+                syntax: '<> - required, [] - optional, () - optional symbol'
             },
             args: [{
                 id: 'nr',

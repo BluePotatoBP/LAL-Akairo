@@ -14,7 +14,7 @@ class Userinfo extends Command {
             description: {
                 content: 'Shows useful information about any user',
                 usage: '<user>',
-                syntax: '<> - necessary'
+                syntax: '<> - required'
             },
             args: [{
                 id: 'u',

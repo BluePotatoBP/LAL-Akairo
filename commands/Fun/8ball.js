@@ -14,7 +14,7 @@ class Eightball extends Command {
             description: {
                 content: 'It is certain, but also try again later',
                 usage: '<question>',
-                syntax: '<> - necessary'
+                syntax: '<> - required'
             },
             args: [{
                 id: 'input',

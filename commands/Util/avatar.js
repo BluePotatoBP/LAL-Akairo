@@ -14,7 +14,7 @@ class Avatar extends Command {
 			description: {
 				content: 'Someone has a dank pfp? Yoink, mine now',
 				usage: '<user>',
-				syntax: '<> - necessary'
+				syntax: '<> - required'
 			},
 			args: [
 				{

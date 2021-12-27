@@ -12,7 +12,7 @@ class reactionRoleFlags extends Command {
             description: {
                 content: '',
                 usage: '<add|remove>',
-                syntax: '<> - necessary'
+                syntax: '<> - required'
             },
             * args() {
                 let action = yield {

@@ -16,7 +16,7 @@ class Addrole extends Command {
             description: {
                 content: 'Add any role to any user',
                 usage: '<user> <role>',
-                syntax: '<> - necessary'
+                syntax: '<> - required'
             },
             args: [{
                 id: 'm',

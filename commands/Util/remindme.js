@@ -15,8 +15,8 @@ class remindMe extends Command {
                 cooldown: 10000,
                 description: {
                     content: '',
-                    usage: '',
-                    syntax: ''
+                    usage: 'in <time> <text>',
+                    syntax: '<> - required'
                 },
                 args: [
                     {

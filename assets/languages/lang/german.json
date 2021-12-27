@@ -267,6 +267,12 @@
     "command.help.embed.desc.one": "Das Prefix dieses Servers ist:",
     "command.help.embed.desc.two": "Dies sind die momentan verfügbaren Commands für",
     "command.help.embed.footer.one": "Alle Commands:",
+    "command.help.embed.field.one": "Mehr Hilfe:",
+    "command.help.embed.field.two": "Klick",
+    "command.help.embed.field.three": "hier",
+    "command.help.embed.field.four": "um den Support Server beizutreten,\noder du kannst mich auch einfach inviten.",
+    "command.help.embed.title.desc.one": "Typ",
+    "command.help.embed.title.desc.two": "Für eine Liste aller Commands.",
     "command.help.embedtwo.title.content": "%BOT_USERNAME% | Search Result",
     "command.help.embedtwo.desc.one": "Das Prefix für den Bot ist:",
     "command.help.embedtwo.desc.two": "Command:",
@@ -418,7 +424,7 @@
 
     "command.coinflip.desc.content": "The classic game of Heads or Tails",
 
-    "command.remindme.desc.content": "\n\nYou must provide a time to remind you of something.\nYou can use the following units:\n\n**s** - seconds\n**m** - minutes\n**h** - hours\n**d** - days\n**w** - weeks\n**y** - years\n%NOTE- please write a short sentence about it being recommended to write reminders in plain english but most of the time it should work in any language as long as they use the propper times listed before%",
+    "command.remindme.desc.content": "\n\nYou must provide a time to be reminded later.\nYou can use the following units:\n\n**s** - seconds\n**m** - minutes\n**h** - hours\n**d** - days\n**w** - weeks\n**y** - years\n%NOTE- please write a short sentence about it being recommended to write reminders in plain english but most of the time it should work in any language as long as they use the propper times listed before%",
     "command.remindme.charLimit.content": "Sorry but you cant save essays, max. **1000** characters are allowed.",
     "command.remindme.invalidTime.content": "Hey, I need an actual time (try rewording your sentence)",
     "command.remindme.backInTime.content": "Hey bud, I get that you'd like to go back in time but thats kinda not possible...",

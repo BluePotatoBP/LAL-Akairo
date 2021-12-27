@@ -12,7 +12,7 @@ class reactionRole extends Command {
             description: {
                 content: '',
                 usage: '<action> [args]',
-                syntax: '<> - necessary, [] - optional'
+                syntax: '<> - required, [] - optional'
             },
             * args() {
                 let action = yield {

@@ -16,7 +16,7 @@ class Ban extends Command {
             description: {
                 content: 'Ban a user with a reason',
                 usage: '<user> [reason]',
-                syntax: '<> - necessary, [] - optional'
+                syntax: '<> - required, [] - optional'
             },
             args: [{
                 id: 'm',

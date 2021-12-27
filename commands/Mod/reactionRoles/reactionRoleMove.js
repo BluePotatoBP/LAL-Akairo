@@ -14,7 +14,7 @@ class reactionRoleMove extends Command {
                 description: {
                     content: '',
                     usage: '<old message> <new message>',
-                    syntax: '<> - necessary'
+                    syntax: '<> - required'
                 },
                 args: [
                     {

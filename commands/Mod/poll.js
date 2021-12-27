@@ -15,7 +15,7 @@ class Poll extends Command {
             description: {
                 content: 'Create a poll for the community to vote for something',
                 usage: '[#channel] <text>',
-                syntax: '<> - necessary, [] - optional'
+                syntax: '<> - required, [] - optional'
             },
             args: [{
                 id: 'c',

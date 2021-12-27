@@ -17,7 +17,7 @@ class Purge extends Command {
             description: {
                 content: '', //[bots] then \n[-embed(s)] \/
                 usage: '<amount>\n\n[-bot(s)]\n[-attachment(s)|-atch]\n[-human(s)]\n[-link(s)]\n[-invite(s)]\n\n[-user(:)] *\n[-include(s)(:)] *\n[-starts(:)|-startswith(:)] *\n[-ends(:)|-endswith(:)] *\n\n*These options can check for multiple entries within quotes\n(ex. -user: "ID1, ID2" or -includes: "blue is funny")\n',
-                syntax: '<> - necessary, [] - optional, () - optional symbol'
+                syntax: '<> - required, [] - optional, () - optional symbol'
             },
             args: [{
                 id: 'messagesAmount',

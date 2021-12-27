@@ -17,7 +17,7 @@ class reactionRoleRemove extends Command {
                 description: {
                     content: '',
                     usage: '<message> [role]',
-                    syntax: '<> - necessary, [] - optional'
+                    syntax: '<> - required, [] - optional'
                 },
                 args: [
                     {

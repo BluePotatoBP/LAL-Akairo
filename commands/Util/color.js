@@ -18,7 +18,7 @@ class Color extends Command {
             description: {
                 content: 'Get a preview of a #hex color code',
                 usage: '<color>',
-                syntax: '<> - necessary'
+                syntax: '<> - required'
             },
 
             args: [{

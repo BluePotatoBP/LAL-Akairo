@@ -14,7 +14,7 @@ class Google extends Command {
 			description: {
 				content: "For the people that can't google themselves",
 				usage: '<query>',
-				syntax: '<> - necessary'
+				syntax: '<> - required'
 			},
 			args: [
 				{

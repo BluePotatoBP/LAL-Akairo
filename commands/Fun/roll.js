@@ -13,7 +13,7 @@ class Roll extends Command {
                 description: {
                     content: '',
                     usage: '<number>-<number>',
-                    syntax: '<> - necessary'
+                    syntax: '<> - required'
                 },
                 args: [
                     {

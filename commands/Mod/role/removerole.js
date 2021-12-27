@@ -16,7 +16,7 @@ class Addrole extends Command {
             description: {
                 content: 'Remove any role from any user',
                 usage: '<user> <role>',
-                syntax: '<> - necessary'
+                syntax: '<> - required'
             },
             args: [{
                 id: 'm',

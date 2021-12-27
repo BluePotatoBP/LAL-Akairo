@@ -13,7 +13,7 @@ class Role extends Command {
             description: {
                 content: 'later',
                 usage: '<add>|<remove> <user> <role>',
-                syntax: '<> - necessary'
+                syntax: '<> - required'
             },
             * args() {
                 let action = yield {

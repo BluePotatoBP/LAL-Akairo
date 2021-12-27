@@ -15,7 +15,7 @@ class reactionRoleFix extends Command {
                 description: {
                     content: '',
                     usage: '<message>',
-                    syntax: '<> - necessary'
+                    syntax: '<> - required'
                 },
                 args: [
                     {

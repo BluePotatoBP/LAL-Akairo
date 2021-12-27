@@ -16,7 +16,7 @@ class Kick extends Command {
             description: {
                 content: 'Kick a user with a reason',
                 usage: '<user> [reason]',
-                syntax: '<> - necessary, [] - optional'
+                syntax: '<> - required, [] - optional'
             },
             args: [{
                 id: 'm',

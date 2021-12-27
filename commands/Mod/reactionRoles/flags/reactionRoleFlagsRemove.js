@@ -16,7 +16,7 @@ class reactionRoleFlagsRemove extends Command {
                 description: {
                     content: 'later',
                     usage: '<flag> <message>',
-                    syntax: '<> - necessary'
+                    syntax: '<> - required'
                 },
                 args: [
                     {

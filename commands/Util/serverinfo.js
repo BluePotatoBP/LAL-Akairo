@@ -14,7 +14,7 @@ class Serverinfo extends Command {
             description: {
                 content: '',
                 usage: '<query>',
-                syntax: '<> - necessary'
+                syntax: '<> - required'
             }
         });
     }

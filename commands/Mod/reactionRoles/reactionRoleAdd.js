@@ -15,7 +15,7 @@ class reactionRoleAdd extends Command {
                 description: {
                     content: '',
                     usage: '<message> <emoji> <role>',
-                    syntax: '<> - necessary, [] - optional'
+                    syntax: '<> - required, [] - optional'
                 },
                 args: [
                     {
