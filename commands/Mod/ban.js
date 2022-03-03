@@ -29,7 +29,8 @@ class Ban extends Command {
             {
                 id: 'r',
                 match: 'rest',
-                type: 'string'
+                type: 'string',
+                default: "No reason provided"
             }
             ]
         });
