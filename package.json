@@ -16,7 +16,7 @@
   "dependencies": {
     "approximate-number": "^2.1.0",
     "better-pastebin": "^0.4.1",
-    "canvas": "^2.8.0",
+    "canvas": "^2.9.1",
     "chalk": "^4.1.2",
     "cli-table3": "^0.6.0",
     "common-tags": "^1.8.0",

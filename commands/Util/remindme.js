@@ -9,7 +9,7 @@ class remindMe extends Command {
     constructor() {
         super('remindme',
             {
-                aliases: ['remindme', 'remind', 'reminder', 'timer'],
+                aliases: ['remindme', 'remind', 'timer'],
                 category: 'Util',
                 ownerOnly: true,
                 cooldown: 10000,

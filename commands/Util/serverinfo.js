@@ -2,6 +2,7 @@ const { Command } = require('discord-akairo');
 const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
 const { crimson } = require('../../assets/colors.json');
 const { delMsg } = require('../../assets/tools/util');
+const moment = require('moment');
 
 class Serverinfo extends Command {
     constructor() {
@@ -20,27 +21,11 @@ class Serverinfo extends Command {
     }
 
     async exec(message) {
+        delMsg(message, 30000);
+
         let sicon = message.guild.iconURL({ dynamic: true });
-        /* let region = {
-            brazil: '`Brazil` :flag_br:',
-            europe: '`Europe` :flag_eu:',
-            'eu-central': '`Central Europe` :flag_eu:',
-            singapore: '`Singapore` :flag_sg:',
-            'us-central': '`U.S. Central` :flag_us:',
-            sydney: '`Sydney` :flag_au:',
-            'us-east': '`U.S. East` :flag_us:',
-            'us-south': '`U.S. South` :flag_us:',
-            'us-west': '`U.S. West` :flag_us:',
-            'eu-west': '`estern Europe` :flag_eu:',
-            'vip-us-east': '`VIP U.S. East` :flag_us:',
-            india: 'India :flag_in:',
-            japan: 'Japan :flag_jp:',
-            london: '`London` :flag_gb:',
-            amsterdam: '`Amsterdam` :flag_nl:',
-            hongkong: '`Hong Kong` :flag_hk:',
-            russia: '`Russia` :flag_ru:',
-            southafrica: '`South Africa` :flag_za:'
-        }; */
+        // fetch the guild owner
+        let guildOwner = await message.guild.members.fetch(message.guild.ownerId);
         let verifLevels = {
             NONE: 'None',
             LOW: 'Low',
@@ -48,10 +33,42 @@ class Serverinfo extends Command {
             HIGH: '(╯°□°）╯︵  ┻━┻',
             VERY_HIGH: '┻┻ヽ(ಠ益ಠ)ノ┻┻'
         };
+        let regions = {
+            "en-US": 'English (United States)',
+            "en-GB": 'English (Great Britain)',
+            "bg": 'Bulgarian',
+            "zh-CN": 'Chinese (China)',
+            "zh-TW": 'Chinese (Taiwan)',
+            "hr": 'Croatian',
+            "cs": 'Czech',
+            "da": 'Danish',
+            "nl": 'Dutch',
+            "fi": 'Finnish',
+            "fr": 'French',
+            "de": 'German',
+            "el": 'Greek',
+            "hi": 'Hindi',
+            "hu": 'Hungarian',
+            "it": 'Italian',
+            "ja": 'Japanese',
+            "ko": 'Korean',
+            "lt": 'Lithuanian',
+            "no": 'Norwegian',
+            "pl": 'Polish',
+            "pt-BR": 'Portuguese (Brazil)',
+            "ro": 'Romanian',
+            "ru": 'Russian',
+            "es-ES": 'Spanish (Spain)',
+            "sv-SE": 'Swedish',
+            "th": 'Thai',
+            "tr": 'Turkish',
+            "uk": 'Ukrainian',
+            "vi": 'Vietnamese'
+        };
 
+        // PAGE 2
         const rolesSize = message.guild.roles.cache.filter((c) => c.managed == false).size;
         const rolesFilterSort = message.guild.roles.cache.filter((c) => c.managed == false).sort((a, b) => b.rawPosition - a.rawPosition);
-
         const rolesEmbed = new MessageEmbed()
             .setAuthor(`${message.guild.name} • Page [2/2]`, sicon)
             .setDescription(`Roles managed by other applications\nwill not be shown. [Something wrong?](https://discord.gg/v8zkSc9 'Support Server')\n\n**Roles [${rolesSize}]:**`)
@@ -70,27 +87,11 @@ class Serverinfo extends Command {
             }
         }
 
+        // PAGE 1
         const infoEmbed = new MessageEmbed()
             .setAuthor(`${message.guild.name} • Page [1/2]`, sicon)
-            .addField('ID', `\`${message.guild.id}\``, true)
-            .addField('Owner', `<@${message.guild.ownerId}>`, true)
-            /* .addField('Region', `${region[message.channel.region]}`, true) */
-            .addField('Custom Emoji', `\`${message.guild.emojis.cache.size}\``, true)
-            .addField('Roles', `\`${message.guild.roles.cache.size}\``, true)
-            .addField('Channels', `\`${message.guild.channels.cache.size}\``, true)
-            .addField('Verification Level', `\`${verifLevels[message.guild.verificationLevel]}\``, true)
-            .addField('Total Members', `\`${message.guild.memberCount}\``, true)
-            /* .addField(
-                'Status List',
-                `${message.guild.members.cache.get(filter((o) => o.presence.status === 'online').size)} <:online:773212850733711360> Online` +
-                `\n${message.guild.members.cache.get(filter((o) => o.presence.status === 'streaming').size)} <:streaming:773212851174506565> Streaming` +
-                `\n${message.guild.members.cache.get(filter((o) => o.presence.status === 'dnd').size)} <:dnd:773212850364743742> DND` +
-                `\n${message.guild.members.cache.get(filter((o) => o.presence.status === 'idle').size)} <:idle:773212850533171211> Idle` +
-                `\n${message.guild.members.cache.get(filter((o) => o.presence.status === 'offline')).size} <:offline:773212850755862538> Offline`,
-                true
-            ) */
-            .addField('Highest Role', `${message.guild.roles.highest}`, true)
-            .addField('Voice AFK Timeout', `\`${message.guild.afkTimeout / 60} min\``, true)
+            .addField('🧭Info', `**Owner:** ${guildOwner}\n**ID:** \`${message.guild.id}\`\n\n**Created:** <t:${moment(message.guild.createdAt).unix()}:R>\n**AFK Timeout:** \`${message.guild.afkTimeout / 60} min\`\n**Highest Role:** ${message.guild.roles.highest}`, true)
+            .addField('📊Stats', `**Emoji:** \`${message.guild.emojis.cache.size}\`\n**Roles:** \`${message.guild.roles.cache.size}\`\n**Channels:** \`${message.guild.channels.cache.size}\`\n**Members:** \`${message.guild.memberCount}\`\n\n**❗Press Buttons to**\n**❗switch pages ⇄**`, true)
             .setThumbnail(sicon)
             .setColor(crimson)
             .setTimestamp()
@@ -98,17 +99,17 @@ class Serverinfo extends Command {
         let backBtn = new MessageButton()
             .setCustomId('back')
             .setEmoji('891664001379991572')
-            .setStyle('PRIMARY');
+            .setStyle('SECONDARY');
         let nextBtn = new MessageButton()
             .setCustomId('next')
             .setEmoji('891664001380020264')
-            .setStyle('PRIMARY');
+            .setStyle('SECONDARY');
         let exitBtn = new MessageButton()
             .setCustomId('exit')
             .setEmoji('817890713190662146')
             .setStyle('DANGER');
         // Define action row and add buttons components
-        const buttonRow = new MessageActionRow().addComponents([backBtn, nextBtn, exitBtn]);
+        const buttonRow = new MessageActionRow().addComponents([backBtn, exitBtn, nextBtn]);
         // Send initial message
         const msg = await message.reply({ embeds: [infoEmbed], components: [buttonRow] })
         const filter = i => i.user.id === message.author.id;

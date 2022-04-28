@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 const { crimson } = require('../../assets/colors.json');
 const Akairo = require('discord-akairo');
 const { delMsg } = require('../../assets/tools/util');
+const moment = require('moment');
 
 class Botinfo extends Command {
     constructor() {
@@ -34,16 +35,8 @@ class Botinfo extends Command {
 
         const embed = new Discord.MessageEmbed()
             .setAuthor(`${client.user.username} - ${lang(message, 'command.botinfo.embed.author')}`, bicon)
-            .addField(`**${lang(message, 'command.botinfo.embed.field.one')}**`, `\`BluePotatoBP#5214\``, true)
-            .addField(`**${lang(message, 'command.botinfo.embed.field.two')}**`, `\`${client.user.id}\``, true)
-            .addField(`**${lang(message, 'command.botinfo.embed.field.three')}**`, `\`${process.env.VERSION}\``, true)
-            .addField(`**${lang(message, 'command.botinfo.embed.field.four')}**`, `\`${client.user.createdAt.toUTCString().substr(0, 16)}\``, true)
-            .addField(`**${lang(message, 'command.botinfo.embed.field.five')}**`, `\`${hours}\`h \`${minutes}\`m \`${seconds}\`s`, true)
-            .addField(`**${lang(message, "command.botinfo.embed.field.ten")}**`, `Akairo: \`v${Akairo.version}\`\nDiscordJS: \`v${Discord.version}\`\nNodeJS: \`${process.version}\``, true)
-            .addField(`**${lang(message, "command.botinfo.embed.field.eleven")}**`, `${lang(message, "command.botinfo.embed.field.thirteen")}`, true)
-            .addField(
-                `**${lang(message, "command.botinfo.embed.field.twelve")}**`,
-                `${lang(message, "command.botinfo.embed.field.fourteen")}`, true)
+            .addField('🧭Info', `**Dev:** \`${await client.users.cache.get(process.env.OWNER).tag}\`\n**ID:** \`${client.user.id}\`\n**Version:** ${process.env.VERSION}\n\n**Birthday:** <t:${moment(client.user.createdAt).unix()}:R>\n**Uptime:** \`${hours}\`h \`${minutes}\`m \`${seconds}\`s`, true)
+            .addField(`ℹ️**${lang(message, "command.botinfo.embed.field.eleven")}**`, `${lang(message, "command.botinfo.embed.field.thirteen")}\n\n👋**${lang(message, "command.botinfo.embed.field.twelve")}**\n${lang(message, "command.botinfo.embed.field.fourteen")}`, true)
             .setThumbnail(bicon)
             .setTimestamp()
             .setColor(crimson);

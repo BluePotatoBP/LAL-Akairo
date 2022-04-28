@@ -110,7 +110,7 @@ class Help extends Command {
                 // Define action row and add buttons components
                 const buttonRow = new MessageActionRow().addComponents([homeBtn, listBtn, searchBtn, exitBtn]);
                 // Send initial message
-                const msg = await message.reply({ embeds: [homeEmbed], components: [buttonRow] })
+                const msg = await message.reply({ embeds: [homeEmbed], components: [buttonRow] }).catch(async e => { await message.channel.send({ content: lang(message, "command.help.noEmbedPerms.content") }) });
                 // Create a message component collector (long ass name \/)
                 const filter = i => i.user.id === message.author.id;
                 const buttonCollector = await msg.channel.createMessageComponentCollector({ filter, time: 60000 });
