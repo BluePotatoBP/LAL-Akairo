@@ -12,5 +12,6 @@ assets/tools/ludogame.js
 assets/tools/snakegame.js
 assets/images
 assets/fonts
+commands/Dev
 commands/Dev/test.js
 assets/changes
