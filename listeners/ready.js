@@ -44,7 +44,6 @@ class ReadyListener extends Listener {
                 await DB.query('DELETE FROM languages WHERE guild = ?', [guildID]);
                 await DB.query('DELETE FROM antiAdvert WHERE guild = ?', [guildID]);
                 await DB.query('DELETE FROM logs WHERE guild = ?', [guildID]);
-                await DB.query('DELETE FROM mute WHERE guild = ?', [guildID]);
                 await DB.query('DELETE FROM prefixes WHERE guild = ?', [guildID]);
                 await DB.query('DELETE FROM staffrole WHERE guild = ?', [guildID]);
                 await DB.query('DELETE FROM reactionRoles WHERE guild = ?', [guildID]);
