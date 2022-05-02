@@ -8,7 +8,7 @@
 
 > Discord bot made using the akairo framework
 
-## First time Startup
+## First time setup
 
 ```sh
 npm i
