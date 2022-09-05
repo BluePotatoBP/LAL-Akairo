@@ -75,4 +75,6 @@ trash | - | - | - |
 
 <h5>Show your support</h5>
 
+***
+
 Give my project a ⭐️ if it helped you!
