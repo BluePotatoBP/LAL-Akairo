@@ -6,16 +6,35 @@
   </a>
 </p>
 
-### LAL is a Discord bot made using the AKAIRO framework!
+<h3>LAL is a Discord bot made using the AKAIRO framework!</h3>
 
 ## First time setup
 
-```sh
-npm i
-npm run dev (or start if you dislike nodemon)
+Clone the project
+
+```bash
+  git clone BluePotatoBP/LAL-Akairo
 ```
 
-# List of features
+Go to the project directory
+
+```bash
+  cd LAL-Akairo
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Run the application
+
+```bash
+  npm run start / dev (nodemon)
+```
+
+## List of features
 | Fun | Mod | Util | Dev |
 | - | - | - | - |
 eightball | config | avatar | checklangfile |
@@ -25,15 +44,15 @@ dice | ban | yes | ram |
 google | kick | color | refreshcache |
 rps | poll | help | restart |
 pp | purge | invite | serverlist |
-rps | slowmode | ping | |
-roll | | reminders | |
-say | | remindme | |
-warm | | changelog | |
-bobross | | wikipedia | |
-gigachad | | | |
-respect | | | |
-suntzu | | | |
-trash | | | |
+rps | slowmode | ping | - |
+roll | - | reminders | - |
+say | - | remindme | - |
+warm | - | changelog | - |
+bobross | - | wikipedia | - |
+gigachad | - | - | - |
+respect | - | - | - |
+suntzu | - | - | - |
+trash | - | - | - |
 
 
 
