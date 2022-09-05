@@ -12,7 +12,7 @@
 
 ```sh
 npm i
-npm run dev (or 'start' if you dislike nodemon)
+npm run dev (or start if you dislike nodemon)
 ```
 
 # List of features
@@ -37,17 +37,18 @@ trash | | | |
 
 
 
-<h2>Images</h2>
+<h3>Images</h3>
 <details>
   <summary>Spoiler</summary>
 <img src="https://i.imgur.com/J5pHEpo.png" data-canonical-src="https://i.imgur.com/J5pHEpo.png" width="500"/>
 <img src="https://i.imgur.com/PesHXmj.png" data-canonical-src="https://i.imgur.com/PesHXmj.png" width="500"/>
 </details>
 
-<h5>You can find me here</h5>
+<h3>You can find me here</h3>
 <ul>
     <li>
         Twitter: <a href="https://twitter.com/BluePotatoBP">@BluePotatoBP</a>
+        <br />
         Discord: <a href="https://discord.gg/v8zkSc9">BluePotatoBP#5214</a>
     </li>
 </ul>
