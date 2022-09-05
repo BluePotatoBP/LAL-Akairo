@@ -6,40 +6,52 @@
   </a>
 </p>
 
-> Discord bot made using the akairo framework
+### LAL is a Discord bot made using the AKAIRO framework!
 
 ## First time setup
 
 ```sh
 npm i
-npm run dev
+npm run dev (or 'start' if you dislike nodemon)
 ```
-
-## Author
-
-👤 **BluePotatoBP**
-
-* Twitter: [@BluePotatoBP](https://twitter.com/BluePotatoBP)
-* Discord: [BluePotatoBP#5214](https://discord.gg/v8zkSc9)
-* Github: [@bluepotatobp](https://github.com/bluepotatobp)
 
 # List of features
-```sh
-.help
-```
+| Fun | Mod | Util | Dev |
+| - | - | - | - |
+eightball | config | avatar | checklangfile |
+bean | reactionroles | botinfo | eval |
+coinflip | role | userinfo | forceleave |
+dice | ban | yes | ram |
+google | kick | color | refreshcache |
+rps | poll | help | restart |
+pp | purge | invite | serverlist |
+rps | slowmode | ping | |
+roll | | reminders | |
+say | | remindme | |
+warm | | changelog | |
+bobross | | wikipedia | |
+gigachad | | | |
+respect | | | |
+suntzu | | | |
+trash | | | |
 
 
-*You can invite me __[here](https://discordapp.com/oauth2/authorize?client_id=528001824566018068&scope=bot&permissions=2081291519 'Click here for the invite link!')__*
-# Images
+
+<h2>Images</h2>
 <details>
   <summary>Spoiler</summary>
 <img src="https://i.imgur.com/J5pHEpo.png" data-canonical-src="https://i.imgur.com/J5pHEpo.png" width="500"/>
 <img src="https://i.imgur.com/PesHXmj.png" data-canonical-src="https://i.imgur.com/PesHXmj.png" width="500"/>
 </details>
 
+<h5>You can find me here</h5>
+<ul>
+    <li>
+        Twitter: <a href="https://twitter.com/BluePotatoBP">@BluePotatoBP</a>
+        Discord: <a href="https://discord.gg/v8zkSc9">BluePotatoBP#5214</a>
+    </li>
+</ul>
 
-## Show your support
+<h5>Show your support</h5>
 
-Give a ⭐️ if this project helped you!
-
-***
+Give my project a ⭐️ if it helped you!
