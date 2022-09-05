@@ -48,7 +48,8 @@ trash | | | |
 <ul>
     <li>
         Twitter: <a href="https://twitter.com/BluePotatoBP">@BluePotatoBP</a>
-        <br />
+    </li>
+    <li>
         Discord: <a href="https://discord.gg/v8zkSc9">BluePotatoBP#5214</a>
     </li>
 </ul>
