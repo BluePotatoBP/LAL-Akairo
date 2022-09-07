@@ -13,7 +13,7 @@
 Clone the project
 
 ```bash
-  git clone BluePotatoBP/LAL-Akairo
+  git clone https://github.com/BluePotatoBP/LAL-Akairo
 ```
 
 Go to the project directory
