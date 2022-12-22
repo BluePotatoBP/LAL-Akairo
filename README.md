@@ -13,25 +13,25 @@
 Clone the project
 
 ```bash
-  git clone https://github.com/BluePotatoBP/LAL-Akairo
+git clone https://github.com/BluePotatoBP/LAL-Akairo
 ```
 
 Go to the project directory
 
 ```bash
-  cd LAL-Akairo
+cd LAL-Akairo
 ```
 
 Install dependencies
 
 ```bash
-  npm install
+npm install
 ```
 
 Run the application
 
 ```bash
-  npm run start / dev (nodemon)
+npm run start / dev (nodemon)
 ```
 
 ## List of features
